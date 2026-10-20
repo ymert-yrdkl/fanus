@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { SITE } from "@/site/ayarlar";
 
 type Iz = { ad: string; adres?: string };
 
@@ -18,8 +19,24 @@ export default function SayfaBasi({
   metin: string;
   children?: ReactNode;
 }) {
+  // Google için sayfa yolu: Ana sayfa > Hizmetler > E-ticaret sitesi
+  const yol = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [{ ad: "Ana sayfa", adres: "/" }, ...iz].map((i, sira) => ({
+      "@type": "ListItem",
+      position: sira + 1,
+      name: i.ad,
+      ...(i.adres ? { item: `${SITE.adres}${i.adres === "/" ? "" : i.adres}` } : {}),
+    })),
+  };
+
   return (
     <section className="relative z-10 overflow-hidden bg-gece px-4 pt-[calc(var(--ust-yukseklik)+4rem)] pb-16 sm:px-6 md:pt-[calc(var(--ust-yukseklik)+6.5rem)] md:pb-24 lg:px-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(yol).replace(/</g, "\\u003c") }}
+      />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="sayfa-isigi absolute -top-[30%] right-[-10%] size-[70vmax] rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_16%,transparent),transparent_62%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-cizgi)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-cizgi)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_at_70%_0%,black,transparent_70%)] bg-[size:5rem_5rem] opacity-40" />
