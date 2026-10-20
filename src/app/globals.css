@@ -1,26 +1,251 @@
 @import "tailwindcss";
 
+/*
+  fanus tasarım token'ları. Renk YALNIZ buradan gelir: Tailwind'in hazır paleti kapalı
+  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "alev"; zemin sıcak kapalı siyah.
+  Ayrıntı: docs/tasarim-dili.md
+*/
+@theme {
+  --color-*: initial;
+  --color-gece: #0d0c0b;
+  --color-gece-2: #151311;
+  --color-gece-3: #1f1c18;
+  --color-gece-4: #2a2621;
+  --color-cizgi: rgb(244 236 224 / 0.1);
+  --color-cizgi-guclu: rgb(244 236 224 / 0.2);
+  --color-krem: #f4ece0;
+  --color-soluk: #a89f92;
+  --color-silik: #7d7468;
+  --color-alev: #eba04e;
+  --color-alev-acik: #f7c58a;
+  --color-alev-koyu: #b8772f;
+  --color-canli: #86c28f;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-govde: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-baslik: var(--font-bricolage), var(--font-geist), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ease-yay: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-kart: 1.5rem;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ust-yukseklik: 4.25rem;
+  interpolate-size: allow-keywords;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
+  background: var(--color-gece);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-gece);
+  color: var(--color-krem);
+  font-family: var(--font-govde);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-alev);
+  color: var(--color-gece);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-alev);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* İçeriğe geç bağlantısı: yalnız klavyeyle odaklanınca görünür */
+.atla {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: var(--color-alev);
+  color: var(--color-gece);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+.atla:focus-visible {
+  transform: none;
+}
+
+/* Lenis (pürüzsüz kaydırma) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Film greni: sabit tek katman, hareket etmez */
+.tane::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.88 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/*
+  Hareket ön durumları. `hareket` sınıfını <head> içindeki küçük betik ekler (hareket azaltma
+  tercihi yoksa). JavaScript çalışmazsa sınıf eklenmez ve her şey görünür kalır.
+*/
+.hareket [data-belir],
+.hareket [data-bol],
+.hareket [data-giris],
+.hareket [data-giris-baslik] {
+  opacity: 0;
+}
+
+/* GSAP'in ölçeklediği çizgiler: başlangıçta kapalı (Tailwind scale-* GSAP transform'uyla çakışır, kullanılmaz) */
+.hareket [data-dolum],
+.hareket #ilerleme {
+  transform: scaleX(0);
+}
+.hareket [data-harf-dolu] {
+  clip-path: inset(100% 0 0 0);
+}
+.hareket [data-dolum-dikey] {
+  transform: scaleY(0);
+}
+#ilerleme {
+  transform: scaleX(0);
+}
+.hareket [data-harf-dolu] {
+  clip-path: inset(100% 0 0 0);
+}
+
+@keyframes dolum {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes satir {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* SplitText satır maskesi: Türkçe şapka ve çengeller (İ, Ğ, Ş, ç) kırpılmasın */
+.bol-satir-mask {
+  padding-block: 0.14em;
+  margin-block: -0.14em;
+}
+
+/* Açılış perdesi yalnız hareket açıkken */
+.acilis {
+  display: none;
+}
+.hareket .acilis {
+  display: flex;
+}
+.hareket:not(.tekrar) .acilis [data-harf] {
+  transform: translateY(110%);
+}
+
+/* SSS: <details> yumuşak açılır (desteklemeyen tarayıcıda anında açılır) */
+details.sss::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.6s var(--ease-yay),
+    content-visibility 0.6s allow-discrete;
+}
+details.sss[open]::details-content {
+  block-size: auto;
+}
+details.sss summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Yazı boyu yardımcıları */
+.dev-baslik {
+  font-family: var(--font-baslik);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 6.4vw, 6.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 96;
+}
+.bolum-baslik {
+  font-family: var(--font-baslik);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 96;
+}
+.ara-baslik {
+  font-family: var(--font-baslik);
+  font-weight: 600;
+  font-size: clamp(1.625rem, 2.6vw, 2.375rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.etiket {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-soluk);
+}
+
+/* Dış çizgi yazı (altbilgi kelime markası) */
+.cizgi-yazi {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-cizgi-guclu);
+}
+
+/* Imleç ışığı: [data-isik] öğesinde --mx / --my JS ile güncellenir */
+[data-isik] {
+  --mx: 50%;
+  --my: 50%;
+}
+.isik-katmani {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-yay);
+  background: radial-gradient(28rem circle at var(--mx) var(--my), rgb(235 160 78 / 0.09), transparent 60%);
+}
+[data-isik]:hover .isik-katmani {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,1 +1,45 @@
 @AGENTS.md
+
+# fanus — proje bağlamı
+
+fanus.tr: Yusuf'un web stüdyosunun tanıtım sitesi (tek sayfa). İşler: e-ticaret, kurumsal site, web otomasyonu,
+QR menü. Referanslar: dijitalbaskimerkezim.com (e-ticaret), ayyildizrobotics.com (kurumsal + katalog),
+emrepide.com.tr (+ menu.emrepide.com.tr QR menü). Örnek alınan seviye: ahmcloud.com (Ahmet'in sitesi; kod ya da
+metin kopyalanmaz). Hedef: ziyaretçi "keşke bende de olsa" desin; ağır, amaçlı animasyon.
+
+## Çalışma kuralları
+1. Dil: arayüz, metin ve kod adları Türkçe; teknik terimler İngilizce kalabilir. Yusuf TypeScript öğreniyor: sade,
+   az soyutlamalı kod.
+2. Tasarım dili `docs/tasarim-dili.md`. Renk yalnız `src/app/globals.css` token'larıyla (Tailwind'in hazır paleti
+   kapalı: `bg-gece`, `text-krem`, `text-alev`...). Uzun çizgi (—) yok, şişirme sözcük yok, uydurma sayı/iddia yok.
+   Referans bilgileri sitelerin kendisinden; yeni iddia eklenirse `src/site/icerik.ts` içinde kaynağı yazılır.
+3. İletişim ve kimlik ayarları tek yer: `src/site/ayarlar.ts` ("ONAY BEKLİYOR" yazanlar Yusuf'un kararı; liste
+   `docs/acik-kararlar.md`). WhatsApp numarası boşken WhatsApp düğmeleri gizlenir, teklif e-postayla gider.
+4. Hareket: GSAP 3.15 (ScrollTrigger, SplitText, MotionPath; hepsi `src/hareket/gsap.ts`'den) + Lenis + three.js.
+   - Her animasyon `gsap.matchMedia()` içinde `HAREKET_ACIK` koşuluyla; hareket azaltma tercihinde içerik durağan
+     ve tam görünür. Ön durumlar yalnız `.hareket` sınıfıyla gizlenir (head betiği ekler; JS yoksa her şey görünür).
+   - GSAP'in canlandırdığı öğede Tailwind `scale-*` / `rotate-*` kullanılmaz (CSS `scale` özelliği GSAP transform'una
+     eklenir). Başlangıç durumu gerekiyorsa `globals.css`'te `transform` ile yazılır.
+   - GSAP, bir zaman çizelgesinin geri çağrısında yaratılan animasyonu o çizelgenin kapsamına bağlar: başka
+     bileşene olay yayınlarken `setTimeout` ile ayrı turda yayınla (`Acilis.tsx`), seçici yerine öğe ver.
+   - 3B sahne (`src/sahne/`) `sahneDurumu` düz nesnesini okur; giriş+manifesto TEK zaman çizelgesinde
+     (`Manifesto.tsx`), teklif bölümü `son` pozu + `sonKarisim` ile (iki tetik aynı değeri yazmasın).
+5. Sunucu (Coolify) Ahmet'in; dağıtım ve DNS değişikliği Yusuf/Ahmet onayıyla. Commit mesajları Türkçe.
+6. Bu proje bağımsızdır; başka projelerden kod/yapı taşınmaz.
+
+## Komutlar
+- `npm run dev` (:3300) · `npm run build` · `npm run lint` · `npm run typecheck` · `npm run format`
+- Ekran görüntüsü (sistem Chrome'u, ek paket yok): `npm run ekran -- <adres> <çıktı.png> [genişlik] [yükseklik]
+  [--tam] [--telefon] [--bekle=ms]`. Paylaşım görseli `src/app/opengraph-image.png` böyle çekildi (1200x630,
+  `--bekle=7000`).
+- Referans görselleri: `npm run referanslar [site-kodu]` → `public/isler/*.webp` (canlı sitelerden; çerez bandı
+  yalnız görüntüde gizlenir, hiçbir şey kabul edilmez).
+
+## Durum (20 Ekim 2026)
+- Tek sayfa tamam ve tarayıcıda (1280/390) denendi: açılış perdesi, 3B cam fanus (alev, kıvılcım, imleç rüzgârı),
+  manifesto (cam kalkar, alev titrer, cam iner, ışığa dalış), kayan şerit, hizmetler (işletme adı yazılınca dört
+  canlı örnek: mağaza + panel, kurumsal site düzenleyici + Google önizlemesi, otomasyon akışı, QR menü + gerçek
+  Emre Pide QR kodu), yayındaki işler (sabitlenen tarayıcı çerçevesinde gerçek ekran görüntüsü kayar), süreç
+  (yatay şerit), SSS, teklif oluşturucu (WhatsApp/e-posta mesajı), altbilgi kelime markası. JSON-LD, site haritası,
+  robots, paylaşım görseli, 404.
+- Yayın: `docs/yayina-alma.md` (hedef https://fanustr.ahmcloud.com; sonra fanus.tr).

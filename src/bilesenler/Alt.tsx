@@ -1,0 +1,157 @@
+"use client";
+
+import { useRef } from "react";
+import { ArrowUp, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { gsap, HAREKET_ACIK, useGSAP } from "@/hareket/gsap";
+import { kaydir } from "@/hareket/kaydirma";
+import { SITE } from "@/site/ayarlar";
+import { REFERANSLAR } from "@/site/icerik";
+import { Logo } from "./Logo";
+
+const SAYFA_BAGLANTILARI = [
+  { ad: "Hizmetler", hedef: "#hizmetler" },
+  { ad: "İşler", hedef: "#isler" },
+  { ad: "Süreç", hedef: "#surec" },
+  { ad: "SSS", hedef: "#sss" },
+  { ad: "Teklif al", hedef: "#teklif" },
+];
+
+export default function Alt() {
+  const kok = useRef<HTMLElement>(null);
+
+  // Dev kelime markası: harfler çizgiden dolguya, soldan sağa ışıyarak dolar
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(HAREKET_ACIK, () => {
+        gsap.fromTo(
+          "[data-harf-dolu]",
+          { clipPath: "inset(100% 0% 0% 0%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            ease: "none",
+            stagger: 0.12,
+            scrollTrigger: { trigger: "[data-kelime-markasi]", start: "top 95%", end: "bottom bottom", scrub: 1 },
+          },
+        );
+      });
+    },
+    { scope: kok },
+  );
+
+  return (
+    <footer
+      ref={kok}
+      className="relative z-10 overflow-hidden border-t border-cizgi bg-gece px-4 pt-20 pb-8 sm:px-6 lg:px-10"
+    >
+      <div className="mx-auto grid max-w-[90rem] gap-12 sm:grid-cols-2 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <Logo />
+          <p className="mt-5 max-w-[22rem] leading-relaxed text-soluk">
+            E-ticaret, kurumsal web sitesi, QR menü ve web otomasyonu. Işığınızı koruyan cam.
+          </p>
+        </div>
+        <nav aria-label="Sayfa" className="lg:col-span-2 lg:col-start-6">
+          <p className="etiket">Sayfa</p>
+          <ul className="mt-4 grid gap-1">
+            {SAYFA_BAGLANTILARI.map((b) => (
+              <li key={b.hedef}>
+                <a
+                  href={b.hedef}
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                >
+                  {b.ad}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="lg:col-span-3">
+          <p className="etiket">İşler</p>
+          <ul className="mt-4 grid gap-1">
+            {REFERANSLAR.map((r) => (
+              <li key={r.kod}>
+                <a
+                  href={r.adres}
+                  target="_blank"
+                  rel="noopener"
+                  className="group inline-flex min-h-10 items-center gap-1.5 text-krem/85 transition-colors hover:text-alev"
+                >
+                  {r.alanAdi}
+                  <ArrowUpRight
+                    size={14}
+                    aria-hidden="true"
+                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="lg:col-span-3">
+          <p className="etiket">İletişim</p>
+          <ul className="mt-4 grid gap-1">
+            <li>
+              <a
+                href={`mailto:${SITE.eposta}`}
+                className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+              >
+                {SITE.eposta}
+              </a>
+            </li>
+            {SITE.telefon && (
+              <li>
+                <a
+                  href={`tel:${SITE.telefon.replace(/\s/g, "")}`}
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                >
+                  {SITE.telefon}
+                </a>
+              </li>
+            )}
+            {SITE.instagram && (
+              <li>
+                <a
+                  href={`https://www.instagram.com/${SITE.instagram}/`}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                >
+                  Instagram: @{SITE.instagram}
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
+
+      <div
+        data-kelime-markasi
+        aria-hidden="true"
+        className="mx-auto mt-20 flex max-w-[90rem] justify-center font-baslik text-[clamp(6rem,29vw,27rem)] leading-[0.82] font-semibold tracking-[-0.065em] select-none"
+      >
+        {"fanus".split("").map((harf, i) => (
+          <span key={i} className="relative inline-block">
+            <span className="cizgi-yazi">{harf}</span>
+            <span data-harf-dolu className="absolute inset-0 text-krem">
+              {harf}
+            </span>
+          </span>
+        ))}
+      </div>
+
+      <div className="mx-auto mt-10 flex max-w-[90rem] flex-col gap-4 border-t border-cizgi pt-6 text-sm text-soluk sm:flex-row sm:items-center sm:justify-between">
+        <p>© 2026 fanus.tr</p>
+        <p>Bu site çerez kullanmaz, ziyaretinizi izlemez.</p>
+        <button
+          type="button"
+          onClick={() => kaydir("#ust")}
+          className="inline-flex min-h-11 items-center gap-2 self-start transition-colors hover:text-krem sm:self-auto"
+        >
+          Başa dön
+          <ArrowUp size={14} aria-hidden="true" />
+        </button>
+      </div>
+    </footer>
+  );
+}
