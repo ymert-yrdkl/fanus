@@ -92,7 +92,10 @@ export default function Surec() {
               aria-hidden="true"
               className="absolute top-0 right-[10vw] left-[max(2.5rem,calc((100vw-90rem)/2+2.5rem))] hidden h-px bg-cizgi md:block"
             >
-              <div data-dolum className="h-full origin-left bg-alev shadow-[0_0_12px_rgb(235_160_78/0.8)]" />
+              <div
+                data-dolum
+                className="h-full origin-left bg-alev shadow-[0_0_12px_color-mix(in_srgb,var(--color-alev)_80%,transparent)]"
+              />
             </div>
             <div
               aria-hidden="true"
@@ -111,7 +114,7 @@ export default function Surec() {
                 >
                   <span
                     aria-hidden="true"
-                    className="absolute top-7 left-[1.2rem] size-3 -translate-x-1/2 rounded-full border border-cizgi-guclu bg-gece transition-[background-color,border-color,box-shadow] duration-500 group-data-aktif/adim:border-alev group-data-aktif/adim:bg-alev group-data-aktif/adim:shadow-[0_0_16px_4px_rgb(235_160_78/0.6)] md:top-0 md:left-8 md:-translate-y-1/2"
+                    className="absolute top-7 left-[1.2rem] size-3 -translate-x-1/2 rounded-full border border-cizgi-guclu bg-gece transition-[background-color,border-color,box-shadow] duration-500 group-data-aktif/adim:border-alev group-data-aktif/adim:bg-alev group-data-aktif/adim:shadow-[0_0_16px_4px_color-mix(in_srgb,var(--color-alev)_60%,transparent)] md:top-0 md:left-8 md:-translate-y-1/2"
                   />
                   <div className="h-full rounded-[1.75rem] border border-cizgi bg-gece-2 p-6 transition-[border-color,background-color] duration-700 group-data-aktif/adim:border-alev/40 group-data-aktif/adim:bg-gece-3 md:p-9">
                     <span className="flex size-12 items-center justify-center rounded-2xl bg-gece-4 text-soluk transition-colors duration-700 group-data-aktif/adim:bg-alev group-data-aktif/adim:text-gece">

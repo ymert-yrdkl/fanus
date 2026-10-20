@@ -46,6 +46,68 @@ const CAM_YARICAP = 1.08;
 const CAM_KALINLIK = 0.035;
 const CAM_DUZ_BOY = 1.95;
 
+/** Sahnenin renkleri, sitenin temasına göre (<html data-tema>). Renkler 0-1 aralığında RGB. */
+const SAHNE_TEMALARI = {
+  eski: {
+    zemin: 0x0d0c0b,
+    cekirdek: [1.0, 0.97, 0.88],
+    orta: [1.0, 0.74, 0.36],
+    dis: [0.93, 0.38, 0.1],
+    taban: [0.32, 0.42, 0.95],
+    kivilcim: [1.0, 0.7, 0.34],
+    hale: 0xff9a3c,
+    haleKucuk: 0xffcf96,
+    zeminIsigi: 0xeb8f3a,
+    isik: 0xffa04a,
+    metal: 0xc8924a,
+  },
+  kor: {
+    zemin: 0x0b0b0c,
+    cekirdek: [1.0, 0.95, 0.86],
+    orta: [1.0, 0.6, 0.3],
+    dis: [1.0, 0.24, 0.1],
+    taban: [0.35, 0.4, 0.95],
+    kivilcim: [1.0, 0.45, 0.22],
+    hale: 0xff4a24,
+    haleKucuk: 0xffae8a,
+    zeminIsigi: 0xff4a2b,
+    isik: 0xff6a3a,
+    metal: 0xb4b4ba,
+  },
+  gece: {
+    zemin: 0x070b16,
+    cekirdek: [1.0, 0.96, 0.88],
+    orta: [1.0, 0.64, 0.32],
+    dis: [1.0, 0.3, 0.12],
+    taban: [0.3, 0.42, 1.0],
+    kivilcim: [1.0, 0.52, 0.26],
+    hale: 0xff5a30,
+    haleKucuk: 0xffbe96,
+    zeminIsigi: 0xff5a36,
+    isik: 0xff7a45,
+    metal: 0xb9c2d3,
+  },
+  lacivert: {
+    zemin: 0x08142b,
+    cekirdek: [0.9, 0.96, 1.0],
+    orta: [0.45, 0.68, 1.0],
+    dis: [0.16, 0.36, 1.0],
+    taban: [0.55, 0.3, 1.0],
+    kivilcim: [0.55, 0.75, 1.0],
+    hale: 0x3d7bff,
+    haleKucuk: 0xa8c8ff,
+    zeminIsigi: 0x3d7bff,
+    isik: 0x6aa0ff,
+    metal: 0xb9c2d3,
+  },
+};
+type SahneTemasi = keyof typeof SAHNE_TEMALARI;
+
+function etkinTema(): (typeof SAHNE_TEMALARI)[SahneTemasi] {
+  const kod = document.documentElement.dataset.tema as SahneTemasi | undefined;
+  return SAHNE_TEMALARI[kod && kod in SAHNE_TEMALARI ? kod : "eski"];
+}
+
 type Secenek = {
   /** İlk kare çizilince çağrılır. */
   hazir: () => void;
@@ -74,7 +136,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   cizici.outputColorSpace = SRGBColorSpace;
   cizici.transmissionResolutionScale = zayif ? 0.5 : 1;
   // Zemin sayfayla aynı renk ve opak: saydam zeminde three.js kırılma için camın arkasını beyaz siler (süt cam görünümü)
-  cizici.setClearColor(0x0d0c0b, 1);
+  cizici.setClearColor(etkinTema().zemin, 1);
 
   const sahne = new Scene();
   const pmrem = new PMREMGenerator(cizici);
@@ -170,6 +232,10 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
         uZaman: { value: 0 },
         uEgim: { value: new Vector2() },
         uGuc: { value: 1 },
+        uCekirdek: { value: new Color() },
+        uOrta: { value: new Color() },
+        uDis: { value: new Color() },
+        uTaban: { value: new Color() },
       },
       vertexShader: /* glsl */ `
         uniform float uZaman;
@@ -197,14 +263,18 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       `,
       fragmentShader: /* glsl */ `
         uniform float uGuc;
+        uniform vec3 uCekirdek;
+        uniform vec3 uOrta;
+        uniform vec3 uDis;
+        uniform vec3 uTaban;
         varying vec3 vNormal;
         varying vec3 vBakis;
         varying float vYukseklik;
         void main() {
           float kenar = 1.0 - abs(dot(normalize(vNormal), normalize(vBakis)));
-          vec3 renk = mix(vec3(1.0, 0.97, 0.88), vec3(1.0, 0.74, 0.36), smoothstep(0.08, 0.55, kenar));
-          renk = mix(renk, vec3(0.93, 0.38, 0.1), smoothstep(0.55, 0.97, kenar));
-          renk = mix(renk, vec3(0.32, 0.42, 0.95), smoothstep(-0.25, -0.95, vYukseklik) * 0.55);
+          vec3 renk = mix(uCekirdek, uOrta, smoothstep(0.08, 0.55, kenar));
+          renk = mix(renk, uDis, smoothstep(0.55, 0.97, kenar));
+          renk = mix(renk, uTaban, smoothstep(-0.25, -0.95, vYukseklik) * 0.55);
           gl_FragColor = vec4(renk * (1.25 + 0.55 * uGuc), 1.0);
         }
       `,
@@ -279,7 +349,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   kivilcimGeo.setAttribute("aParlaklik", new BufferAttribute(parlakliklar, 1));
   const kivilcimMalzeme = m(
     new ShaderMaterial({
-      uniforms: { uPiksel: { value: cizici.getPixelRatio() }, uOlcek: { value: 1 } },
+      uniforms: { uPiksel: { value: cizici.getPixelRatio() }, uOlcek: { value: 1 }, uRenk: { value: new Color() } },
       vertexShader: /* glsl */ `
         attribute float aBoyut;
         attribute float aParlaklik;
@@ -294,11 +364,12 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
         }
       `,
       fragmentShader: /* glsl */ `
+        uniform vec3 uRenk;
         varying float vParlaklik;
         void main() {
           float d = length(gl_PointCoord - 0.5);
           float a = smoothstep(0.5, 0.0, d);
-          gl_FragColor = vec4(vec3(1.0, 0.7, 0.34) * 1.5, a * a * vParlaklik);
+          gl_FragColor = vec4(uRenk * 1.5, a * a * vParlaklik);
         }
       `,
       transparent: true,
@@ -344,6 +415,25 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   };
   boyutla();
   window.addEventListener("resize", boyutla);
+
+  // ---- Tema: renkleri sitenin temasına göre ayarla (tema seçici değişince de) ----
+  const temaUygula = () => {
+    const t = etkinTema();
+    cizici.setClearColor(t.zemin, 1);
+    (alevMalzeme.uniforms.uCekirdek.value as Color).setRGB(t.cekirdek[0]!, t.cekirdek[1]!, t.cekirdek[2]!);
+    (alevMalzeme.uniforms.uOrta.value as Color).setRGB(t.orta[0]!, t.orta[1]!, t.orta[2]!);
+    (alevMalzeme.uniforms.uDis.value as Color).setRGB(t.dis[0]!, t.dis[1]!, t.dis[2]!);
+    (alevMalzeme.uniforms.uTaban.value as Color).setRGB(t.taban[0]!, t.taban[1]!, t.taban[2]!);
+    (kivilcimMalzeme.uniforms.uRenk.value as Color).setRGB(t.kivilcim[0]!, t.kivilcim[1]!, t.kivilcim[2]!);
+    haleBuyuk.material.color.set(t.hale);
+    haleKucuk.material.color.set(t.haleKucuk);
+    zeminIsigiMalzeme.color.set(t.zeminIsigi);
+    alevIsigi.color.set(t.isik);
+    pirinc.color.set(t.metal);
+    yenidenCiz = true;
+  };
+  temaUygula();
+  window.addEventListener("fanus:tema", temaUygula);
 
   // ---- Kare döngüsü ----
   let zaman = 0;
@@ -480,6 +570,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       cizici.setAnimationLoop(null);
       window.removeEventListener("pointermove", imlecHareketi);
       window.removeEventListener("resize", boyutla);
+      window.removeEventListener("fanus:tema", temaUygula);
       geometriler.forEach((geo) => geo.dispose());
       malzemeler.forEach((mal) => mal.dispose());
       haleDokusu.dispose();

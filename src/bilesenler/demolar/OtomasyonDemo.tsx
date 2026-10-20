@@ -215,7 +215,7 @@ export default function OtomasyonDemo() {
                 d={d}
                 pathLength={1}
                 fill="none"
-                stroke="#eba04e"
+                className="stroke-alev"
                 strokeWidth="2"
                 strokeDasharray="1"
                 strokeDashoffset={1}
@@ -227,7 +227,7 @@ export default function OtomasyonDemo() {
         <span
           ref={nokta}
           aria-hidden="true"
-          className="pointer-events-none absolute top-0 left-0 z-10 size-3.5 rounded-full bg-alev-acik opacity-0 shadow-[0_0_0_4px_rgb(235_160_78/0.25),0_0_24px_6px_rgb(235_160_78/0.6)]"
+          className="pointer-events-none absolute top-0 left-0 z-10 size-3.5 rounded-full bg-alev-acik opacity-0 shadow-[0_0_0_4px_color-mix(in_srgb,var(--color-alev)_25%,transparent),0_0_24px_6px_color-mix(in_srgb,var(--color-alev)_60%,transparent)]"
         />
 
         <ol className="relative grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-3 sm:gap-y-12">
@@ -239,7 +239,7 @@ export default function OtomasyonDemo() {
                 data-dugum
                 className={`${YERLESIM[i]} flex items-center gap-3 rounded-2xl border p-3 transition-[border-color,background-color,box-shadow] duration-500 ${
                   tamam
-                    ? "border-alev/60 bg-alev/10 shadow-[0_0_40px_-12px_rgb(235_160_78/0.6)]"
+                    ? "border-alev/60 bg-alev/10 shadow-[0_0_40px_-12px_color-mix(in_srgb,var(--color-alev)_60%,transparent)]"
                     : "border-cizgi bg-gece-2"
                 }`}
               >

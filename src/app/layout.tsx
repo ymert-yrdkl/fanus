@@ -7,6 +7,8 @@ import UstMenu from "@/bilesenler/UstMenu";
 import GecisYoneticisi from "@/hareket/GecisYoneticisi";
 import PuruzsuzKaydirma from "@/hareket/PuruzsuzKaydirma";
 import SayfaEtkileri from "@/hareket/SayfaEtkileri";
+import TemaSecici from "@/bilesenler/TemaSecici";
+import { TEMA_SECICI_ACIK, TEMALAR, VARSAYILAN_TEMA } from "@/site/tema";
 import { SITE } from "@/site/ayarlar";
 import "./globals.css";
 
@@ -43,17 +45,23 @@ export const viewport: Viewport = {
 // yalnız bu sınıfla gizlenir). Hareket altyapısı 6 sn içinde kurulmazsa sınıf kaldırılır, içerik görünür kalır.
 const HAREKET_BETIGI = `(function(){var d=document.documentElement;try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('hareket');if(sessionStorage.getItem('fanus-acildi'))d.classList.add('tekrar');setTimeout(function(){if(!window.__fanusHazir)d.classList.remove('hareket')},6000)}catch(e){}})();`;
 
+// Tema denemesi: seçici açıkken bu tarayıcıda seçilen tema boyamadan önce uygulanır
+const TEMA_BETIGI = TEMA_SECICI_ACIK
+  ? `(function(){try{var t=localStorage.getItem('fanus-tema');if(${JSON.stringify(TEMALAR.map((t) => t.kod))}.indexOf(t)>-1)document.documentElement.dataset.tema=t}catch(e){}})();`
+  : "";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="tr"
+      data-tema={VARSAYILAN_TEMA}
       suppressHydrationWarning
       className={`${geist.variable} ${geistMono.variable} ${bricolage.variable}`}
     >
       <head>
         {/* Boyamadan önce çalışmalı: next/script beforeInteractive bunu geciktirir. Geliştirme modunda React
             "script etiketi" uyarısı verir; yalnız geliştirmede görünür, zararsızdır. */}
-        <script dangerouslySetInnerHTML={{ __html: HAREKET_BETIGI }} />
+        <script dangerouslySetInnerHTML={{ __html: TEMA_BETIGI + HAREKET_BETIGI }} />
       </head>
       <body className="tane">
         <a href="#icerik" className="atla">
@@ -68,6 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </IsletmeAdiSaglayici>
         <GecisYoneticisi />
         <SayfaEtkileri />
+        {TEMA_SECICI_ACIK && <TemaSecici />}
       </body>
     </html>
   );

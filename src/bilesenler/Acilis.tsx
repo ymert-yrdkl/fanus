@@ -114,7 +114,7 @@ export default function Acilis() {
         <div className="relative size-40">
           <div
             data-hale-acilis
-            className="absolute top-[58%] left-1/2 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(235_160_78/0.35),transparent_65%)] opacity-0"
+            className="absolute top-[58%] left-1/2 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_35%,transparent),transparent_65%)] opacity-0"
           />
           <svg viewBox="0 0 32 32" fill="none" className="relative size-full text-krem">
             <path

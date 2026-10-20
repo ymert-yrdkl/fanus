@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Minus, Plus, Phone, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { vurgu } from "@/hareket/renk";
 import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
 import { useIsletmeAdi } from "../IsletmeAdi";
 
@@ -100,8 +101,8 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
     if (guncellendi === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.fromTo(
       kok.current!.querySelector("[data-fiyat-satiri]"),
-      { backgroundColor: "rgb(235 160 78 / 0.35)" },
-      { backgroundColor: "rgb(235 160 78 / 0)", duration: 1.2, ease: "power2.out" },
+      { backgroundColor: vurgu(0.35) },
+      { backgroundColor: vurgu(0), duration: 1.2, ease: "power2.out" },
     );
     gsap.fromTo(
       kok.current!.querySelector("[data-fiyat]"),
@@ -131,7 +132,7 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
           <span
             data-tarama
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-3 top-0 h-0.5 rounded-full bg-alev opacity-0 shadow-[0_0_18px_4px_rgb(235_160_78/0.7)]"
+            className="pointer-events-none absolute inset-x-3 top-0 h-0.5 rounded-full bg-alev opacity-0 shadow-[0_0_18px_4px_color-mix(in_srgb,var(--color-alev)_70%,transparent)]"
           />
         </div>
         <div>

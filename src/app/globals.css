@@ -31,6 +31,56 @@
   --radius-kart: 1.5rem;
 }
 
+/*
+  Temalar (deneme, 20 Ekim 2026): <html data-tema="..."> ile seçilir. Varsayılan (eski) yukarıdaki @theme.
+  kor = nötr siyah + kor kırmızısı · gece = gece mavisi + kor kırmızısı · lacivert = lacivert + mavi
+*/
+:root[data-tema="kor"] {
+  --color-gece: #0b0b0c;
+  --color-gece-2: #131315;
+  --color-gece-3: #1c1c1f;
+  --color-gece-4: #27272b;
+  --color-cizgi: rgb(245 245 244 / 0.1);
+  --color-cizgi-guclu: rgb(245 245 244 / 0.2);
+  --color-krem: #f5f5f4;
+  --color-soluk: #a1a1a6;
+  --color-silik: #75757b;
+  --color-alev: #ff4a2b;
+  --color-alev-acik: #ff7d61;
+  --color-alev-koyu: #d63415;
+  --color-canli: #6fcf8f;
+}
+:root[data-tema="gece"] {
+  --color-gece: #070b16;
+  --color-gece-2: #0d1322;
+  --color-gece-3: #141c30;
+  --color-gece-4: #1d2740;
+  --color-cizgi: rgb(238 242 248 / 0.1);
+  --color-cizgi-guclu: rgb(238 242 248 / 0.2);
+  --color-krem: #eef2f8;
+  --color-soluk: #97a3bd;
+  --color-silik: #6b7894;
+  --color-alev: #ff5a36;
+  --color-alev-acik: #ff8a6b;
+  --color-alev-koyu: #d9401f;
+  --color-canli: #6fcf8f;
+}
+:root[data-tema="lacivert"] {
+  --color-gece: #08142b;
+  --color-gece-2: #0d1b36;
+  --color-gece-3: #132442;
+  --color-gece-4: #1b2f52;
+  --color-cizgi: rgb(241 245 251 / 0.1);
+  --color-cizgi-guclu: rgb(241 245 251 / 0.2);
+  --color-krem: #f1f5fb;
+  --color-soluk: #9aa9c6;
+  --color-silik: #6c7c9e;
+  --color-alev: #4c8dff;
+  --color-alev-acik: #86b2ff;
+  --color-alev-koyu: #2f6fe0;
+  --color-canli: #6fcf8f;
+}
+
 :root {
   --ust-yukseklik: 4.25rem;
   interpolate-size: allow-keywords;
@@ -104,7 +154,7 @@ html.lenis body {
   z-index: 70;
   pointer-events: none;
   opacity: 0.07;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.88 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 }
 
 /*
@@ -233,7 +283,11 @@ details.sss summary::-webkit-details-marker {
   border-radius: inherit;
   opacity: 0;
   transition: opacity 0.4s var(--ease-yay);
-  background: radial-gradient(28rem circle at var(--mx) var(--my), rgb(235 160 78 / 0.09), transparent 60%);
+  background: radial-gradient(
+    28rem circle at var(--mx) var(--my),
+    color-mix(in srgb, var(--color-alev) 9%, transparent),
+    transparent 60%
+  );
 }
 [data-isik]:hover .isik-katmani {
   opacity: 1;

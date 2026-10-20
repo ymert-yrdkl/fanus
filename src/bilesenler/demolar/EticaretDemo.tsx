@@ -12,6 +12,7 @@ import {
   CheckCircle,
   LockSimple,
 } from "@phosphor-icons/react/dist/ssr";
+import { vurgu } from "@/hareket/renk";
 import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
 import { basHarfler, useIsletmeAdi } from "../IsletmeAdi";
 import { AkanTutar, tlBicimi } from "./AkanSayi";
@@ -102,13 +103,13 @@ export default function EticaretDemo() {
     if (!satir) return;
     gsap.fromTo(
       satir,
-      { height: 0, opacity: 0, backgroundColor: "rgb(235 160 78 / 0.22)" },
+      { height: 0, opacity: 0, backgroundColor: vurgu(0.22) },
       {
         height: "auto",
         opacity: 1,
         duration: 0.7,
         ease: "expo.out",
-        backgroundColor: "rgb(235 160 78 / 0)",
+        backgroundColor: vurgu(0),
         clearProps: "height",
       },
     );
