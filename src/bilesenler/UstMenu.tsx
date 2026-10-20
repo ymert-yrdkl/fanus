@@ -60,6 +60,24 @@ export default function UstMenu() {
     { scope: kok },
   );
 
+  // Gündüz (beyaz) bölümün üstündeyken menü de açık renklere döner; her sayfa değişiminde yeniden kurulur
+  useGSAP(
+    () => {
+      const ust = kok.current!;
+      ust.removeAttribute("data-acik-ust");
+      gsap.utils.toArray<HTMLElement>('[data-zemin="acik"]').forEach((bolum) => {
+        ScrollTrigger.create({
+          trigger: bolum,
+          // Menünün alt kenarı beyaz içeriğe değince açık renge geç
+          start: "top top+=60",
+          end: "bottom top+=60",
+          onToggle: (t) => ust.toggleAttribute("data-acik-ust", t.isActive),
+        });
+      });
+    },
+    { dependencies: [yol], revertOnUpdate: true },
+  );
+
   const menuyuAc = () => {
     const dialog = pencere.current!;
     dialog.showModal();
@@ -104,7 +122,7 @@ export default function UstMenu() {
     <>
       <header
         ref={kok}
-        className="group/ust fixed inset-x-0 top-0 z-50 h-(--ust-yukseklik) border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-500 data-dolu:border-cizgi data-dolu:bg-gece/75 data-dolu:backdrop-blur-xl"
+        className="group/ust fixed inset-x-0 top-0 z-50 h-(--ust-yukseklik) border-b border-transparent text-krem transition-[background-color,border-color,backdrop-filter,color] duration-500 data-dolu:border-cizgi data-dolu:bg-gece/75 data-dolu:backdrop-blur-xl"
       >
         <nav
           aria-label="Ana menü"
@@ -132,7 +150,7 @@ export default function UstMenu() {
                   </Link>
                   {/* Açılır panel: üzerine gelince ya da klavyeyle odaklanınca */}
                   <div className="invisible absolute top-full left-1/2 w-[34rem] -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-[opacity,translate,visibility] duration-300 ease-yay group-focus-within/acilir:visible group-focus-within/acilir:translate-y-0 group-focus-within/acilir:opacity-100 group-hover/acilir:visible group-hover/acilir:translate-y-0 group-hover/acilir:opacity-100">
-                    <ul className="grid grid-cols-2 gap-1 rounded-3xl border border-cizgi bg-gece-2/95 p-2 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.8)] backdrop-blur-xl">
+                    <ul className="grid grid-cols-2 gap-1 rounded-3xl border border-cizgi bg-gece-2/95 p-2 golge backdrop-blur-xl">
                       {HIZMETLER.map((h) => (
                         <li key={h.adres}>
                           <Link

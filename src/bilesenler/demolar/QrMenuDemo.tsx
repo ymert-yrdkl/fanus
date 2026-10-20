@@ -124,7 +124,7 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
   return (
     <div ref={kok} className="grid items-center gap-8 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-10">
       <div className="grid gap-5">
-        <div className="relative mx-auto w-full max-w-[15rem] overflow-hidden rounded-[1.75rem] bg-krem p-5 sm:mx-0">
+        <div className="relative mx-auto w-full max-w-[15rem] overflow-hidden rounded-[1.75rem] bg-[#fff] p-5 sm:mx-0">
           <div
             className="text-gece [&_svg]:block [&_svg]:h-auto [&_svg]:w-full"
             dangerouslySetInnerHTML={{ __html: qrSvg }}
@@ -180,7 +180,7 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
       </div>
 
       {/* Telefon */}
-      <div className="relative mx-auto h-[31rem] w-[15.5rem] shrink-0 rounded-[2.6rem] border-[7px] border-gece-4 bg-cukur shadow-[0_40px_90px_-30px_rgb(0_0_0/0.9)]">
+      <div className="relative mx-auto h-[31rem] w-[15.5rem] shrink-0 rounded-[2.6rem] border-[7px] border-gece-4 bg-cukur golge">
         <span
           aria-hidden="true"
           className="absolute top-2 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-gece-4"

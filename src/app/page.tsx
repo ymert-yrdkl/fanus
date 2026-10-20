@@ -1,3 +1,4 @@
+import GecisBandi from "@/bilesenler/GecisBandi";
 import CagriBandi from "@/bilesenler/CagriBandi";
 import FiyatListesi from "@/bilesenler/FiyatListesi";
 import Giris from "@/bilesenler/Giris";
@@ -50,10 +51,14 @@ export default async function AnaSayfa() {
       <main id="icerik">
         <Giris />
         <Manifesto />
-        <Serit />
-        <HizmetKartlari qrSvg={qrSvg} />
-        <Isler />
-        <FiyatListesi />
+        <GecisBandi yon="safak" />
+        <div data-zemin="acik">
+          <Serit />
+          <HizmetKartlari qrSvg={qrSvg} />
+          <Isler />
+          <FiyatListesi />
+        </div>
+        <GecisBandi yon="aksam" />
         <CagriBandi />
       </main>
     </>

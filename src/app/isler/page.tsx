@@ -1,3 +1,4 @@
+import GecisBandi from "@/bilesenler/GecisBandi";
 import type { Metadata } from "next";
 import CagriBandi from "@/bilesenler/CagriBandi";
 import Isler from "@/bilesenler/Isler";
@@ -18,7 +19,11 @@ export default function IslerSayfasi() {
         baslik="Yayında olan işler."
         metin="Üçü de Düzce'den, üçü de bugün çalışıyor. Ekran görüntüleri sitelerin kendisinden; kaydırdıkça gezin, tıklayıp açın."
       />
-      <Isler baslik={null} />
+      <GecisBandi yon="safak" boy="kisa" />
+      <div data-zemin="acik">
+        <Isler baslik={null} />
+      </div>
+      <GecisBandi yon="aksam" boy="kisa" />
       <CagriBandi baslik="Sıradaki iş sizinki olsun." />
     </main>
   );

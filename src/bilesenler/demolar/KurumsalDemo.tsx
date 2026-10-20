@@ -143,7 +143,7 @@ export default function KurumsalDemo() {
       {/* Örnek site */}
       <div className="flex justify-center rounded-[1.75rem] border border-cizgi bg-gece-3/50 p-3 sm:p-4">
         <div
-          className="@container overflow-hidden rounded-2xl border border-cizgi-guclu bg-[#f6f1e9] text-[#1d1a16] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.8)] transition-[width] duration-700 ease-yay"
+          className="@container overflow-hidden rounded-2xl border border-cizgi-guclu bg-[#f6f1e9] text-[#1d1a16] golge transition-[width] duration-700 ease-yay"
           style={{ width: cihaz === "telefon" ? "17rem" : "100%", ["--tema" as string]: RENKLER[renk]!.deger }}
         >
           <div className="flex items-center gap-2 border-b border-[#1d1a16]/10 bg-[#ece5da] px-3 py-2">
@@ -245,7 +245,7 @@ export default function KurumsalDemo() {
             <p className="truncate text-xs text-soluk">https://{alanAdi}</p>
           </div>
         </div>
-        <p data-dil-metni className="mt-2 truncate text-lg text-[#9fc0ff]">
+        <p data-dil-metni className="mt-2 truncate text-lg text-(--google-mavi)">
           {m.googleBaslik(gorunen)}
         </p>
         <p data-dil-metni className="mt-1 line-clamp-2 text-sm text-soluk">

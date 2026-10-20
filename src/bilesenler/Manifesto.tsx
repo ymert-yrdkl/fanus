@@ -127,7 +127,7 @@ export default function Manifesto() {
         <div
           data-isik-perde
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,var(--color-alev-acik)_0%,var(--color-alev)_30%,color-mix(in_srgb,var(--color-alev)_22%,var(--color-gece))_66%,var(--color-gece)_100%)] opacity-0"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent_55%,var(--lacivert)_100%),radial-gradient(circle_at_50%_50%,var(--color-alev-acik)_0%,var(--color-alev)_30%,color-mix(in_srgb,var(--color-alev)_22%,var(--color-gece))_66%,var(--color-gece)_100%)] opacity-0"
         />
       </div>
     </section>

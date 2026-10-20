@@ -206,7 +206,7 @@ export default function OtomasyonDemo() {
                 data-temel-yol
                 d={d}
                 fill="none"
-                stroke="rgb(244 236 224 / 0.14)"
+                className="stroke-cizgi-guclu"
                 strokeWidth="1.5"
                 strokeDasharray="4 6"
               />

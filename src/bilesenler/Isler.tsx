@@ -166,7 +166,7 @@ export default function Isler({
                     rel="noopener"
                     tabIndex={-1}
                     aria-hidden="true"
-                    className="block overflow-hidden rounded-2xl border border-cizgi-guclu bg-gece-3 shadow-[0_50px_120px_-40px_rgb(0_0_0/0.9)]"
+                    className="block overflow-hidden rounded-2xl border border-cizgi-guclu bg-gece-3 golge"
                   >
                     <div className="flex items-center gap-3 border-b border-cizgi px-4 py-2.5">
                       <span className="flex gap-1.5">
@@ -198,7 +198,7 @@ export default function Isler({
                   {/* Telefon */}
                   <div
                     data-telefon-cerceve
-                    className="absolute bottom-0 left-0 w-[8.5rem] overflow-hidden rounded-[1.6rem] border-[5px] border-gece-4 bg-cukur shadow-[0_30px_80px_-20px_rgb(0_0_0/0.95)] sm:w-[10rem] md:-bottom-10 md:w-[11.5rem]"
+                    className="absolute bottom-0 left-0 w-[8.5rem] overflow-hidden rounded-[1.6rem] border-[5px] border-gece-4 bg-cukur golge sm:w-[10rem] md:-bottom-10 md:w-[11.5rem]"
                   >
                     <div className="relative aspect-[9/19] overflow-hidden rounded-[1.25rem]">
                       <div data-telefon-ekran className="will-change-transform">

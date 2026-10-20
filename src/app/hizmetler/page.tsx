@@ -1,3 +1,4 @@
+import GecisBandi from "@/bilesenler/GecisBandi";
 import type { Metadata } from "next";
 import AdGirisi from "@/bilesenler/AdGirisi";
 import CagriBandi from "@/bilesenler/CagriBandi";
@@ -24,8 +25,12 @@ export default async function HizmetlerSayfasi() {
       >
         <AdGirisi />
       </SayfaBasi>
-      <Hizmetler qrSvg={qrSvg} />
-      <Surec />
+      <GecisBandi yon="safak" boy="kisa" />
+      <div data-zemin="acik">
+        <Hizmetler qrSvg={qrSvg} />
+        <Surec />
+      </div>
+      <GecisBandi yon="aksam" boy="kisa" />
       <CagriBandi />
     </main>
   );

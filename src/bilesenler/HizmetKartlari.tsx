@@ -41,7 +41,7 @@ function SiteGorseli() {
 
 function QrGorseli({ qrSvg }: { qrSvg: string }) {
   return (
-    <div className="relative mx-auto aspect-square h-full max-h-40 overflow-hidden rounded-2xl bg-krem p-3">
+    <div className="relative mx-auto aspect-square h-full max-h-40 overflow-hidden rounded-2xl bg-[#fff] p-3">
       <div
         className="text-gece [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
         dangerouslySetInnerHTML={{ __html: qrSvg }}

@@ -118,7 +118,7 @@ export default function EticaretDemo() {
   return (
     <div ref={kok} className="grid gap-4 sm:grid-cols-[minmax(0,19rem)_minmax(0,1fr)] sm:items-start">
       {/* Müşterinin gördüğü mağaza */}
-      <div className="relative overflow-hidden rounded-[1.75rem] border border-cizgi-guclu bg-cukur p-4 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.8)]">
+      <div className="relative overflow-hidden rounded-[1.75rem] border border-cizgi-guclu bg-cukur p-4 golge">
         <div className="flex items-center justify-between gap-3 border-b border-cizgi pb-3">
           <div className="flex min-w-0 items-center gap-2.5">
             <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-alev font-baslik text-sm font-semibold text-gece">

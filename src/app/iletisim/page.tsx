@@ -1,3 +1,4 @@
+import GecisBandi from "@/bilesenler/GecisBandi";
 import type { Metadata } from "next";
 import { EnvelopeSimple, Phone, WhatsappLogo, VideoCamera } from "@phosphor-icons/react/dist/ssr";
 import Teklif from "@/bilesenler/Teklif";
@@ -27,7 +28,12 @@ export default function IletisimSayfasi() {
       <FanusSahnesi poz="son" />
       <main id="icerik">
         <Teklif />
-        <section aria-labelledby="kanallar" className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10">
+        <GecisBandi yon="safak" boy="kisa" />
+        <section
+          data-zemin="acik"
+          aria-labelledby="kanallar"
+          className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10"
+        >
           <div className="mx-auto max-w-[90rem]">
             <h2 id="kanallar" data-bol className="bolum-baslik max-w-[14ch]">
               Doğrudan da yazabilirsiniz.
@@ -68,6 +74,7 @@ export default function IletisimSayfasi() {
             </ul>
           </div>
         </section>
+        <GecisBandi yon="aksam" boy="kisa" />
       </main>
     </>
   );
