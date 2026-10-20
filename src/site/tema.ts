@@ -5,6 +5,7 @@ export const TEMALAR = [
   { kod: "kor", ad: "A · Kor", zemin: "#0b0b0c", vurgu: "#ff4a2b" },
   { kod: "gece", ad: "B · Gece", zemin: "#070b16", vurgu: "#ff5a36" },
   { kod: "lacivert", ad: "C · Lacivert", zemin: "#08142b", vurgu: "#4c8dff" },
+  { kod: "lacivert-kor", ad: "D · Koyu lacivert + kor", zemin: "#050d1e", vurgu: "#ff4a2b" },
 ] as const;
 
 export type TemaKodu = (typeof TEMALAR)[number]["kod"];

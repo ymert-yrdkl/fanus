@@ -47,7 +47,7 @@ const HAREKET_BETIGI = `(function(){var d=document.documentElement;try{if(matchM
 
 // Tema denemesi: seçici açıkken bu tarayıcıda seçilen tema boyamadan önce uygulanır
 const TEMA_BETIGI = TEMA_SECICI_ACIK
-  ? `(function(){try{var t=localStorage.getItem('fanus-tema');if(${JSON.stringify(TEMALAR.map((t) => t.kod))}.indexOf(t)>-1)document.documentElement.dataset.tema=t}catch(e){}})();`
+  ? `(function(){try{var g=${JSON.stringify(TEMALAR.map((t) => t.kod))};var a=new URLSearchParams(location.search).get('tema');if(g.indexOf(a)>-1)localStorage.setItem('fanus-tema',a);var t=localStorage.getItem('fanus-tema');if(g.indexOf(t)>-1)document.documentElement.dataset.tema=t}catch(e){}})();`
   : "";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -33,7 +33,8 @@
 
 /*
   Temalar (deneme, 20 Ekim 2026): <html data-tema="..."> ile seçilir. Varsayılan (eski) yukarıdaki @theme.
-  kor = nötr siyah + kor kırmızısı · gece = gece mavisi + kor kırmızısı · lacivert = lacivert + mavi
+  kor = nötr siyah + kor kırmızısı · gece = gece mavisi + kor kırmızısı · lacivert = lacivert + mavi ·
+  lacivert-kor = lacivertin daha koyusu + kor kırmızısı
 */
 :root[data-tema="kor"] {
   --color-gece: #0b0b0c;
@@ -63,6 +64,21 @@
   --color-alev: #ff5a36;
   --color-alev-acik: #ff8a6b;
   --color-alev-koyu: #d9401f;
+  --color-canli: #6fcf8f;
+}
+:root[data-tema="lacivert-kor"] {
+  --color-gece: #050d1e;
+  --color-gece-2: #0a1529;
+  --color-gece-3: #101d36;
+  --color-gece-4: #182848;
+  --color-cizgi: rgb(241 245 251 / 0.1);
+  --color-cizgi-guclu: rgb(241 245 251 / 0.2);
+  --color-krem: #f1f5fb;
+  --color-soluk: #95a3c0;
+  --color-silik: #66769a;
+  --color-alev: #ff4a2b;
+  --color-alev-acik: #ff7d61;
+  --color-alev-koyu: #d63415;
   --color-canli: #6fcf8f;
 }
 :root[data-tema="lacivert"] {
