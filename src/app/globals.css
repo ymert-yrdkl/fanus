@@ -359,10 +359,10 @@ details.sss summary::-webkit-details-marker {
 }
 @keyframes tarama {
   from {
-    top: 6%;
+    transform: translateY(0);
   }
   to {
-    top: 94%;
+    transform: translateY(100%);
   }
 }
 .yolcu {
@@ -370,10 +370,10 @@ details.sss summary::-webkit-details-marker {
 }
 @keyframes yolcu {
   from {
-    left: 1.25rem;
+    transform: translateX(0);
   }
   to {
-    left: calc(100% - 2rem);
+    transform: translateX(100%);
   }
 }
 .dugum {

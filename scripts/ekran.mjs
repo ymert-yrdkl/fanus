@@ -25,7 +25,7 @@ const CHROME_YOLLARI = [
 
 const bekle = (ms) => new Promise((coz) => setTimeout(coz, ms));
 
-async function chromeAc() {
+export async function chromeAc() {
   const { existsSync } = await import("node:fs");
   const yol = CHROME_YOLLARI.find((y) => existsSync(y));
   if (!yol) throw new Error("Chrome bulunamadı. CHROME_YOLU ortam değişkeniyle yolu verin.");
@@ -73,7 +73,7 @@ async function chromeAc() {
 }
 
 /** Bir sekmeye bağlanır ve `gonder(yontem, parametre)` ile komut çalıştırır. */
-async function sekmeAc(port) {
+export async function sekmeAc(port) {
   const hedef = await (await fetch(`http://127.0.0.1:${port}/json/new?about:blank`, { method: "PUT" })).json();
   const soket = new WebSocket(hedef.webSocketDebuggerUrl);
   await new Promise((coz, reddet) => {

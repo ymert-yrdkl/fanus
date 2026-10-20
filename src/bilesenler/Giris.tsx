@@ -29,8 +29,9 @@ export default function Giris() {
               oge("[data-giris]"),
               { autoAlpha: 0, y: 28 },
               { autoAlpha: 1, y: 0, duration: 1.2, stagger: 0.08 },
-              0.45,
+              0.55,
             )
+            .fromTo(oge("[data-giris-metin]"), { y: 36 }, { y: 0, duration: 1.3 }, 0.4)
             .fromTo(oge("[data-vurgu-cizgi]"), { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: "expo.inOut" }, 0.9);
         };
         if (window.__fanusAcildi) oynat();
@@ -75,7 +76,8 @@ export default function Giris() {
               />
             </span>
           </h1>
-          <p data-giris className="mt-7 max-w-[34rem] text-lg leading-relaxed text-soluk md:text-xl">
+          {/* Görünür kalır, yalnız kayar: sayfanın ana içeriği ilk boyamada sayılsın (LCP) */}
+          <p data-giris-metin className="mt-7 max-w-[34rem] text-lg leading-relaxed text-soluk md:text-xl">
             fanus; e-ticaret siteleri, kurumsal web siteleri, QR menüler ve tekrar eden işi üstlenen web otomasyonları
             kurar.
           </p>

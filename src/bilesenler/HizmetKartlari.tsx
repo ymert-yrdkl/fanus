@@ -46,7 +46,9 @@ function QrGorseli({ qrSvg }: { qrSvg: string }) {
         className="text-gece [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
         dangerouslySetInnerHTML={{ __html: qrSvg }}
       />
-      <span className="tarama absolute inset-x-2 top-0 h-0.5 rounded-full bg-alev shadow-[0_0_14px_3px_color-mix(in_srgb,var(--color-alev)_70%,transparent)]" />
+      <span className="tarama absolute inset-x-2 top-[6%] bottom-[6%]">
+        <span className="absolute inset-x-0 top-0 h-0.5 rounded-full bg-alev shadow-[0_0_14px_3px_color-mix(in_srgb,var(--color-alev)_70%,transparent)]" />
+      </span>
     </div>
   );
 }
@@ -57,7 +59,11 @@ function AkisGorseli() {
     <div className="flex h-full items-center rounded-2xl border border-cizgi bg-cukur p-5">
       <div className="relative flex w-full items-center justify-between">
         <span className="absolute inset-x-5 top-1/2 h-px -translate-y-1/2 border-t border-dashed border-cizgi-guclu" />
-        <span className="yolcu absolute top-1/2 size-3 -translate-y-1/2 rounded-full bg-alev-acik shadow-[0_0_16px_4px_color-mix(in_srgb,var(--color-alev)_60%,transparent)]" />
+        <span className="absolute inset-x-5 top-1/2 h-3 -translate-y-1/2">
+          <span className="yolcu absolute inset-y-0 left-0 w-[calc(100%-0.75rem)]">
+            <span className="absolute top-0 left-0 size-3 rounded-full bg-alev-acik shadow-[0_0_16px_4px_color-mix(in_srgb,var(--color-alev)_60%,transparent)]" />
+          </span>
+        </span>
         {dugumler.map((Ikon, i) => (
           <span
             key={i}

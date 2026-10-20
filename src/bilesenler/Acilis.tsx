@@ -60,7 +60,7 @@ export default function Acilis() {
             bitir();
           }
         },
-        tekrar ? 2500 : 5000,
+        tekrar ? 2500 : 3500,
       );
 
       if (tekrar) {
@@ -74,21 +74,21 @@ export default function Acilis() {
       zc.fromTo(
         "[data-cizgi]",
         { strokeDashoffset: 1 },
-        { strokeDashoffset: 0, duration: 1.3, ease: "power2.inOut", stagger: 0.12 },
+        { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut", stagger: 0.08 },
       )
         .fromTo(
           "[data-alev-acilis]",
           { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.9, ease: "back.out(2.2)" },
-          0.75,
+          { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2.2)" },
+          0.45,
         )
-        .fromTo("[data-hale-acilis]", { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.4 }, 0.8)
-        .fromTo("[data-harf]", { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, duration: 1, stagger: 0.05 }, 0.55)
+        .fromTo("[data-hale-acilis]", { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9 }, 0.5)
+        .fromTo("[data-harf]", { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, duration: 0.7, stagger: 0.04 }, 0.3)
         .to(
           sayac,
           {
             deger: 100,
-            duration: 1.5,
+            duration: 1.0,
             ease: "power2.inOut",
             onUpdate: () => {
               sayacEl.textContent = String(Math.round(sayac.deger)).padStart(3, "0");
@@ -96,9 +96,9 @@ export default function Acilis() {
           },
           0,
         )
-        .to("[data-acilis-icerik]", { scale: 0.92, opacity: 0, duration: 0.7, ease: "power3.in" }, 1.75)
-        .to(kok.current, { clipPath: "inset(0 0 100% 0)", duration: 1.05, ease: "expo.inOut" }, 2.0)
-        .call(duyur, [], 2.15);
+        .to("[data-acilis-icerik]", { scale: 0.92, opacity: 0, duration: 0.45, ease: "power3.in" }, 1.05)
+        .to(kok.current, { clipPath: "inset(0 0 100% 0)", duration: 0.85, ease: "expo.inOut" }, 1.2)
+        .call(duyur, [], 1.3);
       return () => window.clearTimeout(emniyet);
     },
     { scope: kok },
