@@ -68,7 +68,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   } catch {
     return null;
   }
-  cizici.setPixelRatio(Math.min(window.devicePixelRatio, zayif ? 1.25 : 1.75));
+  cizici.setPixelRatio(Math.min(window.devicePixelRatio, zayif ? 1.25 : 1.5));
   cizici.toneMapping = ACESFilmicToneMapping;
   cizici.toneMappingExposure = 1.05;
   cizici.outputColorSpace = SRGBColorSpace;
@@ -447,11 +447,36 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       ilkKare = false;
       secenek.hazir();
     }
+
+    // Uyarlanır kalite: ilk saniyelerde kare süresi uzunsa (zayıf ekran kartı) çözünürlüğü düşür
+    if (!olcum.bitti && !secenek.azHareket) {
+      olcum.kare += 1;
+      if (olcum.kare > 30) olcum.toplam += dt;
+      if (olcum.kare === 120) {
+        olcum.bitti = true;
+        if (olcum.toplam / 90 > 1 / 45) {
+          cizici.setPixelRatio(1);
+          cizici.transmissionResolutionScale = 0.5;
+          kivilcimMalzeme.uniforms.uPiksel.value = 1;
+          boyutla();
+        }
+      }
+    }
   };
-  cizici.setAnimationLoop(kare);
+  const olcum = { kare: 0, toplam: 0, bitti: false };
+
+  // Gölgelendiricileri önceden ve mümkünse paralel derle: ilk karede ana iş parçacığı kilitlenmesin
+  let yokEdildi = false;
+  cizici
+    .compileAsync(sahne, kamera)
+    .catch(() => undefined)
+    .then(() => {
+      if (!yokEdildi) cizici.setAnimationLoop(kare);
+    });
 
   return {
     yokEt() {
+      yokEdildi = true;
       cizici.setAnimationLoop(null);
       window.removeEventListener("pointermove", imlecHareketi);
       window.removeEventListener("resize", boyutla);

@@ -35,22 +35,40 @@ export default function Acilis() {
       }
       kaydirmayiDurdur();
 
+      let duyuruldu = false;
+      const duyur = () => {
+        if (duyuruldu) return;
+        duyuruldu = true;
+        acildiDuyur();
+      };
+      const bitir = () => {
+        kaydirmayiBaslat();
+        gsap.set(kok.current, { display: "none" });
+        duyur();
+      };
+
       const sayac = { deger: 0 };
       const sayacEl = kok.current!.querySelector<HTMLElement>("[data-sayac-yuzde]")!;
-      const zc = gsap.timeline({
-        defaults: { ease: "expo.out" },
-        onComplete: () => {
-          kaydirmayiBaslat();
-          gsap.set(kok.current, { display: "none" });
+      const zc = gsap.timeline({ defaults: { ease: "expo.out" }, onComplete: bitir });
+
+      // Emniyet: sekme arka plandaysa ya da ilk kareler çok yavaşsa (ör. 3B gölgelendirici derlemesi)
+      // zaman çizelgesi takılabilir; perde her durumda en geç birkaç saniyede kalkar.
+      const emniyet = window.setTimeout(
+        () => {
+          if (zc.progress() < 1) {
+            zc.kill();
+            bitir();
+          }
         },
-      });
+        tekrar ? 2500 : 5000,
+      );
 
       if (tekrar) {
         zc.set("[data-cizgi]", { strokeDashoffset: 0 })
           .set("[data-alev-acilis]", { scale: 1, opacity: 1 })
           .to(kok.current, { clipPath: "inset(0 0 100% 0)", duration: 0.9, ease: "expo.inOut" }, 0.15)
-          .call(acildiDuyur, [], 0.35);
-        return;
+          .call(duyur, [], 0.35);
+        return () => window.clearTimeout(emniyet);
       }
 
       zc.fromTo(
@@ -80,7 +98,8 @@ export default function Acilis() {
         )
         .to("[data-acilis-icerik]", { scale: 0.92, opacity: 0, duration: 0.7, ease: "power3.in" }, 1.75)
         .to(kok.current, { clipPath: "inset(0 0 100% 0)", duration: 1.05, ease: "expo.inOut" }, 2.0)
-        .call(acildiDuyur, [], 2.15);
+        .call(duyur, [], 2.15);
+      return () => window.clearTimeout(emniyet);
     },
     { scope: kok },
   );
