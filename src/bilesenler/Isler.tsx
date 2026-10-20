@@ -174,7 +174,7 @@ export default function Isler({
                         <span className="size-2.5 rounded-full bg-gece-4" />
                         <span className="size-2.5 rounded-full bg-gece-4" />
                       </span>
-                      <span className="mx-auto truncate rounded-full bg-gece px-4 py-1 font-mono text-xs text-soluk">
+                      <span className="mx-auto truncate rounded-full bg-cukur px-4 py-1 font-mono text-xs text-soluk">
                         {r.alanAdi}
                       </span>
                     </div>
@@ -198,7 +198,7 @@ export default function Isler({
                   {/* Telefon */}
                   <div
                     data-telefon-cerceve
-                    className="absolute bottom-0 left-0 w-[8.5rem] overflow-hidden rounded-[1.6rem] border-[5px] border-gece-4 bg-gece shadow-[0_30px_80px_-20px_rgb(0_0_0/0.95)] sm:w-[10rem] md:-bottom-10 md:w-[11.5rem]"
+                    className="absolute bottom-0 left-0 w-[8.5rem] overflow-hidden rounded-[1.6rem] border-[5px] border-gece-4 bg-cukur shadow-[0_30px_80px_-20px_rgb(0_0_0/0.95)] sm:w-[10rem] md:-bottom-10 md:w-[11.5rem]"
                   >
                     <div className="relative aspect-[9/19] overflow-hidden rounded-[1.25rem]">
                       <div data-telefon-ekran className="will-change-transform">

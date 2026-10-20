@@ -155,7 +155,7 @@ function TeklifFormu({ baslangic }: { baslangic: Secenek[] }) {
                 maxLength={AD_SINIRI}
                 autoComplete="organization"
                 onChange={(olay) => setAd(olay.target.value)}
-                className="mt-2 h-13 w-full rounded-2xl border border-cizgi-guclu bg-gece px-4 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-alev focus:outline-none"
+                className="mt-2 h-13 w-full rounded-2xl border border-cizgi-guclu bg-cukur px-4 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-alev focus:outline-none"
               />
             </div>
 
@@ -170,7 +170,7 @@ function TeklifFormu({ baslangic }: { baslangic: Secenek[] }) {
                 maxLength={NOT_SINIRI}
                 onChange={(olay) => setNot(olay.target.value)}
                 placeholder="Örneğin: 40 ürünlük bir mağaza, kapıda ödeme de olsun."
-                className="mt-2 w-full resize-none rounded-2xl border border-cizgi-guclu bg-gece px-4 py-3 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-alev focus:outline-none"
+                className="mt-2 w-full resize-none rounded-2xl border border-cizgi-guclu bg-cukur px-4 py-3 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-alev focus:outline-none"
               />
             </div>
 

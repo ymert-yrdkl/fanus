@@ -103,7 +103,7 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
             <div
               data-kart-perde
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gece opacity-0"
+              className="pointer-events-none absolute inset-0 bg-cukur opacity-0"
             />
           </article>
         ))}

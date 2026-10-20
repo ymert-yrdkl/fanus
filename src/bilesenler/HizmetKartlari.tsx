@@ -5,7 +5,7 @@ import { HIZMETLER, hizmetFiyatEtiketi, type HizmetAdresi } from "@/site/icerik"
 function CiroGorseli() {
   const boylar = [0.45, 0.7, 0.55, 0.85, 0.6, 1, 0.75];
   return (
-    <div className="flex h-full flex-col justify-end rounded-2xl border border-cizgi bg-gece p-4">
+    <div className="flex h-full flex-col justify-end rounded-2xl border border-cizgi bg-cukur p-4">
       <div className="flex items-center justify-between text-xs text-soluk">
         <span>Bu hafta</span>
         <span className="rounded-full bg-alev/15 px-2 py-0.5 text-alev">Yeni sipariş</span>
@@ -54,7 +54,7 @@ function QrGorseli({ qrSvg }: { qrSvg: string }) {
 function AkisGorseli() {
   const dugumler = [ShoppingBagOpen, Receipt, Truck, ChatCircleText];
   return (
-    <div className="flex h-full items-center rounded-2xl border border-cizgi bg-gece p-5">
+    <div className="flex h-full items-center rounded-2xl border border-cizgi bg-cukur p-5">
       <div className="relative flex w-full items-center justify-between">
         <span className="absolute inset-x-5 top-1/2 h-px -translate-y-1/2 border-t border-dashed border-cizgi-guclu" />
         <span className="yolcu absolute top-1/2 size-3 -translate-y-1/2 rounded-full bg-alev-acik shadow-[0_0_16px_4px_color-mix(in_srgb,var(--color-alev)_60%,transparent)]" />

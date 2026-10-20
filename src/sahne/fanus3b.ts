@@ -50,54 +50,54 @@ const CAM_DUZ_BOY = 1.95;
 const SAHNE_TEMALARI = {
   eski: {
     zemin: 0x0d0c0b,
-    cekirdek: [1.0, 0.97, 0.88],
-    orta: [1.0, 0.74, 0.36],
-    dis: [0.93, 0.38, 0.1],
+    cekirdek: [1.0, 0.86, 0.28],
+    orta: [1.0, 0.52, 0.08],
+    dis: [0.93, 0.16, 0.03],
     taban: [0.32, 0.42, 0.95],
-    kivilcim: [1.0, 0.7, 0.34],
-    hale: 0xff9a3c,
-    haleKucuk: 0xffcf96,
+    kivilcim: [1.0, 0.62, 0.18],
+    hale: 0xff6a14,
+    haleKucuk: 0xffc23a,
     zeminIsigi: 0xeb8f3a,
-    isik: 0xffa04a,
+    isik: 0xff8a2e,
     metal: 0xc8924a,
   },
   kor: {
     zemin: 0x0b0b0c,
-    cekirdek: [1.0, 0.95, 0.86],
-    orta: [1.0, 0.6, 0.3],
-    dis: [1.0, 0.24, 0.1],
+    cekirdek: [1.0, 0.86, 0.28],
+    orta: [1.0, 0.52, 0.08],
+    dis: [0.93, 0.16, 0.03],
     taban: [0.35, 0.4, 0.95],
-    kivilcim: [1.0, 0.45, 0.22],
-    hale: 0xff4a24,
-    haleKucuk: 0xffae8a,
+    kivilcim: [1.0, 0.62, 0.18],
+    hale: 0xff6a14,
+    haleKucuk: 0xffc23a,
     zeminIsigi: 0xff4a2b,
-    isik: 0xff6a3a,
+    isik: 0xff8a2e,
     metal: 0xb4b4ba,
   },
   gece: {
     zemin: 0x070b16,
-    cekirdek: [1.0, 0.96, 0.88],
-    orta: [1.0, 0.64, 0.32],
-    dis: [1.0, 0.3, 0.12],
+    cekirdek: [1.0, 0.86, 0.28],
+    orta: [1.0, 0.52, 0.08],
+    dis: [0.93, 0.16, 0.03],
     taban: [0.3, 0.42, 1.0],
-    kivilcim: [1.0, 0.52, 0.26],
-    hale: 0xff5a30,
-    haleKucuk: 0xffbe96,
+    kivilcim: [1.0, 0.62, 0.18],
+    hale: 0xff6a14,
+    haleKucuk: 0xffc23a,
     zeminIsigi: 0xff5a36,
-    isik: 0xff7a45,
+    isik: 0xff8a2e,
     metal: 0xb9c2d3,
   },
   "lacivert-kor": {
     zemin: 0x050d1e,
-    cekirdek: [1.0, 0.95, 0.86],
-    orta: [1.0, 0.6, 0.3],
-    dis: [1.0, 0.24, 0.1],
+    cekirdek: [1.0, 0.86, 0.28],
+    orta: [1.0, 0.52, 0.08],
+    dis: [0.93, 0.16, 0.03],
     taban: [0.3, 0.42, 1.0],
-    kivilcim: [1.0, 0.45, 0.22],
-    hale: 0xff4a24,
-    haleKucuk: 0xffae8a,
+    kivilcim: [1.0, 0.62, 0.18],
+    hale: 0xff6a14,
+    haleKucuk: 0xffc23a,
     zeminIsigi: 0xff4a2b,
-    isik: 0xff6a3a,
+    isik: 0xff8a2e,
     metal: 0xb9c2d3,
   },
   lacivert: {
@@ -285,10 +285,13 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
         varying float vYukseklik;
         void main() {
           float kenar = 1.0 - abs(dot(normalize(vNormal), normalize(vBakis)));
-          vec3 renk = mix(uCekirdek, uOrta, smoothstep(0.08, 0.55, kenar));
-          renk = mix(renk, uDis, smoothstep(0.55, 0.97, kenar));
-          renk = mix(renk, uTaban, smoothstep(-0.25, -0.95, vYukseklik) * 0.55);
-          gl_FragColor = vec4(renk * (1.25 + 0.55 * uGuc), 1.0);
+          // Ortası sarı, kenara doğru turuncu ve kızıl; tepeye çıktıkça kızıllaşır, dibi hafif mavi
+          vec3 renk = mix(uCekirdek, uOrta, smoothstep(0.02, 0.5, kenar));
+          renk = mix(renk, uDis, smoothstep(0.42, 0.95, kenar));
+          renk = mix(renk, uDis, smoothstep(0.35, 1.0, vYukseklik) * 0.5);
+          renk = mix(renk, uTaban, smoothstep(-0.3, -0.95, vYukseklik) * 0.5);
+          // Fazla parlatıp beyaza kaçırmadan canlı tut
+          gl_FragColor = vec4(min(renk * (1.08 + 0.22 * uGuc), vec3(1.0)), 1.0);
         }
       `,
     }),
@@ -511,8 +514,8 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     alev.scale.setScalar(0.35 + 0.65 * Math.min(guc, 1.6));
     alev.visible = guc > 0.01;
 
-    haleBuyuk.material.opacity = 0.2 * Math.min(guc, 3);
-    haleKucuk.material.opacity = 0.6 * Math.min(guc, 2);
+    haleBuyuk.material.opacity = 0.3 * Math.min(guc, 3);
+    haleKucuk.material.opacity = 0.75 * Math.min(guc, 2);
     haleBuyuk.scale.setScalar(4.6 + guc * 1.2);
     haleKucuk.position.x = haleBuyuk.position.x = egimX * 0.12;
     zeminIsigiMalzeme.opacity = 0.26 * Math.min(guc, 2.2);

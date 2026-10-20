@@ -94,7 +94,7 @@ export default function KurumsalDemo() {
       {/* Denetimler */}
       <div className="flex flex-wrap items-center gap-2">
         <div
-          className="flex items-center gap-1 rounded-full border border-cizgi bg-gece p-1"
+          className="flex items-center gap-1 rounded-full border border-cizgi bg-cukur p-1"
           role="group"
           aria-label="Tema rengi"
         >
@@ -115,7 +115,7 @@ export default function KurumsalDemo() {
           ))}
         </div>
         <div
-          className="flex items-center gap-1 rounded-full border border-cizgi bg-gece p-1"
+          className="flex items-center gap-1 rounded-full border border-cizgi bg-cukur p-1"
           role="group"
           aria-label="Dil"
         >
@@ -127,7 +127,7 @@ export default function KurumsalDemo() {
           </Secenek>
         </div>
         <div
-          className="flex items-center gap-1 rounded-full border border-cizgi bg-gece p-1"
+          className="flex items-center gap-1 rounded-full border border-cizgi bg-cukur p-1"
           role="group"
           aria-label="Cihaz"
         >
@@ -228,7 +228,7 @@ export default function KurumsalDemo() {
       </div>
 
       {/* Google önizlemesi */}
-      <div className="rounded-[1.25rem] border border-cizgi bg-gece p-4">
+      <div className="rounded-[1.25rem] border border-cizgi bg-cukur p-4">
         <p className="flex items-center gap-2 text-xs text-soluk">
           <MagnifyingGlass size={14} aria-hidden="true" />
           Google arama sonucunda böyle görünür

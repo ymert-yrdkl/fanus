@@ -79,7 +79,7 @@ export default function FiyatlarSayfasi() {
                 key={m}
                 data-belir
                 data-gecikme={String(i * 0.05)}
-                className="flex items-start gap-3 rounded-2xl border border-cizgi bg-gece p-4 text-[0.9375rem]"
+                className="flex items-start gap-3 rounded-2xl border border-cizgi bg-cukur p-4 text-[0.9375rem]"
               >
                 <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
                 {m}

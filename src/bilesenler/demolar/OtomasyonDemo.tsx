@@ -198,7 +198,7 @@ export default function OtomasyonDemo() {
         </button>
       </div>
 
-      <div ref={kok} className="relative rounded-[1.75rem] border border-cizgi bg-gece p-4 sm:p-6">
+      <div ref={kok} className="relative rounded-[1.75rem] border border-cizgi bg-cukur p-4 sm:p-6">
         <svg aria-hidden="true" className="pointer-events-none absolute inset-0 size-full overflow-visible">
           {yollar.map((d, i) => (
             <g key={i}>
@@ -281,7 +281,7 @@ export default function OtomasyonDemo() {
         </ol>
       </div>
 
-      <div className="rounded-[1.25rem] border border-cizgi bg-gece p-4 font-mono text-xs" aria-label="Akış kaydı">
+      <div className="rounded-[1.25rem] border border-cizgi bg-cukur p-4 font-mono text-xs" aria-label="Akış kaydı">
         <p className="mb-2 text-soluk">akış kaydı</p>
         <ul className="grid min-h-[5.5rem] gap-1.5">
           {kayitlar.length === 0 && <li className="text-soluk">Sipariş bekleniyor…</li>}

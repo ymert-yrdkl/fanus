@@ -151,7 +151,7 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
           </a>
         </div>
 
-        <div className="rounded-[1.25rem] border border-cizgi bg-gece p-4">
+        <div className="rounded-[1.25rem] border border-cizgi bg-cukur p-4">
           <p className="etiket">Panel</p>
           <div className="mt-3 flex items-center justify-between gap-3">
             <span className="text-sm">Mercimek çorbası</span>
@@ -180,7 +180,7 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
       </div>
 
       {/* Telefon */}
-      <div className="relative mx-auto h-[31rem] w-[15.5rem] shrink-0 rounded-[2.6rem] border-[7px] border-gece-4 bg-gece shadow-[0_40px_90px_-30px_rgb(0_0_0/0.9)]">
+      <div className="relative mx-auto h-[31rem] w-[15.5rem] shrink-0 rounded-[2.6rem] border-[7px] border-gece-4 bg-cukur shadow-[0_40px_90px_-30px_rgb(0_0_0/0.9)]">
         <span
           aria-hidden="true"
           className="absolute top-2 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-gece-4"
