@@ -6,8 +6,9 @@
   Not: Coolify'a girince ekip seçicide **Root Team** seçilmeli (kişisel ekipte proje ve sunucu yok).
 - Alan adları: `https://fanustr.ahmcloud.com`, `https://www.fanustr.ahmcloud.com` ve geçici
   `http://9nvnwcezuq8yfbdrwpkqgg4j.187.124.174.57.sslip.io` (DNS gelene kadar bu adresten açılır).
-- DNS: BEKLİYOR. ahmcloud.com Hostinger'da (Ahmet'in hesabı); 20 Ekim'de Hostinger panelinde genel arıza
-  ("Dashboard Service API Issue") olduğu için A kaydı eklenemedi.
+- DNS: Hostinger (Ahmet'in hesabı, ahmetayyildiz.us@gmail.com) › ahmcloud.com › DNS: A `fanustr` ve A `www.fanustr`
+  → `187.124.174.57`, TTL 300 (20 Ekim 2026). Let's Encrypt sertifikası alındı (ilk dağıtım DNS'ten önce yapıldığı için
+  uygulama bir kez Restart edildi). YAYINDA: https://fanustr.ahmcloud.com
 
 Sunucu Ahmet'in; adımlar Yusuf ve Ahmet'in onayıyla yapılır. Kurgu: açık GitHub deposu, Coolify'da Dockerfile ile
 derleme. Site durumsuz: veritabanı ve kalıcı birim yok.

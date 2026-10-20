@@ -52,5 +52,6 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
 - Çok sayfalı yapıya geçildi ve fiyatlar eklendi (20 Ekim 2026, Yusuf'un isteği).
 - Renk teması D seçildi (20 Ekim 2026): koyu lacivert zemin + kor kırmızısı, nötr grafit kartlar, sarı-kızıl alev.
   Eski kahve tema "yapay zekâ ürünü gibi" bulundu. Tema seçici yalnız `npm run dev`'de sol altta.
-- Yayın: `docs/yayina-alma.md` (Coolify kurulu; hedef https://fanustr.ahmcloud.com, DNS kaydı Hostinger arızası
-  nedeniyle bekliyor; sonra fanus.tr).
+- YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
+  `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
+  `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).
