@@ -1,5 +1,14 @@
 # Yayına alma (Coolify, fanustr.ahmcloud.com)
 
+## Durum (20 Ekim 2026)
+- Coolify: Root Team › proje `fanus` › `production` › uygulama `fanus` (Public Git Repository, Dockerfile, port 3000)
+  kuruldu, `NEXT_PUBLIC_SITE_ADRESI=https://fanustr.ahmcloud.com` (derleme + çalışma), ilk dağıtım başarılı.
+  Not: Coolify'a girince ekip seçicide **Root Team** seçilmeli (kişisel ekipte proje ve sunucu yok).
+- Alan adları: `https://fanustr.ahmcloud.com`, `https://www.fanustr.ahmcloud.com` ve geçici
+  `http://9nvnwcezuq8yfbdrwpkqgg4j.187.124.174.57.sslip.io` (DNS gelene kadar bu adresten açılır).
+- DNS: BEKLİYOR. ahmcloud.com Hostinger'da (Ahmet'in hesabı); 20 Ekim'de Hostinger panelinde genel arıza
+  ("Dashboard Service API Issue") olduğu için A kaydı eklenemedi.
+
 Sunucu Ahmet'in; adımlar Yusuf ve Ahmet'in onayıyla yapılır. Kurgu: açık GitHub deposu, Coolify'da Dockerfile ile
 derleme. Site durumsuz: veritabanı ve kalıcı birim yok.
 
