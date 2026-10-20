@@ -1,4 +1,5 @@
-// Renk teması denemesi (20 Ekim 2026). Karar verilince VARSAYILAN_TEMA ona çekilir, seçici kapanır.
+// Renk temaları. Seçilen (20 Ekim 2026): D, koyu lacivert zemin + kor kırmızısı, nötr grafit kartlar.
+// Diğerleri yalnız geliştirmedeki seçicide karşılaştırma için durur.
 
 export const TEMALAR = [
   { kod: "eski", ad: "Eski (kahve)", zemin: "#0d0c0b", vurgu: "#eba04e" },
@@ -11,7 +12,7 @@ export const TEMALAR = [
 export type TemaKodu = (typeof TEMALAR)[number]["kod"];
 
 /** Sitede kullanılan tema (seçici kapalıyken herkes bunu görür). */
-export const VARSAYILAN_TEMA: TemaKodu = "eski";
+export const VARSAYILAN_TEMA: TemaKodu = "lacivert-kor";
 
 /** Tema seçici yalnız geliştirmede ya da NEXT_PUBLIC_TEMA_SECICI=1 iken görünür. */
 export const TEMA_SECICI_ACIK = process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_TEMA_SECICI === "1";

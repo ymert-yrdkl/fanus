@@ -50,5 +50,7 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   (yatay şerit), SSS, teklif oluşturucu (WhatsApp/e-posta mesajı), altbilgi kelime markası. JSON-LD, site haritası,
   robots, paylaşım görseli, 404.
 - Çok sayfalı yapıya geçildi ve fiyatlar eklendi (20 Ekim 2026, Yusuf'un isteği).
+- Renk teması D seçildi (20 Ekim 2026): koyu lacivert zemin + kor kırmızısı, nötr grafit kartlar, sarı-kızıl alev.
+  Eski kahve tema "yapay zekâ ürünü gibi" bulundu. Tema seçici yalnız `npm run dev`'de sol altta.
 - Yayın: `docs/yayina-alma.md` (Coolify kurulu; hedef https://fanustr.ahmcloud.com, DNS kaydı Hostinger arızası
   nedeniyle bekliyor; sonra fanus.tr).

@@ -8,15 +8,24 @@ Fanus, alevi rüzgârdan koruyan camdır. İşletmenin ışığı (emeği) inter
 büyütür, uzaktan görünür kılar. Görsel dil buradan gelir: koyu zemin, sıcak tek ışık, cam yansımaları.
 
 ## Renk (yalnız token)
-| Token | Değer | Kullanım |
+Seçilen tema (20 Ekim 2026): **D, koyu lacivert + kor kırmızısı** (`data-tema="lacivert-kor"`, `globals.css`).
+Sayfa zemini lacivert; kartlar ve iç paneller nötr grafit/siyah (lacivert yalnız zeminde). Diğer temalar (eski kahve,
+kor, gece, lacivert) yalnız geliştirmedeki seçicide karşılaştırma için durur (`src/site/tema.ts`).
+
+| Token | D değeri | Kullanım |
 |---|---|---|
-| `gece` / `gece-2..4` | #0d0c0b → #2a2621 | zemin ve yüzey katmanları |
-| `krem` | #f4ece0 | ana metin |
-| `soluk` | #a89f92 | ikincil metin (gecede 7,4:1) |
-| `silik` | #7d7468 | yalnız yer tutucu ve büyük yazı (4:1) |
-| `alev` (+ `alev-acik`, `alev-koyu`) | #eba04e | TEK vurgu: birincil düğme, vurgu kelime, ışık |
-| `canli` | #86c28f | yalnız "yayında" durum noktası |
-| `cizgi`, `cizgi-guclu` | krem %10 / %20 | ayraç ve çerçeve |
+| `gece` | #050d1e | sayfa zemini (koyu lacivert), 3B sahnenin arkası |
+| `gece-2..4` | #111215 → #232428 | kartlar ve yükseltilmiş yüzeyler (nötr grafit) |
+| `cukur` | #09090b | kart içindeki gömülü paneller, form alanları |
+| `krem` | #f3f5f8 | ana metin (soğuk beyaz) |
+| `soluk` | #9ca1ab | ikincil metin |
+| `silik` | #6c7079 | yalnız yer tutucu ve büyük yazı |
+| `alev` (+ `alev-acik`, `alev-koyu`) | #ff4a2b | TEK vurgu: birincil düğme, vurgu kelime, ışık |
+| `canli` | #6fcf8f | yalnız "yayında" durum noktası |
+| `cizgi`, `cizgi-guclu` | beyaz %8 / %16 | ayraç ve çerçeve |
+
+3B sahnenin renkleri temaya göre `src/sahne/fanus3b.ts` › SAHNE_TEMALARI'nda (alev ortası sarı, kenarı kızıl; metal
+gümüş). Işık ve parlamalar elle renk yazmaz: CSS'te `color-mix(..., var(--color-alev) ...)`, GSAP'te `vurgu()`.
 
 İstisna: hizmet örneklerinin içindeki minyatür siteler (kurumsal site önizlemesi, QR menü telefonu) kendi
 kâğıt renklerini kullanır; bunlar müşterinin sitesini temsil eder, fanus'un paletini değil.
