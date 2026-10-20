@@ -1,15 +1,34 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { WhatsappLogo, EnvelopeSimple, Check } from "@phosphor-icons/react/dist/ssr";
-import { gsap, GENIS, ScrollTrigger, useGSAP } from "@/hareket/gsap";
+import { gsap, GENIS, useGSAP } from "@/hareket/gsap";
 import { sahneDurumu } from "@/sahne/durum";
-import { SITE, epostaBaglantisi, whatsappBaglantisi } from "@/site/ayarlar";
-import { HIZMETLER } from "@/site/icerik";
+import { epostaBaglantisi, whatsappBaglantisi } from "@/site/ayarlar";
+import { fiyatYaz, PAKETLER, type PaketKodu } from "@/site/icerik";
 import { AD_SINIRI, useIsletmeAdi } from "./IsletmeAdi";
 import { dugmeSinifi } from "./dugme";
 
-const SECENEKLER = [...HIZMETLER.map((h) => h.ad), "Henüz emin değilim"];
+type Secenek = PaketKodu | "emin-degilim";
+
+/** Mesajda cümle içinde geçen adlar */
+const MESAJ_ADLARI: Record<PaketKodu, string> = {
+  "tek-sayfa": "tek sayfa kurumsal site",
+  kurumsal: "tam paket kurumsal site",
+  "e-ticaret": "e-ticaret sitesi",
+  "qr-menu": "QR menü",
+  otomasyon: "web otomasyonu",
+};
+
+const SECENEKLER: { kod: Secenek; ad: string; fiyat?: string }[] = [
+  ...PAKETLER.map((p) => ({
+    kod: p.kod as Secenek,
+    ad: p.ad,
+    fiyat: p.fiyat !== null ? `${fiyatYaz(p.fiyat)}${p.baslangic ? "'dan" : ""}` : "teklifle",
+  })),
+  { kod: "emin-degilim", ad: "Henüz emin değilim" },
+];
 const NOT_SINIRI = 600;
 
 /** ["a", "b", "c"] → "a, b ve c" */
@@ -18,8 +37,8 @@ function veIleBagla(liste: string[]) {
   return `${liste.slice(0, -1).join(", ")} ve ${liste.at(-1)}`;
 }
 
-export function mesajYaz(ad: string, secilenler: string[], not: string) {
-  const isler = secilenler.filter((s) => s !== "Henüz emin değilim").map((s) => s.toLocaleLowerCase("tr"));
+export function mesajYaz(ad: string, secilenler: Secenek[], not: string) {
+  const isler = secilenler.filter((s): s is PaketKodu => s !== "emin-degilim").map((s) => MESAJ_ADLARI[s]);
   const kim = ad.trim() ? `${ad.trim()} için ` : "";
   const ne =
     isler.length > 0
@@ -30,20 +49,37 @@ export function mesajYaz(ad: string, secilenler: string[], not: string) {
   return satirlar.join("\n");
 }
 
+/** Fiyat kartından gelindiyse (?paket=e-ticaret) o paket seçili gelir. */
+function AdresliTeklif() {
+  const paket = useSearchParams().get("paket");
+  const gecerli = SECENEKLER.find((s) => s.kod === paket)?.kod;
+  return <TeklifFormu key={gecerli ?? "bos"} baslangic={gecerli ? [gecerli] : []} />;
+}
+
+/** İletişim sayfasındaki teklif oluşturucu. Adres parametresi okunurken boş seçimle görünür. */
 export default function Teklif() {
+  return (
+    <Suspense fallback={<TeklifFormu baslangic={[]} />}>
+      <AdresliTeklif />
+    </Suspense>
+  );
+}
+
+/** Seçimlerden WhatsApp ya da e-posta mesajı hazırlanır. */
+function TeklifFormu({ baslangic }: { baslangic: Secenek[] }) {
   const kok = useRef<HTMLElement>(null);
   const { ad, setAd } = useIsletmeAdi();
-  const [secilenler, setSecilenler] = useState<string[]>([]);
+  const [secilenler, setSecilenler] = useState<Secenek[]>(baslangic);
   const [not, setNot] = useState("");
 
   const mesaj = mesajYaz(ad, secilenler, not);
   const whatsapp = whatsappBaglantisi(mesaj);
   const eposta = epostaBaglantisi(ad.trim() ? `${ad.trim()} için teklif` : "Teklif isteği", mesaj);
 
-  const sec = (secenek: string) =>
+  const sec = (secenek: Secenek) =>
     setSecilenler((onceki) => (onceki.includes(secenek) ? onceki.filter((s) => s !== secenek) : [...onceki, secenek]));
 
-  // Bu bölüme gelince fanus geri döner (masaüstünde sağda, telefonda arkada soluk)
+  // Arkadaki fanusun yeri: masaüstünde sağda, telefonda üstte soluk
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -53,22 +89,8 @@ export default function Teklif() {
           sahneDurumu.son,
           genis
             ? { x: 0.26, y: 0.04, boy: 0.58, kapak: 0, isik: 1.7, gorunur: 1 }
-            : { x: 0, y: -0.22, boy: 0.34, kapak: 0, isik: 1.5, gorunur: 0.45 },
+            : { x: 0, y: -0.24, boy: 0.32, kapak: 0, isik: 1.5, gorunur: 0.4 },
         );
-        const azHareket = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const t = ScrollTrigger.create({
-          trigger: kok.current,
-          start: "top 55%",
-          end: "bottom top",
-          onToggle: (tetik) =>
-            gsap.to(sahneDurumu, {
-              sonKarisim: tetik.isActive ? 1 : 0,
-              duration: azHareket ? 0 : tetik.isActive ? 1.6 : 0.6,
-              ease: "power2.inOut",
-              overwrite: true,
-            }),
-        });
-        return () => t.kill();
       });
     },
     { scope: kok },
@@ -79,13 +101,13 @@ export default function Teklif() {
       ref={kok}
       id="teklif"
       aria-labelledby="teklif-baslik"
-      className="relative z-10 px-4 pt-28 pb-24 sm:px-6 md:min-h-dvh md:pt-40 md:pb-32 lg:px-10"
+      className="relative z-10 px-4 pt-[calc(var(--ust-yukseklik)+3rem)] pb-24 sm:px-6 md:min-h-dvh md:pt-[calc(var(--ust-yukseklik)+5.5rem)] md:pb-32 lg:px-10"
     >
       <div className="mx-auto max-w-[90rem]">
         <div className="max-w-[40rem]">
-          <h2 id="teklif-baslik" data-bol className="dev-baslik">
+          <h1 id="teklif-baslik" data-bol className="dev-baslik">
             Sıradaki fanus sizin olsun.
-          </h2>
+          </h1>
           <p data-belir className="mt-6 max-w-[32rem] text-lg leading-relaxed text-soluk">
             Ne istediğinizi seçin, mesajınız hazırlansın. Gerisini görüşmede birlikte netleştiririz.
           </p>
@@ -100,19 +122,22 @@ export default function Teklif() {
               <legend className="text-[0.9375rem] font-medium">Ne yaptırmak istiyorsunuz?</legend>
               <div className="mt-3 flex flex-wrap gap-2">
                 {SECENEKLER.map((s) => {
-                  const secili = secilenler.includes(s);
+                  const secili = secilenler.includes(s.kod);
                   return (
                     <button
-                      key={s}
+                      key={s.kod}
                       type="button"
                       aria-pressed={secili}
-                      onClick={() => sec(s)}
-                      className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-sm transition-[background-color,border-color,color] duration-300 ${
+                      onClick={() => sec(s.kod)}
+                      className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-[background-color,border-color,color] duration-300 ${
                         secili ? "border-alev bg-alev text-gece" : "border-cizgi-guclu text-krem hover:border-krem/50"
                       }`}
                     >
                       {secili && <Check size={14} weight="bold" aria-hidden="true" />}
-                      {s}
+                      {s.ad}
+                      {s.fiyat && (
+                        <span className={`tabular-nums ${secili ? "text-gece/70" : "text-soluk"}`}>{s.fiyat}</span>
+                      )}
                     </button>
                   );
                 })}
@@ -172,27 +197,6 @@ export default function Teklif() {
               </a>
             </div>
           </form>
-
-          <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-[0.9375rem] text-soluk">
-            <li>
-              <a
-                href={`mailto:${SITE.eposta}`}
-                className="inline-flex min-h-11 items-center transition-colors hover:text-alev"
-              >
-                {SITE.eposta}
-              </a>
-            </li>
-            {SITE.telefon && (
-              <li>
-                <a
-                  href={`tel:${SITE.telefon.replace(/\s/g, "")}`}
-                  className="inline-flex min-h-11 items-center transition-colors hover:text-alev"
-                >
-                  {SITE.telefon}
-                </a>
-              </li>
-            )}
-          </ul>
         </div>
       </div>
     </section>

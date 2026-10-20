@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import Acilis from "@/bilesenler/Acilis";
+import Alt from "@/bilesenler/Alt";
+import { IsletmeAdiSaglayici } from "@/bilesenler/IsletmeAdi";
+import UstMenu from "@/bilesenler/UstMenu";
+import GecisYoneticisi from "@/hareket/GecisYoneticisi";
 import PuruzsuzKaydirma from "@/hareket/PuruzsuzKaydirma";
+import SayfaEtkileri from "@/hareket/SayfaEtkileri";
 import { SITE } from "@/site/ayarlar";
 import "./globals.css";
 
@@ -14,7 +20,7 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.adres),
-  title: SITE.baslik,
+  title: { default: SITE.baslik, template: "%s | fanus.tr" },
   description: SITE.aciklama,
   alternates: { canonical: "/" },
   openGraph: {
@@ -22,7 +28,7 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: "/",
     siteName: SITE.alanAdi,
-    title: SITE.baslik,
+    title: { default: SITE.baslik, template: "%s | fanus.tr" },
     description: SITE.aciklama,
   },
   twitter: { card: "summary_large_image", title: SITE.baslik, description: SITE.aciklama },
@@ -45,6 +51,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geist.variable} ${geistMono.variable} ${bricolage.variable}`}
     >
       <head>
+        {/* Boyamadan önce çalışmalı: next/script beforeInteractive bunu geciktirir. Geliştirme modunda React
+            "script etiketi" uyarısı verir; yalnız geliştirmede görünür, zararsızdır. */}
         <script dangerouslySetInnerHTML={{ __html: HAREKET_BETIGI }} />
       </head>
       <body className="tane">
@@ -52,7 +60,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           İçeriğe geç
         </a>
         <PuruzsuzKaydirma />
-        {children}
+        <Acilis />
+        <IsletmeAdiSaglayici>
+          <UstMenu />
+          {children}
+          <Alt />
+        </IsletmeAdiSaglayici>
+        <GecisYoneticisi />
+        <SayfaEtkileri />
       </body>
     </html>
   );

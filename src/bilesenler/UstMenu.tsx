@@ -1,17 +1,21 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { List, X, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { List, X, ArrowUpRight, CaretDown } from "@phosphor-icons/react/dist/ssr";
+import { gecisleGit } from "@/hareket/gecis";
 import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
-import { kaydir, kaydirmayiBaslat, kaydirmayiDurdur } from "@/hareket/kaydirma";
+import { kaydirmayiBaslat, kaydirmayiDurdur } from "@/hareket/kaydirma";
+import { HIZMETLER, hizmetFiyatEtiketi } from "@/site/icerik";
 import { Logo } from "./Logo";
 import { dugmeSinifi } from "./dugme";
 
 const BAGLANTILAR = [
-  { ad: "Hizmetler", hedef: "#hizmetler" },
-  { ad: "İşler", hedef: "#isler" },
-  { ad: "Süreç", hedef: "#surec" },
-  { ad: "SSS", hedef: "#sss" },
+  { ad: "Hizmetler", adres: "/hizmetler" },
+  { ad: "İşler", adres: "/isler" },
+  { ad: "Fiyatlar", adres: "/fiyatlar" },
+  { ad: "İletişim", adres: "/iletisim" },
 ];
 
 /** Üzerine gelince yazı yukarı kayar, altından aynısı gelir. */
@@ -33,10 +37,13 @@ export default function UstMenu() {
   const kok = useRef<HTMLElement>(null);
   const pencere = useRef<HTMLDialogElement>(null);
   const [acik, setAcik] = useState(false);
+  const yol = usePathname();
+  const etkin = (adres: string) => yol === adres || yol.startsWith(`${adres}/`);
 
   useGSAP(
     () => {
       // Aşağı kaydırınca menü gizlenir, yukarı kaydırınca geri gelir; en üstte zeminsizdir
+      let gizli = false;
       ScrollTrigger.create({
         start: 0,
         end: "max",
@@ -44,6 +51,8 @@ export default function UstMenu() {
           const y = tetik.scroll();
           kok.current?.toggleAttribute("data-dolu", y > 40);
           const gizle = tetik.direction === 1 && y > 480;
+          if (gizle === gizli) return;
+          gizli = gizle;
           gsap.to(kok.current, { yPercent: gizle ? -110 : 0, duration: 0.5, ease: "power3.out", overwrite: true });
         },
       });
@@ -66,7 +75,7 @@ export default function UstMenu() {
       gsap.fromTo(
         dialog.querySelectorAll("[data-menu-oge]"),
         { yPercent: 120 },
-        { yPercent: 0, duration: 0.9, ease: "expo.out", stagger: 0.06, delay: 0.3 },
+        { yPercent: 0, duration: 0.9, ease: "expo.out", stagger: 0.05, delay: 0.3 },
       );
     });
   };
@@ -83,34 +92,86 @@ export default function UstMenu() {
     gsap.to(dialog, { clipPath: "inset(100% 0 0% 0)", duration: 0.6, ease: "expo.inOut", onComplete: bitir });
   };
 
+  /** Menü penceresinden bir sayfaya: önce pencere kapanır, sonra sayfa geçişi başlar. */
+  const penceredenGit = (olay: React.MouseEvent<HTMLAnchorElement>, adres: string) => {
+    olay.preventDefault();
+    menuyuKapat(() => {
+      if (adres !== window.location.pathname) gecisleGit(adres);
+    });
+  };
+
   return (
     <>
       <header
         ref={kok}
-        className="group/ust fixed inset-x-0 top-0 z-50 h-(--ust-yukseklik) border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-500 data-dolu:border-cizgi data-dolu:bg-gece/70 data-dolu:backdrop-blur-xl"
+        className="group/ust fixed inset-x-0 top-0 z-50 h-(--ust-yukseklik) border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-500 data-dolu:border-cizgi data-dolu:bg-gece/75 data-dolu:backdrop-blur-xl"
       >
         <nav
           aria-label="Ana menü"
           className="mx-auto flex h-full max-w-[90rem] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10"
         >
-          <a href="#ust" aria-label="fanus.tr ana sayfa" className="-m-2 rounded-full p-2">
+          <Link href="/" aria-label="fanus.tr ana sayfa" className="-m-2 rounded-full p-2">
             <Logo />
-          </a>
+          </Link>
 
           <ul className="hidden items-center gap-9 text-[0.9375rem] text-soluk md:flex">
-            {BAGLANTILAR.map((b) => (
-              <li key={b.hedef}>
-                <a href={b.hedef} className="group block py-2 hover:text-krem">
-                  <KayanYazi>{b.ad}</KayanYazi>
-                </a>
-              </li>
-            ))}
+            {BAGLANTILAR.map((b) =>
+              b.adres === "/hizmetler" ? (
+                <li key={b.adres} className="group/acilir relative">
+                  <Link
+                    href={b.adres}
+                    aria-current={etkin(b.adres) ? "page" : undefined}
+                    className="group flex items-center gap-1 py-2 hover:text-krem aria-[current=page]:text-krem"
+                  >
+                    <KayanYazi>{b.ad}</KayanYazi>
+                    <CaretDown
+                      size={12}
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover/acilir:rotate-180"
+                    />
+                  </Link>
+                  {/* Açılır panel: üzerine gelince ya da klavyeyle odaklanınca */}
+                  <div className="invisible absolute top-full left-1/2 w-[34rem] -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-[opacity,translate,visibility] duration-300 ease-yay group-focus-within/acilir:visible group-focus-within/acilir:translate-y-0 group-focus-within/acilir:opacity-100 group-hover/acilir:visible group-hover/acilir:translate-y-0 group-hover/acilir:opacity-100">
+                    <ul className="grid grid-cols-2 gap-1 rounded-3xl border border-cizgi bg-gece-2/95 p-2 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.8)] backdrop-blur-xl">
+                      {HIZMETLER.map((h) => (
+                        <li key={h.adres}>
+                          <Link
+                            href={`/hizmetler/${h.adres}`}
+                            className="group/hizmet block rounded-2xl p-4 transition-colors duration-300 hover:bg-gece-3"
+                          >
+                            <span className="flex items-center justify-between gap-2 font-medium text-krem">
+                              {h.ad}
+                              <ArrowUpRight
+                                size={14}
+                                aria-hidden="true"
+                                className="text-soluk transition-[transform,color] duration-300 group-hover/hizmet:translate-x-0.5 group-hover/hizmet:-translate-y-0.5 group-hover/hizmet:text-alev"
+                              />
+                            </span>
+                            <span className="mt-1 block text-sm text-alev">{hizmetFiyatEtiketi(h.adres)}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ) : (
+                <li key={b.adres}>
+                  <Link
+                    href={b.adres}
+                    aria-current={etkin(b.adres) ? "page" : undefined}
+                    className="group block py-2 hover:text-krem aria-[current=page]:text-krem"
+                  >
+                    <KayanYazi>{b.ad}</KayanYazi>
+                  </Link>
+                </li>
+              ),
+            )}
           </ul>
 
           <div className="flex items-center gap-2">
-            <a href="#teklif" data-miknatis className={`${dugmeSinifi.alev} hidden min-h-10 px-5 sm:inline-flex`}>
+            <Link href="/iletisim" data-miknatis className={`${dugmeSinifi.alev} hidden min-h-10 px-5 sm:inline-flex`}>
               Teklif al
-            </a>
+            </Link>
             <button
               type="button"
               onClick={menuyuAc}
@@ -134,8 +195,8 @@ export default function UstMenu() {
         }}
         className="m-0 h-dvh max-h-none w-full max-w-none bg-gece p-0 text-krem backdrop:bg-transparent"
       >
-        <div className="flex h-full flex-col px-4 pb-8 sm:px-6">
-          <div className="flex h-(--ust-yukseklik) items-center justify-between">
+        <div className="flex h-full flex-col overflow-y-auto px-4 pb-8 sm:px-6">
+          <div className="flex h-(--ust-yukseklik) shrink-0 items-center justify-between">
             <Logo />
             <button
               type="button"
@@ -146,25 +207,45 @@ export default function UstMenu() {
               <span className="sr-only">Menüyü kapat</span>
             </button>
           </div>
-          <ul className="mt-10 flex flex-col gap-2">
-            {[...BAGLANTILAR, { ad: "Teklif al", hedef: "#teklif" }].map((b) => (
-              <li key={b.hedef} className="overflow-hidden">
+          <ul className="mt-8 flex flex-col">
+            {[{ ad: "Ana sayfa", adres: "/" }, ...BAGLANTILAR].map((b) => (
+              <li key={b.adres} className="overflow-hidden">
                 <a
                   data-menu-oge
-                  href={b.hedef}
-                  onClick={(olay) => {
-                    olay.preventDefault();
-                    menuyuKapat(() => kaydir(b.hedef));
-                  }}
-                  className="flex items-center justify-between py-2 font-baslik text-[2.75rem] leading-tight font-semibold tracking-[-0.03em]"
+                  href={b.adres}
+                  aria-current={yol === b.adres ? "page" : undefined}
+                  onClick={(olay) => penceredenGit(olay, b.adres)}
+                  className="flex items-center justify-between py-2 font-baslik text-[2.5rem] leading-tight font-semibold tracking-[-0.03em] aria-[current=page]:text-alev"
                 >
                   {b.ad}
-                  <ArrowUpRight size={28} className="text-alev" aria-hidden="true" />
+                  <ArrowUpRight size={26} className="text-alev" aria-hidden="true" />
                 </a>
+                {b.adres === "/hizmetler" && (
+                  <ul className="mb-3 grid grid-cols-2 gap-x-4 gap-y-1 pl-1">
+                    {HIZMETLER.map((h) => (
+                      <li key={h.adres} className="overflow-hidden">
+                        <a
+                          data-menu-oge
+                          href={`/hizmetler/${h.adres}`}
+                          onClick={(olay) => penceredenGit(olay, `/hizmetler/${h.adres}`)}
+                          className="flex min-h-11 items-center text-soluk"
+                        >
+                          {h.ad}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
-          <p className="mt-auto text-soluk">E-ticaret, kurumsal site, QR menü ve web otomasyonu.</p>
+          <Link
+            href="/iletisim"
+            onClick={(olay) => penceredenGit(olay, "/iletisim")}
+            className={`${dugmeSinifi.alev} mt-auto w-full`}
+          >
+            Teklif al
+          </Link>
         </div>
       </dialog>
     </>

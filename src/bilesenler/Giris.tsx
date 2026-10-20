@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { ArrowUpRight, ArrowDown } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { ArrowUpRight, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { gsap, HAREKET_ACIK, SplitText, useGSAP } from "@/hareket/gsap";
 import { REFERANSLAR } from "@/site/icerik";
 import { dugmeSinifi } from "./dugme";
@@ -19,8 +20,10 @@ export default function Giris() {
         gsap.set(parcalar.words, { yPercent: 120, rotate: 5, transformOrigin: "0% 100%" });
 
         const oge = (secici: string) => kok.current!.querySelectorAll(secici);
+        // Başka sayfadan gelindiyse sayfa geçiş perdesinin kalkmasını kısa bir süre bekle
+        const gecikme = window.__fanusAcildi ? 0.55 : 0;
         const oynat = () => {
-          const zc = gsap.timeline({ defaults: { ease: "expo.out" } });
+          const zc = gsap.timeline({ defaults: { ease: "expo.out" }, delay: gecikme });
           zc.to(parcalar.words, { yPercent: 0, rotate: 0, duration: 1.5, stagger: 0.07 })
             .fromTo(
               oge("[data-giris]"),
@@ -77,13 +80,13 @@ export default function Giris() {
             kurar.
           </p>
           <div data-giris className="mt-9 flex flex-wrap items-center gap-3">
-            <a href="#teklif" data-miknatis className={dugmeSinifi.alev}>
+            <Link href="/iletisim" data-miknatis className={dugmeSinifi.alev}>
               Teklif al
-            </a>
-            <a href="#isler" className={dugmeSinifi.cerceve}>
-              İşleri gör
-              <ArrowDown size={16} aria-hidden="true" />
-            </a>
+            </Link>
+            <Link href="/fiyatlar" className={dugmeSinifi.cerceve}>
+              Fiyatlar
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </div>

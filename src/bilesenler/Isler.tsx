@@ -6,8 +6,21 @@ import { ArrowUpRight, Check } from "@phosphor-icons/react/dist/ssr";
 import { gsap, GENIS, HAREKET_ACIK, useGSAP } from "@/hareket/gsap";
 import { REFERANSLAR } from "@/site/icerik";
 
-export default function Isler() {
+/**
+ * Yayındaki işlerin vitrini: her iş ekrana sabitlenir, tarayıcı çerçevesinde sitenin gerçek ekran
+ * görüntüsü kayar. `kodlar` verilirse yalnız o işler, `baslik` boşsa başlık bölümü olmadan.
+ */
+export default function Isler({
+  kodlar,
+  baslik = "Yayında olan işler.",
+  metin = "Üçü de Düzce'den, üçü de bugün çalışıyor. Ekran görüntüleri sitelerin kendisinden; tıklayıp gezebilirsiniz.",
+}: {
+  kodlar?: string[];
+  baslik?: string | null;
+  metin?: string;
+}) {
   const kok = useRef<HTMLElement>(null);
+  const isler = kodlar ? REFERANSLAR.filter((r) => kodlar.includes(r.kod)) : REFERANSLAR;
 
   useGSAP(
     () => {
@@ -78,21 +91,23 @@ export default function Isler() {
     <section
       ref={kok}
       id="isler"
-      aria-labelledby="isler-baslik"
-      className="relative z-10 bg-gece px-4 pt-28 sm:px-6 md:pt-36 lg:px-10"
+      aria-labelledby={baslik ? "isler-baslik" : undefined}
+      aria-label={baslik ? undefined : "Yayındaki işler"}
+      className={`relative z-10 bg-gece px-4 sm:px-6 lg:px-10 ${baslik ? "pt-28 md:pt-36" : ""}`}
     >
-      <div className="mx-auto max-w-[90rem]">
-        <h2 id="isler-baslik" data-bol className="bolum-baslik max-w-[16ch]">
-          Yayında olan işler.
-        </h2>
-        <p data-belir className="mt-6 max-w-[36rem] text-lg leading-relaxed text-soluk">
-          Üçü de Düzce&apos;den, üçü de bugün çalışıyor. Ekran görüntüleri sitelerin kendisinden; tıklayıp
-          gezebilirsiniz.
-        </p>
-      </div>
+      {baslik && (
+        <div className="mx-auto max-w-[90rem]">
+          <h2 id="isler-baslik" data-bol className="bolum-baslik max-w-[16ch]">
+            {baslik}
+          </h2>
+          <p data-belir className="mt-6 max-w-[36rem] text-lg leading-relaxed text-soluk">
+            {metin}
+          </p>
+        </div>
+      )}
 
       <div className="mx-auto max-w-[90rem]">
-        {REFERANSLAR.map((r) => (
+        {isler.map((r) => (
           <article
             key={r.kod}
             data-is

@@ -18,6 +18,15 @@ export function kaydirmayiBaslat() {
   document.documentElement.style.overflow = "";
 }
 
+/** Sayfa değişince anında en üste döner (Lenis eski konumu hatırlayıp geri kaydırmasın). */
+export function basaDon() {
+  if (ornek) {
+    ornek.scrollTo(0, { immediate: true, force: true });
+    ornek.resize();
+  }
+  window.scrollTo(0, 0);
+}
+
 /** Bir öğeye ya da çapaya kaydırır; Lenis yoksa tarayıcının kendi kaydırması. */
 export function kaydir(hedef: string | HTMLElement) {
   if (ornek) {

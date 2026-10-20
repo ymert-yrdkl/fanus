@@ -1,19 +1,20 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { ArrowUp, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { gsap, HAREKET_ACIK, useGSAP } from "@/hareket/gsap";
 import { kaydir } from "@/hareket/kaydirma";
 import { SITE } from "@/site/ayarlar";
-import { REFERANSLAR } from "@/site/icerik";
+import { HIZMETLER, REFERANSLAR } from "@/site/icerik";
 import { Logo } from "./Logo";
 
 const SAYFA_BAGLANTILARI = [
-  { ad: "Hizmetler", hedef: "#hizmetler" },
-  { ad: "İşler", hedef: "#isler" },
-  { ad: "Süreç", hedef: "#surec" },
-  { ad: "SSS", hedef: "#sss" },
-  { ad: "Teklif al", hedef: "#teklif" },
+  { ad: "Ana sayfa", adres: "/" },
+  { ad: "Hizmetler", adres: "/hizmetler" },
+  { ad: "İşler", adres: "/isler" },
+  { ad: "Fiyatlar", adres: "/fiyatlar" },
+  { ad: "İletişim", adres: "/iletisim" },
 ];
 
 export default function Alt() {
@@ -45,28 +46,43 @@ export default function Alt() {
       className="relative z-10 overflow-hidden border-t border-cizgi bg-gece px-4 pt-20 pb-8 sm:px-6 lg:px-10"
     >
       <div className="mx-auto grid max-w-[90rem] gap-12 sm:grid-cols-2 lg:grid-cols-12">
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-3">
           <Logo />
           <p className="mt-5 max-w-[22rem] leading-relaxed text-soluk">
             E-ticaret, kurumsal web sitesi, QR menü ve web otomasyonu. Işığınızı koruyan cam.
           </p>
         </div>
-        <nav aria-label="Sayfa" className="lg:col-span-2 lg:col-start-6">
+        <nav aria-label="Sayfa" className="lg:col-span-2">
           <p className="etiket">Sayfa</p>
           <ul className="mt-4 grid gap-1">
             {SAYFA_BAGLANTILARI.map((b) => (
-              <li key={b.hedef}>
-                <a
-                  href={b.hedef}
+              <li key={b.adres}>
+                <Link
+                  href={b.adres}
                   className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
                 >
                   {b.ad}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <div className="lg:col-span-3">
+        <nav aria-label="Hizmetler" className="lg:col-span-3">
+          <p className="etiket">Hizmetler</p>
+          <ul className="mt-4 grid gap-1">
+            {HIZMETLER.map((h) => (
+              <li key={h.adres}>
+                <Link
+                  href={`/hizmetler/${h.adres}`}
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                >
+                  {h.ad}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="lg:col-span-2">
           <p className="etiket">İşler</p>
           <ul className="mt-4 grid gap-1">
             {REFERANSLAR.map((r) => (
@@ -88,7 +104,7 @@ export default function Alt() {
             ))}
           </ul>
         </div>
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-2">
           <p className="etiket">İletişim</p>
           <ul className="mt-4 grid gap-1">
             <li>
@@ -145,7 +161,7 @@ export default function Alt() {
         <p>Bu site çerez kullanmaz, ziyaretinizi izlemez.</p>
         <button
           type="button"
-          onClick={() => kaydir("#ust")}
+          onClick={() => kaydir(document.body)}
           className="inline-flex min-h-11 items-center gap-2 self-start transition-colors hover:text-krem sm:self-auto"
         >
           Başa dön

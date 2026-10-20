@@ -1,25 +1,18 @@
 "use client";
 
 import { useRef } from "react";
-import { Check } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { ArrowRight, Check } from "@phosphor-icons/react/dist/ssr";
 import { gsap, GENIS, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
-import { HIZMETLER, type HizmetKodu } from "@/site/icerik";
-import { AD_SINIRI, useIsletmeAdi } from "./IsletmeAdi";
-import EticaretDemo from "./demolar/EticaretDemo";
-import KurumsalDemo from "./demolar/KurumsalDemo";
-import OtomasyonDemo from "./demolar/OtomasyonDemo";
-import QrMenuDemo from "./demolar/QrMenuDemo";
+import { HIZMETLER, hizmetFiyatEtiketi } from "@/site/icerik";
+import HizmetDemosu from "./demolar/HizmetDemosu";
 
+/**
+ * Hizmetler sayfasındaki üst üste binen kartlar: solda anlatım, fiyat ve ayrıntı bağlantısı,
+ * sağda o hizmetin canlı örneği.
+ */
 export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
   const kok = useRef<HTMLElement>(null);
-  const { ad, setAd } = useIsletmeAdi();
-
-  const demolar: Record<HizmetKodu, React.ReactNode> = {
-    eticaret: <EticaretDemo />,
-    kurumsal: <KurumsalDemo />,
-    otomasyon: <OtomasyonDemo />,
-    qrmenu: <QrMenuDemo qrSvg={qrSvg} />,
-  };
 
   // Kartlar üst üste biner: alttaki kart gelince öndeki küçülür ve kararır
   useGSAP(
@@ -61,40 +54,10 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
   return (
     <section
       ref={kok}
-      id="hizmetler"
-      aria-labelledby="hizmetler-baslik"
-      className="relative z-10 bg-gece px-4 pt-28 pb-24 sm:px-6 md:pt-40 lg:px-10"
+      aria-label="Hizmetlerin canlı örnekleri"
+      className="relative z-10 bg-gece px-4 pb-24 sm:px-6 lg:px-10"
     >
-      <div className="mx-auto grid max-w-[90rem] gap-10 md:grid-cols-12 md:items-end">
-        <div className="md:col-span-7">
-          <h2 id="hizmetler-baslik" data-bol className="bolum-baslik max-w-[14ch]">
-            Adınızı yazın, sitenizi şimdi görün.
-          </h2>
-          <p data-belir className="mt-6 max-w-[34rem] text-lg leading-relaxed text-soluk">
-            Aşağıdaki dört örnek gerçek bileşenlerdir ve yazdığınız adla canlı çalışır. Tıklayın, deneyin.
-          </p>
-        </div>
-        <div data-belir data-gecikme="0.15" className="md:col-span-5">
-          <label htmlFor="isletme-adi" className="text-[0.9375rem] font-medium text-krem">
-            İşletmenizin adı
-          </label>
-          <input
-            id="isletme-adi"
-            type="text"
-            value={ad}
-            maxLength={AD_SINIRI}
-            autoComplete="organization"
-            placeholder="Örneğin Yıldız Fırın"
-            onChange={(olay) => setAd(olay.target.value)}
-            className="mt-2.5 h-15 w-full rounded-2xl border border-cizgi-guclu bg-gece-2 px-5 text-lg text-krem transition-colors duration-300 placeholder:text-silik hover:border-krem/40 focus:border-alev focus:outline-none"
-          />
-          <p className="mt-2.5 text-sm text-soluk">
-            Yazdığınız ad yalnız bu sayfada kullanılır, hiçbir yere gönderilmez.
-          </p>
-        </div>
-      </div>
-
-      <div className="mx-auto mt-16 flex max-w-[90rem] flex-col gap-6 md:mt-24 md:gap-10">
+      <div className="mx-auto flex max-w-[90rem] flex-col gap-6 md:gap-10">
         {HIZMETLER.map((h) => (
           <article
             key={h.kod}
@@ -105,9 +68,9 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
             <div className="grid gap-10 p-5 sm:p-8 md:h-full md:grid-cols-12 md:items-center md:gap-8 lg:p-12">
               <div className="md:col-span-5 lg:pr-6">
                 <p className="etiket">{h.ad}</p>
-                <h3 id={`hizmet-${h.kod}`} className="ara-baslik mt-4 max-w-[18ch]">
+                <h2 id={`hizmet-${h.kod}`} className="ara-baslik mt-4 max-w-[18ch]">
                   {h.baslik}
-                </h3>
+                </h2>
                 <p className="mt-5 max-w-[30rem] leading-relaxed text-soluk">{h.metin}</p>
                 <ul className="mt-8 grid gap-3">
                   {h.maddeler.map((madde) => (
@@ -117,8 +80,25 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
                     </li>
                   ))}
                 </ul>
+                <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-cizgi pt-6">
+                  <p className="font-baslik text-xl font-semibold text-alev">{hizmetFiyatEtiketi(h.adres)}</p>
+                  <Link
+                    href={`/hizmetler/${h.adres}`}
+                    className="group inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium"
+                  >
+                    Ayrıntılar ve paketler
+                    <ArrowRight
+                      size={16}
+                      weight="bold"
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    />
+                  </Link>
+                </div>
               </div>
-              <div className="min-w-0 md:col-span-7">{demolar[h.kod]}</div>
+              <div className="min-w-0 md:col-span-7">
+                <HizmetDemosu kod={h.kod} qrSvg={qrSvg} />
+              </div>
             </div>
             <div
               data-kart-perde

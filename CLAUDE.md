@@ -35,6 +35,13 @@ metin kopyalanmaz). Hedef: ziyaretçi "keşke bende de olsa" desin; ağır, ama�
 - Referans görselleri: `npm run referanslar [site-kodu]` → `public/isler/*.webp` (canlı sitelerden; çerez bandı
   yalnız görüntüde gizlenir, hiçbir şey kabul edilmez).
 
+## Sayfalar
+`/` ana sayfa (3B giriş, manifesto, hizmet kartları, işler, fiyat listesi) · `/hizmetler` (canlı örnekler + süreç) ·
+`/hizmetler/[e-ticaret|kurumsal-site|qr-menu|web-otomasyonu]` (örnek, özellikler, paketler, referans, SSS) ·
+`/fiyatlar` · `/isler` · `/iletisim` (3B fanus + teklif formu, `?paket=` ile seçili gelir). Menü, altbilgi, açılış
+perdesi ve sayfa geçiş perdesi (`src/hareket/GecisYoneticisi.tsx`) layout'ta; genel kaydırma efektleri her sayfada
+yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PAKETLER.
+
 ## Durum (20 Ekim 2026)
 - Tek sayfa tamam ve tarayıcıda (1280/390) denendi: açılış perdesi, 3B cam fanus (alev, kıvılcım, imleç rüzgârı),
   manifesto (cam kalkar, alev titrer, cam iner, ışığa dalış), kayan şerit, hizmetler (işletme adı yazılınca dört
@@ -42,4 +49,6 @@ metin kopyalanmaz). Hedef: ziyaretçi "keşke bende de olsa" desin; ağır, ama�
   Emre Pide QR kodu), yayındaki işler (sabitlenen tarayıcı çerçevesinde gerçek ekran görüntüsü kayar), süreç
   (yatay şerit), SSS, teklif oluşturucu (WhatsApp/e-posta mesajı), altbilgi kelime markası. JSON-LD, site haritası,
   robots, paylaşım görseli, 404.
-- Yayın: `docs/yayina-alma.md` (hedef https://fanustr.ahmcloud.com; sonra fanus.tr).
+- Çok sayfalı yapıya geçildi ve fiyatlar eklendi (20 Ekim 2026, Yusuf'un isteği).
+- Yayın: `docs/yayina-alma.md` (Coolify kurulu; hedef https://fanustr.ahmcloud.com, DNS kaydı Hostinger arızası
+  nedeniyle bekliyor; sonra fanus.tr).

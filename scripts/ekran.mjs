@@ -180,6 +180,12 @@ export async function ekranGoruntusu(secenek) {
     await bekle(beklemeSuresi);
 
     let yakalamaYuksekligi = yukseklik;
+    // Tam sayfa değilse görünen alan çekilir (betik sayfayı kaydırmış olabilir)
+    const { result: kaydirma } = await sekme.gonder("Runtime.evaluate", {
+      expression: "[window.scrollY, document.title]",
+      returnByValue: true,
+    });
+    const [ustY, baslik] = kaydirma.value;
     if (tam) {
       const { result } = await sekme.gonder("Runtime.evaluate", {
         expression: "document.documentElement.scrollHeight",
@@ -193,12 +199,12 @@ export async function ekranGoruntusu(secenek) {
       format: tur,
       quality: tur === "png" ? undefined : 82,
       captureBeyondViewport: tam,
-      clip: { x: 0, y: 0, width: genislik, height: yakalamaYuksekligi, scale: 1 },
+      clip: { x: 0, y: tam ? 0 : ustY, width: genislik, height: yakalamaYuksekligi, scale: 1 },
     });
     mkdirSync(dirname(cikti), { recursive: true });
     writeFileSync(cikti, Buffer.from(data, "base64"));
     sekme.kapat();
-    return { cikti, genislik, yukseklik: yakalamaYuksekligi };
+    return { cikti, genislik, yukseklik: yakalamaYuksekligi, baslik };
   } finally {
     chrome.kapat();
   }

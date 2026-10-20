@@ -249,3 +249,82 @@ details.sss summary::-webkit-details-marker {
     scroll-behavior: auto !important;
   }
 }
+
+/* Ana sayfa hizmet kartlarının küçük döngüleri (hareket azaltmada tek kare kalır) */
+.cubuk {
+  animation: cubuk 2.8s var(--ease-yay) infinite;
+}
+@keyframes cubuk {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.yazilan {
+  animation: yazilan 3.2s var(--ease-yay) infinite;
+}
+@keyframes yazilan {
+  0% {
+    transform: scaleX(0);
+  }
+  40%,
+  85% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+.tarama {
+  animation: tarama 2.4s ease-in-out infinite alternate;
+}
+@keyframes tarama {
+  from {
+    top: 6%;
+  }
+  to {
+    top: 94%;
+  }
+}
+.yolcu {
+  animation: yolcu 3s ease-in-out infinite;
+}
+@keyframes yolcu {
+  from {
+    left: 1.25rem;
+  }
+  to {
+    left: calc(100% - 2rem);
+  }
+}
+.dugum {
+  animation: dugum 3s ease-in-out infinite;
+}
+@keyframes dugum {
+  0%,
+  10% {
+    color: var(--color-alev);
+    border-color: var(--color-alev);
+  }
+  30%,
+  100% {
+    color: var(--color-soluk);
+    border-color: var(--color-cizgi-guclu);
+  }
+}
+
+/* Alt sayfa başlıklarının arkasındaki yavaş ışık */
+.sayfa-isigi {
+  animation: sayfa-isigi 14s ease-in-out infinite alternate;
+}
+@keyframes sayfa-isigi {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-8%, 6%) scale(1.15);
+  }
+}

@@ -8,10 +8,11 @@ type Hal = "yukleniyor" | "hazir" | "yok";
 
 /**
  * Sayfanın arkasında sabit duran 3B fanus. three.js sayfa açıldıktan sonra boşta yüklenir;
- * o sırada ve WebGL yoksa yerinde sıcak bir ışık durur. Ön bölümler (giriş, manifesto, teklif)
- * saydamdır, aradaki bölümler zemin rengiyle tuvali örter.
+ * o sırada ve WebGL yoksa yerinde sıcak bir ışık durur. Saydam bölümler (ana sayfada giriş ve
+ * manifesto, iletişimde teklif) tuvali gösterir, diğer bölümler zemin rengiyle örter.
+ * `poz`: "akis" ana sayfanın kaydırma çizelgesi, "son" iletişim sayfasının sabit duruşu.
  */
-export default function FanusSahnesi() {
+export default function FanusSahnesi({ poz = "akis" }: { poz?: "akis" | "son" }) {
   const tuvalRef = useRef<HTMLCanvasElement>(null);
   const [hal, setHal] = useState<Hal>("yukleniyor");
 
@@ -19,6 +20,9 @@ export default function FanusSahnesi() {
     let iptal = false;
     let kurulum: { yokEt: () => void } | null = null;
     const azHareket = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Her sayfada sahne baştan kurulur: açılış (alev tutuşur, cam iner) yeniden oynar
+    sahneDurumu.sonKarisim = poz === "son" ? 1 : 0;
+    sahneDurumu.giris = azHareket ? 1 : 0;
 
     // Sahne hazır olunca açılış perdesinin kalkmasını bekle, sonra alevi yak ve camı indir
     const girisiBaslat = () => {
@@ -50,11 +54,12 @@ export default function FanusSahnesi() {
 
     return () => {
       iptal = true;
+      sahneDurumu.sonKarisim = 0;
       if (window.cancelIdleCallback) window.cancelIdleCallback(bosta);
       else window.clearTimeout(bosta);
       kurulum?.yokEt();
     };
-  }, []);
+  }, [poz]);
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-0 h-lvh">
