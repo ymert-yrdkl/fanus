@@ -8,7 +8,7 @@ import GecisYoneticisi from "@/hareket/GecisYoneticisi";
 import PuruzsuzKaydirma from "@/hareket/PuruzsuzKaydirma";
 import SayfaEtkileri from "@/hareket/SayfaEtkileri";
 import TemaSecici from "@/bilesenler/TemaSecici";
-import { BICIMLER, TEMA_SECICI_ACIK, TEMALAR, VARSAYILAN_BICIM, VARSAYILAN_TEMA } from "@/site/tema";
+import { TEMA_SECICI_ACIK, TEMALAR, VARSAYILAN_TEMA } from "@/site/tema";
 import { SITE } from "@/site/ayarlar";
 import "./globals.css";
 
@@ -45,9 +45,9 @@ export const viewport: Viewport = {
 // yalnız bu sınıfla gizlenir). Hareket altyapısı 6 sn içinde kurulmazsa sınıf kaldırılır, içerik görünür kalır.
 const HAREKET_BETIGI = `(function(){var d=document.documentElement;try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('hareket');if(sessionStorage.getItem('fanus-acildi'))d.classList.add('tekrar');setTimeout(function(){if(!window.__fanusHazir)d.classList.remove('hareket')},6000)}catch(e){}})();`;
 
-// Tema ve biçim denemesi: seçici açıkken bu tarayıcıda seçilenler boyamadan önce uygulanır (?tema=, ?bicim= de olur)
+// Palet denemesi: seçici açıkken bu tarayıcıda seçilen palet boyamadan önce uygulanır (?tema= de olur)
 const TEMA_BETIGI = TEMA_SECICI_ACIK
-  ? `(function(){try{var g=${JSON.stringify(TEMALAR.map((t) => t.kod))};var a=new URLSearchParams(location.search).get('tema');if(g.indexOf(a)>-1)localStorage.setItem('fanus-tema',a);var t=localStorage.getItem('fanus-tema');if(g.indexOf(t)>-1)document.documentElement.dataset.tema=t;var b=localStorage.getItem('fanus-acik-bolum');if(b)document.documentElement.dataset.acikBolum=b;var f=${JSON.stringify(BICIMLER.map((b) => b.kod))};var s=new URLSearchParams(location.search).get('bicim');if(f.indexOf(s)>-1)localStorage.setItem('fanus-bicim',s);var c=localStorage.getItem('fanus-bicim');if(f.indexOf(c)>-1)document.documentElement.dataset.bicim=c}catch(e){}})();`
+  ? `(function(){try{var g=${JSON.stringify(TEMALAR.map((t) => t.kod))};var a=new URLSearchParams(location.search).get('tema');if(g.indexOf(a)>-1)localStorage.setItem('fanus-tema',a);var t=localStorage.getItem('fanus-tema');if(g.indexOf(t)>-1)document.documentElement.dataset.tema=t;}catch(e){}})();`
   : "";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -55,7 +55,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="tr"
       data-tema={VARSAYILAN_TEMA}
-      data-bicim={VARSAYILAN_BICIM}
       suppressHydrationWarning
       className={`${geist.variable} ${geistMono.variable} ${bricolage.variable}`}
     >

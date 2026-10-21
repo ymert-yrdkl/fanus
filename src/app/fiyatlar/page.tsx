@@ -10,7 +10,7 @@ import { fiyatYaz, PAKETLER, SSS, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/si
 export const metadata: Metadata = {
   title: "Fiyatlar",
   description:
-    "Tek sayfa kurumsal site ₺9.999, tam paket kurumsal site ₺25.000, e-ticaret sitesi ₺25.000, QR menü ₺9.999'dan başlayan fiyatlarla. Her pakette yıllık yenileme ₺2.399.",
+    "Tek sayfa kurumsal site ₺9.999, tam paket kurumsal site ₺45.000, e-ticaret sitesi ₺65.000, QR menü ₺9.999'dan başlayan fiyatlarla. Her pakette yıllık yenileme ₺2.399.",
   alternates: { canonical: "/fiyatlar" },
 };
 

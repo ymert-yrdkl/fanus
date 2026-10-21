@@ -69,7 +69,7 @@ export const PAKETLER: Paket[] = [
     kod: "kurumsal",
     ad: "Kurumsal site, tam paket",
     hizmet: "kurumsal-site",
-    fiyat: 25000,
+    fiyat: 45000,
     yenileme: YILLIK_YENILEME,
     ozet: "Birden çok sayfası olan, içeriğini yönetim panelinden kendiniz değiştirdiğiniz, her şeyin dahil olduğu kurumsal site.",
     maddeler: [
@@ -88,7 +88,7 @@ export const PAKETLER: Paket[] = [
     kod: "e-ticaret",
     ad: "E-ticaret sitesi",
     hizmet: "e-ticaret",
-    fiyat: 25000,
+    fiyat: 65000,
     yenileme: YILLIK_YENILEME,
     ozet: "Ürünlerinizi kendiniz yönettiğiniz panelli online mağaza: sepet, ödeme, sipariş ve kargo bir arada.",
     maddeler: [
@@ -180,7 +180,7 @@ export const HIZMETLER: Hizmet[] = [
       "Ürünlerinizi kendiniz eklediğiniz, kartla ödeme alan, siparişi ve kargoyu tek panelden yönettiğiniz e-ticaret sitesi.",
     seoBasligi: "E-ticaret sitesi",
     seoAciklamasi:
-      "Panelli e-ticaret sitesi: ürün ve stok yönetimi, iyzico/PayTR ile ödeme, sipariş ve kargo takibi. ₺25.000, yıllık yenileme ₺2.399.",
+      "Panelli e-ticaret sitesi: ürün ve stok yönetimi, iyzico/PayTR ile ödeme, sipariş ve kargo takibi. ₺65.000, yıllık yenileme ₺2.399.",
     kimlerIcin: ["Üretici markalar", "Butik mağazalar", "Baskı ve promosyon", "Pazaryerinden kendi sitesine geçenler"],
     ozellikler: [
       {
@@ -257,7 +257,7 @@ export const HIZMETLER: Hizmet[] = [
       "Tek sayfalık bir tanıtım sitesinden yönetim panelli, çok dilli kurumsal siteye kadar. Firmanızı doğru anlatan, telefonda hızlı açılan ve Google'da bulunan bir site.",
     seoBasligi: "Kurumsal web sitesi",
     seoAciklamasi:
-      "Kurumsal web sitesi: tek sayfa site ₺9.999, yönetim panelli tam paket ₺25.000; yıllık yenileme ₺2.399. Sıfırdan tasarım, SEO, çok dil.",
+      "Kurumsal web sitesi: tek sayfa site ₺9.999, yönetim panelli tam paket ₺45.000; yıllık yenileme ₺2.399. Sıfırdan tasarım, SEO, çok dil.",
     kimlerIcin: ["Üretim ve sanayi", "Klinik ve ofisler", "Restoran ve kafeler", "Hizmet işletmeleri"],
     ozellikler: [
       {
@@ -452,7 +452,7 @@ export function hizmetBul(adres: string) {
   return HIZMETLER.find((h) => h.adres === adres);
 }
 
-/** Hizmetin en düşük paket fiyatı: "₺9.999'dan başlayan", "₺25.000" ya da "Teklif üzerine". */
+/** Hizmetin en düşük paket fiyatı: "₺9.999'dan başlayan", "₺65.000" ya da "Teklif üzerine". */
 export function hizmetFiyatEtiketi(adres: HizmetAdresi) {
   const paketler = PAKETLER.filter((p) => p.hizmet === adres);
   const fiyatlar = paketler.map((p) => p.fiyat).filter((f): f is number => f !== null);

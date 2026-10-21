@@ -38,7 +38,7 @@ export default function SayfaBasi({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(yol).replace(/</g, "\\u003c") }}
       />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="sayfa-isigi absolute -top-[30%] right-[-10%] size-[70vmax] rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_16%,transparent),transparent_62%)]" />
+        <div className="sayfa-isigi absolute -top-[30%] right-[-10%] size-[70vmax] rounded-full bg-[radial-gradient(circle,var(--sayfa-isigi),transparent_62%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-cizgi)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-cizgi)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_at_70%_0%,black,transparent_70%)] bg-[size:5rem_5rem] opacity-40" />
       </div>
       <div className="relative mx-auto grid max-w-[90rem] gap-12 md:grid-cols-12 md:items-end md:gap-8">

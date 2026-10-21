@@ -52,13 +52,14 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
 - Çok sayfalı yapıya geçildi ve fiyatlar eklendi (20 Ekim 2026, Yusuf'un isteği).
 - Renk teması D seçildi (20 Ekim 2026): koyu lacivert zemin + kor kırmızısı, nötr grafit kartlar, sarı-kızıl alev.
   Eski kahve tema "yapay zekâ ürünü gibi" bulundu. Tema seçici yalnız `npm run dev`'de sol altta.
-- Gündüz/gece ve yeni fanus denemesi (21 Ekim 2026, yalnız yerelde, yayında DEĞİL): lacivert yalnız 3B sahnenin
-  olduğu yerde (ana sayfa girişi + manifesto, iletişim teklif bölümü); tek şafak geçişi (`GecisBandi`), sonrası,
-  alt sayfalar, sayfa sonu ve altbilgi kurumsal beyaz (`data-zemin="acik"`). Eski fener (topuz, pirinç taban, fitil)
-  kalktı; iki modern biçim karşılaştırılıyor: "Cam simge" (kalın cam uygulama simgesi) ve "Parantez" (iki kavisli
-  cam). Alev logodaki yoldan, dört katmanlı. Biçim `<html data-bicim>` (`src/site/tema.ts` › BICIMLER), tema
-  panelinden ya da `?bicim=`. Seçim yapılınca: diğer biçim silinir, `public/fanus-telefon.webp` (telefondaki sabit
-  görsel) ve `opengraph-image.png` yeniden çekilir.
+- Yeni fanus ve renk denemesi (21 Ekim 2026, yalnız yerelde, yayında DEĞİL): eski fener (topuz, pirinç taban, fitil)
+  yerine "cam simge" seçildi (kalın, köşeleri yuvarlatılmış cam uygulama simgesi; logo, sekme simgesi, açılış ve
+  sayfa sonu çizimi aynı biçim; alev logodaki yoldan, dört katman). Lacivert yalnız 3B sahnede (ana sayfa girişi +
+  manifesto, iletişim teklif bölümü); tek şafak geçişi (`GecisBandi`), sonrası ve alt sayfalar gündüz
+  (`data-zemin="acik"`). Renk paleti karşılaştırılıyor: 11 palet (`src/site/tema.ts` › TEMALAR, renkler
+  `globals.css` › `:root[data-tema]`, gece `--color-*` + gündüz `--g-*`), tema panelinden ya da `?tema=`. Palet
+  seçilince: diğerleri silinir, `public/fanus-telefon.webp` (telefondaki sabit görsel) ve `opengraph-image.png`
+  yeniden çekilir, sonra yayına alınır. Fiyatlar 21 Ekim'de güncellendi: tam paket kurumsal ₺45.000, e-ticaret ₺65.000.
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).
