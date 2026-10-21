@@ -1,8 +1,9 @@
 // Cam simge ve içinde yanan katmanlı alev, kıvılcımlar (three.js).
 // Bu dosya yalnız tarayıcıda, sayfa açıldıktan sonra dinamik olarak yüklenir.
 //
-// Cam: kalın, köşeleri yuvarlatılmış bir uygulama simgesi (logodaki işaretin 3B hâli). Alev logodakiyle aynı
-// biçimde, dört katman (kor, turuncu, sarı, öz); her zaman kameraya döner, rüzgârla eğilir.
+// Cam: kalın, köşeleri yuvarlatılmış bir uygulama simgesi (logodaki işaretin 3B hâli). Denemede ikinci biçim
+// "koseli": alevi iki yandan saran iki kalın cam köşeli parantez (<html data-bicim>, tema panelinden).
+// Alev logodakiyle aynı biçimde, dört katman (kor, turuncu, sarı, öz); her zaman kameraya döner, rüzgârla eğilir.
 //
 // Dünya birimleri: alevin tabanı y=ALEV_TABANI'nda, camın ortası y=CAM_ORTASI'nda.
 // Ekrandaki yer, boy ve camın kalkması `sahneDurumu`ndan okunur (GSAP değiştirir).
@@ -172,7 +173,30 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   simge.add(simgeCam);
   simge.position.y = CAM_ORTASI;
 
-  egim.add(simge);
+  // Köşeli parantez: iki kalın cam parça, önden "[ ]"
+  const koseliGeo = (yon: 1 | -1) => {
+    const geo = g(
+      yumusat(
+        new ExtrudeGeometry(koseliBicimi(yon), {
+          depth: 0.3,
+          bevelEnabled: true,
+          bevelThickness: 0.09,
+          bevelSize: 0.06,
+          bevelSegments: zayif ? 4 : 8,
+          curveSegments: zayif ? 6 : 12,
+        }),
+      ),
+    );
+    geo.translate(0, 0, -0.15);
+    return geo;
+  };
+  const koseli = new Group();
+  const solKoseli = new Mesh(koseliGeo(1), camMalzeme);
+  const sagKoseli = new Mesh(koseliGeo(-1), camMalzeme);
+  koseli.add(solKoseli, sagKoseli);
+  koseli.position.y = CAM_ORTASI;
+
+  egim.add(simge, koseli);
 
   // ---- Alev (opak, ışıyan; cam onu kırarak gösterir) ----
   const alevOrtak = {
@@ -392,6 +416,17 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   temaUygula();
   window.addEventListener("fanus:tema", temaUygula);
 
+  // ---- Biçim: cam simge ya da köşeli parantez ----
+  const etkinBicim = () => (document.documentElement.dataset.bicim === "koseli" ? "koseli" : "simge");
+  let bicim = etkinBicim();
+  const bicimUygula = () => {
+    bicim = etkinBicim();
+    simge.visible = bicim === "simge";
+    koseli.visible = bicim === "koseli";
+    yenidenCiz = true;
+  };
+  window.addEventListener("fanus:bicim", bicimUygula);
+
   // ---- Kare döngüsü ----
   let zaman = 0;
   let onceki = performance.now();
@@ -431,8 +466,16 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     const alevGiris = MathUtils.smoothstep(giris, 0, 0.35);
     const camGiris = MathUtils.smootherstep(giris, 0.22, 1);
     const acilma = poz.kapak + (1 - camGiris) * 1.9;
-    simge.position.set(poz.kapak * 0.35, CAM_ORTASI + acilma * 2.15, 0);
-    simge.rotation.set(-acilma * 0.32, 0, -poz.kapak * 0.16);
+    if (bicim === "simge") {
+      simge.position.set(poz.kapak * 0.35, CAM_ORTASI + acilma * 2.15, 0);
+      simge.rotation.set(-acilma * 0.32, 0, -poz.kapak * 0.16);
+    } else {
+      // İki parça kapı gibi açılır: yana kayar, iç kenarı arkaya döner (kameraya yaklaşıp büyümez)
+      solKoseli.position.x = -acilma * 0.95;
+      sagKoseli.position.x = acilma * 0.95;
+      solKoseli.rotation.y = -acilma * 0.55;
+      sagKoseli.rotation.y = acilma * 0.55;
+    }
 
     // Rüzgâr: imlecin hızı, cam açıldıkça alevi daha çok etkiler
     const vx = (imlec.x - imlec.oncekiX) / Math.max(dt, 0.001);
@@ -480,7 +523,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     // Kıvılcımlar: alevden yükselir; cam kapalıyken içinde kalır, açılınca tavan yükselir ve rüzgâra kapılır
     const kapali = acilma < 0.3;
     const tavan = MathUtils.lerp(1.65, 4.2, Math.min(acilma, 1));
-    const sinirX = kapali ? 0.85 : 3;
+    const sinirX = kapali ? (bicim === "simge" ? 0.85 : 0.6) : 3;
     const sinirZ = kapali ? 0.22 : 3;
     for (let i = 0; i < KIVILCIM; i++) {
       omur[i] += dt * hiz[i] * (0.6 + 0.4 * guc);
@@ -521,12 +564,15 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   };
   const olcum = { kare: 0, toplam: 0, bitti: false };
 
-  // Gölgelendiricileri önceden ve mümkünse paralel derle: ilk karede ana iş parçacığı kilitlenmesin
+  // Gölgelendiricileri önceden ve mümkünse paralel derle: ilk karede ana iş parçacığı kilitlenmesin.
+  // Gizli biçimin camı da derlensin diye ikisi de bir an görünür yapılır.
+  simge.visible = koseli.visible = true;
   let yokEdildi = false;
   cizici
     .compileAsync(sahne, kamera)
     .catch(() => undefined)
     .then(() => {
+      bicimUygula();
       if (!yokEdildi) cizici.setAnimationLoop(kare);
     });
 
@@ -537,6 +583,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       window.removeEventListener("pointermove", imlecHareketi);
       window.removeEventListener("resize", boyutla);
       window.removeEventListener("fanus:tema", temaUygula);
+      window.removeEventListener("fanus:bicim", bicimUygula);
       geometriler.forEach((geo) => geo.dispose());
       malzemeler.forEach((mal) => mal.dispose());
       haleDokusu.dispose();
@@ -588,6 +635,32 @@ function yuvarlakKare(boy: number, yaricap: number) {
   b.quadraticCurveTo(-y, y, -y, y - r);
   b.lineTo(-y, -y + r);
   b.quadraticCurveTo(-y, -y, -y + r, -y);
+  return b;
+}
+
+/**
+ * Köşeli parantez biçimli cam parçanın önden görünüşü (ortası 0,0). yon 1: soldaki "[", -1: sağdaki "]".
+ * Dış köşeler yuvarlatılmış; logodaki çizimle aynı oran (boy 2,9; kol 0,62; kalınlık 0,26).
+ */
+function koseliBicimi(yon: 1 | -1) {
+  const H = 1.45; // yarı boy
+  const L = 1.05; // dış kenarın ortadan uzaklığı
+  const k = 0.62; // kol uzunluğu
+  const t = 0.26; // kalınlık
+  const r = 0.14; // dış köşe yarıçapı
+  const n = (x: number, y: number): [number, number] => [x * yon, y];
+  const b = new Shape();
+  b.moveTo(...n(-L + k, -H));
+  b.lineTo(...n(-L + r, -H));
+  b.quadraticCurveTo(...n(-L, -H), ...n(-L, -H + r));
+  b.lineTo(...n(-L, H - r));
+  b.quadraticCurveTo(...n(-L, H), ...n(-L + r, H));
+  b.lineTo(...n(-L + k, H));
+  b.lineTo(...n(-L + k, H - t));
+  b.lineTo(...n(-L + t, H - t));
+  b.lineTo(...n(-L + t, -H + t));
+  b.lineTo(...n(-L + k, -H + t));
+  b.closePath();
   return b;
 }
 

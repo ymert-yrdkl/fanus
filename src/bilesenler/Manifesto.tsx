@@ -125,11 +125,7 @@ export default function Manifesto() {
         </p>
 
         {/* Işığa dalışın sonu: alev ekranı doldurunca sahne düz gece rengine kapanır (degrade yok) */}
-        <div
-          data-isik-perde
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gece opacity-0"
-        />
+        <div data-isik-perde aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gece opacity-0" />
       </div>
     </section>
   );

@@ -468,6 +468,15 @@ header[data-acik-ust] {
   display: none;
 }
 
+/* Fanus biçimi denemesi: <html data-bicim> hangi işaretin görüneceğini seçer (varsayılan cam simge). */
+[data-bicim-isaret] {
+  display: none;
+}
+:root:not([data-bicim="koseli"]) [data-bicim-isaret="simge"],
+:root[data-bicim="koseli"] [data-bicim-isaret="koseli"] {
+  display: block;
+}
+
 /* Büyük, yumuşak gölge: gecede koyu, gündüzde lacivert tonlu ve hafif */
 .golge {
   box-shadow: 0 40px 100px -40px var(--golge-rengi);
