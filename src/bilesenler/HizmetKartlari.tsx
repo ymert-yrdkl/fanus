@@ -8,7 +8,7 @@ function CiroGorseli() {
     <div className="flex h-full flex-col justify-end rounded-2xl border border-cizgi bg-cukur p-4">
       <div className="flex items-center justify-between text-xs text-soluk">
         <span>Bu hafta</span>
-        <span className="rounded-full bg-alev/15 px-2 py-0.5 text-alev">Yeni sipariş</span>
+        <span className="rounded-full bg-alev/15 px-2 py-0.5 text-alev-koyu">Yeni sipariş</span>
       </div>
       <div className="mt-4 flex h-28 items-end gap-2">
         {boylar.map((b, i) => (

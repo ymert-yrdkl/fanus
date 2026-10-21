@@ -208,7 +208,7 @@ export default function UstMenu() {
           </ul>
 
           <div className="flex items-center gap-2">
-            <Link href="/iletisim" data-miknatis className={`${dugmeSinifi.alev} hidden min-h-10 px-5 sm:inline-flex`}>
+            <Link href="/iletisim" data-miknatis className={`${dugmeSinifi.alev} min-h-10 px-5 max-[359px]:hidden`}>
               Teklif al
             </Link>
             <button

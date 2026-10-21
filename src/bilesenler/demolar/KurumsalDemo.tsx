@@ -5,12 +5,13 @@ import { Desktop, DeviceMobile, List, MagnifyingGlass, ArrowRight } from "@phosp
 import { gsap } from "@/hareket/gsap";
 import { adresAdi, basHarfler, useIsletmeAdi } from "../IsletmeAdi";
 
-// Örnek sitenin tema renkleri (ziyaretçinin seçeceği marka renkleri; fanus'un paleti değil)
+// Örnek sitenin tema renkleri (ziyaretçinin seçeceği marka renkleri; fanussoft'un paleti değil).
+// Üstlerinde beyaz yazı durur: her biri beyazla en az 4,5:1 (WCAG AA).
 const RENKLER = [
-  { ad: "Kehribar", deger: "#e39b4c" },
-  { ad: "Deniz", deger: "#5f9fb8" },
-  { ad: "Zeytin", deger: "#8fa66a" },
-  { ad: "Gül", deger: "#cf8592" },
+  { ad: "Kehribar", deger: "#a85a14" },
+  { ad: "Deniz", deger: "#2f6b85" },
+  { ad: "Zeytin", deger: "#55702f" },
+  { ad: "Gül", deger: "#a5475a" },
 ];
 
 const METIN = {

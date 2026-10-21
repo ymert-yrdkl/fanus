@@ -182,7 +182,7 @@ export default function OtomasyonDemo() {
   }, [mesaj]);
 
   return (
-    <div className="grid gap-4">
+    <div className="grid grid-cols-1 gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="flex items-center gap-2 text-sm text-soluk">
           <Lightning size={16} weight="fill" className="text-alev" aria-hidden="true" />
@@ -283,12 +283,12 @@ export default function OtomasyonDemo() {
 
       <div className="rounded-[1.25rem] border border-cizgi bg-cukur p-4 font-mono text-xs" aria-label="Akış kaydı">
         <p className="mb-2 text-soluk">akış kaydı</p>
-        <ul className="grid min-h-[5.5rem] gap-1.5">
+        <ul className="grid min-h-[5.5rem] grid-cols-1 gap-1.5">
           {kayitlar.length === 0 && <li className="text-soluk">Sipariş bekleniyor…</li>}
           {kayitlar.map((k, i) => (
             <li key={`${k.saat}-${i}-${k.metin}`} className="flex gap-3 animate-[satir_0.5s_var(--ease-yay)]">
               <span className="text-soluk tabular-nums">{k.saat}</span>
-              <span className="truncate text-krem/90">{k.metin}</span>
+              <span className="min-w-0 truncate text-krem/90">{k.metin}</span>
             </li>
           ))}
         </ul>

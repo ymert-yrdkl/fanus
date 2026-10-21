@@ -1,7 +1,6 @@
 "use client";
 
-import { Suspense, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { WhatsappLogo, EnvelopeSimple, Check } from "@phosphor-icons/react/dist/ssr";
 import { gsap, GENIS, useGSAP } from "@/hareket/gsap";
 import { sahneDurumu } from "@/sahne/durum";
@@ -49,27 +48,33 @@ export function mesajYaz(ad: string, secilenler: Secenek[], not: string) {
   return satirlar.join("\n");
 }
 
-/** Fiyat kartından gelindiyse (?paket=e-ticaret) o paket seçili gelir. */
-function AdresliTeklif() {
-  const paket = useSearchParams().get("paket");
-  const gecerli = SECENEKLER.find((s) => s.kod === paket)?.kod;
-  return <TeklifFormu key={gecerli ?? "bos"} baslangic={gecerli ? [gecerli] : []} />;
+/**
+ * Fiyat kartından gelindiyse (?paket=e-ticaret) o paket seçili gelir. Adres useSyncExternalStore ile okunur:
+ * sunucuda ve ilk çizimde boş, hemen ardından gerçek değer. (useSearchParams + Suspense, formu yedek kopyadan
+ * gerçeğine değiştiriyordu; belirme animasyonu eski kopyaya bağlı kaldığı için form görünmez kalıyordu.)
+ */
+const adresAbone = (degisti: () => void) => {
+  window.addEventListener("popstate", degisti);
+  return () => window.removeEventListener("popstate", degisti);
+};
+function adrestekiPaket(arama: string): Secenek | null {
+  const paket = new URLSearchParams(arama).get("paket");
+  return SECENEKLER.find((s) => s.kod === paket)?.kod ?? null;
 }
 
-/** İletişim sayfasındaki teklif oluşturucu. Adres parametresi okunurken boş seçimle görünür. */
+/** İletişim sayfasındaki teklif oluşturucu: seçimlerden WhatsApp ya da e-posta mesajı hazırlanır. */
 export default function Teklif() {
-  return (
-    <Suspense fallback={<TeklifFormu baslangic={[]} />}>
-      <AdresliTeklif />
-    </Suspense>
-  );
-}
-
-/** Seçimlerden WhatsApp ya da e-posta mesajı hazırlanır. */
-function TeklifFormu({ baslangic }: { baslangic: Secenek[] }) {
   const kok = useRef<HTMLElement>(null);
   const { ad, setAd } = useIsletmeAdi();
-  const [secilenler, setSecilenler] = useState<Secenek[]>(baslangic);
+  const arama = useSyncExternalStore(
+    adresAbone,
+    () => window.location.search,
+    () => "",
+  );
+  // Ziyaretçi bir seçime dokunana kadar (null) adresteki paket seçili sayılır
+  const [elleSecilen, setElleSecilen] = useState<Secenek[] | null>(null);
+  const adrestenGelen = adrestekiPaket(arama);
+  const secilenler = elleSecilen ?? (adrestenGelen ? [adrestenGelen] : []);
   const [not, setNot] = useState("");
 
   const mesaj = mesajYaz(ad, secilenler, not);
@@ -77,7 +82,7 @@ function TeklifFormu({ baslangic }: { baslangic: Secenek[] }) {
   const eposta = epostaBaglantisi(ad.trim() ? `${ad.trim()} için teklif` : "Teklif isteği", mesaj);
 
   const sec = (secenek: Secenek) =>
-    setSecilenler((onceki) => (onceki.includes(secenek) ? onceki.filter((s) => s !== secenek) : [...onceki, secenek]));
+    setElleSecilen(secilenler.includes(secenek) ? secilenler.filter((s) => s !== secenek) : [...secilenler, secenek]);
 
   // Arkadaki fanusun yeri: masaüstünde sağda, telefonda üstte soluk
   useGSAP(

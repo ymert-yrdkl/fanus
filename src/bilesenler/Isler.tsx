@@ -91,10 +91,15 @@ export default function Isler({
     <section
       ref={kok}
       id="isler"
-      aria-labelledby={baslik ? "isler-baslik" : undefined}
-      aria-label={baslik ? undefined : "Yayındaki işler"}
+      aria-labelledby="isler-baslik"
       className={`relative z-10 bg-gece px-4 sm:px-6 lg:px-10 ${baslik ? "pt-28 md:pt-36" : ""}`}
     >
+      {/* Başlık gösterilmese de başlık sırası bozulmasın (h1'den h3'e atlanmasın): yalnız ekran okuyucu için */}
+      {!baslik && (
+        <h2 id="isler-baslik" className="sr-only">
+          Yayındaki işler
+        </h2>
+      )}
       {baslik && (
         <div className="mx-auto max-w-[90rem]">
           <h2 id="isler-baslik" data-bol className="bolum-baslik max-w-[16ch]">
@@ -114,7 +119,7 @@ export default function Isler({
             aria-labelledby={`is-${r.kod}`}
             className="relative border-b border-cizgi py-16 last:border-b-0 md:py-0 [.hareket_&]:md:h-[230vh]"
           >
-            <div className="grid gap-10 md:grid-cols-12 md:items-center md:gap-8 [.hareket_&]:md:sticky [.hareket_&]:md:top-0 [.hareket_&]:md:h-dvh md:py-20 [.hareket_&]:md:py-0">
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:items-center md:gap-8 [.hareket_&]:md:sticky [.hareket_&]:md:top-0 [.hareket_&]:md:h-dvh md:py-20 [.hareket_&]:md:py-0">
               <div className="md:col-span-5 lg:col-span-4 lg:pr-4">
                 <p className="etiket">
                   {r.tur} · {r.sehir}

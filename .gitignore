@@ -42,3 +42,6 @@ next-env.d.ts
 
 # ekran görüntüsü çıktıları
 /.ekran/
+
+# denetim raporları
+/.denetim/

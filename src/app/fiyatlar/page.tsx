@@ -45,7 +45,10 @@ export default function FiyatlarSayfasi() {
         baslik="Fiyatı baştan söylüyoruz."
         metin={`Her paketin fiyatı ve içeriği aşağıda yazılı. Site yayına girdikten sonra her yıl ${fiyatYaz(YILLIK_YENILEME)} yenileme ödersiniz; sunucu, SSL, güncelleme ve yedek buna dahildir.`}
       />
-      <section aria-label="Paketler" className="relative z-10 bg-gece px-4 pb-20 sm:px-6 md:pb-28 lg:px-10">
+      <section aria-labelledby="paketler-baslik" className="relative z-10 bg-gece px-4 pb-20 sm:px-6 md:pb-28 lg:px-10">
+        <h2 id="paketler-baslik" className="sr-only">
+          Paketler ve fiyatlar
+        </h2>
         <div className="mx-auto grid max-w-[90rem] gap-5 md:grid-cols-2">
           {fiyatliPaketler.map((p, i) => (
             <FiyatKarti key={p.kod} paket={p} gecikme={(i % 2) * 0.08} />
