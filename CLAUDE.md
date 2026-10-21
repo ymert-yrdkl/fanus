@@ -60,6 +60,16 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   Fiyatlar 21 Ekim: tam paket kurumsal ₺45.000, e-ticaret ₺65.000. DNS ve Coolify ayrıntısı `docs/yayina-alma.md`.
   Bekleyen: fanussoft.com.tr'nin .tr kayıt sisteminde açılması (sonra Coolify'a eklenir), e-posta kutusu
   (`merhaba@fanussoft.com`), İHS'de alan adı kilidinin tekrar açılması.
+- Denetim (21 Ekim 2026): `npm run denetim [-- <adres>] [--hizli]` bütün sayfaları 5 genişlikte gezer (konsol/ağ,
+  taşma, takılı animasyon, görsel, SEO etiketleri, axe-core, bağlantılar, site haritası) ve 11 etkileşim senaryosunu
+  oynatır (`scripts/denetim/`); rapor `.denetim/rapor.md`. Yerelde üretim derlemesine karşı: `npm run build` +
+  launch.json `fanus-uretim` (:3400). Son yerel koşu 0 hata; düzeltmeler canlıda. Her değişiklikten sonra çalıştırılır.
+- KALDIĞIMIZ YER (21 Ekim gece): (1) Telefondaki animasyonlar için kapsamlı düzenleme (Yusuf'un listesi gelecek;
+  pin/yatay şerit/yapışkan çerçeve/manifesto telefonda sadeleşmeli), (2) hız: PageSpeed masaüstü 60, mobil 90
+  (LCP 3,3 sn); masaüstünde 3B sahne geç yüklenmeli, açılış perdesi LCP'yi geciktiriyor, (3) `npm run denetim:lighthouse`
+  betiği henüz yazılmadı (package.json'da tanımlı), (4) SEO aşaması: sayfa başlıkları kısa (denetim uyarısı),
+  Search Console + Bing, anahtar kelimeler, Google İşletme Profili, (5) fanussoft.com.tr: .tr kayıt sistemi ad
+  sunucusunu işleyince Coolify › Domains › Add Domain ile eklenecek (DNS kayıtları İHS'de hazır).
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).
