@@ -7,8 +7,6 @@ import UstMenu from "@/bilesenler/UstMenu";
 import GecisYoneticisi from "@/hareket/GecisYoneticisi";
 import PuruzsuzKaydirma from "@/hareket/PuruzsuzKaydirma";
 import SayfaEtkileri from "@/hareket/SayfaEtkileri";
-import TemaSecici from "@/bilesenler/TemaSecici";
-import { TEMA_SECICI_ACIK, TEMALAR, VARSAYILAN_TEMA } from "@/site/tema";
 import { SITE } from "@/site/ayarlar";
 import "./globals.css";
 
@@ -22,7 +20,7 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.adres),
-  title: { default: SITE.baslik, template: "%s | fanus.tr" },
+  title: { default: SITE.baslik, template: "%s | fanussoft" },
   description: SITE.aciklama,
   alternates: { canonical: "/" },
   openGraph: {
@@ -30,14 +28,14 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: "/",
     siteName: SITE.alanAdi,
-    title: { default: SITE.baslik, template: "%s | fanus.tr" },
+    title: { default: SITE.baslik, template: "%s | fanussoft" },
     description: SITE.aciklama,
   },
   twitter: { card: "summary_large_image", title: SITE.baslik, description: SITE.aciklama },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050d1e",
+  themeColor: "#313338",
   colorScheme: "dark",
 };
 
@@ -45,23 +43,17 @@ export const viewport: Viewport = {
 // yalnız bu sınıfla gizlenir). Hareket altyapısı 6 sn içinde kurulmazsa sınıf kaldırılır, içerik görünür kalır.
 const HAREKET_BETIGI = `(function(){var d=document.documentElement;try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('hareket');if(sessionStorage.getItem('fanus-acildi'))d.classList.add('tekrar');setTimeout(function(){if(!window.__fanusHazir)d.classList.remove('hareket')},6000)}catch(e){}})();`;
 
-// Palet denemesi: seçici açıkken bu tarayıcıda seçilen palet boyamadan önce uygulanır (?tema= de olur)
-const TEMA_BETIGI = TEMA_SECICI_ACIK
-  ? `(function(){try{var g=${JSON.stringify(TEMALAR.map((t) => t.kod))};var a=new URLSearchParams(location.search).get('tema');if(g.indexOf(a)>-1)localStorage.setItem('fanus-tema',a);var t=localStorage.getItem('fanus-tema');if(g.indexOf(t)>-1)document.documentElement.dataset.tema=t;}catch(e){}})();`
-  : "";
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="tr"
-      data-tema={VARSAYILAN_TEMA}
       suppressHydrationWarning
       className={`${geist.variable} ${geistMono.variable} ${bricolage.variable}`}
     >
       <head>
         {/* Boyamadan önce çalışmalı: next/script beforeInteractive bunu geciktirir. Geliştirme modunda React
             "script etiketi" uyarısı verir; yalnız geliştirmede görünür, zararsızdır. */}
-        <script dangerouslySetInnerHTML={{ __html: TEMA_BETIGI + HAREKET_BETIGI }} />
+        <script dangerouslySetInnerHTML={{ __html: HAREKET_BETIGI }} />
       </head>
       <body className="tane">
         <a href="#icerik" className="atla">
@@ -76,7 +68,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </IsletmeAdiSaglayici>
         <GecisYoneticisi />
         <SayfaEtkileri />
-        {TEMA_SECICI_ACIK && <TemaSecici />}
       </body>
     </html>
   );

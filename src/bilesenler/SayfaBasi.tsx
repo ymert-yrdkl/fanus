@@ -47,7 +47,7 @@ export default function SayfaBasi({
             <ol className="flex flex-wrap items-center gap-2 font-mono text-[0.8125rem] tracking-wide text-soluk uppercase">
               <li>
                 <Link href="/" className="transition-colors hover:text-krem">
-                  fanus
+                  fanussoft
                 </Link>
               </li>
               {iz.map((i) => (

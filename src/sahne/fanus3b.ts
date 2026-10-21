@@ -65,8 +65,9 @@ const ALEV_RENKLERI = {
   isik: 0xff8a2e,
 };
 
-/** Sahnenin zemini sayfanın gece rengiyle aynı olmalı: paletten (CSS --lacivert) okunur. */
-const sahneZemini = () => getComputedStyle(document.documentElement).getPropertyValue("--lacivert").trim() || "#050d1e";
+/** Sahnenin zemini sayfanın gece rengiyle aynı olmalı: CSS --gece-zemin'den okunur. */
+const sahneZemini = () =>
+  getComputedStyle(document.documentElement).getPropertyValue("--gece-zemin").trim() || "#313338";
 
 type Secenek = {
   /** İlk kare çizilince çağrılır. */
@@ -367,7 +368,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   boyutla();
   window.addEventListener("resize", boyutla);
 
-  // ---- Renkler: alev sabit, zemin paletten (palet seçici değişince de) ----
+  // ---- Renkler: alev sabit, zemin sayfanın gece renginden ----
   const temaUygula = () => {
     const t = ALEV_RENKLERI;
     cizici.setClearColor(sahneZemini(), 1);
@@ -393,7 +394,6 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     yenidenCiz = true;
   };
   temaUygula();
-  window.addEventListener("fanus:tema", temaUygula);
 
   // ---- Kare döngüsü ----
   let zaman = 0;
@@ -542,7 +542,6 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       cizici.setAnimationLoop(null);
       window.removeEventListener("pointermove", imlecHareketi);
       window.removeEventListener("resize", boyutla);
-      window.removeEventListener("fanus:tema", temaUygula);
       geometriler.forEach((geo) => geo.dispose());
       malzemeler.forEach((mal) => mal.dispose());
       haleDokusu.dispose();

@@ -39,7 +39,7 @@ export default function GecisYoneticisi() {
       }
       if (bekleyen.current) return;
       bekleyen.current = true;
-      setHedefAdi(SAYFA_ADLARI[url.pathname] ?? "fanus");
+      setHedefAdi(SAYFA_ADLARI[url.pathname] ?? "fanussoft");
       router.prefetch(url.pathname);
       let gidildi = false;
       const sayfayaGec = () => {

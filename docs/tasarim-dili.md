@@ -1,31 +1,36 @@
-# fanus tasarım dili
+# fanussoft tasarım dili
 
-**Okuma:** tanıtım sayfası; kitle Türkiye'de küçük ve orta işletme sahipleri; dil sıcak, somut, abartısız;
-sistem koyu "gece" zemin + tek "alev" vurgusu. Kadranlar: çeşitlilik 8, hareket 9, yoğunluk 4.
+**Okuma:** tanıtım sitesi; kitle Türkiye'de küçük ve orta işletme sahipleri; dil sıcak, somut, abartısız;
+sistem yumuşak koyu gri "gece" (3B sahne) + açık gri "gündüz" (içerik) + tek "alev" vurgusu. Kadranlar: çeşitlilik
+8, hareket 9, yoğunluk 4.
 
-## Metafor
-Fanus, alevi rüzgârdan koruyan camdır. İşletmenin ışığı (emeği) internette kolay söner; fanus onu korur,
-büyütür, uzaktan görünür kılar. Görsel dil buradan gelir: koyu zemin, sıcak tek ışık, cam yansımaları.
+## Metafor ve işaret
+Fanus, alevi rüzgârdan koruyan camdır. İşletmenin ışığı (emeği) internette kolay söner; fanus onu korur, büyütür,
+uzaktan görünür kılar. İşaret (21 Ekim 2026): köşeli parantez içinde alev, `[ alev ]`; parantezler fanusun iki cam
+yarısı (3B'de iki kalın cam parça) ve aynı zamanda kod. Yazım: **fanus**soft ("soft" soluk renkte). Eski fener
+(topuz, pirinç taban, fitil) "eski usul, falcı fanusu" bulunduğu için bırakıldı.
 
 ## Renk (yalnız token)
-Seçilen tema (20 Ekim 2026): **D, koyu lacivert + kor kırmızısı** (`data-tema="lacivert-kor"`, `globals.css`).
-Sayfa zemini lacivert; kartlar ve iç paneller nötr grafit/siyah (lacivert yalnız zeminde). Diğer temalar (eski kahve,
-kor, gece, lacivert) yalnız geliştirmedeki seçicide karşılaştırma için durur (`src/site/tema.ts`).
+Seçilen (21 Ekim 2026): **Discord grisi + açık gri**, mercan vurgu. Lacivert ve degrade istenmedi: koyular yumuşak
+gri, gece ile gündüz arasında renk geçişi yok (gündüz, köşeleri yuvarlak bir sayfa gibi başlar, `.gecis-yaprak`).
+Koyu yalnız 3B sahnenin olduğu yerde: ana sayfa girişi + manifesto, iletişim teklif bölümü. Gerisi gündüz
+(`data-zemin="acik"`): aynı token adları `--g-*` değerlerine eşlenir. Bütün çiftler WCAG AA (en az 4,5:1).
 
-| Token | D değeri | Kullanım |
-|---|---|---|
-| `gece` | #050d1e | sayfa zemini (koyu lacivert), 3B sahnenin arkası |
-| `gece-2..4` | #111215 → #232428 | kartlar ve yükseltilmiş yüzeyler (nötr grafit) |
-| `cukur` | #09090b | kart içindeki gömülü paneller, form alanları |
-| `krem` | #f3f5f8 | ana metin (soğuk beyaz) |
-| `soluk` | #9ca1ab | ikincil metin |
-| `silik` | #6c7079 | yalnız yer tutucu ve büyük yazı |
-| `alev` (+ `alev-acik`, `alev-koyu`) | #ff4a2b | TEK vurgu: birincil düğme, vurgu kelime, ışık |
-| `canli` | #6fcf8f | yalnız "yayında" durum noktası |
-| `cizgi`, `cizgi-guclu` | beyaz %8 / %16 | ayraç ve çerçeve |
+| Token | Gece | Gündüz | Kullanım |
+|---|---|---|---|
+| `gece` | #313338 | #f2f3f5 | zemin; gecede 3B sahnenin arkası (`--gece-zemin`) |
+| `gece-2..4` | #393b41 → #4a4d55 | #ffffff → #e3e5e8 | kartlar ve yükseltilmiş yüzeyler |
+| `cukur` | #2b2d31 | #f6f7f8 | kart içindeki gömülü paneller, form alanları |
+| `krem` | #f2f3f5 | #1e1f22 | ana metin |
+| `soluk` | #b5bac1 | #4e5058 | ikincil metin |
+| `silik` | #aab0b8 | #5c5e66 | küçük yardımcı metin |
+| `alev` (+ `alev-acik`, `alev-koyu`) | #ff8266 | #c9321a | TEK vurgu: birincil düğme, vurgu kelime, ışık |
+| `canli` | #6fcf8f | | yalnız "yayında" durum noktası |
+| `cizgi`, `cizgi-guclu` | beyaz %8 / %16 | koyu gri %10 / %18 | ayraç ve çerçeve |
 
-3B sahnenin renkleri temaya göre `src/sahne/fanus3b.ts` › SAHNE_TEMALARI'nda (alev ortası sarı, kenarı kızıl; metal
-gümüş). Işık ve parlamalar elle renk yazmaz: CSS'te `color-mix(..., var(--color-alev) ...)`, GSAP'te `vurgu()`.
+Gündüzde `alev-acik` düğmenin üzerine gelinceki renktir (koyulaşır). 3B sahnede alev markanın sabit rengindedir
+(`src/sahne/fanus3b.ts` › ALEV_RENKLERI: dışı kor kırmızısı, içi sarı); logodaki alev de aynı. Işık ve parlamalar elle
+renk yazmaz: CSS'te `color-mix(..., var(--color-alev) ...)`, GSAP'te `vurgu()`. Gündüz zeminde süs ışıkları yok.
 
 İstisna: hizmet örneklerinin içindeki minyatür siteler (kurumsal site önizlemesi, QR menü telefonu) kendi
 kâğıt renklerini kullanır; bunlar müşterinin sitesini temsil eder, fanus'un paletini değil.

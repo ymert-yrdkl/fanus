@@ -128,7 +128,7 @@ export default function UstMenu() {
           aria-label="Ana menü"
           className="mx-auto flex h-full max-w-[90rem] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10"
         >
-          <Link href="/" aria-label="fanus.tr ana sayfa" className="-m-2 rounded-full p-2">
+          <Link href="/" aria-label="fanussoft ana sayfa" className="-m-2 rounded-full p-2">
             <Logo />
           </Link>
 

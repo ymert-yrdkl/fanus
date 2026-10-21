@@ -6,7 +6,7 @@ Sitede şu an yer tutucu ya da onay bekleyen bilgiler. Değerler `src/site/ayarl
 |---|---|---|
 | WhatsApp numarası | boş | Boşken WhatsApp düğmeleri gizli, teklif e-postayla gider. Biçim: `905xxxxxxxxx`. |
 | Telefon | boş | Altbilgide ve teklif bölümünde gösterilir. |
-| E-posta | `merhaba@fanus.tr` | Kutunun açılmış olması gerekir; açılmadıysa gerçek adresle değiştirin. |
+| E-posta | `merhaba@fanussoft.com` | Kutu henüz yok (alan adı 21 Ekim 2026'da alındı): açılmalı ya da gerçek adresle değiştirilmeli. |
 | Instagram | boş | Altbilgide gösterilir. |
 | Alan adı | fanustr.ahmcloud.com (geçici) | fanus.tr bağlanınca Coolify'da alan adı ve `NEXT_PUBLIC_SITE_ADRESI` güncellenir. |
 | Süreç ve SSS metinleri | taslak | "Görüşmeden sonra yazılı teklif ve takvim", "teklifte olmayan kalem faturaya eklenmez", "alan adı, sunucu, yedek ve güncellemeler bizde" birer taahhüttür; doğru değilse `src/site/icerik.ts`'te düzeltin. |

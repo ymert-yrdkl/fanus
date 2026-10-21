@@ -15,11 +15,11 @@ type SiteAyarlari = {
 
 export const SITE: SiteAyarlari = {
   ad: "fanus",
-  alanAdi: "fanus.tr",
-  adres: process.env.NEXT_PUBLIC_SITE_ADRESI ?? "https://fanus.tr",
-  baslik: "fanus.tr | E-ticaret, kurumsal site, QR menü ve web otomasyonu",
+  alanAdi: "fanussoft.com",
+  adres: process.env.NEXT_PUBLIC_SITE_ADRESI ?? "https://fanussoft.com",
+  baslik: "fanussoft | E-ticaret, kurumsal site, QR menü ve web otomasyonu",
   aciklama:
-    "fanus; e-ticaret siteleri, kurumsal web siteleri, QR menüler ve iş akışınızı yürüten web otomasyonları kurar. Yayındaki işlerimizi gezin, teklif isteyin.",
+    "fanussoft; e-ticaret siteleri, kurumsal web siteleri, QR menüler ve iş akışınızı yürüten web otomasyonları kurar. Yayındaki işlerimizi gezin, teklif isteyin.",
 
   // ONAY BEKLİYOR: WhatsApp numarası, ülke koduyla ve boşluksuz (ör. "905xxxxxxxxx").
   // Boşken WhatsApp düğmeleri gizlenir, teklif e-postayla gönderilir.
@@ -27,8 +27,8 @@ export const SITE: SiteAyarlari = {
   // ONAY BEKLİYOR: görünen telefon (ör. "+90 5xx xxx xx xx"). Boşken gösterilmez.
   telefon: "",
   // ONAY BEKLİYOR: e-posta kutusunun açılmış olması gerekir.
-  eposta: "merhaba@fanus.tr",
-  // ONAY BEKLİYOR: Instagram kullanıcı adı (ör. "fanus.tr"). Boşken gösterilmez.
+  eposta: "merhaba@fanussoft.com",
+  // ONAY BEKLİYOR: Instagram kullanıcı adı (ör. "fanussoft"). Boşken gösterilmez.
   instagram: "",
 };
 

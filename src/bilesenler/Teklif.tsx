@@ -44,7 +44,7 @@ export function mesajYaz(ad: string, secilenler: Secenek[], not: string) {
     isler.length > 0
       ? `${veIleBagla(isler)} hakkında teklif almak istiyorum.`
       : "bir web projesi hakkında görüşmek istiyorum.";
-  const satirlar = [`Merhaba fanus, ${kim}${ne}`];
+  const satirlar = [`Merhaba fanussoft, ${kim}${ne}`];
   if (not.trim()) satirlar.push("", not.trim());
   return satirlar.join("\n");
 }

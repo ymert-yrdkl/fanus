@@ -82,7 +82,7 @@ export function Logo() {
     <span className="flex items-center gap-2.5">
       <FanusIsareti className="size-7 text-krem" />
       <span className="font-baslik text-[1.375rem] leading-none font-semibold tracking-[-0.03em]">
-        fanus<span className="text-soluk">.tr</span>
+        fanus<span className="text-soluk">soft</span>
       </span>
     </span>
   );

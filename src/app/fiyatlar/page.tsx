@@ -22,7 +22,7 @@ export default function FiyatlarSayfasi() {
   const yapilandirilmisVeri = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
-    name: "fanus paketleri",
+    name: "fanussoft paketleri",
     url: `${SITE.adres}/fiyatlar`,
     itemListElement: fiyatliPaketler.map((p) => ({
       "@type": "Offer",

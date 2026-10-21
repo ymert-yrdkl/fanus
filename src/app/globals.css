@@ -1,26 +1,29 @@
 @import "tailwindcss";
 
 /*
-  fanus tasarım token'ları. Renk YALNIZ buradan gelir: Tailwind'in hazır paleti kapalı
-  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "alev"; zemin sıcak kapalı siyah.
+  fanussoft tasarım token'ları. Renk YALNIZ buradan gelir: Tailwind'in hazır paleti kapalı
+  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "alev" (mercan). İki takım: gece (@theme, koyu gri) ve
+  gündüz (--g-*, açık gri; data-zemin="acik" bölümlerinde token'lara eşlenir). Lacivert ve degrade yok.
+  Bütün çiftler WCAG AA'yı geçer (yazı, soluk, silik, vurgu ve düğme yazısı en az 4,5:1).
   Ayrıntı: docs/tasarim-dili.md
 */
 @theme {
   --color-*: initial;
-  --color-gece: #0d0c0b;
-  --color-gece-2: #151311;
-  --color-gece-3: #1f1c18;
-  --color-gece-4: #2a2621;
-  --color-cukur: #0d0c0b;
-  --color-cizgi: rgb(244 236 224 / 0.1);
-  --color-cizgi-guclu: rgb(244 236 224 / 0.2);
-  --color-krem: #f4ece0;
-  --color-soluk: #a89f92;
-  --color-silik: #7d7468;
-  --color-alev: #eba04e;
-  --color-alev-acik: #f7c58a;
-  --color-alev-koyu: #b8772f;
-  --color-canli: #86c28f;
+  /* Gece (3B sahnenin olduğu bölümler): yumuşak koyu gri, Discord'un koyu temasındaki gibi */
+  --color-gece: #313338;
+  --color-gece-2: #393b41;
+  --color-gece-3: #404249;
+  --color-gece-4: #4a4d55;
+  --color-cukur: #2b2d31;
+  --color-cizgi: rgb(255 255 255 / 0.08);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --color-krem: #f2f3f5;
+  --color-soluk: #b5bac1;
+  --color-silik: #aab0b8;
+  --color-alev: #ff8266;
+  --color-alev-acik: #ffa58f;
+  --color-alev-koyu: #f5603f;
+  --color-canli: #6fcf8f;
   --color-transparent: transparent;
   --color-current: currentColor;
 
@@ -32,210 +35,27 @@
   --radius-kart: 1.5rem;
 }
 
-/*
-  Renk paletleri (deneme, 21 Ekim 2026): <html data-tema="..."> ile seçilir; liste src/site/tema.ts › TEMALAR.
-  Her palet iki takım verir: gece (--color-*: 3B sahnenin olduğu bölümler) ve gündüz (--g-*: data-zemin="acik"
-  bölümleri, aşağıda token'lara eşlenir). Lacivert ve degrade yok (Yusuf'un isteği): koyular yumuşak gri, geçiş keskin.
-  Bütün çiftler WCAG AA'yı geçer (yazı, soluk, silik, vurgu ve düğme yazısı en az 4,5:1).
-*/
-:root[data-tema="discord-gri"] {
-  /* Discord grisi + açık gri */
-  --lacivert: #313338;
-  --color-gece: #313338;
-  --color-gece-2: #393b41;
-  --color-gece-3: #404249;
-  --color-gece-4: #4a4d55;
-  --color-cukur: #2b2d31;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f2f3f5;
-  --color-soluk: #b5bac1;
-  --color-silik: #aab0b8;
-  --color-alev: #ff8266;
-  --color-alev-acik: #ffa58f;
-  --color-alev-koyu: #f5603f;
-  --g-zemin: #f2f3f5;
-  --g-kart: #ffffff;
-  --g-kart-2: #ebedef;
-  --g-kart-3: #e3e5e8;
-  --g-cukur: #f6f7f8;
-  --g-cizgi: rgb(30 31 34 / 0.1);
-  --g-cizgi-guclu: rgb(30 31 34 / 0.18);
-  --g-yazi: #1e1f22;
-  --g-soluk: #4e5058;
-  --g-silik: #5c5e66;
-  --g-vurgu: #c9321a;
-  --g-vurgu-ust: #a82a14;
-  --g-vurgu-koyu: #8f2410;
-  --g-golge: rgb(30 31 34 / 0.14);
-  --g-google: #1a0dab;
-}
-:root[data-tema="koyu-discord"] {
-  /* Koyu Discord grisi + açık gri */
-  --lacivert: #2b2d31;
-  --color-gece: #2b2d31;
-  --color-gece-2: #35373c;
-  --color-gece-3: #3c3e44;
-  --color-gece-4: #46484f;
-  --color-cukur: #232428;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f2f3f5;
-  --color-soluk: #b5bac1;
-  --color-silik: #a8aeb6;
-  --color-alev: #ff7a5c;
-  --color-alev-acik: #ff9f87;
-  --color-alev-koyu: #f05a39;
-  --g-zemin: #f2f3f5;
-  --g-kart: #ffffff;
-  --g-kart-2: #ebedef;
-  --g-kart-3: #e3e5e8;
-  --g-cukur: #f6f7f8;
-  --g-cizgi: rgb(30 31 34 / 0.1);
-  --g-cizgi-guclu: rgb(30 31 34 / 0.18);
-  --g-yazi: #1e1f22;
-  --g-soluk: #4e5058;
-  --g-silik: #5c5e66;
-  --g-vurgu: #c9321a;
-  --g-vurgu-ust: #a82a14;
-  --g-vurgu-koyu: #8f2410;
-  --g-golge: rgb(30 31 34 / 0.14);
-  --g-google: #1a0dab;
-}
-:root[data-tema="yumusak-siyah"] {
-  /* Yumuşak siyah + açık gri */
-  --lacivert: #1e1f22;
-  --color-gece: #1e1f22;
-  --color-gece-2: #2b2d31;
-  --color-gece-3: #313338;
-  --color-gece-4: #3a3c42;
-  --color-cukur: #18191b;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f2f3f5;
-  --color-soluk: #b5bac1;
-  --color-silik: #a3a9b2;
-  --color-alev: #ff6145;
-  --color-alev-acik: #ff8f78;
-  --color-alev-koyu: #e5452a;
-  --g-zemin: #f2f3f5;
-  --g-kart: #ffffff;
-  --g-kart-2: #ebedef;
-  --g-kart-3: #e3e5e8;
-  --g-cukur: #f6f7f8;
-  --g-cizgi: rgb(30 31 34 / 0.1);
-  --g-cizgi-guclu: rgb(30 31 34 / 0.18);
-  --g-yazi: #1e1f22;
-  --g-soluk: #4e5058;
-  --g-silik: #5c5e66;
-  --g-vurgu: #c9321a;
-  --g-vurgu-ust: #a82a14;
-  --g-vurgu-koyu: #8f2410;
-  --g-golge: rgb(30 31 34 / 0.14);
-  --g-google: #1a0dab;
-}
-:root[data-tema="hep-discord"] {
-  /* Hep Discord grisi */
-  --lacivert: #313338;
-  --color-gece: #313338;
-  --color-gece-2: #393b41;
-  --color-gece-3: #404249;
-  --color-gece-4: #4a4d55;
-  --color-cukur: #2b2d31;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f2f3f5;
-  --color-soluk: #b5bac1;
-  --color-silik: #aab0b8;
-  --color-alev: #ff8266;
-  --color-alev-acik: #ffa58f;
-  --color-alev-koyu: #f5603f;
-  --g-zemin: #313338;
-  --g-kart: #393b41;
-  --g-kart-2: #404249;
-  --g-kart-3: #4a4d55;
-  --g-cukur: #2b2d31;
-  --g-cizgi: rgb(255 255 255 / 0.08);
-  --g-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --g-yazi: #f2f3f5;
-  --g-soluk: #b5bac1;
-  --g-silik: #aab0b8;
-  --g-vurgu: #ff8266;
-  --g-vurgu-ust: #ffa58f;
-  --g-vurgu-koyu: #f5603f;
-  --g-golge: rgb(0 0 0 / 0.5);
-  --g-google: #9fc0ff;
-}
-:root[data-tema="hep-yumusak-siyah"] {
-  /* Hep yumuşak siyah */
-  --lacivert: #1e1f22;
-  --color-gece: #1e1f22;
-  --color-gece-2: #2b2d31;
-  --color-gece-3: #313338;
-  --color-gece-4: #3a3c42;
-  --color-cukur: #18191b;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f2f3f5;
-  --color-soluk: #b5bac1;
-  --color-silik: #a3a9b2;
-  --color-alev: #ff6145;
-  --color-alev-acik: #ff8f78;
-  --color-alev-koyu: #e5452a;
-  --g-zemin: #1e1f22;
-  --g-kart: #2b2d31;
-  --g-kart-2: #313338;
-  --g-kart-3: #3a3c42;
-  --g-cukur: #18191b;
-  --g-cizgi: rgb(255 255 255 / 0.08);
-  --g-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --g-yazi: #f2f3f5;
-  --g-soluk: #b5bac1;
-  --g-silik: #a3a9b2;
-  --g-vurgu: #ff6145;
-  --g-vurgu-ust: #ff8f78;
-  --g-vurgu-koyu: #e5452a;
-  --g-golge: rgb(0 0 0 / 0.6);
-  --g-google: #9fc0ff;
-}
-:root[data-tema="komur-kagit"] {
-  /* Kömür + kâğıt (önceki) */
-  --lacivert: #0b0b0c;
-  --color-gece: #0b0b0c;
-  --color-gece-2: #151517;
-  --color-gece-3: #1c1c1f;
-  --color-gece-4: #26262a;
-  --color-cukur: #070708;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f4f4f5;
-  --color-soluk: #a1a1aa;
-  --color-silik: #8b8b94;
-  --color-alev: #ff4a2b;
-  --color-alev-acik: #ff7d61;
-  --color-alev-koyu: #d63415;
-  --g-zemin: #fafaf9;
-  --g-kart: #ffffff;
-  --g-kart-2: #f1f1ef;
-  --g-kart-3: #e6e6e3;
-  --g-cukur: #f4f4f2;
-  --g-cizgi: rgb(12 12 13 / 0.1);
-  --g-cizgi-guclu: rgb(12 12 13 / 0.18);
-  --g-yazi: #0c0c0d;
-  --g-soluk: #52525b;
-  --g-silik: #61616a;
-  --g-vurgu: #c9321a;
-  --g-vurgu-ust: #a82a14;
-  --g-vurgu-koyu: #8f2410;
-  --g-golge: rgb(0 0 0 / 0.14);
-  --g-google: #1a0dab;
-}
-
 :root {
   --ust-yukseklik: 4.25rem;
   interpolate-size: allow-keywords;
-  /* Gece zemini (gündüz kapsamında da değişmez; geçiş bandı ve 3B sahne kullanır). Palet bloğu değiştirir. */
-  --lacivert: #050d1e;
+  /* Gece zemini (gündüz kapsamında da değişmez; 3B sahne bu renge siler) */
+  --gece-zemin: #313338;
+  /* Gündüz takımı (açık gri); data-zemin="acik" bölümünde --color-* bunlara eşlenir */
+  --g-zemin: #f2f3f5;
+  --g-kart: #ffffff;
+  --g-kart-2: #ebedef;
+  --g-kart-3: #e3e5e8;
+  --g-cukur: #f6f7f8;
+  --g-cizgi: rgb(30 31 34 / 0.1);
+  --g-cizgi-guclu: rgb(30 31 34 / 0.18);
+  --g-yazi: #1e1f22;
+  --g-soluk: #4e5058;
+  --g-silik: #5c5e66;
+  --g-vurgu: #c9321a;
+  --g-vurgu-ust: #a82a14;
+  --g-vurgu-koyu: #8f2410;
+  --g-golge: rgb(30 31 34 / 0.14);
+  --g-google: #1a0dab;
   --sayfa-isigi: color-mix(in srgb, var(--color-alev) 16%, transparent);
   --golge-rengi: rgb(0 0 0 / 0.85);
   --google-mavi: #9fc0ff;

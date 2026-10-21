@@ -1,4 +1,4 @@
-# fanus.tr: Next.js standalone imajı (Coolify, Dockerfile derleme paketi).
+# fanussoft: Next.js standalone imajı (Coolify, Dockerfile derleme paketi).
 # Site durumsuzdur: veritabanı ve kalıcı birim gerekmez.
 
 FROM node:24-alpine AS bagimliliklar
@@ -9,7 +9,7 @@ RUN npm ci --no-audit --no-fund
 FROM node:24-alpine AS derleme
 WORKDIR /app
 # Paylaşım görseli, kanonik adres ve site haritası bu adresle üretilir (derleme anında yazılır)
-ARG NEXT_PUBLIC_SITE_ADRESI=https://fanus.tr
+ARG NEXT_PUBLIC_SITE_ADRESI=https://fanussoft.com
 ENV NEXT_TELEMETRY_DISABLED=1 \
     NEXT_PUBLIC_SITE_ADRESI=$NEXT_PUBLIC_SITE_ADRESI
 COPY --from=bagimliliklar /app/node_modules ./node_modules

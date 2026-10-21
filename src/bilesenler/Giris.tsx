@@ -78,8 +78,8 @@ export default function Giris() {
           </h1>
           {/* Görünür kalır, yalnız kayar: sayfanın ana içeriği ilk boyamada sayılsın (LCP) */}
           <p data-giris-metin className="mt-7 max-w-[34rem] text-lg leading-relaxed text-soluk md:text-xl">
-            fanus; e-ticaret siteleri, kurumsal web siteleri, QR menüler ve tekrar eden işi üstlenen web otomasyonları
-            kurar.
+            fanussoft; e-ticaret siteleri, kurumsal web siteleri, QR menüler ve tekrar eden işi üstlenen web
+            otomasyonları kurar.
           </p>
           <div data-giris className="mt-9 flex flex-wrap items-center gap-3">
             <Link href="/iletisim" data-miknatis className={dugmeSinifi.alev}>

@@ -127,8 +127,8 @@ export default function Acilis() {
         </div>
         <div className="flex items-end gap-4">
           <span className="flex overflow-hidden font-baslik text-5xl leading-[1.1] font-semibold tracking-[-0.04em]">
-            {"fanus".split("").map((harf, i) => (
-              <span key={i} data-harf className="inline-block">
+            {"fanussoft".split("").map((harf, i) => (
+              <span key={i} data-harf className={`inline-block ${i < 5 ? "" : "text-soluk"}`}>
                 {harf}
               </span>
             ))}

@@ -142,15 +142,16 @@ export default function Alt() {
         </div>
       </div>
 
+      {/* "soft" soluk: logodaki yazımla aynı */}
       <div
         data-kelime-markasi
         aria-hidden="true"
-        className="mx-auto mt-20 flex max-w-[90rem] justify-center font-baslik text-[clamp(6rem,29vw,27rem)] leading-[0.82] font-semibold tracking-[-0.065em] select-none"
+        className="mx-auto mt-20 flex max-w-[90rem] justify-center font-baslik text-[clamp(3.5rem,16.5vw,15.5rem)] leading-[0.82] font-semibold tracking-[-0.06em] select-none"
       >
-        {"fanus".split("").map((harf, i) => (
+        {"fanussoft".split("").map((harf, i) => (
           <span key={i} className="relative inline-block">
             <span className="cizgi-yazi">{harf}</span>
-            <span data-harf-dolu className="absolute inset-0 text-krem">
+            <span data-harf-dolu className={`absolute inset-0 ${i < 5 ? "text-krem" : "text-soluk"}`}>
               {harf}
             </span>
           </span>
@@ -158,7 +159,7 @@ export default function Alt() {
       </div>
 
       <div className="mx-auto mt-10 flex max-w-[90rem] flex-col gap-4 border-t border-cizgi pt-6 text-sm text-soluk sm:flex-row sm:items-center sm:justify-between">
-        <p>© 2026 fanus.tr</p>
+        <p>© 2026 fanussoft</p>
         <p>Bu site çerez kullanmaz, ziyaretinizi izlemez.</p>
         <button
           type="button"
