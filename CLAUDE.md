@@ -52,14 +52,14 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
 - Çok sayfalı yapıya geçildi ve fiyatlar eklendi (20 Ekim 2026, Yusuf'un isteği).
 - Renk teması D seçildi (20 Ekim 2026): koyu lacivert zemin + kor kırmızısı, nötr grafit kartlar, sarı-kızıl alev.
   Eski kahve tema "yapay zekâ ürünü gibi" bulundu. Tema seçici yalnız `npm run dev`'de sol altta.
-- Yeni kimlik (21 Ekim 2026, yerelde hazır, yayında DEĞİL): ad **fanus**soft (fanussoft.com ve fanussoft.com.tr,
+- Yeni kimlik (21 Ekim 2026, YAYINDA: https://fanussoft.com): ad **fanus**soft (fanussoft.com ve fanussoft.com.tr,
   İHS'den alındı; asıl adres fanussoft.com, diğerleri ve fanustr.ahmcloud.com 301 ile oraya, `next.config.ts`).
   İşaret köşeli parantez içinde alev (3B'de iki kalın cam parça, manifestoda kapı gibi açılır). Renk: antrasit
   gece (#1a1b1e) + açık gri gündüz, mercan vurgu; lacivert ve degrade yok; koyu yalnız 3B sahnede. Ayrıntı
   `docs/tasarim-dili.md`. Tema/palet seçici kaldırıldı. Telefon sabit görseli ve paylaşım görseli yeni hâlden çekildi.
-  Fiyatlar 21 Ekim: tam paket kurumsal ₺45.000, e-ticaret ₺65.000. Bekleyen: İHS'de DNS (alan adı kilidi kalkınca
-  @ ve www için A kaydı 187.124.174.57), Coolify'a alan adları + `NEXT_PUBLIC_SITE_ADRESI=https://fanussoft.com`,
-  sonra dağıtım; e-posta kutusu (`merhaba@fanussoft.com`).
+  Fiyatlar 21 Ekim: tam paket kurumsal ₺45.000, e-ticaret ₺65.000. DNS ve Coolify ayrıntısı `docs/yayina-alma.md`.
+  Bekleyen: fanussoft.com.tr'nin .tr kayıt sisteminde açılması (sonra Coolify'a eklenir), e-posta kutusu
+  (`merhaba@fanussoft.com`), İHS'de alan adı kilidinin tekrar açılması.
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).

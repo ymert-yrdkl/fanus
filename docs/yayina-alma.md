@@ -1,6 +1,16 @@
-# Yayına alma (Coolify, fanustr.ahmcloud.com)
+# Yayına alma (Coolify, fanussoft.com)
 
-## Durum (20 Ekim 2026)
+## Durum (21 Ekim 2026)
+- YAYINDA: **https://fanussoft.com** (Let's Encrypt). `https://www.fanussoft.com` ve `https://fanustr.ahmcloud.com`
+  (her yol) 308 ile fanussoft.com'a yönlenir (`next.config.ts`). Coolify'da `NEXT_PUBLIC_SITE_ADRESI=https://fanussoft.com`.
+- Alan adları İHS'de (Yusuf'un hesabı). DNS: İHS › Alan Adı › Yönet › DNS Zone Servisi (açık); kayıtlar
+  `@` ve `www` → A `187.124.174.57`. İHS'de DNS düzenlemek için önce **alan adı kilidi** kaldırılmalı (Yusuf yapar,
+  iş bitince tekrar açar); .com için ayrıca alan adı sahibi e-posta doğrulaması gerekir (yapıldı).
+- fanussoft.com.tr: DNS kayıtları aynı şekilde eklendi, ama .tr kayıt sistemi alan adını henüz yayına almadı (21 Ekim
+  akşamı NXDOMAIN). Açılınca Coolify › Domains › Add Domain ile `fanussoft.com.tr` eklenir (www kendiliğinden gelir);
+  yönlendirme kodda hazır.
+
+## Önceki durum (20 Ekim 2026)
 - Coolify paneli: https://panel.ahmcloud.com (uygulama: `/project/ccyhabwrej0jlzti0tyhlcol/environment/djvpcds9vcvfirqkv3prddlx/application/9nvnwcezuq8yfbdrwpkqgg4j`).
 - Coolify: Root Team › proje `fanus` › `production` › uygulama `fanus` (Public Git Repository, Dockerfile, port 3000)
   kuruldu, `NEXT_PUBLIC_SITE_ADRESI=https://fanustr.ahmcloud.com` (derleme + çalışma), ilk dağıtım başarılı.
