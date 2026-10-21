@@ -1,54 +1,38 @@
-// Renk paletleri (21 Ekim 2026 denemesi): her biri gece (3B sahne) + gündüz (içerik) + vurgu rengi.
+// Renk paletleri (21 Ekim 2026 denemesi): her biri gece (3B sahne) + gündüz (içerik) + vurgu rengi. Lacivert yok.
 // Renkler src/app/globals.css › :root[data-tema="..."]. Seçici yalnız geliştirmede (sol alt "Tema").
 
 export const TEMALAR = [
   {
-    kod: "lacivert-beyaz",
-    ad: "Lacivert + beyaz",
-    not: "Şimdiki deneme. Klasik kurumsal; beyaz biraz sade kalıyor.",
-    gece: "#050d1e",
-    gunduz: "#f5f6f8",
-    vurgu: "#ff4a2b",
-  },
-  {
-    kod: "lacivert-buz",
-    ad: "Lacivert + buz",
-    not: "Beyaz yerine laciverte akraba mavimsi gri. Banka, sigorta, yazılım: güven veren kurumsal.",
-    gece: "#050d1e",
-    gunduz: "#e4eaf3",
-    vurgu: "#ff4a2b",
-  },
-  {
-    kod: "lacivert-fildisi",
-    ad: "Lacivert + fildişi",
-    not: "Kırık beyaz zemin, lacivert yazı. Dergi ve butik markalar gibi sıcak ama ciddi.",
-    gece: "#050d1e",
-    gunduz: "#f3f0e8",
-    vurgu: "#ff4a2b",
-  },
-  {
-    kod: "lacivert-elektrik",
-    ad: "Lacivert + elektrik mavisi",
-    not: "Vurgu mavi, alev turuncu kalır. En 'yazılım şirketi' duranı (Stripe, Intercom çizgisi).",
-    gece: "#050b1a",
-    gunduz: "#f3f6fb",
-    vurgu: "#5b86ff",
-  },
-  {
-    kod: "lacivert-altin",
-    ad: "Lacivert + altın",
-    not: "Gecede altın vurgu, gündüzde lacivert düğmeler. Hukuk, finans, kuyumcu gibi prestij işleri.",
-    gece: "#050d1e",
-    gunduz: "#f6f6f3",
-    vurgu: "#ffb547",
-  },
-  {
     kod: "komur-kagit",
     ad: "Kömür + kâğıt",
-    not: "Siyah, beyaz ve tek kırmızı. Tasarım ajanslarının en sık kullandığı sade, iddialı düzen.",
+    not: "Siyah, beyaz ve tek kırmızı. Tasarım ajanslarının sade, iddialı düzeni; müşteri işlerinin renkleri öne çıkar.",
     gece: "#0b0b0c",
     gunduz: "#fafaf9",
     vurgu: "#ff4a2b",
+  },
+  {
+    kod: "siyah-beyaz",
+    ad: "Saf siyah + beyaz",
+    not: "En keskin karşıtlık; Apple'ın ürün sayfaları gibi. Alev en çok burada parlar.",
+    gece: "#000000",
+    gunduz: "#ffffff",
+    vurgu: "#ff3d1f",
+  },
+  {
+    kod: "antrasit-beyaz",
+    ad: "Antrasit + beyaz",
+    not: "Siyahtan bir ton açık koyu gri; daha yumuşak, göz yormayan kurumsal.",
+    gece: "#1a1b1e",
+    gunduz: "#f6f6f5",
+    vurgu: "#ff4a2b",
+  },
+  {
+    kod: "antrasit-turuncu",
+    ad: "Antrasit + turuncu",
+    not: "Vurgu kırmızı yerine alevin turuncusu; daha sıcak ve samimi.",
+    gece: "#1a1b1e",
+    gunduz: "#f6f6f5",
+    vurgu: "#ff7a1a",
   },
   {
     kod: "siyah-beton",
@@ -57,6 +41,22 @@ export const TEMALAR = [
     gece: "#0e0e0d",
     gunduz: "#e2e2de",
     vurgu: "#ff5b1f",
+  },
+  {
+    kod: "grafit-kemik",
+    ad: "Grafit + kemik",
+    not: "Kırık beyaz (kemik) zemin; sıcak, el yapımı, butik his.",
+    gece: "#141414",
+    gunduz: "#f2efe9",
+    vurgu: "#ff4a2b",
+  },
+  {
+    kod: "siyah-amber",
+    ad: "Siyah + amber",
+    not: "Vurgu alevin sarısı; enerjik ve dikkat çekici. Gündüz bölümlerinde yanık turuncu.",
+    gece: "#0b0b0c",
+    gunduz: "#fafaf9",
+    vurgu: "#ffb020",
   },
   {
     kod: "gece-yesili",
@@ -83,11 +83,19 @@ export const TEMALAR = [
     vurgu: "#ff5a4a",
   },
   {
-    kod: "hep-gece",
-    ad: "Hep gece",
-    not: "Beyaz yok; baştan sona lacivert, kartlar grafit (yayındaki site).",
-    gece: "#050d1e",
-    gunduz: "#050d1e",
+    kod: "hep-siyah",
+    ad: "Hep siyah",
+    not: "Beyaz yok; baştan sona siyah, kartlar grafit.",
+    gece: "#0b0b0c",
+    gunduz: "#0b0b0c",
+    vurgu: "#ff4a2b",
+  },
+  {
+    kod: "hep-antrasit",
+    ad: "Hep antrasit",
+    not: "Beyaz yok; baştan sona siyahtan bir ton açık koyu gri.",
+    gece: "#1a1b1e",
+    gunduz: "#1a1b1e",
     vurgu: "#ff4a2b",
   },
 ] as const;
@@ -95,7 +103,7 @@ export const TEMALAR = [
 export type TemaKodu = (typeof TEMALAR)[number]["kod"];
 
 /** Sitede kullanılan palet (seçici kapalıyken herkes bunu görür). */
-export const VARSAYILAN_TEMA: TemaKodu = "lacivert-beyaz";
+export const VARSAYILAN_TEMA: TemaKodu = "komur-kagit";
 
 /** Tema seçici yalnız geliştirmede ya da NEXT_PUBLIC_TEMA_SECICI=1 iken görünür. */
 export const TEMA_SECICI_ACIK = process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_TEMA_SECICI === "1";

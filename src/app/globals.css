@@ -35,194 +35,9 @@
 /*
   Renk paletleri (deneme, 21 Ekim 2026): <html data-tema="..."> ile seçilir; liste src/site/tema.ts › TEMALAR.
   Her palet iki takım verir: gece (--color-*: 3B sahnenin olduğu bölümler) ve gündüz (--g-*: data-zemin="acik"
-  bölümleri, aşağıda token'lara eşlenir). --ufuk-*: geceden gündüze geçiş bandının ara renkleri.
+  bölümleri, aşağıda token'lara eşlenir). Lacivert ve degrade yok (Yusuf'un isteği): koyular nötr, geçiş keskin.
   Bütün çiftler WCAG AA'yı geçer (yazı, soluk, silik, vurgu ve düğme yazısı en az 4,5:1).
 */
-:root[data-tema="lacivert-beyaz"] {
-  /* Lacivert + beyaz */
-  --lacivert: #050d1e;
-  --color-gece: #050d1e;
-  --color-gece-2: #111215;
-  --color-gece-3: #18191d;
-  --color-gece-4: #232428;
-  --color-cukur: #09090b;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f3f5f8;
-  --color-soluk: #9ca1ab;
-  --color-silik: #868b95;
-  --color-alev: #ff4a2b;
-  --color-alev-acik: #ff7d61;
-  --color-alev-koyu: #d63415;
-  --g-zemin: #f5f6f8;
-  --g-kart: #ffffff;
-  --g-kart-2: #eef1f5;
-  --g-kart-3: #e2e6ec;
-  --g-cukur: #f0f2f6;
-  --g-cizgi: rgb(11 18 32 / 0.1);
-  --g-cizgi-guclu: rgb(11 18 32 / 0.18);
-  --g-yazi: #0b1220;
-  --g-soluk: #4b5567;
-  --g-silik: #5f6879;
-  --g-vurgu: #c9321a;
-  --g-vurgu-ust: #a82a14;
-  --g-vurgu-koyu: #8f2410;
-  --g-golge: rgb(11 18 32 / 0.2);
-  --g-google: #1a0dab;
-  --g-isik: rgb(255 74 43 / 0.14);
-  --ufuk-1: #0a1a3c;
-  --ufuk-2: #1d3a6e;
-  --ufuk-3: #6f8bb8;
-  --ufuk-4: #c9d5e8;
-}
-:root[data-tema="lacivert-buz"] {
-  /* Lacivert + buz */
-  --lacivert: #050d1e;
-  --color-gece: #050d1e;
-  --color-gece-2: #111215;
-  --color-gece-3: #18191d;
-  --color-gece-4: #232428;
-  --color-cukur: #09090b;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f3f5f8;
-  --color-soluk: #9ca1ab;
-  --color-silik: #868b95;
-  --color-alev: #ff4a2b;
-  --color-alev-acik: #ff7d61;
-  --color-alev-koyu: #d63415;
-  --g-zemin: #e4eaf3;
-  --g-kart: #f7f9fc;
-  --g-kart-2: #dae2ed;
-  --g-kart-3: #ccd6e4;
-  --g-cukur: #ecf0f6;
-  --g-cizgi: rgb(10 30 70 / 0.1);
-  --g-cizgi-guclu: rgb(10 30 70 / 0.18);
-  --g-yazi: #0a1630;
-  --g-soluk: #3f4d66;
-  --g-silik: #4f5d77;
-  --g-vurgu: #c2321a;
-  --g-vurgu-ust: #a32a14;
-  --g-vurgu-koyu: #8a230f;
-  --g-golge: rgb(10 30 70 / 0.22);
-  --g-google: #1a0dab;
-  --g-isik: rgb(70 120 230 / 0.16);
-  --ufuk-1: #0a1a3c;
-  --ufuk-2: #1d3a6e;
-  --ufuk-3: #6f8bb8;
-  --ufuk-4: #c2cfe2;
-}
-:root[data-tema="lacivert-fildisi"] {
-  /* Lacivert + fildişi */
-  --lacivert: #050d1e;
-  --color-gece: #050d1e;
-  --color-gece-2: #111215;
-  --color-gece-3: #18191d;
-  --color-gece-4: #232428;
-  --color-cukur: #09090b;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f3f5f8;
-  --color-soluk: #9ca1ab;
-  --color-silik: #868b95;
-  --color-alev: #ff4a2b;
-  --color-alev-acik: #ff7d61;
-  --color-alev-koyu: #d63415;
-  --g-zemin: #f3f0e8;
-  --g-kart: #fbfaf6;
-  --g-kart-2: #ebe6da;
-  --g-kart-3: #ded7c8;
-  --g-cukur: #f0ece2;
-  --g-cizgi: rgb(13 26 51 / 0.1);
-  --g-cizgi-guclu: rgb(13 26 51 / 0.18);
-  --g-yazi: #0d1a33;
-  --g-soluk: #48506a;
-  --g-silik: #585f74;
-  --g-vurgu: #b5301b;
-  --g-vurgu-ust: #962815;
-  --g-vurgu-koyu: #7e2211;
-  --g-golge: rgb(13 26 51 / 0.18);
-  --g-google: #1a0dab;
-  --g-isik: rgb(255 130 70 / 0.14);
-  --ufuk-1: #0b1c3d;
-  --ufuk-2: #2a3f68;
-  --ufuk-3: #9aa0b0;
-  --ufuk-4: #e2dccf;
-}
-:root[data-tema="lacivert-elektrik"] {
-  /* Lacivert + elektrik mavisi */
-  --lacivert: #050b1a;
-  --color-gece: #050b1a;
-  --color-gece-2: #111215;
-  --color-gece-3: #18191d;
-  --color-gece-4: #232428;
-  --color-cukur: #09090b;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f2f5fb;
-  --color-soluk: #a0a8b8;
-  --color-silik: #8890a2;
-  --color-alev: #5b86ff;
-  --color-alev-acik: #8aa9ff;
-  --color-alev-koyu: #3a66f0;
-  --g-zemin: #f3f6fb;
-  --g-kart: #ffffff;
-  --g-kart-2: #e9eef7;
-  --g-kart-3: #dbe3f0;
-  --g-cukur: #eef2f9;
-  --g-cizgi: rgb(10 19 40 / 0.1);
-  --g-cizgi-guclu: rgb(10 19 40 / 0.18);
-  --g-yazi: #0a1328;
-  --g-soluk: #465169;
-  --g-silik: #56617a;
-  --g-vurgu: #2349cc;
-  --g-vurgu-ust: #1c3cae;
-  --g-vurgu-koyu: #183494;
-  --g-golge: rgb(10 19 40 / 0.2);
-  --g-google: #1a0dab;
-  --g-isik: rgb(91 134 255 / 0.16);
-  --ufuk-1: #0a1a3c;
-  --ufuk-2: #1d3a8e;
-  --ufuk-3: #7f9be0;
-  --ufuk-4: #d3def4;
-}
-:root[data-tema="lacivert-altin"] {
-  /* Lacivert + altın */
-  --lacivert: #050d1e;
-  --color-gece: #050d1e;
-  --color-gece-2: #111215;
-  --color-gece-3: #18191d;
-  --color-gece-4: #232428;
-  --color-cukur: #09090b;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f3f5f8;
-  --color-soluk: #9ca1ab;
-  --color-silik: #868b95;
-  --color-alev: #ffb547;
-  --color-alev-acik: #ffcb7d;
-  --color-alev-koyu: #e8961c;
-  --g-zemin: #f6f6f3;
-  --g-kart: #ffffff;
-  --g-kart-2: #eeeeea;
-  --g-kart-3: #e3e3dd;
-  --g-cukur: #f2f2ee;
-  --g-cizgi: rgb(11 22 48 / 0.1);
-  --g-cizgi-guclu: rgb(11 22 48 / 0.18);
-  --g-yazi: #0b1630;
-  --g-soluk: #4a5265;
-  --g-silik: #5a6275;
-  --g-vurgu: #16306e;
-  --g-vurgu-ust: #0f2556;
-  --g-vurgu-koyu: #0b1c44;
-  --g-golge: rgb(11 22 48 / 0.18);
-  --g-google: #1a0dab;
-  --g-isik: rgb(255 181 71 / 0.18);
-  --ufuk-1: #0a1a3c;
-  --ufuk-2: #1d3a6e;
-  --ufuk-3: #8c9bb8;
-  --ufuk-4: #dcdfe5;
-}
 :root[data-tema="komur-kagit"] {
   /* Kömür + kâğıt */
   --lacivert: #0b0b0c;
@@ -254,11 +69,102 @@
   --g-vurgu-koyu: #8f2410;
   --g-golge: rgb(0 0 0 / 0.14);
   --g-google: #1a0dab;
-  --g-isik: rgb(255 74 43 / 0.12);
-  --ufuk-1: #18181a;
-  --ufuk-2: #313134;
-  --ufuk-3: #8e8e94;
-  --ufuk-4: #e0e0dd;
+}
+:root[data-tema="siyah-beyaz"] {
+  /* Saf siyah + beyaz */
+  --lacivert: #000000;
+  --color-gece: #000000;
+  --color-gece-2: #0f0f10;
+  --color-gece-3: #161618;
+  --color-gece-4: #202023;
+  --color-cukur: #000000;
+  --color-cizgi: rgb(255 255 255 / 0.08);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --color-krem: #ffffff;
+  --color-soluk: #a3a3a8;
+  --color-silik: #8c8c92;
+  --color-alev: #ff3d1f;
+  --color-alev-acik: #ff7357;
+  --color-alev-koyu: #d92e12;
+  --g-zemin: #ffffff;
+  --g-kart: #f5f5f4;
+  --g-kart-2: #ededeb;
+  --g-kart-3: #e2e2df;
+  --g-cukur: #f7f7f6;
+  --g-cizgi: rgb(0 0 0 / 0.1);
+  --g-cizgi-guclu: rgb(0 0 0 / 0.18);
+  --g-yazi: #0a0a0a;
+  --g-soluk: #4f4f55;
+  --g-silik: #5c5c62;
+  --g-vurgu: #c8301a;
+  --g-vurgu-ust: #a82814;
+  --g-vurgu-koyu: #8f2210;
+  --g-golge: rgb(0 0 0 / 0.12);
+  --g-google: #1a0dab;
+}
+:root[data-tema="antrasit-beyaz"] {
+  /* Antrasit + beyaz */
+  --lacivert: #1a1b1e;
+  --color-gece: #1a1b1e;
+  --color-gece-2: #232428;
+  --color-gece-3: #2a2b30;
+  --color-gece-4: #34363b;
+  --color-cukur: #141518;
+  --color-cizgi: rgb(255 255 255 / 0.08);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --color-krem: #f4f4f5;
+  --color-soluk: #a7a9b0;
+  --color-silik: #9497a0;
+  --color-alev: #ff4a2b;
+  --color-alev-acik: #ff7d61;
+  --color-alev-koyu: #d63415;
+  --g-zemin: #f6f6f5;
+  --g-kart: #ffffff;
+  --g-kart-2: #eeeeec;
+  --g-kart-3: #e3e3e0;
+  --g-cukur: #f1f1ef;
+  --g-cizgi: rgb(20 20 22 / 0.1);
+  --g-cizgi-guclu: rgb(20 20 22 / 0.18);
+  --g-yazi: #111214;
+  --g-soluk: #4d4f55;
+  --g-silik: #606268;
+  --g-vurgu: #c9321a;
+  --g-vurgu-ust: #a82a14;
+  --g-vurgu-koyu: #8f2410;
+  --g-golge: rgb(0 0 0 / 0.14);
+  --g-google: #1a0dab;
+}
+:root[data-tema="antrasit-turuncu"] {
+  /* Antrasit + turuncu */
+  --lacivert: #1a1b1e;
+  --color-gece: #1a1b1e;
+  --color-gece-2: #232428;
+  --color-gece-3: #2a2b30;
+  --color-gece-4: #34363b;
+  --color-cukur: #141518;
+  --color-cizgi: rgb(255 255 255 / 0.08);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --color-krem: #f4f4f5;
+  --color-soluk: #a7a9b0;
+  --color-silik: #9497a0;
+  --color-alev: #ff7a1a;
+  --color-alev-acik: #ffa05c;
+  --color-alev-koyu: #e85f00;
+  --g-zemin: #f6f6f5;
+  --g-kart: #ffffff;
+  --g-kart-2: #eeeeec;
+  --g-kart-3: #e3e3e0;
+  --g-cukur: #f1f1ef;
+  --g-cizgi: rgb(20 20 22 / 0.1);
+  --g-cizgi-guclu: rgb(20 20 22 / 0.18);
+  --g-yazi: #111214;
+  --g-soluk: #4d4f55;
+  --g-silik: #606268;
+  --g-vurgu: #b5470c;
+  --g-vurgu-ust: #973b0a;
+  --g-vurgu-koyu: #7e3108;
+  --g-golge: rgb(0 0 0 / 0.14);
+  --g-google: #1a0dab;
 }
 :root[data-tema="siyah-beton"] {
   /* Siyah + beton */
@@ -291,11 +197,70 @@
   --g-vurgu-koyu: #7e2609;
   --g-golge: rgb(0 0 0 / 0.18);
   --g-google: #1a0dab;
-  --g-isik: rgb(255 91 31 / 0.14);
-  --ufuk-1: #1c1c1a;
-  --ufuk-2: #3a3a36;
-  --ufuk-3: #8f8f89;
-  --ufuk-4: #cfcfca;
+}
+:root[data-tema="grafit-kemik"] {
+  /* Grafit + kemik */
+  --lacivert: #141414;
+  --color-gece: #141414;
+  --color-gece-2: #1c1c1c;
+  --color-gece-3: #232323;
+  --color-gece-4: #2d2d2d;
+  --color-cukur: #0e0e0e;
+  --color-cizgi: rgb(255 255 255 / 0.08);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --color-krem: #f4f2ee;
+  --color-soluk: #aaa69f;
+  --color-silik: #96928b;
+  --color-alev: #ff4a2b;
+  --color-alev-acik: #ff7d61;
+  --color-alev-koyu: #d63415;
+  --g-zemin: #f2efe9;
+  --g-kart: #fbfaf7;
+  --g-kart-2: #e9e5dd;
+  --g-kart-3: #ddd8ce;
+  --g-cukur: #f0ece5;
+  --g-cizgi: rgb(28 24 18 / 0.1);
+  --g-cizgi-guclu: rgb(28 24 18 / 0.18);
+  --g-yazi: #141210;
+  --g-soluk: #4d4943;
+  --g-silik: #5c5751;
+  --g-vurgu: #b5301b;
+  --g-vurgu-ust: #962815;
+  --g-vurgu-koyu: #7e2211;
+  --g-golge: rgb(0 0 0 / 0.14);
+  --g-google: #1a0dab;
+}
+:root[data-tema="siyah-amber"] {
+  /* Siyah + amber */
+  --lacivert: #0b0b0c;
+  --color-gece: #0b0b0c;
+  --color-gece-2: #151517;
+  --color-gece-3: #1c1c1f;
+  --color-gece-4: #26262a;
+  --color-cukur: #070708;
+  --color-cizgi: rgb(255 255 255 / 0.08);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --color-krem: #f4f4f5;
+  --color-soluk: #a1a1aa;
+  --color-silik: #8b8b94;
+  --color-alev: #ffb020;
+  --color-alev-acik: #ffc95c;
+  --color-alev-koyu: #e09400;
+  --g-zemin: #fafaf9;
+  --g-kart: #ffffff;
+  --g-kart-2: #f1f1ef;
+  --g-kart-3: #e6e6e3;
+  --g-cukur: #f4f4f2;
+  --g-cizgi: rgb(12 12 13 / 0.1);
+  --g-cizgi-guclu: rgb(12 12 13 / 0.18);
+  --g-yazi: #0c0c0d;
+  --g-soluk: #52525b;
+  --g-silik: #61616a;
+  --g-vurgu: #ae430d;
+  --g-vurgu-ust: #93380b;
+  --g-vurgu-koyu: #7e3109;
+  --g-golge: rgb(0 0 0 / 0.14);
+  --g-google: #1a0dab;
 }
 :root[data-tema="gece-yesili"] {
   /* Gece yeşili + amber */
@@ -328,11 +293,6 @@
   --g-vurgu-koyu: #7e3109;
   --g-golge: rgb(11 26 20 / 0.18);
   --g-google: #1a0dab;
-  --g-isik: rgb(255 176 32 / 0.16);
-  --ufuk-1: #082019;
-  --ufuk-2: #164234;
-  --ufuk-3: #7fa595;
-  --ufuk-4: #cbded3;
 }
 :root[data-tema="petrol-mercan"] {
   /* Petrol + mercan */
@@ -365,11 +325,6 @@
   --g-vurgu-koyu: #82290f;
   --g-golge: rgb(6 25 28 / 0.18);
   --g-google: #1a0dab;
-  --g-isik: rgb(40 160 170 / 0.16);
-  --ufuk-1: #062a30;
-  --ufuk-2: #12515a;
-  --ufuk-3: #79a6ab;
-  --ufuk-4: #cce1e1;
 }
 :root[data-tema="murdum-mercan"] {
   /* Mürdüm + mercan */
@@ -402,48 +357,70 @@
   --g-vurgu-koyu: #87201c;
   --g-golge: rgb(26 15 34 / 0.2);
   --g-google: #1a0dab;
-  --g-isik: rgb(255 90 74 / 0.14);
-  --ufuk-1: #1d0f2a;
-  --ufuk-2: #3b2350;
-  --ufuk-3: #a08cb3;
-  --ufuk-4: #e1d6e6;
 }
-:root[data-tema="hep-gece"] {
-  /* Hep gece */
-  --lacivert: #050d1e;
-  --color-gece: #050d1e;
-  --color-gece-2: #111215;
-  --color-gece-3: #18191d;
-  --color-gece-4: #232428;
-  --color-cukur: #09090b;
+:root[data-tema="hep-siyah"] {
+  /* Hep siyah */
+  --lacivert: #0b0b0c;
+  --color-gece: #0b0b0c;
+  --color-gece-2: #151517;
+  --color-gece-3: #1c1c1f;
+  --color-gece-4: #26262a;
+  --color-cukur: #070708;
   --color-cizgi: rgb(255 255 255 / 0.08);
   --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f3f5f8;
-  --color-soluk: #9ca1ab;
-  --color-silik: #868b95;
+  --color-krem: #f4f4f5;
+  --color-soluk: #a1a1aa;
+  --color-silik: #8b8b94;
   --color-alev: #ff4a2b;
   --color-alev-acik: #ff7d61;
   --color-alev-koyu: #d63415;
-  --g-zemin: #050d1e;
-  --g-kart: #111215;
-  --g-kart-2: #18191d;
-  --g-kart-3: #232428;
-  --g-cukur: #09090b;
+  --g-zemin: #0b0b0c;
+  --g-kart: #151517;
+  --g-kart-2: #1c1c1f;
+  --g-kart-3: #26262a;
+  --g-cukur: #070708;
   --g-cizgi: rgb(255 255 255 / 0.08);
   --g-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --g-yazi: #f3f5f8;
-  --g-soluk: #9ca1ab;
-  --g-silik: #868b95;
+  --g-yazi: #f4f4f5;
+  --g-soluk: #a1a1aa;
+  --g-silik: #8b8b94;
   --g-vurgu: #ff4a2b;
   --g-vurgu-ust: #ff7d61;
   --g-vurgu-koyu: #d63415;
   --g-golge: rgb(0 0 0 / 0.85);
   --g-google: #9fc0ff;
-  --g-isik: rgb(255 74 43 / 0.16);
-  --ufuk-1: #050d1e;
-  --ufuk-2: #050d1e;
-  --ufuk-3: #050d1e;
-  --ufuk-4: #050d1e;
+}
+:root[data-tema="hep-antrasit"] {
+  /* Hep antrasit */
+  --lacivert: #1a1b1e;
+  --color-gece: #1a1b1e;
+  --color-gece-2: #232428;
+  --color-gece-3: #2a2b30;
+  --color-gece-4: #34363b;
+  --color-cukur: #141518;
+  --color-cizgi: rgb(255 255 255 / 0.08);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --color-krem: #f4f4f5;
+  --color-soluk: #a7a9b0;
+  --color-silik: #9497a0;
+  --color-alev: #ff4a2b;
+  --color-alev-acik: #ff7d61;
+  --color-alev-koyu: #d63415;
+  --g-zemin: #1a1b1e;
+  --g-kart: #232428;
+  --g-kart-2: #2a2b30;
+  --g-kart-3: #34363b;
+  --g-cukur: #141518;
+  --g-cizgi: rgb(255 255 255 / 0.08);
+  --g-cizgi-guclu: rgb(255 255 255 / 0.16);
+  --g-yazi: #f4f4f5;
+  --g-soluk: #a7a9b0;
+  --g-silik: #9497a0;
+  --g-vurgu: #ff4a2b;
+  --g-vurgu-ust: #ff7d61;
+  --g-vurgu-koyu: #d63415;
+  --g-golge: rgb(0 0 0 / 0.6);
+  --g-google: #9fc0ff;
 }
 
 :root {
@@ -480,11 +457,15 @@ header[data-acik-ust] {
   --color-alev-koyu: var(--g-vurgu-koyu);
   --golge-rengi: var(--g-golge);
   --google-mavi: var(--g-google);
-  --sayfa-isigi: var(--g-isik);
   color: var(--color-krem);
 }
 [data-zemin="acik"] {
   background: var(--color-gece);
+}
+/* Gündüzde süs ışıkları (yumuşak renk lekeleri) yok: zemin düz kalır */
+[data-zemin="acik"] .sayfa-isigi,
+[data-zemin="acik"] [data-cagri-hale] {
+  display: none;
 }
 
 /* Büyük, yumuşak gölge: gecede koyu, gündüzde lacivert tonlu ve hafif */
@@ -493,24 +474,23 @@ header[data-acik-ust] {
 }
 
 /*
-  Geceden gündüze tek renk geçişi (şafak): gece rengi, paletin ufuk renkleri, sıcak ufuk ışığı, gündüz rengi.
-  Ortadaki sıcak ışık alevin rengini taşır, geçiş "ışık doğuyor" hissi verir.
+  Geceden gündüze geçiş: degrade yok. Gündüz, gece bölümünün üstüne köşeleri yuvarlak bir sayfa gibi biner;
+  köşelerin arkasında gece rengi (ya da 3B sahne) görünür.
 */
-.gecis-bandi {
+.gecis-yaprak {
   position: relative;
   z-index: 10;
+  height: 3rem;
+  margin-bottom: -1px;
+  border-radius: 2rem 2rem 0 0;
+  background: var(--g-zemin);
   pointer-events: none;
-  background:
-    radial-gradient(70% 45% at 50% 58%, rgb(255 120 70 / 0.16), transparent 70%),
-    linear-gradient(
-      180deg,
-      var(--lacivert) 0%,
-      var(--ufuk-1) 20%,
-      var(--ufuk-2) 42%,
-      var(--ufuk-3) 64%,
-      var(--ufuk-4) 82%,
-      var(--g-zemin) 100%
-    );
+}
+@media (min-width: 768px) {
+  .gecis-yaprak {
+    height: 4.5rem;
+    border-radius: 3rem 3rem 0 0;
+  }
 }
 
 html {

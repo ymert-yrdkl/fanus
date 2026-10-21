@@ -28,7 +28,7 @@ export default function IletisimSayfasi() {
       <FanusSahnesi poz="son" />
       <main id="icerik">
         <Teklif />
-        <GecisBandi boy="kisa" />
+        <GecisBandi />
         <section
           data-zemin="acik"
           aria-labelledby="kanallar"

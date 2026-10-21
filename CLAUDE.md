@@ -56,8 +56,8 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   yerine "cam simge" seçildi (kalın, köşeleri yuvarlatılmış cam uygulama simgesi; logo, sekme simgesi, açılış ve
   sayfa sonu çizimi aynı biçim; alev logodaki yoldan, dört katman). Lacivert yalnız 3B sahnede (ana sayfa girişi +
   manifesto, iletişim teklif bölümü); tek şafak geçişi (`GecisBandi`), sonrası ve alt sayfalar gündüz
-  (`data-zemin="acik"`). Renk paleti karşılaştırılıyor: 11 palet (`src/site/tema.ts` › TEMALAR, renkler
-  `globals.css` › `:root[data-tema]`, gece `--color-*` + gündüz `--g-*`), tema panelinden ya da `?tema=`. Palet
+  (`data-zemin="acik"`). Renk paleti karşılaştırılıyor: 12 palet (`src/site/tema.ts` › TEMALAR, renkler
+  `globals.css` › `:root[data-tema]`, gece `--color-*` + gündüz `--g-*`; lacivert ve degrade yok, geçiş köşeleri yuvarlak sayfa `.gecis-yaprak`), tema panelinden ya da `?tema=`. Palet
   seçilince: diğerleri silinir, `public/fanus-telefon.webp` (telefondaki sabit görsel) ve `opengraph-image.png`
   yeniden çekilir, sonra yayına alınır. Fiyatlar 21 Ekim'de güncellendi: tam paket kurumsal ₺45.000, e-ticaret ₺65.000.
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
