@@ -39,11 +39,13 @@ export default function GecisYoneticisi() {
         gidildi = true;
         router.push(url.pathname + url.search + url.hash);
       };
+      // Telefonda bulanıklık yok: zayıf telefonlarda takılır; sade solma yeter
+      const bulaniklik = window.matchMedia("(max-width: 767px)").matches ? "none" : "blur(18px)";
       gsap
         .timeline()
         .set(ortu.current, { display: "block", opacity: 0, backdropFilter: "blur(0px)" })
         .set(cizgi.current, { display: "block", scaleX: 0, opacity: 1 })
-        .to(ortu.current, { opacity: 1, backdropFilter: "blur(18px)", duration: 0.32, ease: "power2.in" })
+        .to(ortu.current, { opacity: 1, backdropFilter: bulaniklik, duration: 0.32, ease: "power2.in" })
         .to(cizgi.current, { scaleX: 0.7, duration: 0.6, ease: "power2.out" }, 0)
         .call(sayfayaGec, [], 0.32);
       // Emniyet: animasyon karesi gelmezse (arka plandaki sekme) sayfa yine açılır
@@ -100,7 +102,11 @@ export default function GecisYoneticisi() {
   return (
     <>
       <div ref={ortu} aria-hidden="true" className="gecis-ortusu pointer-events-none fixed inset-0 z-[78] hidden" />
-      <div ref={cizgi} aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-[79] hidden h-0.5 origin-left bg-alev" />
+      <div
+        ref={cizgi}
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 top-0 z-[79] hidden h-0.5 origin-left bg-alev"
+      />
     </>
   );
 }

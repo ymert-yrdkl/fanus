@@ -63,7 +63,10 @@ export default function CagriBandi({
             </Link>
           </div>
         </div>
-        <div aria-hidden="true" className="relative mx-auto w-full max-w-[22rem] md:col-span-5 md:max-w-[26rem]">
+        <div
+          aria-hidden="true"
+          className="relative mx-auto w-full max-w-[22rem] max-md:hidden md:col-span-5 md:max-w-[26rem]"
+        >
           <div
             data-cagri-hale
             className="absolute top-[62%] left-1/2 size-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_30%,transparent),transparent_62%)]"

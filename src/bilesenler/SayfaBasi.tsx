@@ -32,7 +32,10 @@ export default function SayfaBasi({
   };
 
   return (
-    <section className="relative z-10 overflow-hidden bg-gece px-4 pt-[calc(var(--ust-yukseklik)+4rem)] pb-16 sm:px-6 md:pt-[calc(var(--ust-yukseklik)+6.5rem)] md:pb-24 lg:px-10">
+    <section
+      data-sayfa-basi
+      className="relative z-10 overflow-hidden bg-gece px-4 pt-[calc(var(--ust-yukseklik)+4rem)] pb-16 sm:px-6 md:pt-[calc(var(--ust-yukseklik)+6.5rem)] md:pb-24 lg:px-10"
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(yol).replace(/</g, "\\u003c") }}

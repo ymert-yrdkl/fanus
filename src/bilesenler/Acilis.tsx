@@ -15,8 +15,8 @@ function acildiDuyur() {
 }
 
 /**
- * Açılış perdesi: fanus çizilir, alev yanar, perde yukarı kalkar. Oturumda ikinci açılışta kısa sürer.
- * Hareket azaltma tercihi varsa (ya da JS yoksa) CSS perdeyi hiç göstermez.
+ * Açılış perdesi (masaüstü): işaret çizilir, alev yanar, perde yukarı kalkar. Oturumda ikinci açılışta kısa sürer.
+ * Hareket azaltma tercihi varsa, JS yoksa ya da telefondaysa perde hiç görünmez.
  */
 export default function Acilis() {
   const kok = useRef<HTMLDivElement>(null);
@@ -24,7 +24,8 @@ export default function Acilis() {
   useGSAP(
     () => {
       const html = document.documentElement;
-      if (!html.classList.contains("hareket")) {
+      // Hareket azaltma tercihinde ve telefonda perde yok (CSS de gizler)
+      if (!html.classList.contains("hareket") || window.matchMedia("(max-width: 767px)").matches) {
         acildiDuyur();
         return;
       }

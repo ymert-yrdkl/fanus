@@ -47,6 +47,8 @@ export default async function AnaSayfa() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(yapilandirilmisVeri).replace(/</g, "\\u003c") }}
       />
+      {/* Telefonda en büyük öğe fanusun sabit görseli: HTML gelir gelmez istensin (LCP) */}
+      <link rel="preload" as="image" href="/fanus-telefon.webp" media="(max-width: 767px)" fetchPriority="high" />
       <FanusSahnesi />
       <main id="icerik">
         <Giris />

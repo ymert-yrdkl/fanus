@@ -104,6 +104,7 @@ export default function Teklif() {
   return (
     <section
       ref={kok}
+      data-sayfa-basi
       id="teklif"
       aria-labelledby="teklif-baslik"
       className="relative z-10 px-4 pt-[calc(var(--ust-yukseklik)+3rem)] pb-24 sm:px-6 md:min-h-dvh md:pt-[calc(var(--ust-yukseklik)+5.5rem)] md:pb-32 lg:px-10"

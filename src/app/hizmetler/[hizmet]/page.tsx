@@ -65,7 +65,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
   };
 
   return (
-    <main id="icerik" key={h.adres}>
+    <main id="icerik" key={h.adres} data-zemin="acik">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(yapilandirilmisVeri).replace(/</g, "\\u003c") }}

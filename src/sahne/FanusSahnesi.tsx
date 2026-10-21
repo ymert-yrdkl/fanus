@@ -7,11 +7,12 @@ import { sahneDurumu } from "./durum";
 type Hal = "yukleniyor" | "hazir" | "yok";
 
 /**
- * Sayfanın arkasında sabit duran 3B fanus. three.js sayfa açıldıktan sonra boşta yüklenir;
- * o sırada ve WebGL yoksa yerinde sıcak bir ışık durur. Telefonda three.js ilk dokunuşta ya da
- * kaydırmada yüklenir (sayfa hızlı açılsın); o ana kadar sahnenin birebir sabit görseli durur
+ * Sayfanın arkasında sabit duran 3B fanus. three.js ilk etkileşimde yüklenir (masaüstünde etkileşim yoksa
+ * 6 sn sonra); o sırada ve WebGL yoksa yerinde sıcak bir ışık durur. Telefonda o ana kadar sahnenin birebir
+ * sabit görseli durur
  * (`public/fanus-telefon.webp`, giriş bitmiş hâli; tema değişirse yeniden çekilmeli). Saydam bölümler (ana sayfada giriş ve
- * manifesto, iletişimde teklif) tuvali gösterir, diğer bölümler zemin rengiyle örter.
+ * manifesto, iletişimde teklif) tuvali gösterir, diğer bölümler zemin rengiyle örter. Telefonda ana sayfada
+ * sahne sabit değildir: yalnız girişin parçasıdır ve sayfayla birlikte kayar (manifesto telefonda sahnesizdir).
  * `poz`: "akis" ana sayfanın kaydırma çizelgesi, "son" iletişim sayfasının sabit duruşu.
  */
 export default function FanusSahnesi({ poz = "akis" }: { poz?: "akis" | "son" }) {
@@ -53,8 +54,9 @@ export default function FanusSahnesi({ poz = "akis" }: { poz?: "akis" | "son" })
       if (!kurulum) setHal("yok");
     };
 
-    // Telefonda ilk etkileşimi bekle; masaüstünde tarayıcı boşalınca yükle
-    const OLAYLAR = ["pointerdown", "touchstart", "wheel", "keydown", "scroll"] as const;
+    // İlk etkileşimde yükle (fare hareketi, dokunma, kaydırma, tuş): sayfa ilk açılırken işlemci boş kalır, içerik
+    // hemen görünür. Masaüstünde hiç etkileşim olmazsa 6 sn sonra yine yüklenir; telefonda pil için beklenir.
+    const OLAYLAR = ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "scroll"] as const;
     let basladi = false;
     const etkilesimle = () => {
       if (basladi) return;
@@ -62,27 +64,23 @@ export default function FanusSahnesi({ poz = "akis" }: { poz?: "akis" | "son" })
       OLAYLAR.forEach((o) => window.removeEventListener(o, etkilesimle));
       void baslat();
     };
-    let bosta = 0;
-    if (telefon) {
-      OLAYLAR.forEach((o) => window.addEventListener(o, etkilesimle, { passive: true }));
-    } else {
-      bosta = window.requestIdleCallback
-        ? window.requestIdleCallback(() => void baslat(), { timeout: 900 })
-        : window.setTimeout(() => void baslat(), 150);
-    }
+    OLAYLAR.forEach((o) => window.addEventListener(o, etkilesimle, { passive: true }));
+    const yedek = telefon ? 0 : window.setTimeout(etkilesimle, 6000);
 
     return () => {
       iptal = true;
       sahneDurumu.sonKarisim = 0;
       OLAYLAR.forEach((o) => window.removeEventListener(o, etkilesimle));
-      if (window.cancelIdleCallback) window.cancelIdleCallback(bosta);
-      else window.clearTimeout(bosta);
+      window.clearTimeout(yedek);
       kurulum?.yokEt();
     };
   }, [poz]);
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-0 h-lvh">
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none fixed inset-x-0 top-0 z-0 h-lvh overflow-hidden ${poz === "akis" ? "max-md:absolute" : ""}`}
+    >
       {/* Telefonda canlı sahne gelene kadar sahnenin sabit görseli (yalnız ana sayfa) */}
       {poz === "akis" && (
         // eslint-disable-next-line @next/next/no-img-element -- tam ekran boyunda, ölçeklemesi CSS ile

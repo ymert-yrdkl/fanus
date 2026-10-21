@@ -1,6 +1,6 @@
 "use client";
 
-import { FARE, gsap, HAREKET_ACIK, ScrollTrigger, SplitText, useGSAP } from "./gsap";
+import { FARE, gsap, GENIS, HAREKET_ACIK, ScrollTrigger, SplitText, useGSAP } from "./gsap";
 
 const sayiBicimi = new Intl.NumberFormat("tr-TR");
 
@@ -18,7 +18,29 @@ export default function SahneYonetmeni() {
   useGSAP(() => {
     const mm = gsap.matchMedia();
 
-    mm.add(HAREKET_ACIK, () => {
+    // Telefon: belirmeler kısa ve sakin; başlıklar satırlara bölünmez, aynı kısa belirmeyle gelir
+    mm.add(`${HAREKET_ACIK} and (max-width: 767px)`, () => {
+      gsap.utils
+        .toArray<HTMLElement>("[data-belir], [data-bol]")
+        .filter((el) => !el.closest("[data-sayfa-basi]"))
+        .forEach((el) => {
+          // Yalnız saydamlık (visibility değil): başlıklar ekran okuyucuda ve erişilebilirlik ağacında kalır
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 16 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "power2.out",
+              scrollTrigger: { trigger: el, start: "top 90%", once: true },
+            },
+          );
+        });
+    });
+
+    // Masaüstü: aşağıdan uzun belirme, başlıklar satır satır maskeden yükselir, paralaks
+    mm.add(`${HAREKET_ACIK} and ${GENIS}`, () => {
       gsap.utils.toArray<HTMLElement>("[data-belir]").forEach((el) => {
         gsap.fromTo(
           el,
@@ -55,6 +77,22 @@ export default function SahneYonetmeni() {
         });
       });
 
+      gsap.utils.toArray<HTMLElement>("[data-paralaks]").forEach((el) => {
+        const hiz = Number(el.dataset.paralaks);
+        gsap.fromTo(
+          el,
+          { yPercent: -hiz * 50 },
+          {
+            yPercent: hiz * 50,
+            ease: "none",
+            scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true },
+          },
+        );
+      });
+    });
+
+    // Her ekranda: sayaçlar ve üstteki ilerleme çizgisi
+    mm.add(HAREKET_ACIK, () => {
       gsap.utils.toArray<HTMLElement>("[data-sayac]").forEach((el) => {
         const hedef = Number(el.dataset.sayac);
         const sayac = { deger: 0 };
@@ -67,19 +105,6 @@ export default function SahneYonetmeni() {
             el.textContent = sayiBicimi.format(Math.round(sayac.deger));
           },
         });
-      });
-
-      gsap.utils.toArray<HTMLElement>("[data-paralaks]").forEach((el) => {
-        const hiz = Number(el.dataset.paralaks);
-        gsap.fromTo(
-          el,
-          { yPercent: -hiz * 50 },
-          {
-            yPercent: hiz * 50,
-            ease: "none",
-            scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true },
-          },
-        );
       });
 
       gsap.fromTo(

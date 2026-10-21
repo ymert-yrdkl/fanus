@@ -28,6 +28,7 @@ const POZLAR = {
  * 3-4 cam iner, ışık büyür · 4.1-4.6 alev son kez parlar. Bölüm bitince gündüz (beyaz) sayfa doğrudan
  * sahnenin üstüne biner; arada boş koyu ekran yok. Sahne, gündüz ekranı tamamen örtünce gizlenir (tuval çizmez).
  * Konum ve ışık tek çizelgede kalır ki sahne değerleri iki ayrı tetikte çakışmasın; görünürlüğü yalnız ayrı tetik yazar.
+ * Telefonda (dar ekran) sabitleme ve çizelge yoktur: üç cümle alt alta, ekrana girince belirir.
  */
 export default function Manifesto() {
   const kok = useRef<HTMLElement>(null);
@@ -42,6 +43,31 @@ export default function Manifesto() {
         gsap.set(A, { ...P.giris, kapak: 0, isik: 1, gorunur: 1 });
         sahneDurumu.ruzgar = 0.15;
         if (!hareket) return;
+
+        if (!genis) {
+          // Telefon: sahne yalnız girişte; cümleler normal akışta, ekrana girince belirir
+          gsap.utils.toArray<HTMLElement>("[data-cumle]").forEach((c) =>
+            gsap.fromTo(
+              c,
+              { opacity: 0, y: 16 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                ease: "power2.out",
+                scrollTrigger: { trigger: c, start: "top 85%", once: true },
+              },
+            ),
+          );
+          // Giriş ekrandan çıkınca sahne çizimi durur (pil ve işlemci)
+          ScrollTrigger.create({
+            trigger: document.getElementById("ust"),
+            start: "bottom top",
+            onEnter: () => gsap.set(A, { gorunur: 0 }),
+            onLeaveBack: () => gsap.set(A, { gorunur: 1 }),
+          });
+          return;
+        }
 
         const cumleler = gsap.utils.toArray<HTMLElement>("[data-cumle]");
         const bolumler = cumleler.map((c) => SplitText.create(c, { type: "words" }));
@@ -106,16 +132,16 @@ export default function Manifesto() {
       ref={kok}
       id="manifesto"
       aria-label="fanus ne demek"
-      className="relative z-10 bg-gece/85 [.hareket_&]:h-[460vh] [.hareket_&]:bg-transparent"
+      className="relative z-10 bg-gece/85 max-md:bg-gece [.hareket_&]:md:h-[460vh] [.hareket_&]:md:bg-transparent"
     >
-      <div className="relative overflow-hidden [.hareket_&]:sticky [.hareket_&]:top-0 [.hareket_&]:h-svh">
-        <div className="mx-auto grid h-full max-w-[90rem] px-4 py-24 sm:px-6 md:items-center lg:px-10 [.hareket_&]:py-0">
-          <div className="relative flex flex-col gap-10 md:max-w-[44rem] [.hareket_&]:h-full [.hareket_&]:max-md:justify-end [.hareket_&]:max-md:pb-[12svh] lg:max-w-[48rem]">
+      <div className="relative overflow-hidden [.hareket_&]:md:sticky [.hareket_&]:md:top-0 [.hareket_&]:md:h-svh">
+        <div className="mx-auto grid h-full max-w-[90rem] px-4 py-24 sm:px-6 md:items-center lg:px-10 [.hareket_&]:md:py-0">
+          <div className="relative flex flex-col gap-10 md:max-w-[44rem] [.hareket_&]:md:h-full lg:max-w-[48rem]">
             {CUMLELER.map((cumle, i) => (
               <p
                 key={i}
                 data-cumle
-                className="font-baslik text-[clamp(1.75rem,3.4vw,3.25rem)] leading-[1.14] font-medium tracking-[-0.02em] text-krem [.hareket_&]:absolute [.hareket_&]:inset-x-0 [.hareket_&]:max-md:bottom-[12svh] [.hareket_&]:md:top-1/2 [.hareket_&]:md:-translate-y-1/2"
+                className="font-baslik text-[clamp(1.75rem,3.4vw,3.25rem)] leading-[1.14] font-medium tracking-[-0.02em] text-krem [.hareket_&]:md:absolute [.hareket_&]:md:inset-x-0 [.hareket_&]:md:top-1/2 [.hareket_&]:md:-translate-y-1/2"
               >
                 {cumle}
               </p>

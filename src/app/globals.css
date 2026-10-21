@@ -260,6 +260,27 @@ html.lenis body {
 .hareket:not(.tekrar) .acilis [data-harf] {
   transform: translateY(110%);
 }
+/* Telefonda açılış perdesi yok ve giriş başlığı beklemeden görünür (içerik anında gelsin, hız puanı da) */
+@media (max-width: 767px) {
+  .hareket .acilis {
+    display: none;
+  }
+  .hareket [data-giris-baslik] {
+    opacity: 1;
+  }
+  /* Sayfa başı (ilk ekran) JavaScript'i beklemeden belirir: içerik hemen görünür (LCP) */
+  .hareket [data-sayfa-basi] [data-belir],
+  .hareket [data-sayfa-basi] [data-bol] {
+    opacity: 1;
+    animation: ilk-ekran 0.6s ease-out both;
+  }
+}
+@keyframes ilk-ekran {
+  from {
+    opacity: 0.01;
+    transform: translateY(12px);
+  }
+}
 
 /* SSS: <details> yumuşak açılır (desteklemeyen tarayıcıda anında açılır) */
 details.sss::details-content {

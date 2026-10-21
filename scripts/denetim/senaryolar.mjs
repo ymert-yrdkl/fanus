@@ -15,6 +15,17 @@ const GECIS_DURUMU = `(() => {
   };
 })()`;
 
+/** Sayfa geçişinin bitmesini bekler (en çok 8 sn; makine yüklüyken geçiş yavaşlayabilir), son durumu döndürür. */
+async function gecisiBekle(sekme) {
+  let d;
+  for (let i = 0; i < 40; i++) {
+    await bekle(200);
+    d = await sekme.degerlendir(GECIS_DURUMU).catch(() => null);
+    if (d && !d.ortuAcik && !d.icerikKaymis && i >= 4) break;
+  }
+  return d;
+}
+
 const panelGorunur = (sekme) =>
   sekme.degerlendir(`getComputedStyle(document.querySelector(${JSON.stringify(PANEL)})).visibility === "visible"`);
 
@@ -29,8 +40,7 @@ export const SENARYOLAR = [
       await bekle(500);
       beklenti(await panelGorunur(sekme), "Fare üstündeyken açılır panel açılmalı");
       await sekme.fareyle('header a[href="/hizmetler"]');
-      await bekle(2600);
-      const d = await sekme.degerlendir(GECIS_DURUMU);
+      const d = await gecisiBekle(sekme);
       beklenti(d.yol === "/hizmetler", `Hizmetler sayfası açılmalı (açılan: ${d.yol})`);
       beklenti(!d.ortuAcik, "Geçiş örtüsü kapanmalı");
       beklenti(!d.icerikKaymis, "Sayfa içeriği yerine oturmalı");
@@ -46,8 +56,7 @@ export const SENARYOLAR = [
       await sekme.fareyle('header a[href="/hizmetler"]', false);
       await bekle(500);
       await sekme.fareyle('header a[href="/hizmetler/e-ticaret"]');
-      await bekle(2600);
-      const d = await sekme.degerlendir(GECIS_DURUMU);
+      const d = await gecisiBekle(sekme);
       beklenti(d.yol === "/hizmetler/e-ticaret", `E-ticaret sayfası açılmalı (açılan: ${d.yol})`);
       beklenti(!d.ortuAcik, "Geçiş örtüsü kapanmalı");
       beklenti(!(await panelGorunur(sekme)), "Açılır panel kapanmalı");
@@ -62,8 +71,7 @@ export const SENARYOLAR = [
       await sekme.fareyle('header a[href="/fiyatlar"]');
       await bekle(2600);
       await sekme.degerlendir("history.back()");
-      await bekle(2600);
-      const d = await sekme.degerlendir(GECIS_DURUMU);
+      const d = await gecisiBekle(sekme);
       beklenti(d.yol === "/isler", `İşler sayfasına dönülmeli (açılan: ${d.yol})`);
       beklenti(!d.ortuAcik, "Geçiş örtüsü kapalı olmalı");
       const h1 = await sekme.degerlendir(`Number(getComputedStyle(document.querySelector("h1")).opacity)`);
@@ -80,8 +88,7 @@ export const SENARYOLAR = [
       await bekle(1200);
       beklenti(await sekme.degerlendir(`document.querySelector("dialog").open`), "Menü penceresi açılmalı");
       await sekme.fareyle('dialog a[href="/fiyatlar"]');
-      await bekle(3200);
-      const d = await sekme.degerlendir(GECIS_DURUMU);
+      const d = await gecisiBekle(sekme);
       beklenti(d.yol === "/fiyatlar", `Fiyatlar açılmalı (açılan: ${d.yol})`);
       beklenti(!(await sekme.degerlendir(`document.querySelector("dialog").open`)), "Menü penceresi kapanmalı");
       beklenti(!d.ortuAcik, "Geçiş örtüsü kapanmalı");
@@ -182,6 +189,34 @@ export const SENARYOLAR = [
       beklenti(!d.perde, "Açılış perdesi görünmemeli");
       beklenti(d.gizli === 0, `Gizli kalan öğe olmamalı (gizli: ${d.gizli})`);
       await sekme.gonder("Emulation.setEmulatedMedia", { features: [] });
+    },
+  },
+  {
+    ad: "Renk düzeni: koyu yalnız 3B sahnede; iç sayfalar açık zeminde başlar",
+    genislik: 1440,
+    async calistir(sekme, kok, beklenti) {
+      const yollar = [
+        "/hizmetler",
+        "/hizmetler/e-ticaret",
+        "/hizmetler/kurumsal-site",
+        "/hizmetler/qr-menu",
+        "/hizmetler/web-otomasyonu",
+        "/fiyatlar",
+        "/isler",
+      ];
+      for (const yol of yollar) {
+        await sekme.git(kok + yol);
+        await sekme.hazirBekle();
+        // Ana içeriğin ilk bölümünün zemini açık olmalı (parlaklık 0-1)
+        const parlaklik = await sekme.degerlendir(`(() => {
+          const ilk = document.querySelector("#icerik section") ?? document.querySelector("#icerik");
+          let el = ilk, renk = "rgba(0, 0, 0, 0)";
+          while (el && (renk === "rgba(0, 0, 0, 0)" || renk === "transparent")) { renk = getComputedStyle(el).backgroundColor; el = el.parentElement; }
+          const [r, g, b] = renk.match(/[0-9]+/g).map(Number);
+          return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+        })()`);
+        beklenti(parlaklik > 0.8, `${yol} açık zeminde başlamalı (parlaklık ${parlaklik.toFixed(2)})`);
+      }
     },
   },
   {
