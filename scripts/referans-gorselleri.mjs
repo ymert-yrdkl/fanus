@@ -10,6 +10,7 @@ const SITELER = [
   { ad: "ayyildizrobotics", adres: "https://ayyildizrobotics.com/" },
   { ad: "emrepide", adres: "https://emrepide.com.tr/" },
   { ad: "emrepide-menu", adres: "https://menu.emrepide.com.tr/" },
+  { ad: "nfcqrkartim", adres: "https://nfcqrkartimcom.ahmcloud.com/" },
 ];
 
 const SABITLERI_GIZLE = `(() => {

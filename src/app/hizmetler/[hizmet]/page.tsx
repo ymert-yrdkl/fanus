@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowsClockwise, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import AdGirisi from "@/bilesenler/AdGirisi";
+import BolumBasi from "@/bilesenler/BolumBasi";
 import CagriBandi from "@/bilesenler/CagriBandi";
 import DigerHizmetler from "@/bilesenler/DigerHizmetler";
 import FiyatKarti from "@/bilesenler/FiyatKarti";
@@ -96,27 +97,26 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
         baslik={h.sayfaBasligi}
         metin={h.sayfaMetni}
       >
-        {/* Kısa fiyat kutusu: paketler ve teklif bağlantısı */}
-        <div className="grid gap-3">
-          {paketler.map((p) => (
+        {/* Kısa fiyat tahtası: paketler ve teklif bağlantısı, koyu zeminde */}
+        <div data-zemin="koyu" className="rounded-[1.25rem] p-5 sm:p-6">
+          {paketler.map((p, i) => (
             <div
               key={p.kod}
-              className="flex flex-wrap items-end justify-between gap-4 rounded-[1.5rem] border border-cizgi-guclu bg-gece-2/80 p-5 backdrop-blur"
+              className={`flex flex-wrap items-end justify-between gap-4 ${i > 0 ? "mt-5 border-t border-cizgi-guclu pt-5" : ""}`}
             >
               <div>
-                <p className="text-sm text-soluk">{p.ad}</p>
-                <p className="mt-1 font-baslik text-3xl font-semibold tracking-tight tabular-nums">
-                  {p.fiyat !== null ? fiyatYaz(p.fiyat) : "Teklif üzerine"}
+                <p className="etiket">{p.ad}</p>
+                <p className="rakam mt-2 text-[clamp(1.875rem,3vw,2.75rem)] leading-none">
+                  {p.fiyat !== null ? fiyatYaz(p.fiyat) : "Teklifle"}
                   {p.fiyat !== null && (
-                    <span className="text-base font-normal text-soluk">
-                      {" "}
+                    <span className="ml-1.5 text-base font-normal tracking-normal text-soluk">
                       {kdvEki(p.baslangic)}
                       {p.baslangic && " başlayan"}
                     </span>
                   )}
                 </p>
                 {p.yenileme !== null && (
-                  <p className="mt-1 text-sm text-soluk">
+                  <p className="mt-2 text-sm text-soluk">
                     Yıllık yenileme <span className="text-alev">{fiyatYaz(p.yenileme)}</span> {KDV_EKI}
                   </p>
                 )}
@@ -130,50 +130,43 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
       </SayfaBasi>
 
       {/* Canlı örnek */}
-      <section aria-labelledby="canli-ornek" className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10">
+      <section
+        aria-labelledby="canli-ornek"
+        className="relative z-10 bg-gece px-4 pt-10 pb-16 sm:px-6 md:pt-14 md:pb-24 lg:px-10"
+      >
         <div className="mx-auto max-w-[90rem]">
-          <div className="grid gap-10 md:grid-cols-12 md:items-end">
-            <div className="md:col-span-7">
-              <h2 id="canli-ornek" data-bol className="bolum-baslik max-w-[14ch]">
-                Deneyin, sizin adınızla çalışsın.
-              </h2>
-              <p data-belir className="mt-6 max-w-[34rem] text-lg leading-relaxed text-soluk">
-                Aşağıdaki örnek gerçek bir bileşen. Adınızı yazın, düğmelere basın; teslim edeceğimiz sitenin nasıl
-                davrandığını görün.
-              </p>
-            </div>
-            <div data-belir data-gecikme="0.1" className="md:col-span-5">
+          <BolumBasi
+            id="canli-ornek"
+            etiket="Canlı örnek"
+            baslik="Deneyin, sizin adınızla çalışsın."
+            metin="Aşağıdaki örnek gerçek bir bileşen. Adınızı yazın, düğmelere basın; teslim edeceğimiz sitenin nasıl davrandığını görün."
+          >
+            <div data-belir data-gecikme="0.1" className="mt-8 max-w-[28rem]">
               <AdGirisi kimlik="hizmet-isletme-adi" />
             </div>
-          </div>
-          <div data-belir className="mt-12 rounded-[2rem] border border-cizgi bg-gece-2 p-4 sm:p-8 lg:p-12">
+          </BolumBasi>
+          <div data-belir className="mt-10 rounded-[1.25rem] border border-cizgi-guclu p-4 sm:p-8 md:mt-14 lg:p-10">
             <HizmetDemosu kod={h.kod} qrSvg={qrSvg} />
           </div>
         </div>
       </section>
 
       {/* Özellikler */}
-      <section aria-labelledby="ozellikler" className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10">
+      <section
+        aria-labelledby="ozellikler"
+        className="relative z-10 bg-gece px-4 pt-10 pb-16 sm:px-6 md:pt-14 md:pb-24 lg:px-10"
+      >
         <div className="mx-auto max-w-[90rem]">
-          <h2 id="ozellikler" data-bol className="bolum-baslik max-w-[14ch]">
-            Neler dahil?
-          </h2>
+          <BolumBasi id="ozellikler" etiket="Kapsam" baslik="Neler dahil?" />
           <ul
-            className={`mt-12 grid gap-4 sm:grid-cols-2 ${h.ozellikler.length === 4 ? "xl:grid-cols-4" : "lg:grid-cols-3"}`}
+            className={`mt-10 grid gap-x-8 gap-y-8 border-t border-cizgi-guclu pt-8 sm:grid-cols-2 md:mt-14 ${h.ozellikler.length === 4 ? "xl:grid-cols-4" : "lg:grid-cols-3"}`}
           >
             {h.ozellikler.map((g, i) => (
-              <li
-                key={g.baslik}
-                data-belir
-                data-gecikme={String(i * 0.07)}
-                data-isik
-                className="relative overflow-hidden rounded-[1.75rem] border border-cizgi bg-gece-2 p-6 sm:p-7"
-              >
-                <span className="isik-katmani" aria-hidden="true" />
-                <h3 className="relative font-baslik text-xl font-semibold">{g.baslik}</h3>
-                <ul className="relative mt-5 grid gap-3">
+              <li key={g.baslik} data-belir data-gecikme={String(i * 0.07)}>
+                <h3 className="font-baslik text-xl font-semibold tracking-[-0.015em]">{g.baslik}</h3>
+                <ul className="mt-4 grid gap-2.5">
                   {g.maddeler.map((m) => (
-                    <li key={m} className="flex items-start gap-3 text-[0.9375rem] text-krem/90">
+                    <li key={m} className="flex items-start gap-3 text-[0.9375rem]">
                       <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
                       {m}
                     </li>
@@ -182,7 +175,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
               </li>
             ))}
           </ul>
-          <div data-belir className="mt-12 flex flex-wrap items-center gap-3">
+          <div data-belir className="mt-10 flex flex-wrap items-center gap-3 border-t border-cizgi-guclu pt-6">
             <span className="etiket mr-2">Kimler için</span>
             {h.kimlerIcin.map((k) => (
               <span key={k} className="rounded-full border border-cizgi-guclu px-4 py-2 text-sm">
@@ -194,13 +187,18 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
       </section>
 
       {/* Paketler */}
-      <section aria-labelledby="paketler" className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10">
+      <section
+        aria-labelledby="paketler"
+        className="relative z-10 bg-gece px-4 pt-10 pb-16 sm:px-6 md:pt-14 md:pb-24 lg:px-10"
+      >
         <div className="mx-auto max-w-[90rem]">
-          <h2 id="paketler" data-bol className="bolum-baslik max-w-[14ch]">
-            {paketler.length > 1 ? "Paketler ve fiyatlar." : "Paket ve fiyat."}
-          </h2>
+          <BolumBasi
+            id="paketler"
+            etiket="Fiyat"
+            baslik={paketler.length > 1 ? "Paketler ve fiyatlar." : "Paket ve fiyat."}
+          />
           <div
-            className={`mt-12 grid gap-5 ${paketler.length > 1 || paketler[0]!.yenileme !== null ? "lg:grid-cols-2" : "max-w-[44rem]"}`}
+            className={`mt-10 grid gap-5 md:mt-14 ${paketler.length > 1 || paketler[0]!.yenileme !== null ? "lg:grid-cols-2" : "max-w-[44rem]"}`}
           >
             {paketler.map((p, i) => (
               <FiyatKarti key={p.kod} paket={p} detayLinki={false} gecikme={i * 0.08} />
@@ -210,9 +208,9 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
               <div
                 data-belir
                 data-gecikme="0.1"
-                className="flex flex-col rounded-[2rem] border border-cizgi bg-gece-3/50 p-6 sm:p-8"
+                className="flex flex-col rounded-[1.25rem] border border-cizgi-guclu p-6 sm:p-8"
               >
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-alev text-gece">
+                <span className="flex size-12 items-center justify-center rounded-full bg-alev text-gece">
                   <ArrowsClockwise size={22} weight="bold" aria-hidden="true" />
                 </span>
                 <h3 className="ara-baslik mt-6">Yıllık yenileme {kdvHaricYaz(YILLIK_YENILEME)}</h3>
@@ -239,11 +237,11 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
         </div>
       </section>
 
-      {h.referans && (
+      {h.referanslar && (
         <Isler
-          kodlar={[h.referans]}
-          baslik="Bu işi yaptığımız bir site."
-          metin="Yayında, bugün çalışıyor. Ekran görüntüleri sitenin kendisinden; tıklayıp gezebilirsiniz."
+          kodlar={h.referanslar}
+          baslik={h.referanslar.length > 1 ? "Bu işi yaptığımız siteler." : "Bu işi yaptığımız bir site."}
+          metin="Yayında, bugün çalışıyor. Ekran görüntüleri sitelerin kendisinden; tıklayıp gezebilirsiniz."
         />
       )}
       <Sss sorular={h.sss} baslik="Bu hizmetle ilgili sorular." />

@@ -1,6 +1,7 @@
 import GecisBandi from "@/bilesenler/GecisBandi";
 import type { Metadata } from "next";
-import { EnvelopeSimple, Phone, WhatsappLogo, VideoCamera } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRight, EnvelopeSimple, Phone, WhatsappLogo, VideoCamera } from "@phosphor-icons/react/dist/ssr";
+import BolumBasi from "@/bilesenler/BolumBasi";
 import Teklif from "@/bilesenler/Teklif";
 import FanusSahnesi from "@/sahne/FanusSahnesi";
 import { SITE } from "@/site/ayarlar";
@@ -32,46 +33,50 @@ export default function IletisimSayfasi() {
         <section
           data-zemin="acik"
           aria-labelledby="kanallar"
-          className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10"
+          className="relative z-10 bg-gece px-4 pt-10 pb-20 sm:px-6 md:pt-14 md:pb-28 lg:px-10"
         >
           <div className="mx-auto max-w-[90rem]">
-            <h2 id="kanallar" data-bol className="bolum-baslik max-w-[14ch]">
-              Doğrudan da yazabilirsiniz.
-            </h2>
-            <ul className="mt-12 grid gap-4 md:grid-cols-3">
-              {kanallar.map((k, i) => (
-                <li key={k.ad} data-belir data-gecikme={String(i * 0.07)}>
-                  <a
-                    href={k.adres}
-                    {...(k.adres.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
-                    data-isik
-                    className="group relative flex h-full flex-col gap-8 overflow-hidden rounded-[1.75rem] border border-cizgi bg-gece-2 p-6 transition-colors duration-500 hover:border-alev/40 sm:p-8"
-                  >
-                    <span className="isik-katmani" aria-hidden="true" />
-                    <span className="relative flex size-12 items-center justify-center rounded-2xl bg-gece-4 text-alev transition-colors duration-500 group-hover:bg-alev group-hover:text-gece">
-                      <k.Ikon size={24} aria-hidden="true" />
+            <BolumBasi id="kanallar" etiket="Doğrudan" baslik="Doğrudan da yazabilirsiniz.">
+              <ul className="mt-10 border-t border-cizgi-guclu md:mt-14">
+                {kanallar.map((k, i) => (
+                  <li key={k.ad} data-belir data-gecikme={String(i * 0.07)} className="border-b border-cizgi-guclu">
+                    <a
+                      href={k.adres}
+                      {...(k.adres.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
+                      className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 py-5"
+                    >
+                      <span className="flex size-12 items-center justify-center rounded-full border border-cizgi-guclu text-alev transition-colors duration-500 group-hover:border-alev group-hover:bg-alev group-hover:text-gece">
+                        <k.Ikon size={22} aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="etiket block">{k.ad}</span>
+                        <span className="mt-1 block font-baslik text-xl font-semibold tracking-[-0.015em] break-all md:text-2xl">
+                          {k.deger}
+                        </span>
+                      </span>
+                      <ArrowUpRight
+                        size={20}
+                        aria-hidden="true"
+                        className="text-soluk transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-alev"
+                      />
+                    </a>
+                  </li>
+                ))}
+                <li data-belir data-gecikme="0.2" className="border-b border-cizgi-guclu">
+                  <div className="grid grid-cols-[auto_1fr] items-center gap-5 py-5">
+                    <span className="flex size-12 items-center justify-center rounded-full border border-cizgi-guclu text-alev">
+                      <VideoCamera size={22} aria-hidden="true" />
                     </span>
-                    <span className="relative">
-                      <span className="block text-sm text-soluk">{k.ad}</span>
-                      <span className="mt-1 block font-baslik text-xl font-semibold break-all">{k.deger}</span>
+                    <span>
+                      <span className="etiket block">Görüşme</span>
+                      <span className="mt-1 block leading-relaxed">
+                        Türkiye&apos;nin her yerinden çalışıyoruz; görüşmeler telefonla ya da görüntülü yapılır.
+                      </span>
                     </span>
-                  </a>
+                  </div>
                 </li>
-              ))}
-              <li data-belir data-gecikme="0.2">
-                <div className="relative flex h-full flex-col gap-8 rounded-[1.75rem] border border-cizgi bg-gece-2 p-6 sm:p-8">
-                  <span className="flex size-12 items-center justify-center rounded-2xl bg-gece-4 text-alev">
-                    <VideoCamera size={24} aria-hidden="true" />
-                  </span>
-                  <span>
-                    <span className="block text-sm text-soluk">Görüşme</span>
-                    <span className="mt-1 block leading-relaxed">
-                      Türkiye&apos;nin her yerinden çalışıyoruz; görüşmeler telefonla ya da görüntülü yapılır.
-                    </span>
-                  </span>
-                </div>
-              </li>
-            </ul>
+              </ul>
+            </BolumBasi>
           </div>
         </section>
       </main>

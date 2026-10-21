@@ -26,6 +26,16 @@ function Alev({ alt, ...ozellik }: { alt: number } & SVGProps<SVGGElement>) {
   );
 }
 
+/** Yalnız alev (parantezsiz): şerit ayracı, başlık içi işaret. Boyu yazı boyuna bağlanabilir (h-[1em]). */
+export function AlevIsareti({ className = "size-6" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 140" className={`shrink-0 ${className}`} aria-hidden="true">
+      <path d={ALEV_YOLU} fill="#ff4a2b" />
+      <path d={ALEV_YOLU} fill="#ffc83a" transform="translate(50 134) scale(.5) translate(-50 -134)" />
+    </svg>
+  );
+}
+
 /** Küçük işaret (menü, altbilgi, geçiş perdesi). Rengi `currentColor`. */
 export function FanusIsareti({ className = "size-7" }: { className?: string }) {
   return (

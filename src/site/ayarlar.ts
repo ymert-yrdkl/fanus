@@ -17,9 +17,9 @@ export const SITE: SiteAyarlari = {
   ad: "fanus",
   alanAdi: "fanussoft.com",
   adres: process.env.NEXT_PUBLIC_SITE_ADRESI ?? "https://fanussoft.com",
-  baslik: "fanussoft | E-ticaret, kurumsal site, QR menü ve web otomasyonu",
+  baslik: "fanussoft | Web sitesi, e-ticaret, QR ve NFC, özel yazılım",
   aciklama:
-    "fanussoft; e-ticaret siteleri, kurumsal web siteleri, QR menüler ve iş akışınızı yürüten web otomasyonları kurar. Yayındaki işlerimizi gezin, teklif isteyin.",
+    "fanussoft; e-ticaret ve kurumsal web siteleri, QR menü ve NFC kart sistemleri, iş ve üretim otomasyonu için özel yazılım kurar. Yayındaki işleri gezin, teklif isteyin.",
 
   // ONAY BEKLİYOR: WhatsApp numarası, ülke koduyla ve boşluksuz (ör. "905xxxxxxxxx").
   // Boşken WhatsApp düğmeleri gizlenir, teklif e-postayla gönderilir.

@@ -25,8 +25,8 @@ export type Hizmet = {
   kimlerIcin: string[];
   ozellikler: OzellikGrubu[];
   paketler: PaketKodu[];
-  /** İlgili referansın kodu (REFERANSLAR) */
-  referans?: string;
+  /** İlgili referansların kodları (REFERANSLAR) */
+  referanslar?: string[];
   sss: Soru[];
 };
 
@@ -125,18 +125,18 @@ export const PAKETLER: Paket[] = [
   },
   {
     kod: "otomasyon",
-    ad: "Web otomasyonu",
+    ad: "Özel yazılım ve otomasyon",
     hizmet: "web-otomasyonu",
     fiyat: null,
     yenileme: null,
-    ozet: "Sipariş, fatura, randevu ve bildirim gibi tekrar eden işler için kurulan akışlar. Fiyat, bağlanacak sistemlere göre belirlenir.",
+    ozet: "Sipariş, fatura, randevu, bildirim ve üretim takibi gibi tekrar eden işler için kurulan özel yazılım. Fiyat, bağlanacak sistemlere göre belirlenir.",
     maddeler: [
       "WhatsApp, SMS ve e-posta bildirimleri",
-      "Muhasebe ve e-fatura bağlantısı",
+      "Muhasebe, e-fatura ve ERP bağlantısı",
       "Pazaryeri ürün ve stok eşitleme",
-      "Randevu ve hatırlatma akışları",
-      "Kendiliğinden hazırlanan raporlar",
-      "Mevcut sitenize eklenebilir",
+      "Üretim takibi, iş emirleri ve stok sayımı",
+      "Size özel yönetim panelleri ve raporlar",
+      "Mevcut sitenize ya da programınıza eklenebilir",
     ],
   },
 ];
@@ -234,7 +234,7 @@ export const HIZMETLER: Hizmet[] = [
       },
     ],
     paketler: ["e-ticaret"],
-    referans: "dijitalbaskimerkezim",
+    referanslar: ["dijitalbaskimerkezim", "nfcqrkartim"],
     sss: [
       {
         soru: "Kartla ödeme için ne gerekiyor?",
@@ -311,7 +311,7 @@ export const HIZMETLER: Hizmet[] = [
       },
     ],
     paketler: ["tek-sayfa", "kurumsal"],
-    referans: "ayyildizrobotics",
+    referanslar: ["ayyildizrobotics"],
     sss: [
       {
         soru: "Tek sayfa ile tam paket arasındaki fark ne?",
@@ -379,7 +379,7 @@ export const HIZMETLER: Hizmet[] = [
       },
     ],
     paketler: ["qr-menu"],
-    referans: "emrepide",
+    referanslar: ["emrepide", "nfcqrkartim"],
     sss: [
       {
         soru: "Fiyatı değiştirince QR kodu yeniden bastırmam gerekir mi?",
@@ -400,24 +400,33 @@ export const HIZMETLER: Hizmet[] = [
   {
     kod: "otomasyon",
     adres: "web-otomasyonu",
-    ad: "Web otomasyonu",
-    baslik: "Tekrar eden işi siteye devredin.",
+    ad: "Özel yazılım ve otomasyon",
+    baslik: "Tekrar eden işi yazılıma devredin.",
     metin:
-      "Sipariş gelince stok düşsün, fatura kesilsin, kargo etiketi çıksın, müşteriye WhatsApp'tan haber gitsin. Siz yalnız sonucu görün.",
+      "Sipariş gelince stok düşsün, fatura kesilsin, kargo etiketi çıksın, müşteriye WhatsApp'tan haber gitsin; atölyede iş emri açılsın, rapor kendiliğinden gelsin. Siz yalnız sonucu görün.",
     maddeler: [
       "WhatsApp, SMS ve e-posta bildirimleri",
-      "Muhasebe ve e-fatura bağlantısı",
-      "Randevu ve hatırlatma akışları",
-      "Kendiliğinden hazırlanan raporlar",
+      "Muhasebe, e-fatura ve ERP bağlantısı",
+      "Üretim takibi, iş emirleri ve stok sayımı",
+      "Size özel yönetim panelleri ve raporlar",
     ],
-    sayfaBasligi: "Tekrar eden işi siteye devredin.",
+    sayfaBasligi: "Tekrar eden işi yazılıma devredin.",
     sayfaMetni:
-      "Her gün elle yaptığınız işleri birbirine bağlayan akışlar: sipariş, fatura, kargo, randevu ve bildirimler kendiliğinden yürür.",
-    seoBasligi: "Web otomasyonu",
+      "Her gün elle yaptığınız işleri birbirine bağlayan özel yazılım: sipariş, fatura, kargo, randevu ve bildirimlerden üretim takibine; mevcut sistemlerinize eklenir, kendiliğinden yürür.",
+    seoBasligi: "Özel yazılım ve otomasyon",
     seoAciklamasi:
-      "Web otomasyonu: sipariş, fatura, kargo, randevu ve WhatsApp bildirim akışları. Fiyat, bağlanacak sistemlere göre teklifle belirlenir.",
-    kimlerIcin: ["E-ticaret siteleri", "Randevulu işletmeler", "Pazaryeri satıcıları", "Ofis ve muhasebe işleri"],
+      "Özel yazılım ve otomasyon: sipariş, fatura, kargo ve WhatsApp bildirim akışları, üretim takibi, ERP ve muhasebe bağlantısı, yönetim panelleri. Fiyat teklifle belirlenir.",
+    kimlerIcin: ["E-ticaret siteleri", "Üretim ve atölyeler", "Randevulu işletmeler", "Ofis ve muhasebe işleri"],
     ozellikler: [
+      {
+        baslik: "Üretim ve stok",
+        maddeler: [
+          "İş emirleri ve üretim takibi",
+          "Barkod / QR ile stok sayımı",
+          "Vardiya, makine ve fire raporları",
+          "Mevcut ERP ve muhasebeye bağlantı",
+        ],
+      },
       {
         baslik: "Bildirimler",
         maddeler: [
@@ -454,8 +463,14 @@ export const HIZMETLER: Hizmet[] = [
           "Her akış farklı sistemlere bağlanır; birkaç bildirim ile muhasebe ve pazaryeri bağlantısı aynı iş değildir. İhtiyacı dinledikten sonra yazılı fiyat veririz.",
       },
       {
-        soru: "Mevcut siteme eklenebilir mi?",
-        cevap: "Çoğu zaman evet. Sitenizin altyapısına bakar, eklenebilecek akışları birlikte belirleriz.",
+        soru: "Mevcut siteme ya da programıma eklenebilir mi?",
+        cevap:
+          "Çoğu zaman evet. Sitenizin, muhasebe programınızın ya da ERP'nizin dışa açık bir bağlantısı varsa ona bağlanırız; yoksa dosya alışverişiyle (Excel, CSV) de kurulabilir. Önce altyapıya bakar, eklenebilecek akışları birlikte belirleriz.",
+      },
+      {
+        soru: "Yalnız web mi, masaüstü ya da telefon uygulaması da olur mu?",
+        cevap:
+          "Akışlar tarayıcıda çalışan panellerle kurulur; telefonda da kullanılır. Barkod okuma gibi işler telefonun kamerasıyla yapılır, ayrıca uygulama indirmek gerekmez.",
       },
     ],
   },
@@ -479,6 +494,8 @@ export type Referans = {
   kod: string;
   ad: string;
   alanAdi: string;
+  /** Bağlantı listelerinde alan adı yerine gösterilecek kısa ad (alan adı geçici bir demo adresiyse). */
+  gosterim?: string;
   adres: string;
   tur: string;
   sehir: string;
@@ -511,6 +528,30 @@ export const REFERANSLAR: Referans[] = [
       genislik: 780,
       yukseklik: 5200,
       aciklama: "Dijital Baskı Merkezim'in telefondaki görünümü",
+    },
+  },
+  {
+    // Yusuf'un kendi ürünü ve sitesi (Projeler/nfcqrkartim; 2 Ekim 2026). Alan adı henüz alınmadı, demo adresi yayında.
+    kod: "nfcqrkartim",
+    ad: "NFC QR Kartım",
+    alanAdi: "nfcqrkartimcom.ahmcloud.com",
+    gosterim: "nfcqrkartim",
+    adres: "https://nfcqrkartimcom.ahmcloud.com",
+    tur: "Ürün ve e-ticaret",
+    sehir: "Düzce",
+    ozet: "İşletmelerin kasasına konan NFC ve dinamik QR'lı pleksi standlar (Google yorum, Instagram takip) için ürün ve satış sitesi: sepet, ödeme, sipariş takibi ve yönetim paneli.",
+    maddeler: [
+      "NFC ve dinamik QR: tek dokunuşla yorum ya da takip",
+      "Ürün sayfalarında gerçek baskıyla stüdyo görselleri",
+      "Sipariş takibi, stok ve kargo yönetim paneli",
+      "Kod değişmez; yönlendirme panelden güncellenir",
+    ],
+    masaustu: { src: "/isler/nfcqrkartim-masaustu.webp", genislik: 1440, yukseklik: 5200 },
+    telefon: {
+      src: "/isler/nfcqrkartim-telefon.webp",
+      genislik: 780,
+      yukseklik: 5200,
+      aciklama: "NFC QR Kartım'ın telefondaki görünümü",
     },
   },
   {
@@ -585,7 +626,7 @@ export const SSS = [
   {
     soru: "Hangi işleri yapıyorsunuz?",
     cevap:
-      "E-ticaret siteleri, kurumsal web siteleri, QR menüler, yönetim panelleri ve işinizi kendiliğinden yürüten web otomasyonları. Mevcut sitenizi yenilemek de bu işlerden biri.",
+      "E-ticaret siteleri, kurumsal web siteleri, QR menü ve NFC kart sistemleri, yönetim panelleri ve işinizi kendiliğinden yürüten özel yazılım ve otomasyonlar; sipariş akışından üretim takibine. Mevcut sitenizi ya da programınızı yenilemek de bu işlerden biri.",
   },
   {
     soru: "Bir site ne kadar sürede hazır olur?",

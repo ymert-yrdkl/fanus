@@ -3,7 +3,10 @@ import { ArrowUpRight, Check } from "@phosphor-icons/react/dist/ssr";
 import { fiyatYaz, KDV_EKI, kdvEki, type Paket } from "@/site/icerik";
 import { dugmeSinifi } from "./dugme";
 
-/** Bir paketin fiyat kartı: fiyat (sayarak belirir), yıllık yenileme, özellikler ve eylemler. */
+/**
+ * Bir paketin fiyat kartı: üstte koyu zeminde ad, özet ve büyük rakam (sayarak belirir), altta kâğıt zeminde
+ * özellikler ve eylemler.
+ */
 export default function FiyatKarti({
   paket,
   detayLinki = true,
@@ -15,26 +18,24 @@ export default function FiyatKarti({
 }) {
   return (
     <article
-      data-isik
       data-belir
       data-gecikme={String(gecikme)}
       aria-labelledby={`paket-${paket.kod}`}
-      className="group relative flex flex-col overflow-hidden rounded-[2rem] border border-cizgi bg-gece-2 p-6 transition-colors duration-500 hover:border-alev/40 sm:p-8"
+      className="flex flex-col overflow-hidden rounded-[1.25rem] border border-cizgi-guclu"
     >
-      <div className="isik-katmani" aria-hidden="true" />
-      <h3 id={`paket-${paket.kod}`} className="ara-baslik relative">
-        {paket.ad}
-      </h3>
-      <p className="relative mt-3 leading-relaxed text-soluk">{paket.ozet}</p>
+      <div data-zemin="koyu" className="p-6 sm:p-8">
+        <h3 id={`paket-${paket.kod}`} className="ara-baslik">
+          {paket.ad}
+        </h3>
+        <p className="mt-3 max-w-[30rem] leading-relaxed text-soluk">{paket.ozet}</p>
 
-      <div className="relative mt-8 border-t border-cizgi pt-7">
         {paket.fiyat !== null ? (
           <>
-            <p className="flex flex-wrap items-baseline gap-x-2">
-              <span className="font-baslik text-[clamp(2.75rem,4vw,3.5rem)] leading-none font-semibold tracking-[-0.035em] text-krem tabular-nums">
+            <p className="rakam mt-8 flex flex-wrap items-baseline gap-x-2 text-[clamp(2.5rem,4vw,3.5rem)] leading-none">
+              <span>
                 ₺<span data-sayac={paket.fiyat}>{paket.fiyat.toLocaleString("tr-TR")}</span>
               </span>
-              <span className="text-soluk">
+              <span className="text-base font-normal tracking-normal text-soluk">
                 {kdvEki(paket.baslangic)}
                 {paket.baslangic && " başlayan"}
               </span>
@@ -47,40 +48,40 @@ export default function FiyatKarti({
           </>
         ) : (
           <>
-            <p className="font-baslik text-[clamp(2.25rem,3.4vw,3rem)] leading-none font-semibold tracking-[-0.03em]">
-              Teklif üzerine
-            </p>
+            <p className="rakam mt-8 text-[clamp(2rem,3.2vw,2.75rem)] leading-none">Teklif üzerine</p>
             <p className="mt-3 text-[0.9375rem] text-soluk">Bağlanacak sistemlere göre yazılı fiyat</p>
           </>
         )}
       </div>
 
-      <ul className="relative mt-8 grid flex-1 content-start gap-3">
-        {paket.maddeler.map((m) => (
-          <li key={m} className="flex items-start gap-3 text-[0.9375rem]">
-            <Check size={17} weight="bold" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
-            {m}
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-1 flex-col p-6 sm:p-8">
+        <ul className="grid flex-1 content-start gap-3">
+          {paket.maddeler.map((m) => (
+            <li key={m} className="flex items-start gap-3 text-[0.9375rem]">
+              <Check size={17} weight="bold" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
+              {m}
+            </li>
+          ))}
+        </ul>
 
-      <div className="relative mt-9 flex flex-wrap items-center gap-3">
-        <Link href={`/iletisim?paket=${paket.kod}`} data-miknatis className={dugmeSinifi.alev}>
-          Bu paketle başla
-        </Link>
-        {detayLinki && (
-          <Link
-            href={`/hizmetler/${paket.hizmet}`}
-            className="group/detay inline-flex min-h-12 items-center gap-1.5 px-2 text-[0.9375rem] text-soluk transition-colors hover:text-krem"
-          >
-            Ayrıntılar
-            <ArrowUpRight
-              size={15}
-              aria-hidden="true"
-              className="transition-transform duration-300 group-hover/detay:translate-x-0.5 group-hover/detay:-translate-y-0.5"
-            />
+        <div className="mt-9 flex flex-wrap items-center gap-3">
+          <Link href={`/iletisim?paket=${paket.kod}`} data-miknatis className={dugmeSinifi.alev}>
+            Bu paketle başla
           </Link>
-        )}
+          {detayLinki && (
+            <Link
+              href={`/hizmetler/${paket.hizmet}`}
+              className="group/detay inline-flex min-h-12 items-center gap-1.5 px-2 text-[0.9375rem] text-soluk transition-colors hover:text-krem"
+            >
+              Ayrıntılar
+              <ArrowUpRight
+                size={15}
+                aria-hidden="true"
+                className="transition-transform duration-300 group-hover/detay:translate-x-0.5 group-hover/detay:-translate-y-0.5"
+              />
+            </Link>
+          )}
+        </div>
       </div>
     </article>
   );

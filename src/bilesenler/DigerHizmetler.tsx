@@ -2,33 +2,39 @@ import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { HIZMETLER, hizmetFiyatEtiketi, type HizmetAdresi } from "@/site/icerik";
 
-/** Hizmet sayfasının sonunda diğer hizmetlere bağlantılar. */
+/** Hizmet sayfasının sonunda diğer hizmetlere bağlantılar: ince çizgili satırlar. */
 export default function DigerHizmetler({ simdiki }: { simdiki: HizmetAdresi }) {
   const digerleri = HIZMETLER.filter((h) => h.adres !== simdiki);
   return (
-    <section aria-labelledby="diger-hizmetler" className="relative z-10 bg-gece px-4 pb-28 sm:px-6 md:pb-40 lg:px-10">
+    <section
+      aria-labelledby="diger-hizmetler"
+      className="relative z-10 bg-gece px-4 pt-6 pb-16 sm:px-6 md:pb-24 lg:px-10"
+    >
       <div className="mx-auto max-w-[90rem]">
         <h2 id="diger-hizmetler" data-belir className="etiket">
           Diğer hizmetler
         </h2>
-        <ul className="mt-6 grid gap-4 md:grid-cols-3">
+        <ul className="mt-5">
           {digerleri.map((h, i) => (
-            <li key={h.adres} data-belir data-gecikme={String(i * 0.07)}>
+            <li
+              key={h.adres}
+              data-belir
+              data-gecikme={String(i * 0.05)}
+              className="border-t border-cizgi-guclu last:border-b"
+            >
               <Link
                 href={`/hizmetler/${h.adres}`}
-                data-isik
-                className="group relative flex h-full flex-col justify-between gap-8 overflow-hidden rounded-[1.75rem] border border-cizgi bg-gece-2 p-6 transition-[border-color,transform] duration-500 ease-yay hover:-translate-y-1 hover:border-alev/40"
+                className="group grid grid-cols-[1fr_auto] items-center gap-x-5 gap-y-1 py-5 md:grid-cols-12 md:gap-x-8 md:py-6"
               >
-                <span className="isik-katmani" aria-hidden="true" />
-                <span className="relative flex items-start justify-between gap-4">
-                  <span className="ara-baslik">{h.ad}</span>
-                  <ArrowUpRight
-                    size={20}
-                    aria-hidden="true"
-                    className="shrink-0 text-soluk transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-alev"
-                  />
+                <span className="ara-baslik transition-transform duration-500 ease-yay md:col-span-6 md:group-hover:translate-x-3">
+                  {h.ad}
                 </span>
-                <span className="relative text-[0.9375rem] text-alev">{hizmetFiyatEtiketi(h.adres)}</span>
+                <span className="rakam col-start-1 text-base text-soluk md:col-span-5 md:col-start-7 md:text-right md:text-lg">
+                  {hizmetFiyatEtiketi(h.adres)}
+                </span>
+                <span className="row-span-2 flex size-11 items-center justify-center justify-self-end rounded-full border border-cizgi-guclu transition-[background-color,border-color,color,transform] duration-500 ease-yay group-hover:rotate-45 group-hover:border-alev group-hover:bg-alev group-hover:text-gece md:col-span-1 md:row-span-1">
+                  <ArrowUpRight size={18} weight="bold" aria-hidden="true" />
+                </span>
               </Link>
             </li>
           ))}

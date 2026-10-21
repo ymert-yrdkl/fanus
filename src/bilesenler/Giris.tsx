@@ -7,6 +7,10 @@ import { gsap, GENIS, HAREKET_ACIK, SplitText, useGSAP } from "@/hareket/gsap";
 import { REFERANSLAR } from "@/site/icerik";
 import { dugmeSinifi } from "./dugme";
 
+/**
+ * Giriş: afiş gibi büyük başlık solda, sağda (telefonda altta) 3B silindir fanus. Altta ince çizgiyle ayrılmış
+ * "şu an yayında" satırı.
+ */
 export default function Giris() {
   const kok = useRef<HTMLElement>(null);
 
@@ -68,29 +72,34 @@ export default function Giris() {
       ref={kok}
       id="ust"
       aria-labelledby="giris-baslik"
-      className="relative z-10 flex min-h-svh flex-col px-4 pt-[calc(var(--ust-yukseklik)+2.5rem)] sm:px-6 md:min-h-dvh md:pt-[calc(var(--ust-yukseklik)+4rem)] lg:px-10"
+      className="relative z-10 flex min-h-svh flex-col px-4 pt-[calc(var(--ust-yukseklik)+1.5rem)] sm:px-6 md:min-h-dvh md:pt-[calc(var(--ust-yukseklik)+3rem)] lg:px-10"
     >
       <div data-giris-icerik className="mx-auto flex w-full max-w-[90rem] flex-1 flex-col md:justify-center">
-        <div className="max-w-[46rem] lg:max-w-[52rem]">
-          <h1 id="giris-baslik" data-giris-baslik className="dev-baslik">
-            Siteniz satsın,
-            <br /> anlatsın, işinizi
-            <br />
-            <span className="relative inline-block text-alev">
-              yürütsün.
-              <span
-                data-vurgu-cizgi
-                aria-hidden="true"
-                className="absolute -bottom-1 left-0 h-[0.06em] w-full origin-left rounded-full bg-alev/70"
-              />
-            </span>
-          </h1>
+        <p data-giris className="etiket flex items-center gap-3">
+          <span className="h-px w-8 bg-cizgi-guclu" aria-hidden="true" />
+          Yazılım ve teknoloji çözümleri
+          <span className="max-md:hidden"> · Düzce&apos;den Türkiye&apos;nin her yerine</span>
+        </p>
+        <h1 id="giris-baslik" data-giris-baslik className="dev-baslik mt-6 max-w-[15ch] md:mt-8">
+          Web&apos;den üretime,
+          <br /> işinizi yürüten
+          <br />
+          <span className="relative inline-block text-alev">
+            yazılım.
+            <span
+              data-vurgu-cizgi
+              aria-hidden="true"
+              className="absolute -bottom-1 left-0 h-[0.06em] w-full origin-left rounded-full bg-alev/70"
+            />
+          </span>
+        </h1>
+        <div className="mt-8 grid gap-7 md:mt-12 md:grid-cols-12 md:items-end md:gap-8">
           {/* Görünür kalır, yalnız kayar: sayfanın ana içeriği ilk boyamada sayılsın (LCP) */}
-          <p data-giris-metin className="mt-7 max-w-[34rem] text-lg leading-relaxed text-soluk md:text-xl">
-            fanussoft; e-ticaret siteleri, kurumsal web siteleri, QR menüler ve tekrar eden işi üstlenen web
-            otomasyonları kurar.
+          <p data-giris-metin className="max-w-[30rem] text-lg leading-relaxed text-soluk md:col-span-5 md:text-xl">
+            fanussoft; e-ticaret ve kurumsal web siteleri, QR menü ve NFC kart sistemleri, iş ve üretim otomasyonu için
+            özel yazılım kurar.
           </p>
-          <div data-giris className="mt-9 flex flex-wrap items-center gap-3">
+          <div data-giris className="flex flex-wrap items-center gap-3 md:col-span-5 md:col-start-7">
             <Link href="/iletisim" data-miknatis className={dugmeSinifi.alev}>
               Teklif al
             </Link>
@@ -102,21 +111,21 @@ export default function Giris() {
         </div>
       </div>
 
-      {/* Telefonda fanus bu boşlukta görünür */}
-      <div aria-hidden="true" className="h-[46svh] md:hidden" />
+      {/* Telefonda alev bu boşlukta yanar */}
+      <div aria-hidden="true" className="h-[44svh] md:hidden" />
 
       <div
         data-giris
-        className="mx-auto mb-6 flex w-full max-w-[90rem] flex-col gap-3 border-t border-cizgi pt-5 md:mb-8 md:flex-row md:items-center md:gap-8"
+        className="mx-auto mb-6 flex w-full max-w-[90rem] flex-col gap-3 border-t border-cizgi-guclu pt-5 md:mb-8 md:flex-row md:items-center md:gap-10"
       >
-        <p className="flex items-center gap-2 text-sm text-soluk">
+        <p className="etiket flex items-center gap-2.5">
           <span className="relative flex size-2">
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-canli opacity-60" />
             <span className="relative inline-flex size-2 rounded-full bg-canli" />
           </span>
           Şu an yayında
         </p>
-        <ul className="flex flex-wrap gap-x-6 gap-y-2">
+        <ul className="flex flex-wrap gap-x-7 gap-y-2">
           {REFERANSLAR.map((r) => (
             <li key={r.kod}>
               <a
@@ -125,7 +134,7 @@ export default function Giris() {
                 rel="noopener"
                 className="group inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] text-krem/85 transition-colors hover:text-alev md:min-h-0"
               >
-                {r.alanAdi}
+                {r.gosterim ?? r.alanAdi}
                 <ArrowUpRight
                   size={14}
                   aria-hidden="true"
@@ -135,6 +144,7 @@ export default function Giris() {
             </li>
           ))}
         </ul>
+        <p className="etiket hidden md:ml-auto md:block">Web · E-ticaret · QR ve NFC · Özel yazılım</p>
       </div>
     </section>
   );

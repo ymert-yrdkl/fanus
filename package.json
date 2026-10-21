@@ -12,7 +12,8 @@
     "ekran": "node scripts/ekran.mjs",
     "referanslar": "node scripts/referans-gorselleri.mjs",
     "denetim": "node scripts/denetim/calistir.mjs",
-    "denetim:lighthouse": "node scripts/denetim/lighthouse.mjs"
+    "denetim:lighthouse": "node scripts/denetim/lighthouse.mjs",
+    "poster": "node scripts/telefon-posteri.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

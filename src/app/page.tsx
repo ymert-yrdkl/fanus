@@ -2,7 +2,7 @@ import GecisBandi from "@/bilesenler/GecisBandi";
 import CagriBandi from "@/bilesenler/CagriBandi";
 import FiyatListesi from "@/bilesenler/FiyatListesi";
 import Giris from "@/bilesenler/Giris";
-import HizmetKartlari from "@/bilesenler/HizmetKartlari";
+import HizmetVitrini from "@/bilesenler/HizmetVitrini";
 import Isler from "@/bilesenler/Isler";
 import Manifesto from "@/bilesenler/Manifesto";
 import Serit from "@/bilesenler/Serit";
@@ -26,7 +26,14 @@ export default async function AnaSayfa() {
         areaServed: { "@type": "Country", name: "Türkiye" },
         ...(SITE.eposta ? { email: SITE.eposta } : {}),
         ...(SITE.telefon ? { telephone: SITE.telefon } : {}),
-        knowsAbout: ["E-ticaret sitesi", "Kurumsal web sitesi", "Web otomasyonu", "QR menü"],
+        knowsAbout: [
+          "E-ticaret sitesi",
+          "Kurumsal web sitesi",
+          "QR menü",
+          "NFC kart sistemleri",
+          "Özel yazılım",
+          "Web ve üretim otomasyonu",
+        ],
       },
       {
         "@type": "ItemList",
@@ -56,9 +63,12 @@ export default async function AnaSayfa() {
         <GecisBandi />
         <div data-zemin="acik">
           <Serit />
-          <HizmetKartlari qrSvg={qrSvg} />
+          <HizmetVitrini qrSvg={qrSvg} />
           <Isler />
-          <FiyatListesi />
+        </div>
+        {/* Fiyat tahtası koyu: gündüz sayfasının ortasında tek koyu blok (menü de üstünde koyuya döner) */}
+        <FiyatListesi />
+        <div data-zemin="acik">
           <CagriBandi />
         </div>
       </main>

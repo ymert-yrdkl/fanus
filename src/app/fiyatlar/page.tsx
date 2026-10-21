@@ -51,28 +51,32 @@ export default function FiyatlarSayfasi() {
         baslik="Fiyatı baştan söylüyoruz."
         metin={`Her paketin fiyatı ve içeriği aşağıda yazılı. Site yayına girdikten sonra her yıl ${kdvHaricYaz(YILLIK_YENILEME)} yenileme ödersiniz; sunucu, SSL, güncelleme ve yedek buna dahildir.`}
       />
-      <section aria-labelledby="paketler-baslik" className="relative z-10 bg-gece px-4 pb-20 sm:px-6 md:pb-28 lg:px-10">
+      <section aria-labelledby="paketler-baslik" className="relative z-10 bg-gece px-4 pb-16 sm:px-6 md:pb-24 lg:px-10">
         <h2 id="paketler-baslik" className="sr-only">
           Paketler ve fiyatlar
         </h2>
-        <div className="mx-auto grid max-w-[90rem] gap-5 md:grid-cols-2">
+        <div className="mx-auto grid max-w-[90rem] gap-5 md:grid-cols-2 md:gap-6">
           {fiyatliPaketler.map((p, i) => (
             <FiyatKarti key={p.kod} paket={p} gecikme={(i % 2) * 0.08} />
           ))}
         </div>
-        <div className="mx-auto mt-5 max-w-[90rem]">
+        <div className="mx-auto mt-5 max-w-[90rem] md:mt-6">
           {teklifli.map((p) => (
             <FiyatKarti key={p.kod} paket={p} />
           ))}
         </div>
       </section>
 
-      {/* Yıllık yenileme */}
-      <section aria-labelledby="yenileme-baslik" className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10">
-        <div className="mx-auto grid max-w-[90rem] gap-10 rounded-[2rem] border border-cizgi bg-gece-2 p-6 sm:p-10 md:grid-cols-12 md:items-center lg:p-14">
+      {/* Yıllık yenileme: koyu tahta */}
+      <section
+        data-zemin="koyu"
+        aria-labelledby="yenileme-baslik"
+        className="relative z-10 bg-gece px-4 py-20 sm:px-6 md:py-28 lg:px-10"
+      >
+        <div className="mx-auto grid max-w-[90rem] gap-10 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
-            <span className="flex size-14 items-center justify-center rounded-2xl bg-alev text-gece">
-              <ArrowsClockwise size={26} weight="bold" aria-hidden="true" />
+            <span className="flex size-12 items-center justify-center rounded-full bg-alev text-gece">
+              <ArrowsClockwise size={22} weight="bold" aria-hidden="true" />
             </span>
             <h2 id="yenileme-baslik" data-bol className="bolum-baslik mt-8 max-w-[12ch]">
               Yıllık yenileme {kdvHaricYaz(YILLIK_YENILEME)}.
@@ -81,13 +85,13 @@ export default function FiyatlarSayfasi() {
               Bütün paketlerde aynı. Siteniz yayında kaldığı sürece çalışır, güncel ve güvende kalır.
             </p>
           </div>
-          <ul className="grid gap-3 sm:grid-cols-2 md:col-span-7">
+          <ul className="border-t border-cizgi-guclu md:col-span-7">
             {YENILEMEYE_DAHIL.map((m, i) => (
               <li
                 key={m}
                 data-belir
                 data-gecikme={String(i * 0.05)}
-                className="flex items-start gap-3 rounded-2xl border border-cizgi bg-cukur p-4 text-[0.9375rem]"
+                className="flex items-start gap-3 border-b border-cizgi-guclu py-4 text-[0.9375rem] md:text-base"
               >
                 <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
                 {m}

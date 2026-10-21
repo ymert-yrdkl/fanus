@@ -1,51 +1,86 @@
 # fanussoft tasarım dili
 
-**Okuma:** tanıtım sitesi; kitle Türkiye'de küçük ve orta işletme sahipleri; dil sıcak, somut, abartısız;
-sistem yumuşak koyu gri "gece" (3B sahne) + açık gri "gündüz" (içerik) + tek "alev" vurgusu. Kadranlar: çeşitlilik
-8, hareket 9, yoğunluk 4.
+**Okuma:** yazılım ve teknoloji çözümleri sunan bir stüdyonun tanıtım sitesi; kitle Türkiye'de küçük ve orta
+işletme sahipleri ile üretim yapan firmalar; dil sıcak, somut, abartısız. Sistem (22 Ekim 2026): **kâğıt ve
+mürekkep** üstünde **afiş tipografisi**; koyu yalnız 3B fanusun olduğu yerde ve sayfanın ortasındaki tek koyu
+tahtada. Kadranlar: çeşitlilik 7, hareket 8, yoğunluk 5.
 
 ## Metafor ve işaret
+
 Fanus, alevi rüzgârdan koruyan camdır. İşletmenin ışığı (emeği) internette kolay söner; fanus onu korur, büyütür,
-uzaktan görünür kılar. İşaret (21 Ekim 2026): köşeli parantez içinde alev, `[ alev ]`; parantezler fanusun iki cam
-yarısı (3B'de iki kalın cam parça) ve aynı zamanda kod. Yazım: **fanus**soft ("soft" soluk renkte). Eski fener
-(topuz, pirinç taban, fitil) "eski usul, falcı fanusu" bulunduğu için bırakıldı.
+uzaktan görünür kılar. İşaret: köşeli parantez içinde alev, `[ alev ]`; yazım **fanus**soft ("soft" soluk).
+3B'de cam (22 Ekim 2026): **kapalı bir silindir**, üstte ve altta omuz gibi daralıp ortada dar birer delikle açılır
+(lamba camı); bilezik ya da pencere yok (Yusuf ikisini de istemedi). Karşıdan iki dikey kenar ve daralan uçlar
+`[ ]` gibi okunur, dönünce silindir olduğu görülür. Alev logodaki siluette tek gövde: gürültüyle içten
+akan türbülans, sıcak çekirdek, düzensiz uçlar, dışında yumuşak ışıltı (`src/sahne/fanus3b.ts`). Düz, çizgi film
+gibi alev işareti sayfada kullanılmaz (Yusuf "ucuz" buldu); parantezli işaret yalnız logo, menü ve altbilgide.
+Eski fener (topuz, pirinç taban, fitil) "falcı fanusu", parantez biçimli iki cam parça ise anlaşılmaz bulunduğu için bırakıldı.
+
+## Neden bu sistem
+
+Önceki hâl (gri zemin, beyaz yuvarlak kartlar, gri paragraflar, her bölümde aynı "sol başlık + paragraf + kart
+ızgarası" kalıbı) "silik", "tasarımcı yapmamış gibi", "Wikipedia gibi tekdüze" bulundu. Çözüm renk değil kompozisyon:
+
+1. Gri yerine kâğıt beyazı, gri yazı yerine mürekkep; ayraçlar belirgin ince çizgi.
+2. Başlıklar afiş gibi: Bricolage Grotesque'in genişlik ekseni (wdth 86-92) ile hafif sıkışık, daha büyük.
+3. Her bölüm "bölüm başı" ile açılır (`BolumBasi`: üstte çizgi, solda mono etiket, sağda başlık ve metin).
+4. Kart yerine iki şey: **koyu karolar** (hizmet vitrini, paket kartlarının üst yarısı, fiyat kutuları) ve
+   **çizgili satırlar** (SSS, kanallar, diğer hizmetler, kapsam listeleri). Ana sayfanın ortasında tek koyu tahta
+   (fiyat listesi) ritmi kurar: gece › kâğıt › tahta › kâğıt.
+5. İmleci izleyen pencere, kart üstünde ışık, dev dış çizgili şerit yazı gibi "gösteri" efektleri yok; hareket
+   belirme, sabitlenen vitrin ve 3B sahneyle sınırlı.
+6. Telefon ayrı tasarlanır: yana kaydırılan vitrin (işler), tek sütun karolar, kısa belirmeler; küçültülmüş masaüstü değil.
 
 ## Renk (yalnız token)
-Seçilen (21 Ekim 2026): **antrasit (#1a1b1e, Discord'un koyu tonları) + açık gri**, mercan vurgu. Lacivert ve degrade istenmedi: koyular yumuşak
-gri, gece ile gündüz arasında renk geçişi yok (gündüz, köşeleri yuvarlak bir sayfa gibi başlar, `.gecis-yaprak`).
-Koyu yalnız 3B sahnenin olduğu yerde: ana sayfa girişi + manifesto, iletişim teklif bölümü. Gerisi gündüz
-(`data-zemin="acik"`): aynı token adları `--g-*` değerlerine eşlenir. Bütün çiftler WCAG AA (en az 4,5:1).
 
-| Token | Gece | Gündüz | Kullanım |
-|---|---|---|---|
-| `gece` | #1a1b1e | #f2f3f5 | zemin; gecede 3B sahnenin arkası (`--gece-zemin`) |
-| `gece-2..4` | #232428 → #34363b | #ffffff → #e3e5e8 | kartlar ve yükseltilmiş yüzeyler |
-| `cukur` | #141518 | #f6f7f8 | kart içindeki gömülü paneller, form alanları |
-| `krem` | #f2f3f5 | #1e1f22 | ana metin |
-| `soluk` | #b5bac1 | #4e5058 | ikincil metin |
-| `silik` | #a3a9b2 | #5c5e66 | küçük yardımcı metin |
-| `alev` (+ `alev-acik`, `alev-koyu`) | #ff6145 | #c9321a | TEK vurgu: birincil düğme, vurgu kelime, ışık |
-| `canli` | #6fcf8f | | yalnız "yayında" durum noktası |
-| `cizgi`, `cizgi-guclu` | beyaz %8 / %16 | koyu gri %10 / %18 | ayraç ve çerçeve |
+Gece (3B sahne ve koyu tahta): antrasit #1a1b1e (Discord'un koyu tonları). Gündüz: kâğıt #f4f3ee, mürekkep #141416.
+Tek vurgu "alev": gecede mercan #ff6145, gündüzde kor #c9321a. Lacivert, degrade, saf siyah/beyaz yok. Gece ile
+gündüz arasında renk geçişi yok (gündüz, köşeleri yuvarlak bir sayfa gibi başlar, `.gecis-yaprak`).
+Üç kapsam: varsayılan gece (`@theme`), `data-zemin="acik"` (token'lar `--g-*` değerlerine eşlenir), gündüz içinde
+`data-zemin="koyu"` (token'lar `--n-*` kopyasına geri döner; tahta, karo, çerçeve). Bütün çiftler WCAG AA (en az 4,5:1).
 
-Gündüzde `alev-acik` düğmenin üzerine gelinceki renktir (koyulaşır). 3B sahnede alev markanın sabit rengindedir
-(`src/sahne/fanus3b.ts` › ALEV_RENKLERI: dışı kor kırmızısı, içi sarı); logodaki alev de aynı. Işık ve parlamalar elle
-renk yazmaz: CSS'te `color-mix(..., var(--color-alev) ...)`, GSAP'te `vurgu()`. Gündüz zeminde süs ışıkları yok.
+| Token                               | Gece              | Gündüz             | Kullanım                                          |
+| ----------------------------------- | ----------------- | ------------------ | ------------------------------------------------- |
+| `gece`                              | #1a1b1e           | #f4f3ee            | zemin; gecede 3B sahnenin arkası (`--gece-zemin`) |
+| `gece-2..4`                         | #232428 → #34363b | #fbfaf7 → #e1dfd6  | yüzeyler (az kullanılır)                          |
+| `cukur`                             | #141518           | #fdfcfa            | gömülü paneller, form alanları                    |
+| `krem`                              | #f4f3ee           | #141416            | ana metin                                         |
+| `soluk`                             | #b9bcc3           | #44454b            | ikincil metin                                     |
+| `silik`                             | #a3a7b0           | #67686f            | küçük yardımcı metin                              |
+| `alev` (+ `alev-acik`, `alev-koyu`) | #ff6145           | #c9321a            | TEK vurgu: birincil düğme, vurgu kelime           |
+| `canli`                             | #6fcf8f           |                    | yalnız "yayında" durum noktası                    |
+| `cizgi`, `cizgi-guclu`              | beyaz %10 / %22   | mürekkep %14 / %30 | ayraç ve çerçeve; gündüzde belirgin               |
 
-İstisna: hizmet örneklerinin içindeki minyatür siteler (kurumsal site önizlemesi, QR menü telefonu) kendi
-kâğıt renklerini kullanır; bunlar müşterinin sitesini temsil eder, fanus'un paletini değil.
+İş vitrinindeki tarayıcı ve telefon çerçeveleri her zeminde koyu gri (`data-zemin="koyu"`). 3B'de alev markanın
+sabit rengindedir (`ALEV_RENKLERI`). Gündüz zeminde süs ışıkları yok. Hizmet örneklerinin içindeki minyatür siteler
+kendi kâğıt renklerini kullanır (müşterinin sitesini temsil eder).
 
 ## Yazı
-- Başlık: Bricolage Grotesque (opsz 96, sıkı aralık). Gövde: Geist. Küçük etiket: Geist Mono büyük harf.
-- `.dev-baslik` (giriş, teklif), `.bolum-baslik`, `.ara-baslik`, `.etiket` sınıfları `globals.css`'te.
-- Gövde en az 16 px, satır 1,6; ikincil metin `soluk`.
+
+- Başlık: Bricolage Grotesque, eksenler opsz 96 + wdth (next/font `axes: ["opsz", "wdth"]`). Gövde: Geist. Etiket: Geist Mono büyük harf, 0,75 rem, geniş aralık.
+- Sınıflar `globals.css`'te: `.dev-baslik` (giriş, sayfa başı, çağrı; 6,9vw'ye kadar, wdth 86), `.bolum-baslik`
+  (wdth 88), `.ara-baslik` (wdth 92), `.cumle` (manifesto), `.rakam` (fiyat ve sayı: tablo rakamları), `.etiket`.
+- Gövde en az 16 px, satır 1,6; ikincil metin `soluk`. Telefonda başlıklar ayrı ölçekte (`@media (max-width: 767px)`).
+
+## Bileşen dili
+
+- `BolumBasi`: her bölümün başı. Bölüm iç boşluğu `pt-10 pb-16 md:pt-14 md:pb-24`; bölümler arasında ek boşluk yok
+  (üst üste binen büyük boşluklar "neden boşluk var" eleştirisini getirdi).
+- Köşe yarıçapı 1,25 rem (`--radius-kart`); 2 rem'lik yuvarlak kartlar kaldırıldı.
+- Düğmeler hap biçimli (`dugme.ts`): birincil alev, ikincil ince çerçeve.
+- Koyu karo: `data-zemin="koyu"` + `rounded-[1.25rem]`; içinde token'lar gece değerlerindedir.
 
 ## Hareket
-- Her animasyonun işi var: anlatı (manifesto, süreç), kanıt (işler), geri bildirim (örnekler), yön (menü).
-- Sayfada tek kayan şerit. Kaydırmaya bağlı sahneler `scrub`, belirmeler bir kez (`once`).
+
+- Her animasyonun işi var: anlatı (manifesto: cam kalkar, rüzgâr, cam iner), kanıt (işler), geri bildirim
+  (örnekler), yön (menü). Sayfada tek kayan şerit (ince, tek renk, nokta ayraçlı).
+- Kaydırmaya bağlı sahneler `scrub`, belirmeler bir kez (`once`). Telefonda sabitleme ve yatay şerit yok;
+  işler yana kaydırılır, telefon ekranı CSS ile kendi kendine kayar.
 - Hareket azaltma tercihinde: Lenis, sabitleme ve yatay şerit kapalı; içerik durağan ve tam görünür.
 - Yalnız transform/opacity/clip-path; GSAP'in canlandırdığı öğede Tailwind `scale-*` yok.
 
 ## Yasaklar
+
 Uzun çizgi (—), bölüm numarası etiketi (01, 02), sahte istatistik, "devrim yaratın / sorunsuz / yeni nesil"
-gibi dolgu sözcükler, emoji ikon, özel imleç, büyük gradyan metin, saf siyah/beyaz.
+gibi dolgu sözcükler, emoji ikon, düz alev ikonu, özel imleç, imleci izleyen pencere, büyük gradyan metin,
+saf siyah/beyaz, gri üstüne gri.

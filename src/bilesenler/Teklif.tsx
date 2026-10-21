@@ -122,7 +122,7 @@ export default function Teklif() {
             data-belir
             data-gecikme="0.1"
             onSubmit={(olay) => olay.preventDefault()}
-            className="mt-10 grid gap-7 rounded-[2rem] border border-cizgi bg-gece-2/85 p-5 backdrop-blur-xl sm:p-8"
+            className="mt-10 grid gap-7 rounded-[1.25rem] border border-cizgi-guclu bg-gece-2/85 p-5 backdrop-blur-xl sm:p-8"
           >
             <fieldset>
               <legend className="text-[0.9375rem] font-medium">Ne yaptırmak istiyorsunuz?</legend>

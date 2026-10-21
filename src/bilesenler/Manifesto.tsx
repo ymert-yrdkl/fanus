@@ -10,23 +10,23 @@ const CUMLELER = [
   "fanus o ışığın camıdır. Korur, büyütür ve uzaktan görünür kılar.",
 ];
 
-/** Fanusun ekrandaki yerleri: masaüstünde sağda, telefonda üstte/altta. */
+/** Fanusun ekrandaki yerleri: masaüstünde sağda, telefonda başlığın altında. */
 const POZLAR = {
   genis: {
-    giris: { x: 0.22, y: 0.06, boy: 0.62 },
+    giris: { x: 0.27, y: 0.04, boy: 0.64 },
     manifesto: { x: 0.235, y: 0.05, boy: 0.76 },
   },
   dar: {
-    giris: { x: 0, y: 0.28, boy: 0.37 },
+    giris: { x: 0, y: 0.31, boy: 0.38 },
     manifesto: { x: 0, y: -0.12, boy: 0.42 },
   },
 };
 
 /**
  * Giriş + manifesto boyunca tek bir kaydırma zaman çizelgesi (1 birim = 1 ekran boyu):
- * 0-1 giriş kayar, fanus yerine geçer · 1-2 ilk cümle · 2-3 cam kalkar, alev rüzgârda titrer ·
- * 3-4 cam iner, ışık büyür · 4.1-4.6 alev son kez parlar. Bölüm bitince gündüz (beyaz) sayfa doğrudan
- * sahnenin üstüne biner; arada boş koyu ekran yok. Sahne, gündüz ekranı tamamen örtünce gizlenir (tuval çizmez).
+ * 0-1 giriş kayar, fanus yerine geçer · 1-2 ilk cümle · 2-3 cam parçaları açılır, rüzgâr çıkar, alev titrer ·
+ * 3-4 cam kapanır, ışık büyür · 4.1-4.6 alev son kez parlar. Bölüm bitince gündüz sayfası
+ * doğrudan sahnenin üstüne biner; arada boş koyu ekran yok. Sahne, gündüz ekranı tamamen örtünce gizlenir.
  * Konum ve ışık tek çizelgede kalır ki sahne değerleri iki ayrı tetikte çakışmasın; görünürlüğü yalnız ayrı tetik yazar.
  * Telefonda (dar ekran) sabitleme ve çizelge yoktur: üç cümle alt alta, ekrana girince belirir.
  */
@@ -93,16 +93,16 @@ export default function Manifesto() {
           .to(bolumler[0].words, { opacity: 1, duration: 0.12, stagger: 0.7 / bolumler[0].words.length }, 1.0)
           .to(cumleler[0], { autoAlpha: 0, y: -40, duration: 0.18 }, 1.85);
 
-        // İkinci cümle: cam kalkar, rüzgâr esmeye başlar
-        zc.to(A, { kapak: 1, y: P.manifesto.y + 0.12, duration: 0.5, ease: "power2.inOut" }, 1.95)
-          .to(sahneDurumu, { ruzgar: 1.1, duration: 0.4 }, 2.05)
+        // İkinci cümle: cam parçaları açılır, rüzgâr çıkar, korumasız alev titrer, kıvılcımlar savrulur
+        zc.to(A, { kapak: 1, y: P.manifesto.y + 0.1, duration: 0.5, ease: "power2.inOut" }, 1.95)
+          .to(sahneDurumu, { ruzgar: 1.15, duration: 0.4 }, 2.05)
           .fromTo(cumleler[1], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 2.0)
           .to(bolumler[1].words, { opacity: 1, duration: 0.12, stagger: 0.75 / bolumler[1].words.length }, 2.15)
           .fromTo("[data-ruzgar-ipucu]", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.15 }, 2.3)
           .to("[data-ruzgar-ipucu]", { autoAlpha: 0, duration: 0.15 }, 2.95)
           .to(cumleler[1], { autoAlpha: 0, y: -40, duration: 0.18 }, 2.95);
 
-        // Üçüncü cümle: cam yerine iner, ışık büyür
+        // Üçüncü cümle: cam kapanır, rüzgâr kesilir, ışık büyür
         zc.to(A, { kapak: 0, y: P.manifesto.y, duration: 0.45, ease: "power3.in" }, 3.05)
           .to(sahneDurumu, { ruzgar: 0.1, duration: 0.3 }, 3.2)
           .to(A, { isik: 2.3, boy: P.manifesto.boy * 1.12, duration: 0.6, ease: "power2.out" }, 3.45)
@@ -135,13 +135,13 @@ export default function Manifesto() {
       className="relative z-10 bg-gece/85 max-md:bg-gece [.hareket_&]:md:h-[460vh] [.hareket_&]:md:bg-transparent"
     >
       <div className="relative overflow-hidden [.hareket_&]:md:sticky [.hareket_&]:md:top-0 [.hareket_&]:md:h-svh">
-        <div className="mx-auto grid h-full max-w-[90rem] px-4 py-24 sm:px-6 md:items-center lg:px-10 [.hareket_&]:md:py-0">
-          <div className="relative flex flex-col gap-10 md:max-w-[44rem] [.hareket_&]:md:h-full lg:max-w-[48rem]">
+        <div className="mx-auto grid h-full max-w-[90rem] px-4 py-20 sm:px-6 md:items-center lg:px-10 [.hareket_&]:md:py-0">
+          <div className="relative flex flex-col gap-10 md:max-w-[44rem] [.hareket_&]:md:h-full lg:max-w-[50rem]">
             {CUMLELER.map((cumle, i) => (
               <p
                 key={i}
                 data-cumle
-                className="font-baslik text-[clamp(1.75rem,3.4vw,3.25rem)] leading-[1.14] font-medium tracking-[-0.02em] text-krem [.hareket_&]:md:absolute [.hareket_&]:md:inset-x-0 [.hareket_&]:md:top-1/2 [.hareket_&]:md:-translate-y-1/2"
+                className="cumle text-krem [.hareket_&]:md:absolute [.hareket_&]:md:inset-x-0 [.hareket_&]:md:top-1/2 [.hareket_&]:md:-translate-y-1/2"
               >
                 {cumle}
               </p>

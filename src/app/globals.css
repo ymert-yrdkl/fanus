@@ -2,24 +2,25 @@
 
 /*
   fanussoft tasarım token'ları. Renk YALNIZ buradan gelir: Tailwind'in hazır paleti kapalı
-  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "alev" (mercan). İki takım: gece (@theme, koyu gri) ve
-  gündüz (--g-*, açık gri; data-zemin="acik" bölümlerinde token'lara eşlenir). Lacivert ve degrade yok.
+  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "alev". İki takım: gece (@theme; 3B sahnenin olduğu
+  bölümler ve koyu tahta) ve gündüz (--g-*; kâğıt ve mürekkep: data-zemin="acik" bölümlerinde token'lara eşlenir).
+  Degrade yok, gri üstüne gri yok: açık zemin kâğıt beyazı, yazı mürekkep siyahı, ayraçlar belirgin ince çizgi.
   Bütün çiftler WCAG AA'yı geçer (yazı, soluk, silik, vurgu ve düğme yazısı en az 4,5:1).
   Ayrıntı: docs/tasarim-dili.md
 */
 @theme {
   --color-*: initial;
-  /* Gece (3B sahnenin olduğu bölümler): koyu gri, Discord'un koyu temasındaki tonlardan */
+  /* Gece: antrasit (Discord'un koyu tonları) */
   --color-gece: #1a1b1e;
   --color-gece-2: #232428;
   --color-gece-3: #2b2d31;
   --color-gece-4: #34363b;
   --color-cukur: #141518;
-  --color-cizgi: rgb(255 255 255 / 0.08);
-  --color-cizgi-guclu: rgb(255 255 255 / 0.16);
-  --color-krem: #f2f3f5;
-  --color-soluk: #b5bac1;
-  --color-silik: #a3a9b2;
+  --color-cizgi: rgb(255 255 255 / 0.1);
+  --color-cizgi-guclu: rgb(255 255 255 / 0.22);
+  --color-krem: #f4f3ee;
+  --color-soluk: #b9bcc3;
+  --color-silik: #a3a7b0;
   --color-alev: #ff6145;
   --color-alev-acik: #ff8f78;
   --color-alev-koyu: #e5452a;
@@ -32,7 +33,7 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   --ease-yay: cubic-bezier(0.16, 1, 0.3, 1);
-  --radius-kart: 1.5rem;
+  --radius-kart: 1.25rem;
 }
 
 :root {
@@ -40,21 +41,36 @@
   interpolate-size: allow-keywords;
   /* Gece zemini (gündüz kapsamında da değişmez; 3B sahne bu renge siler) */
   --gece-zemin: #1a1b1e;
-  /* Gündüz takımı (açık gri); data-zemin="acik" bölümünde --color-* bunlara eşlenir */
-  --g-zemin: #f2f3f5;
-  --g-kart: #ffffff;
-  --g-kart-2: #ebedef;
-  --g-kart-3: #e3e5e8;
-  --g-cukur: #f6f7f8;
-  --g-cizgi: rgb(30 31 34 / 0.1);
-  --g-cizgi-guclu: rgb(30 31 34 / 0.18);
-  --g-yazi: #1e1f22;
-  --g-soluk: #4e5058;
-  --g-silik: #5c5e66;
+  /* Gece takımının kopyası: gündüz içindeki koyu tahta bölümleri (data-zemin="koyu") bunlara döner */
+  --n-zemin: #1a1b1e;
+  --n-kart: #232428;
+  --n-kart-2: #2b2d31;
+  --n-kart-3: #34363b;
+  --n-cukur: #141518;
+  --n-cizgi: rgb(255 255 255 / 0.1);
+  --n-cizgi-guclu: rgb(255 255 255 / 0.22);
+  --n-yazi: #f4f3ee;
+  --n-soluk: #b9bcc3;
+  --n-silik: #a3a7b0;
+  --n-vurgu: #ff6145;
+  --n-vurgu-ust: #ff8f78;
+  --n-vurgu-koyu: #e5452a;
+  --n-golge: rgb(0 0 0 / 0.85);
+  /* Gündüz takımı: kâğıt ve mürekkep. data-zemin="acik" bölümünde --color-* bunlara eşlenir */
+  --g-zemin: #f4f3ee;
+  --g-kart: #fbfaf7;
+  --g-kart-2: #ebeae3;
+  --g-kart-3: #e1dfd6;
+  --g-cukur: #fdfcfa;
+  --g-cizgi: rgb(20 20 22 / 0.14);
+  --g-cizgi-guclu: rgb(20 20 22 / 0.3);
+  --g-yazi: #141416;
+  --g-soluk: #44454b;
+  --g-silik: #67686f;
   --g-vurgu: #c9321a;
   --g-vurgu-ust: #a82a14;
   --g-vurgu-koyu: #8f2410;
-  --g-golge: rgb(30 31 34 / 0.14);
+  --g-golge: rgb(20 20 22 / 0.16);
   --g-google: #1a0dab;
   --sayfa-isigi: color-mix(in srgb, var(--color-alev) 16%, transparent);
   --golge-rengi: rgb(0 0 0 / 0.85);
@@ -90,6 +106,25 @@ header[data-acik-ust] {
 [data-zemin="acik"] {
   background: var(--color-gece);
 }
+/* Gündüzün içindeki koyu tahta (ör. fiyat listesi): gece takımına döner */
+[data-zemin="koyu"] {
+  --color-gece: var(--n-zemin);
+  --color-gece-2: var(--n-kart);
+  --color-gece-3: var(--n-kart-2);
+  --color-gece-4: var(--n-kart-3);
+  --color-cukur: var(--n-cukur);
+  --color-cizgi: var(--n-cizgi);
+  --color-cizgi-guclu: var(--n-cizgi-guclu);
+  --color-krem: var(--n-yazi);
+  --color-soluk: var(--n-soluk);
+  --color-silik: var(--n-silik);
+  --color-alev: var(--n-vurgu);
+  --color-alev-acik: var(--n-vurgu-ust);
+  --color-alev-koyu: var(--n-vurgu-koyu);
+  --golge-rengi: var(--n-golge);
+  background: var(--color-gece);
+  color: var(--color-krem);
+}
 /* Gündüzde süs ışıkları (yumuşak renk lekeleri) yok: zemin düz kalır */
 [data-zemin="acik"] .sayfa-isigi,
 [data-zemin="acik"] [data-cagri-hale] {
@@ -104,7 +139,7 @@ header[data-acik-ust] {
   background: color-mix(in srgb, var(--gece-zemin) 86%, transparent);
 }
 
-/* Büyük, yumuşak gölge: gecede koyu, gündüzde lacivert tonlu ve hafif */
+/* Büyük, yumuşak gölge: gecede koyu, gündüzde mürekkep tonlu ve hafif */
 .golge {
   box-shadow: 0 40px 100px -40px var(--golge-rengi);
 }
@@ -196,7 +231,7 @@ html.lenis body {
   inset: 0;
   z-index: 70;
   pointer-events: none;
-  opacity: 0.07;
+  opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 }
 
@@ -224,9 +259,6 @@ html.lenis body {
 }
 #ilerleme {
   transform: scaleX(0);
-}
-.hareket [data-harf-dolu] {
-  clip-path: inset(100% 0 0 0);
 }
 
 @keyframes dolum {
@@ -274,11 +306,24 @@ html.lenis body {
     opacity: 1;
     animation: ilk-ekran 0.6s ease-out both;
   }
+  /* İşler vitrininde telefon ekranı kendi kendine yavaşça kayar (masaüstünde kaydırmaya bağlıdır) */
+  .hareket [data-telefon-ekran] {
+    animation: telefon-kayar 28s ease-in-out infinite alternate;
+  }
 }
 @keyframes ilk-ekran {
   from {
     opacity: 0.01;
     transform: translateY(12px);
+  }
+}
+/* Telefon ekran görüntüleri 780x5200: çerçeve 9/14 oranında, görüntünün %76'sı çerçevenin altında kalır */
+@keyframes telefon-kayar {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-76%);
   }
 }
 
@@ -297,42 +342,104 @@ details.sss summary::-webkit-details-marker {
   display: none;
 }
 
-/* Yazı boyu yardımcıları */
+/*
+  Yazı ölçeği. Başlık yazı tipi Bricolage Grotesque'in üç ekseni kullanılır: opsz 96 (büyük boy çizimi), wdth
+  (genişlik: büyük başlıklar hafif sıkışık, afiş gibi) ve ağırlık. Gövde Geist; etiketler Geist Mono büyük harf.
+*/
 .dev-baslik {
   font-family: var(--font-baslik);
-  font-weight: 600;
-  font-size: clamp(2.75rem, 6.4vw, 6.25rem);
-  line-height: 0.98;
-  letter-spacing: -0.035em;
-  font-variation-settings: "opsz" 96;
+  font-weight: 640;
+  font-size: clamp(2.75rem, 6.9vw, 7.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  font-variation-settings:
+    "opsz" 96,
+    "wdth" 86;
 }
 .bolum-baslik {
   font-family: var(--font-baslik);
-  font-weight: 600;
-  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  font-variation-settings: "opsz" 96;
+  font-weight: 620;
+  font-size: clamp(2.25rem, 5vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-variation-settings:
+    "opsz" 96,
+    "wdth" 88;
 }
 .ara-baslik {
   font-family: var(--font-baslik);
   font-weight: 600;
-  font-size: clamp(1.625rem, 2.6vw, 2.375rem);
+  font-size: clamp(1.5rem, 2.3vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-variation-settings:
+    "opsz" 96,
+    "wdth" 92;
+}
+/* Manifesto cümleleri ve benzeri uzun, büyük metin */
+.cumle {
+  font-family: var(--font-baslik);
+  font-weight: 540;
+  font-size: clamp(1.875rem, 3.8vw, 3.6rem);
   line-height: 1.08;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  font-variation-settings:
+    "opsz" 96,
+    "wdth" 90;
+}
+/* Fiyat ve sayı: tablo rakamları, sıkı aralık */
+.rakam {
+  font-family: var(--font-baslik);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  font-variation-settings:
+    "opsz" 96,
+    "wdth" 90;
 }
 .etiket {
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-soluk);
+}
+@media (max-width: 767px) {
+  .dev-baslik {
+    font-size: clamp(2.6rem, 11.5vw, 3.5rem);
+  }
+  .bolum-baslik {
+    font-size: clamp(2.1rem, 9vw, 2.75rem);
+  }
+  .cumle {
+    font-weight: 520;
+    font-size: clamp(1.5rem, 6.6vw, 1.875rem);
+    line-height: 1.16;
+  }
 }
 
 /* Dış çizgi yazı (altbilgi kelime markası) */
 .cizgi-yazi {
   color: transparent;
   -webkit-text-stroke: 1px var(--color-cizgi-guclu);
+}
+
+/* Başlık içindeki küçük alev: yerinde titrer */
+.alev-titrer {
+  transform-origin: 50% 100%;
+  animation: alev-titrer 1.7s ease-in-out infinite;
+}
+@keyframes alev-titrer {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  35% {
+    transform: scale(1.04, 1.07) rotate(-2deg);
+  }
+  70% {
+    transform: scale(0.97, 1.02) rotate(2deg);
+  }
 }
 
 /* Imleç ışığı: [data-isik] öğesinde --mx / --my JS ile güncellenir */
@@ -368,7 +475,7 @@ details.sss summary::-webkit-details-marker {
   }
 }
 
-/* Ana sayfa hizmet kartlarının küçük döngüleri (hareket azaltmada tek kare kalır) */
+/* Hizmet minyatürlerinin küçük döngüleri (hareket azaltmada tek kare kalır) */
 .cubuk {
   animation: cubuk 2.8s var(--ease-yay) infinite;
 }
@@ -445,4 +552,12 @@ details.sss summary::-webkit-details-marker {
   to {
     transform: translate(-8%, 6%) scale(1.15);
   }
+}
+
+/* Yatay kaydırılan vitrinlerde kaydırma çubuğu görünmez (telefon) */
+.kaydirma-gizli {
+  scrollbar-width: none;
+}
+.kaydirma-gizli::-webkit-scrollbar {
+  display: none;
 }

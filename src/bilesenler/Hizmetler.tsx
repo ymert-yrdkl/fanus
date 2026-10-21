@@ -63,7 +63,7 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
             key={h.kod}
             data-hizmet-karti
             aria-labelledby={`hizmet-${h.kod}`}
-            className="relative origin-top overflow-hidden rounded-[2rem] border border-cizgi bg-gece-2 md:sticky md:top-[5.5rem] md:min-h-[calc(100dvh-7rem)]"
+            className="relative origin-top overflow-hidden rounded-[1.25rem] border border-cizgi-guclu bg-gece-2 md:sticky md:top-[5.5rem] md:min-h-[calc(100dvh-7rem)]"
           >
             <div className="grid gap-10 p-5 sm:p-8 md:h-full md:grid-cols-12 md:items-center md:gap-8 lg:p-12">
               <div className="md:col-span-5 lg:pr-6">

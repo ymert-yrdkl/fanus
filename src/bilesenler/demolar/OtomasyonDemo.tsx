@@ -271,7 +271,7 @@ export default function OtomasyonDemo() {
               data-balon
               className={`max-w-[17rem] rounded-2xl rounded-tl-sm border border-cizgi-guclu bg-gece-3 p-3 text-sm leading-snug ${mesaj ? "" : "invisible"}`}
             >
-              <p className="text-xs font-medium text-alev">{gorunen}</p>
+              <p className="text-xs font-medium text-alev-koyu">{gorunen}</p>
               <p className="mt-1">
                 Merhaba, #{no} numaralı siparişiniz kargoya verildi. Takip numaranız: FN{no}TR
               </p>

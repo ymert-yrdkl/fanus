@@ -96,10 +96,11 @@ export async function sayfayiDenetle(sekme, adres, secenek) {
     // Yatay taşma: sayfa ekrandan geniş mi, ekranın dışına taşan görünür öğe var mı
     const tasma = await sekme.degerlendir(`(() => {
       const gen = document.documentElement.clientWidth;
+      // Ekrana sığan bir atası taşanı kırpıyorsa (hidden/clip) ya da yana kaydırılan bir vitrinse (auto/scroll) taşma değildir
       const kirpan = (el) => {
         for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
           const st = getComputedStyle(a);
-          if (/(hidden|clip)/.test(st.overflowX) && a.getBoundingClientRect().right <= gen + 1) return true;
+          if (/(hidden|clip|auto|scroll)/.test(st.overflowX) && a.getBoundingClientRect().right <= gen + 1) return true;
         }
         return false;
       };

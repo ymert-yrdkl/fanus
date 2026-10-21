@@ -9,7 +9,7 @@ export type Poz = {
   y: number;
   /** Fanusun boyu, ekran yüksekliğine oranla. */
   boy: number;
-  /** Camın kalkması: 0 kapalı, 1 tamamen kalkmış. */
+  /** Cam: 0 kapalı, 1 tamamen açık, 2 sahnede yok (uzaklaşıp küçülmüş; alev tek başına). */
   kapak: number;
   /** Alevin gücü (1 normal). */
   isik: number;
@@ -19,7 +19,7 @@ export type Poz = {
 
 export const sahneDurumu = {
   /** Giriş ve manifesto boyunca kaydırmayla değişen hal. */
-  akis: { x: 0.22, y: 0.04, boy: 0.62, kapak: 0, isik: 1, gorunur: 1 } as Poz,
+  akis: { x: 0.27, y: 0.04, boy: 0.64, kapak: 0, isik: 1, gorunur: 1 } as Poz,
   /** Teklif bölümündeki son hal. */
   son: { x: 0.25, y: 0.02, boy: 0.56, kapak: 0, isik: 1.6, gorunur: 1 } as Poz,
   /** 0 = akış, 1 = son hal (teklif bölümüne girince yumuşakça 1 olur). */

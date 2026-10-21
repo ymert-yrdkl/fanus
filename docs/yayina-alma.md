@@ -1,6 +1,7 @@
 # Yayına alma (Coolify, fanussoft.com)
 
 ## Durum (21 Ekim 2026)
+
 - YAYINDA: **https://fanussoft.com** (Let's Encrypt). `https://www.fanussoft.com` ve `https://fanustr.ahmcloud.com`
   (her yol) 308 ile fanussoft.com'a yönlenir (`next.config.ts`). Coolify'da `NEXT_PUBLIC_SITE_ADRESI=https://fanussoft.com`.
 - Alan adları İHS'de (Yusuf'un hesabı). DNS: İHS › Alan Adı › Yönet › DNS Zone Servisi (açık); kayıtlar
@@ -11,6 +12,7 @@
   yönlendirme kodda hazır.
 
 ## Önceki durum (20 Ekim 2026)
+
 - Coolify paneli: https://panel.ahmcloud.com (uygulama: `/project/ccyhabwrej0jlzti0tyhlcol/environment/djvpcds9vcvfirqkv3prddlx/application/9nvnwcezuq8yfbdrwpkqgg4j`).
 - Coolify: Root Team › proje `fanus` › `production` › uygulama `fanus` (Public Git Repository, Dockerfile, port 3000)
   kuruldu, `NEXT_PUBLIC_SITE_ADRESI=https://fanustr.ahmcloud.com` (derleme + çalışma), ilk dağıtım başarılı.
@@ -25,6 +27,7 @@ Sunucu Ahmet'in; adımlar Yusuf ve Ahmet'in onayıyla yapılır. Kurgu: açık G
 derleme. Site durumsuz: veritabanı ve kalıcı birim yok.
 
 ## 1. Kod
+
 Açık depo: https://github.com/ymert-yrdkl/fanus (dal `main`).
 
 ```bash
@@ -33,6 +36,7 @@ git push -u origin main
 ```
 
 ## 2. Coolify kaynağı
+
 1. Yeni proje `fanus` › ortam `production` › yeni kaynak › **Public Git Repository** →
    `https://github.com/ymert-yrdkl/fanus`, dal `main`, Build Pack **Dockerfile**.
 2. Port **3000**. Alan adı `https://fanustr.ahmcloud.com`.
@@ -43,10 +47,19 @@ git push -u origin main
 Depo açık olduğu için GitHub webhook yok: `git push` sonrası Coolify'da **Deploy** düğmesine basılır.
 
 ## 3. DNS
+
 Hostinger › ahmcloud.com DNS: A kaydı `fanustr` → `187.124.174.57` (diğer alt alanlarla aynı sunucu), TTL 300.
 Kayıt yayılınca Coolify (Traefik + Let's Encrypt) HTTPS sertifikasını ilk istekte kendisi alır.
 
 ## 4. fanus.tr'ye geçiş
+
 fanus.tr'nin DNS'inde `@` ve `www` için A kaydı → `187.124.174.57`; Coolify'da alan adına
 `https://fanus.tr,https://www.fanus.tr` eklenir, `NEXT_PUBLIC_SITE_ADRESI` güncellenip yeniden dağıtılır
 (kanonik adres, site haritası ve paylaşım görseli bu adresle üretilir).
+
+## fanussoft.com.tr (22 Ekim 2026)
+
+.tr kayıt sistemi (ns43.ns.tr) alan adını İHS'nin knuth.ihsdns.com / dijkstra.ihsdns.com sunucularına devretti; A kayıtları
+(@ ve www → 187.124.174.57) İHS DNS Zone'da. Coolify › fanus › Domains'e https://fanussoft.com.tr eklendi (www
+kendiliğinden geldi), Redeploy ile uygulandı; Let's Encrypt sertifikası alındı, `next.config.ts` 308 ile fanussoft.com'a
+yönlendiriyor.

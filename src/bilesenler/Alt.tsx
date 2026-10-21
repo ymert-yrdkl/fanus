@@ -50,7 +50,7 @@ export default function Alt() {
         <div className="lg:col-span-3">
           <Logo />
           <p className="mt-5 max-w-[22rem] leading-relaxed text-soluk">
-            E-ticaret, kurumsal web sitesi, QR menü ve web otomasyonu. Işığınızı koruyan cam.
+            Web siteleri, e-ticaret, QR ve NFC sistemleri, özel yazılım ve otomasyon. Işığınızı koruyan cam.
           </p>
         </div>
         <nav aria-label="Sayfa" className="lg:col-span-2">
@@ -94,7 +94,7 @@ export default function Alt() {
                   rel="noopener"
                   className="group inline-flex min-h-10 items-center gap-1.5 text-krem/85 transition-colors hover:text-alev"
                 >
-                  {r.alanAdi}
+                  {r.gosterim ?? r.alanAdi}
                   <ArrowUpRight
                     size={14}
                     aria-hidden="true"
