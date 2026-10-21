@@ -5,7 +5,7 @@ import { WhatsappLogo, EnvelopeSimple, Check } from "@phosphor-icons/react/dist/
 import { gsap, GENIS, useGSAP } from "@/hareket/gsap";
 import { sahneDurumu } from "@/sahne/durum";
 import { epostaBaglantisi, whatsappBaglantisi } from "@/site/ayarlar";
-import { fiyatYaz, KDV_NOTU, PAKETLER, type PaketKodu } from "@/site/icerik";
+import { kdvHaricYaz, PAKETLER, type PaketKodu } from "@/site/icerik";
 import { AD_SINIRI, useIsletmeAdi } from "./IsletmeAdi";
 import { dugmeSinifi } from "./dugme";
 
@@ -24,7 +24,7 @@ const SECENEKLER: { kod: Secenek; ad: string; fiyat?: string }[] = [
   ...PAKETLER.map((p) => ({
     kod: p.kod as Secenek,
     ad: p.ad,
-    fiyat: p.fiyat !== null ? `${fiyatYaz(p.fiyat)}${p.baslangic ? "'dan" : ""}` : "teklifle",
+    fiyat: p.fiyat !== null ? kdvHaricYaz(p.fiyat, p.baslangic) : "teklifle",
   })),
   { kod: "emin-degilim", ad: "Henüz emin değilim" },
 ];
@@ -148,7 +148,6 @@ export default function Teklif() {
                   );
                 })}
               </div>
-              <p className="mt-3 text-sm text-soluk">{KDV_NOTU}</p>
             </fieldset>
 
             <div>

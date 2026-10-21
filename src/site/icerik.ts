@@ -161,18 +161,17 @@ export function fiyatYaz(tutar: number) {
   return `₺${tl.format(tutar)}`;
 }
 
-// Fiyatlar KDV hariç (Yusuf, 22 Ekim 2026). Görünen her fiyatın yanında kısa ek, fiyat bölümlerinde not.
+// Fiyatlar KDV hariç; görünen her fiyatın yanına "+KDV" yazılır (Yusuf, 22 Ekim 2026).
 export const KDV_EKI = "+KDV";
-export const KDV_NOTU = "Fiyatlara KDV dahil değildir.";
 
 /** Fiyatın arkasındaki ek: "+KDV", başlangıç fiyatında "+KDV'den" (ek "KDV" ile bittiği için "'den"). */
 export function kdvEki(baslangic = false) {
   return baslangic ? `${KDV_EKI}'den` : KDV_EKI;
 }
 
-/** 9999 → "₺9.999 +KDV"; başlangıç fiyatında "₺9.999 +KDV'den" */
+/** 9999 → "₺9.999 +KDV"; başlangıç fiyatında "₺9.999 +KDV'den". Arada kırılmaz boşluk: ikisi ayrı satıra düşmez. */
 export function kdvHaricYaz(tutar: number, baslangic = false) {
-  return `${fiyatYaz(tutar)} ${kdvEki(baslangic)}`;
+  return `${fiyatYaz(tutar)} ${kdvEki(baslangic)}`;
 }
 
 export const HIZMETLER: Hizmet[] = [
@@ -595,12 +594,13 @@ export const SSS = [
   },
   {
     soru: "Fiyatlar neye göre belirleniyor?",
-    cevap: `Paket fiyatlarımız Fiyatlar sayfasında açıkça yazılı. ${KDV_NOTU} Paketin dışında kalan bir istek olursa görüşmeden sonra yazılı teklif alırsınız; teklifte olmayan bir kalem sonradan faturaya eklenmez.`,
+    cevap:
+      "Paket fiyatlarımız Fiyatlar sayfasında açıkça yazılı. Paketin dışında kalan bir istek olursa görüşmeden sonra yazılı teklif alırsınız; teklifte olmayan bir kalem sonradan faturaya eklenmez.",
   },
   {
     soru: "Yıllık yenileme ne demek?",
     cevap:
-      "Site yayına girdikten sonra her yıl ödenen ₺2.399'luk ücrettir; bu tutar da KDV hariçtir. Sunucu, SSL sertifikası, güvenlik güncellemeleri, yedekleme ve küçük değişiklikler için destek bu ücrete dahildir.",
+      "Site yayına girdikten sonra her yıl ödenen ücrettir: ₺2.399 +KDV. Sunucu, SSL sertifikası, güvenlik güncellemeleri, yedekleme ve küçük değişiklikler için destek bu ücrete dahildir.",
   },
   {
     soru: "Siteyi kendim güncelleyebilir miyim?",

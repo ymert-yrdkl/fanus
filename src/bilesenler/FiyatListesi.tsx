@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { fiyatYaz, KDV_NOTU, kdvEki, kdvHaricYaz, PAKETLER, YILLIK_YENILEME } from "@/site/icerik";
+import { fiyatYaz, kdvEki, kdvHaricYaz, PAKETLER, YILLIK_YENILEME } from "@/site/icerik";
 
 /** Ana sayfadaki fiyat listesi: menü tahtası gibi, noktalı çizgiyle fiyata uzanan satırlar. */
 export default function FiyatListesi() {
@@ -15,7 +15,7 @@ export default function FiyatListesi() {
             Fiyatı baştan yazıyoruz.
           </h2>
           <p data-belir className="mt-6 max-w-[24rem] text-lg leading-relaxed text-soluk">
-            Her pakette yıllık yenileme {fiyatYaz(YILLIK_YENILEME)}. {KDV_NOTU} Paketlerin bütün özellikleri fiyatlar
+            Her pakette yıllık yenileme {kdvHaricYaz(YILLIK_YENILEME)}. Paketlerin bütün özellikleri fiyatlar
             sayfasında.
           </p>
           <Link

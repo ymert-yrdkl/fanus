@@ -5,11 +5,12 @@ import FiyatKarti from "@/bilesenler/FiyatKarti";
 import SayfaBasi from "@/bilesenler/SayfaBasi";
 import Sss from "@/bilesenler/Sss";
 import { SITE } from "@/site/ayarlar";
-import { fiyatYaz, KDV_NOTU, PAKETLER, SSS, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
+import { kdvHaricYaz, PAKETLER, SSS, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
 
 export const metadata: Metadata = {
   title: "Fiyatlar",
-  description: `Tek sayfa site ₺9.999, kurumsal tam paket ₺45.000, e-ticaret sitesi ₺65.000, QR menü ₺9.999'dan başlayan; yıllık yenileme ₺2.399. ${KDV_NOTU}`,
+  description:
+    "Tek sayfa site ₺9.999 +KDV, kurumsal tam paket ₺45.000 +KDV, e-ticaret sitesi ₺65.000 +KDV, QR menü ₺9.999 +KDV'den başlayan; yenileme ₺2.399 +KDV / yıl.",
   alternates: { canonical: "/fiyatlar" },
 };
 
@@ -48,7 +49,7 @@ export default function FiyatlarSayfasi() {
       <SayfaBasi
         iz={[{ ad: "Fiyatlar" }]}
         baslik="Fiyatı baştan söylüyoruz."
-        metin={`Her paketin fiyatı ve içeriği aşağıda yazılı. ${KDV_NOTU} Site yayına girdikten sonra her yıl ${fiyatYaz(YILLIK_YENILEME)} yenileme ödersiniz; sunucu, SSL, güncelleme ve yedek buna dahildir.`}
+        metin={`Her paketin fiyatı ve içeriği aşağıda yazılı. Site yayına girdikten sonra her yıl ${kdvHaricYaz(YILLIK_YENILEME)} yenileme ödersiniz; sunucu, SSL, güncelleme ve yedek buna dahildir.`}
       />
       <section aria-labelledby="paketler-baslik" className="relative z-10 bg-gece px-4 pb-20 sm:px-6 md:pb-28 lg:px-10">
         <h2 id="paketler-baslik" className="sr-only">
@@ -74,10 +75,10 @@ export default function FiyatlarSayfasi() {
               <ArrowsClockwise size={26} weight="bold" aria-hidden="true" />
             </span>
             <h2 id="yenileme-baslik" data-bol className="bolum-baslik mt-8 max-w-[12ch]">
-              Yıllık yenileme {fiyatYaz(YILLIK_YENILEME)}.
+              Yıllık yenileme {kdvHaricYaz(YILLIK_YENILEME)}.
             </h2>
             <p data-belir className="mt-5 max-w-[28rem] leading-relaxed text-soluk">
-              Bütün paketlerde aynı tutar, KDV hariç. Siteniz yayında kaldığı sürece çalışır, güncel ve güvende kalır.
+              Bütün paketlerde aynı. Siteniz yayında kaldığı sürece çalışır, güncel ve güvende kalır.
             </p>
           </div>
           <ul className="grid gap-3 sm:grid-cols-2 md:col-span-7">
