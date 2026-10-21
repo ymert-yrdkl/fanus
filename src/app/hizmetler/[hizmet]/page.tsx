@@ -12,7 +12,17 @@ import SayfaBasi from "@/bilesenler/SayfaBasi";
 import Sss from "@/bilesenler/Sss";
 import { dugmeSinifi } from "@/bilesenler/dugme";
 import { SITE } from "@/site/ayarlar";
-import { fiyatYaz, HIZMETLER, hizmetBul, paketBul, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
+import {
+  fiyatYaz,
+  HIZMETLER,
+  hizmetBul,
+  KDV_EKI,
+  kdvEki,
+  kdvHaricYaz,
+  paketBul,
+  YENILEMEYE_DAHIL,
+  YILLIK_YENILEME,
+} from "@/site/icerik";
 import { qrSvgUret } from "@/site/qr";
 
 export const dynamicParams = false;
@@ -51,7 +61,18 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
         provider: { "@type": "ProfessionalService", name: "fanus", url: SITE.adres },
         offers: paketler
           .filter((p) => p.fiyat !== null)
-          .map((p) => ({ "@type": "Offer", name: p.ad, price: p.fiyat, priceCurrency: "TRY" })),
+          .map((p) => ({
+            "@type": "Offer",
+            name: p.ad,
+            price: p.fiyat,
+            priceCurrency: "TRY",
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              price: p.fiyat,
+              priceCurrency: "TRY",
+              valueAddedTaxIncluded: false,
+            },
+          })),
       },
       {
         "@type": "FAQPage",
@@ -86,11 +107,17 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
                 <p className="text-sm text-soluk">{p.ad}</p>
                 <p className="mt-1 font-baslik text-3xl font-semibold tracking-tight tabular-nums">
                   {p.fiyat !== null ? fiyatYaz(p.fiyat) : "Teklif üzerine"}
-                  {p.baslangic && <span className="text-base font-normal text-soluk">&apos;dan başlayan</span>}
+                  {p.fiyat !== null && (
+                    <span className="text-base font-normal text-soluk">
+                      {" "}
+                      {kdvEki(p.baslangic)}
+                      {p.baslangic && " başlayan"}
+                    </span>
+                  )}
                 </p>
                 {p.yenileme !== null && (
                   <p className="mt-1 text-sm text-soluk">
-                    Yıllık yenileme <span className="text-alev">{fiyatYaz(p.yenileme)}</span>
+                    Yıllık yenileme <span className="text-alev">{fiyatYaz(p.yenileme)}</span> {KDV_EKI}
                   </p>
                 )}
               </div>
@@ -188,7 +215,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
                 <span className="flex size-12 items-center justify-center rounded-2xl bg-alev text-gece">
                   <ArrowsClockwise size={22} weight="bold" aria-hidden="true" />
                 </span>
-                <h3 className="ara-baslik mt-6">Yıllık yenileme {fiyatYaz(YILLIK_YENILEME)}</h3>
+                <h3 className="ara-baslik mt-6">Yıllık yenileme {kdvHaricYaz(YILLIK_YENILEME)}</h3>
                 <p className="mt-3 leading-relaxed text-soluk">
                   Site yayına girdikten sonra her yıl ödenir. Siteniz çalışır, güncel ve güvende kalır.
                 </p>

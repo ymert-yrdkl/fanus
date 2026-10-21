@@ -5,7 +5,7 @@ import { WhatsappLogo, EnvelopeSimple, Check } from "@phosphor-icons/react/dist/
 import { gsap, GENIS, useGSAP } from "@/hareket/gsap";
 import { sahneDurumu } from "@/sahne/durum";
 import { epostaBaglantisi, whatsappBaglantisi } from "@/site/ayarlar";
-import { fiyatYaz, PAKETLER, type PaketKodu } from "@/site/icerik";
+import { fiyatYaz, KDV_NOTU, PAKETLER, type PaketKodu } from "@/site/icerik";
 import { AD_SINIRI, useIsletmeAdi } from "./IsletmeAdi";
 import { dugmeSinifi } from "./dugme";
 
@@ -148,6 +148,7 @@ export default function Teklif() {
                   );
                 })}
               </div>
+              <p className="mt-3 text-sm text-soluk">{KDV_NOTU}</p>
             </fieldset>
 
             <div>

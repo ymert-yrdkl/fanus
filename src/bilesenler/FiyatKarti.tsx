@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Check } from "@phosphor-icons/react/dist/ssr";
-import { fiyatYaz, type Paket } from "@/site/icerik";
+import { fiyatYaz, KDV_EKI, kdvEki, type Paket } from "@/site/icerik";
 import { dugmeSinifi } from "./dugme";
 
 /** Bir paketin fiyat kartı: fiyat (sayarak belirir), yıllık yenileme, özellikler ve eylemler. */
@@ -30,15 +30,18 @@ export default function FiyatKarti({
       <div className="relative mt-8 border-t border-cizgi pt-7">
         {paket.fiyat !== null ? (
           <>
-            <p className="flex items-baseline gap-2">
+            <p className="flex flex-wrap items-baseline gap-x-2">
               <span className="font-baslik text-[clamp(2.75rem,4vw,3.5rem)] leading-none font-semibold tracking-[-0.035em] text-krem tabular-nums">
                 ₺<span data-sayac={paket.fiyat}>{paket.fiyat.toLocaleString("tr-TR")}</span>
               </span>
-              {paket.baslangic && <span className="text-soluk">&apos;dan başlayan</span>}
+              <span className="text-soluk">
+                {kdvEki(paket.baslangic)}
+                {paket.baslangic && " başlayan"}
+              </span>
             </p>
             {paket.yenileme !== null && (
               <p className="mt-3 text-[0.9375rem] text-soluk">
-                Yıllık yenileme <span className="font-medium text-alev">{fiyatYaz(paket.yenileme)}</span>
+                Yıllık yenileme <span className="font-medium text-alev">{fiyatYaz(paket.yenileme)}</span> {KDV_EKI}
               </p>
             )}
           </>

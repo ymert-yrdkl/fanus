@@ -161,6 +161,20 @@ export function fiyatYaz(tutar: number) {
   return `₺${tl.format(tutar)}`;
 }
 
+// Fiyatlar KDV hariç (Yusuf, 22 Ekim 2026). Görünen her fiyatın yanında kısa ek, fiyat bölümlerinde not.
+export const KDV_EKI = "+KDV";
+export const KDV_NOTU = "Fiyatlara KDV dahil değildir.";
+
+/** Fiyatın arkasındaki ek: "+KDV", başlangıç fiyatında "+KDV'den" (ek "KDV" ile bittiği için "'den"). */
+export function kdvEki(baslangic = false) {
+  return baslangic ? `${KDV_EKI}'den` : KDV_EKI;
+}
+
+/** 9999 → "₺9.999 +KDV"; başlangıç fiyatında "₺9.999 +KDV'den" */
+export function kdvHaricYaz(tutar: number, baslangic = false) {
+  return `${fiyatYaz(tutar)} ${kdvEki(baslangic)}`;
+}
+
 export const HIZMETLER: Hizmet[] = [
   {
     kod: "eticaret",
@@ -180,7 +194,7 @@ export const HIZMETLER: Hizmet[] = [
       "Ürünlerinizi kendiniz eklediğiniz, kartla ödeme alan, siparişi ve kargoyu tek panelden yönettiğiniz e-ticaret sitesi.",
     seoBasligi: "E-ticaret sitesi",
     seoAciklamasi:
-      "Panelli e-ticaret sitesi: ürün ve stok yönetimi, iyzico/PayTR ile ödeme, sipariş ve kargo takibi. ₺65.000, yıllık yenileme ₺2.399.",
+      "Panelli e-ticaret sitesi: ürün ve stok yönetimi, iyzico/PayTR ile ödeme, sipariş ve kargo takibi. ₺65.000 +KDV, yıllık yenileme ₺2.399 +KDV.",
     kimlerIcin: ["Üretici markalar", "Butik mağazalar", "Baskı ve promosyon", "Pazaryerinden kendi sitesine geçenler"],
     ozellikler: [
       {
@@ -257,7 +271,7 @@ export const HIZMETLER: Hizmet[] = [
       "Tek sayfalık bir tanıtım sitesinden yönetim panelli, çok dilli kurumsal siteye kadar. Firmanızı doğru anlatan, telefonda hızlı açılan ve Google'da bulunan bir site.",
     seoBasligi: "Kurumsal web sitesi",
     seoAciklamasi:
-      "Kurumsal web sitesi: tek sayfa site ₺9.999, yönetim panelli tam paket ₺45.000; yıllık yenileme ₺2.399. Sıfırdan tasarım, SEO, çok dil.",
+      "Kurumsal web sitesi: tek sayfa site ₺9.999 +KDV, yönetim panelli tam paket ₺45.000 +KDV; yıllık yenileme ₺2.399 +KDV. Sıfırdan tasarım, SEO, çok dil.",
     kimlerIcin: ["Üretim ve sanayi", "Klinik ve ofisler", "Restoran ve kafeler", "Hizmet işletmeleri"],
     ozellikler: [
       {
@@ -334,7 +348,7 @@ export const HIZMETLER: Hizmet[] = [
       "Restoran, kafe ve pastaneler için dijital menü. Müşteri okutur, menü açılır; fiyatı panelden değiştirirsiniz, kod aynı kalır.",
     seoBasligi: "QR menü",
     seoAciklamasi:
-      "Restoran ve kafeler için QR menü: kategoriler, fotoğraflar, porsiyon fiyatları, panelden anında güncelleme. ₺9.999'dan başlayan fiyatlar, yıllık yenileme ₺2.399.",
+      "Restoran ve kafeler için QR menü: kategoriler, fotoğraflar, porsiyon fiyatları, anında güncelleme. ₺9.999 +KDV'den başlayan fiyatlar, yıllık yenileme ₺2.399 +KDV.",
     kimlerIcin: ["Restoranlar", "Kafeler", "Pastaneler", "Otel ve plaj işletmeleri"],
     ozellikler: [
       {
@@ -452,14 +466,14 @@ export function hizmetBul(adres: string) {
   return HIZMETLER.find((h) => h.adres === adres);
 }
 
-/** Hizmetin en düşük paket fiyatı: "₺9.999'dan başlayan", "₺65.000" ya da "Teklif üzerine". */
+/** Hizmetin en düşük paket fiyatı: "₺9.999 +KDV'den başlayan", "₺65.000 +KDV" ya da "Teklif üzerine". */
 export function hizmetFiyatEtiketi(adres: HizmetAdresi) {
   const paketler = PAKETLER.filter((p) => p.hizmet === adres);
   const fiyatlar = paketler.map((p) => p.fiyat).filter((f): f is number => f !== null);
   if (fiyatlar.length === 0) return "Teklif üzerine";
   const enDusuk = Math.min(...fiyatlar);
   const baslangic = paketler.length > 1 || paketler.some((p) => p.baslangic);
-  return baslangic ? `${fiyatYaz(enDusuk)}'dan başlayan` : fiyatYaz(enDusuk);
+  return baslangic ? `${kdvHaricYaz(enDusuk, true)} başlayan` : kdvHaricYaz(enDusuk);
 }
 
 export type Referans = {
@@ -581,13 +595,12 @@ export const SSS = [
   },
   {
     soru: "Fiyatlar neye göre belirleniyor?",
-    cevap:
-      "Paket fiyatlarımız Fiyatlar sayfasında açıkça yazılı. Paketin dışında kalan bir istek olursa görüşmeden sonra yazılı teklif alırsınız; teklifte olmayan bir kalem sonradan faturaya eklenmez.",
+    cevap: `Paket fiyatlarımız Fiyatlar sayfasında açıkça yazılı. ${KDV_NOTU} Paketin dışında kalan bir istek olursa görüşmeden sonra yazılı teklif alırsınız; teklifte olmayan bir kalem sonradan faturaya eklenmez.`,
   },
   {
     soru: "Yıllık yenileme ne demek?",
     cevap:
-      "Site yayına girdikten sonra her yıl ödenen ₺2.399'luk ücrettir. Sunucu, SSL sertifikası, güvenlik güncellemeleri, yedekleme ve küçük değişiklikler için destek bu ücrete dahildir.",
+      "Site yayına girdikten sonra her yıl ödenen ₺2.399'luk ücrettir; bu tutar da KDV hariçtir. Sunucu, SSL sertifikası, güvenlik güncellemeleri, yedekleme ve küçük değişiklikler için destek bu ücrete dahildir.",
   },
   {
     soru: "Siteyi kendim güncelleyebilir miyim?",

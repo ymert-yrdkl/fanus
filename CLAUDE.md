@@ -70,6 +70,8 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   telefonda CSS ile belirir. 3B sahne her cihazda ilk etkileşimde yüklenir (masaüstünde en geç 6 sn). Canlı Lighthouse
   (`npm run denetim:lighthouse -- https://fanussoft.com`): masaüstü 97/95 (önce 60), telefon 85/81 (LCP ~3,5 sn,
   sınırlayan JS boyutu). Masaüstü animasyonları aynı.
+- Fiyatlar KDV hariç (22 Ekim 2026, Yusuf): görünen her fiyatın yanında "+KDV", fiyat bölümlerinde ve teklif
+  oluşturucuda "Fiyatlara KDV dahil değildir." Metin tek yerde: `src/site/icerik.ts` › `KDV_EKI`, `KDV_NOTU`.
 - SIRADAKİ: SEO aşaması (sayfa başlıkları kısa: denetim uyarısı; Search Console + Bing doğrulaması; anahtar kelimeler;
   Google İşletme Profili); Yusuf'un beğenmediği telefon animasyonları listesi; fanussoft.com.tr (.tr kayıt sistemi ad
   sunucusunu işleyince Coolify › Domains › Add Domain); telefonda hız için JS küçültme (Lenis yalnız farede, GSAP

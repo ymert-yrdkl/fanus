@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { fiyatYaz, PAKETLER, YILLIK_YENILEME } from "@/site/icerik";
+import { fiyatYaz, KDV_NOTU, kdvEki, kdvHaricYaz, PAKETLER, YILLIK_YENILEME } from "@/site/icerik";
 
 /** Ana sayfadaki fiyat listesi: menü tahtası gibi, noktalı çizgiyle fiyata uzanan satırlar. */
 export default function FiyatListesi() {
@@ -15,7 +15,8 @@ export default function FiyatListesi() {
             Fiyatı baştan yazıyoruz.
           </h2>
           <p data-belir className="mt-6 max-w-[24rem] text-lg leading-relaxed text-soluk">
-            Her pakette yıllık yenileme {fiyatYaz(YILLIK_YENILEME)}. Paketlerin bütün özellikleri fiyatlar sayfasında.
+            Her pakette yıllık yenileme {fiyatYaz(YILLIK_YENILEME)}. {KDV_NOTU} Paketlerin bütün özellikleri fiyatlar
+            sayfasında.
           </p>
           <Link
             href="/fiyatlar"
@@ -48,10 +49,12 @@ export default function FiyatListesi() {
                 <span className="ml-auto shrink-0 text-right">
                   <span className="block font-baslik text-[clamp(1.375rem,2.4vw,2rem)] leading-tight font-semibold tabular-nums">
                     {p.fiyat !== null ? fiyatYaz(p.fiyat) : "Teklif üzerine"}
-                    {p.baslangic && <span className="text-base font-normal text-soluk">&apos;dan</span>}
+                    {p.fiyat !== null && (
+                      <span className="text-base font-normal text-soluk"> {kdvEki(p.baslangic)}</span>
+                    )}
                   </span>
                   {p.yenileme !== null && (
-                    <span className="mt-1 block text-sm text-soluk">yıllık {fiyatYaz(p.yenileme)}</span>
+                    <span className="mt-1 block text-sm text-soluk">yıllık {kdvHaricYaz(p.yenileme)}</span>
                   )}
                 </span>
               </Link>

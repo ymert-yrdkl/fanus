@@ -5,12 +5,11 @@ import FiyatKarti from "@/bilesenler/FiyatKarti";
 import SayfaBasi from "@/bilesenler/SayfaBasi";
 import Sss from "@/bilesenler/Sss";
 import { SITE } from "@/site/ayarlar";
-import { fiyatYaz, PAKETLER, SSS, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
+import { fiyatYaz, KDV_NOTU, PAKETLER, SSS, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
 
 export const metadata: Metadata = {
   title: "Fiyatlar",
-  description:
-    "Tek sayfa kurumsal site ₺9.999, tam paket kurumsal site ₺45.000, e-ticaret sitesi ₺65.000, QR menü ₺9.999'dan başlayan fiyatlarla. Her pakette yıllık yenileme ₺2.399.",
+  description: `Tek sayfa site ₺9.999, kurumsal tam paket ₺45.000, e-ticaret sitesi ₺65.000, QR menü ₺9.999'dan başlayan; yıllık yenileme ₺2.399. ${KDV_NOTU}`,
   alternates: { canonical: "/fiyatlar" },
 };
 
@@ -30,6 +29,12 @@ export default function FiyatlarSayfasi() {
       description: p.ozet,
       price: p.fiyat,
       priceCurrency: "TRY",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        price: p.fiyat,
+        priceCurrency: "TRY",
+        valueAddedTaxIncluded: false,
+      },
       url: `${SITE.adres}/hizmetler/${p.hizmet}`,
     })),
   };
@@ -43,7 +48,7 @@ export default function FiyatlarSayfasi() {
       <SayfaBasi
         iz={[{ ad: "Fiyatlar" }]}
         baslik="Fiyatı baştan söylüyoruz."
-        metin={`Her paketin fiyatı ve içeriği aşağıda yazılı. Site yayına girdikten sonra her yıl ${fiyatYaz(YILLIK_YENILEME)} yenileme ödersiniz; sunucu, SSL, güncelleme ve yedek buna dahildir.`}
+        metin={`Her paketin fiyatı ve içeriği aşağıda yazılı. ${KDV_NOTU} Site yayına girdikten sonra her yıl ${fiyatYaz(YILLIK_YENILEME)} yenileme ödersiniz; sunucu, SSL, güncelleme ve yedek buna dahildir.`}
       />
       <section aria-labelledby="paketler-baslik" className="relative z-10 bg-gece px-4 pb-20 sm:px-6 md:pb-28 lg:px-10">
         <h2 id="paketler-baslik" className="sr-only">
@@ -72,7 +77,7 @@ export default function FiyatlarSayfasi() {
               Yıllık yenileme {fiyatYaz(YILLIK_YENILEME)}.
             </h2>
             <p data-belir className="mt-5 max-w-[28rem] leading-relaxed text-soluk">
-              Bütün paketlerde aynı. Siteniz yayında kaldığı sürece çalışır, güncel ve güvende kalır.
+              Bütün paketlerde aynı tutar, KDV hariç. Siteniz yayında kaldığı sürece çalışır, güncel ve güvende kalır.
             </p>
           </div>
           <ul className="grid gap-3 sm:grid-cols-2 md:col-span-7">
