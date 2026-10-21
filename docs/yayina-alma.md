@@ -1,6 +1,7 @@
 # Yayına alma (Coolify, fanustr.ahmcloud.com)
 
 ## Durum (20 Ekim 2026)
+- Coolify paneli: https://panel.ahmcloud.com (uygulama: `/project/ccyhabwrej0jlzti0tyhlcol/environment/djvpcds9vcvfirqkv3prddlx/application/9nvnwcezuq8yfbdrwpkqgg4j`).
 - Coolify: Root Team › proje `fanus` › `production` › uygulama `fanus` (Public Git Repository, Dockerfile, port 3000)
   kuruldu, `NEXT_PUBLIC_SITE_ADRESI=https://fanustr.ahmcloud.com` (derleme + çalışma), ilk dağıtım başarılı.
   Not: Coolify'a girince ekip seçicide **Root Team** seçilmeli (kişisel ekipte proje ve sunucu yok).

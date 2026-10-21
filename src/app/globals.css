@@ -9,20 +9,20 @@
 */
 @theme {
   --color-*: initial;
-  /* Gece (3B sahnenin olduğu bölümler): yumuşak koyu gri, Discord'un koyu temasındaki gibi */
-  --color-gece: #313338;
-  --color-gece-2: #393b41;
-  --color-gece-3: #404249;
-  --color-gece-4: #4a4d55;
-  --color-cukur: #2b2d31;
+  /* Gece (3B sahnenin olduğu bölümler): koyu gri, Discord'un koyu temasındaki tonlardan */
+  --color-gece: #1a1b1e;
+  --color-gece-2: #232428;
+  --color-gece-3: #2b2d31;
+  --color-gece-4: #34363b;
+  --color-cukur: #141518;
   --color-cizgi: rgb(255 255 255 / 0.08);
   --color-cizgi-guclu: rgb(255 255 255 / 0.16);
   --color-krem: #f2f3f5;
   --color-soluk: #b5bac1;
-  --color-silik: #aab0b8;
-  --color-alev: #ff8266;
-  --color-alev-acik: #ffa58f;
-  --color-alev-koyu: #f5603f;
+  --color-silik: #a3a9b2;
+  --color-alev: #ff6145;
+  --color-alev-acik: #ff8f78;
+  --color-alev-koyu: #e5452a;
   --color-canli: #6fcf8f;
   --color-transparent: transparent;
   --color-current: currentColor;
@@ -39,7 +39,7 @@
   --ust-yukseklik: 4.25rem;
   interpolate-size: allow-keywords;
   /* Gece zemini (gündüz kapsamında da değişmez; 3B sahne bu renge siler) */
-  --gece-zemin: #313338;
+  --gece-zemin: #1a1b1e;
   /* Gündüz takımı (açık gri); data-zemin="acik" bölümünde --color-* bunlara eşlenir */
   --g-zemin: #f2f3f5;
   --g-kart: #ffffff;

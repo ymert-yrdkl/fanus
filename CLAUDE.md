@@ -54,8 +54,8 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   Eski kahve tema "yapay zekâ ürünü gibi" bulundu. Tema seçici yalnız `npm run dev`'de sol altta.
 - Yeni kimlik (21 Ekim 2026, yerelde hazır, yayında DEĞİL): ad **fanus**soft (fanussoft.com ve fanussoft.com.tr,
   İHS'den alındı; asıl adres fanussoft.com, diğerleri ve fanustr.ahmcloud.com 301 ile oraya, `next.config.ts`).
-  İşaret köşeli parantez içinde alev (3B'de iki kalın cam parça, manifestoda kapı gibi açılır). Renk: Discord grisi
-  gece + açık gri gündüz, mercan vurgu; lacivert ve degrade yok; koyu yalnız 3B sahnede. Ayrıntı
+  İşaret köşeli parantez içinde alev (3B'de iki kalın cam parça, manifestoda kapı gibi açılır). Renk: antrasit
+  gece (#1a1b1e) + açık gri gündüz, mercan vurgu; lacivert ve degrade yok; koyu yalnız 3B sahnede. Ayrıntı
   `docs/tasarim-dili.md`. Tema/palet seçici kaldırıldı. Telefon sabit görseli ve paylaşım görseli yeni hâlden çekildi.
   Fiyatlar 21 Ekim: tam paket kurumsal ₺45.000, e-ticaret ₺65.000. Bekleyen: İHS'de DNS (alan adı kilidi kalkınca
   @ ve www için A kaydı 187.124.174.57), Coolify'a alan adları + `NEXT_PUBLIC_SITE_ADRESI=https://fanussoft.com`,

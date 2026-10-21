@@ -67,7 +67,7 @@ const ALEV_RENKLERI = {
 
 /** Sahnenin zemini sayfanın gece rengiyle aynı olmalı: CSS --gece-zemin'den okunur. */
 const sahneZemini = () =>
-  getComputedStyle(document.documentElement).getPropertyValue("--gece-zemin").trim() || "#313338";
+  getComputedStyle(document.documentElement).getPropertyValue("--gece-zemin").trim() || "#1a1b1e";
 
 type Secenek = {
   /** İlk kare çizilince çağrılır. */

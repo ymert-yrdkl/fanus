@@ -11,20 +11,20 @@ yarısı (3B'de iki kalın cam parça) ve aynı zamanda kod. Yazım: **fanus**so
 (topuz, pirinç taban, fitil) "eski usul, falcı fanusu" bulunduğu için bırakıldı.
 
 ## Renk (yalnız token)
-Seçilen (21 Ekim 2026): **Discord grisi + açık gri**, mercan vurgu. Lacivert ve degrade istenmedi: koyular yumuşak
+Seçilen (21 Ekim 2026): **antrasit (#1a1b1e, Discord'un koyu tonları) + açık gri**, mercan vurgu. Lacivert ve degrade istenmedi: koyular yumuşak
 gri, gece ile gündüz arasında renk geçişi yok (gündüz, köşeleri yuvarlak bir sayfa gibi başlar, `.gecis-yaprak`).
 Koyu yalnız 3B sahnenin olduğu yerde: ana sayfa girişi + manifesto, iletişim teklif bölümü. Gerisi gündüz
 (`data-zemin="acik"`): aynı token adları `--g-*` değerlerine eşlenir. Bütün çiftler WCAG AA (en az 4,5:1).
 
 | Token | Gece | Gündüz | Kullanım |
 |---|---|---|---|
-| `gece` | #313338 | #f2f3f5 | zemin; gecede 3B sahnenin arkası (`--gece-zemin`) |
-| `gece-2..4` | #393b41 → #4a4d55 | #ffffff → #e3e5e8 | kartlar ve yükseltilmiş yüzeyler |
-| `cukur` | #2b2d31 | #f6f7f8 | kart içindeki gömülü paneller, form alanları |
+| `gece` | #1a1b1e | #f2f3f5 | zemin; gecede 3B sahnenin arkası (`--gece-zemin`) |
+| `gece-2..4` | #232428 → #34363b | #ffffff → #e3e5e8 | kartlar ve yükseltilmiş yüzeyler |
+| `cukur` | #141518 | #f6f7f8 | kart içindeki gömülü paneller, form alanları |
 | `krem` | #f2f3f5 | #1e1f22 | ana metin |
 | `soluk` | #b5bac1 | #4e5058 | ikincil metin |
-| `silik` | #aab0b8 | #5c5e66 | küçük yardımcı metin |
-| `alev` (+ `alev-acik`, `alev-koyu`) | #ff8266 | #c9321a | TEK vurgu: birincil düğme, vurgu kelime, ışık |
+| `silik` | #a3a9b2 | #5c5e66 | küçük yardımcı metin |
+| `alev` (+ `alev-acik`, `alev-koyu`) | #ff6145 | #c9321a | TEK vurgu: birincil düğme, vurgu kelime, ışık |
 | `canli` | #6fcf8f | | yalnız "yayında" durum noktası |
 | `cizgi`, `cizgi-guclu` | beyaz %8 / %16 | koyu gri %10 / %18 | ayraç ve çerçeve |
 
