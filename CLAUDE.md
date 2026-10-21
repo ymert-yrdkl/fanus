@@ -64,12 +64,16 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   taşma, takılı animasyon, görsel, SEO etiketleri, axe-core, bağlantılar, site haritası) ve 11 etkileşim senaryosunu
   oynatır (`scripts/denetim/`); rapor `.denetim/rapor.md`. Yerelde üretim derlemesine karşı: `npm run build` +
   launch.json `fanus-uretim` (:3400). Son yerel koşu 0 hata; düzeltmeler canlıda. Her değişiklikten sonra çalıştırılır.
-- KALDIĞIMIZ YER (21 Ekim gece): (1) Telefondaki animasyonlar için kapsamlı düzenleme (Yusuf'un listesi gelecek;
-  pin/yatay şerit/yapışkan çerçeve/manifesto telefonda sadeleşmeli), (2) hız: PageSpeed masaüstü 60, mobil 90
-  (LCP 3,3 sn); masaüstünde 3B sahne geç yüklenmeli, açılış perdesi LCP'yi geciktiriyor, (3) `npm run denetim:lighthouse`
-  betiği henüz yazılmadı (package.json'da tanımlı), (4) SEO aşaması: sayfa başlıkları kısa (denetim uyarısı),
-  Search Console + Bing, anahtar kelimeler, Google İşletme Profili, (5) fanussoft.com.tr: .tr kayıt sistemi ad
-  sunucusunu işleyince Coolify › Domains › Add Domain ile eklenecek (DNS kayıtları İHS'de hazır).
+- Telefon ve hız (22 Ekim 2026, YAYINDA): telefonda açılış perdesi yok, giriş başlığı hemen görünür, 3B sahne girişin
+  parçası (sabit değil), manifesto sabitlenmez (cümleler akışta), belirmeler kısa ve yalnız saydamlıkla, başlıklar
+  bölünmez, geçişte bulanıklık yok, sayfa sonu çizimi gizli; sayfa başları (SayfaBasi, Teklif: `data-sayfa-basi`)
+  telefonda CSS ile belirir. 3B sahne her cihazda ilk etkileşimde yüklenir (masaüstünde en geç 6 sn). Canlı Lighthouse
+  (`npm run denetim:lighthouse -- https://fanussoft.com`): masaüstü 97/95 (önce 60), telefon 85/81 (LCP ~3,5 sn,
+  sınırlayan JS boyutu). Masaüstü animasyonları aynı.
+- SIRADAKİ: SEO aşaması (sayfa başlıkları kısa: denetim uyarısı; Search Console + Bing doğrulaması; anahtar kelimeler;
+  Google İşletme Profili); Yusuf'un beğenmediği telefon animasyonları listesi; fanussoft.com.tr (.tr kayıt sistemi ad
+  sunucusunu işleyince Coolify › Domains › Add Domain); telefonda hız için JS küçültme (Lenis yalnız farede, GSAP
+  eklentileri gerektiğinde).
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).
