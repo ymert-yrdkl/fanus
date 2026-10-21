@@ -53,13 +53,15 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
 - Renk teması D seçildi (20 Ekim 2026): koyu lacivert zemin + kor kırmızısı, nötr grafit kartlar, sarı-kızıl alev.
   Eski kahve tema "yapay zekâ ürünü gibi" bulundu. Tema seçici yalnız `npm run dev`'de sol altta.
 - Yeni fanus ve renk denemesi (21 Ekim 2026, yalnız yerelde, yayında DEĞİL): eski fener (topuz, pirinç taban, fitil)
-  yerine "cam simge" seçildi (kalın, köşeleri yuvarlatılmış cam uygulama simgesi; logo, sekme simgesi, açılış ve
-  sayfa sonu çizimi aynı biçim; alev logodaki yoldan, dört katman). Lacivert yalnız 3B sahnede (ana sayfa girişi +
-  manifesto, iletişim teklif bölümü); tek şafak geçişi (`GecisBandi`), sonrası ve alt sayfalar gündüz
-  (`data-zemin="acik"`). Renk paleti karşılaştırılıyor: 12 palet (`src/site/tema.ts` › TEMALAR, renkler
-  `globals.css` › `:root[data-tema]`, gece `--color-*` + gündüz `--g-*`; lacivert ve degrade yok, geçiş köşeleri yuvarlak sayfa `.gecis-yaprak`), tema panelinden ya da `?tema=`. Palet
-  seçilince: diğerleri silinir, `public/fanus-telefon.webp` (telefondaki sabit görsel) ve `opengraph-image.png`
-  yeniden çekilir, sonra yayına alınır. Fiyatlar 21 Ekim'de güncellendi: tam paket kurumsal ₺45.000, e-ticaret ₺65.000.
+  yerine "köşeli parantez" seçildi: [ alev ], iki kalın cam parça (3B, manifestoda kapı gibi açılır); logo, sekme
+  simgesi, açılış ve sayfa sonu çizimi aynı biçim; alev logodaki yoldan, dört katman. Koyu yalnız 3B sahnede (ana
+  sayfa girişi + manifesto, iletişim teklif bölümü); gündüze geçiş köşeleri yuvarlak sayfa (`.gecis-yaprak`), sonrası
+  ve alt sayfalar gündüz (`data-zemin="acik"`). Lacivert ve degrade istenmedi. Renk paleti seçimi sürüyor: Discord
+  grisi çizgisinde 6 palet (`src/site/tema.ts` › TEMALAR, renkler `globals.css` › `:root[data-tema]`, gece `--color-*`
+  + gündüz `--g-*`), tema panelinden ya da `?tema=`. Palet seçilince: diğerleri silinir, `public/fanus-telefon.webp`
+  ve `opengraph-image.png` yeniden çekilir, sonra yayına alınır. Fiyatlar 21 Ekim: tam paket kurumsal ₺45.000,
+  e-ticaret ₺65.000. Alan adı: fanussoft.com ve fanussoft.com.tr alındı (21 Ekim 2026, İHS); DNS ve marka yazımı
+  bekliyor.
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).

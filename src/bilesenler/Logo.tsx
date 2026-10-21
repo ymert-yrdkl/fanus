@@ -1,27 +1,16 @@
 import type { SVGProps } from "react";
-import { BICIMLER, type BicimKodu } from "@/site/tema";
 
 /*
-  fanus işareti, 32x32'lik kutuda. Denemede iki biçim var: "simge" (köşeleri yuvarlatılmış cam bir simge, sağ üstte
-  camın parıltısı) ve "koseli" (alevi iki yandan saran köşeli parantez: [ alev ]). İkisi de sayfada durur, hangisinin
-  görüneceğini <html data-bicim> seçer (globals.css › data-bicim-isaret). Alev sabit renkli: dışı kor, içi sarı.
+  fanus işareti, 32x32'lik kutuda: alevi iki yandan saran köşeli parantez, [ alev ]. Parantezler fanusun iki cam
+  yarısı (3B sahnede kalın cam parçalar). Alev sabit renkli: dışı kor kırmızısı, içi sarı.
 */
 
 /** Alevin yolu (100x140'lık kutuda). 3B sahnedeki alev de bu yoldan kurulur (src/sahne/fanus3b.ts). */
 const ALEV_YOLU = "M57 2C64 34 88 54 88 90C88 119 71 138 50 138C29 138 12 119 12 90C12 58 42 42 57 2Z";
 
-/** Her biçimin çizgileri; "ince" olan camın parıltısıdır (daha ince ve yarı saydam). */
-const CIZGILER: Record<BicimKodu, { d: string; ince?: boolean }[]> = {
-  simge: [
-    { d: "M12 4h8a8 8 0 0 1 8 8v8a8 8 0 0 1-8 8h-8a8 8 0 0 1-8-8v-8a8 8 0 0 1 8-8Z" },
-    { d: "M21.5 8.2a4.6 4.6 0 0 1 2.3 2.3", ince: true },
-  ],
-  koseli: [
-    { d: "M12.5 5H9a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h3.5" },
-    { d: "M19.5 5H23a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2h-3.5" },
-  ],
-};
-const ALEV_ALTI: Record<BicimKodu, number> = { simge: 23.6, koseli: 23.4 };
+/** Köşeli parantezlerin çizgileri. */
+const CIZGILER = ["M12.5 5H9a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h3.5", "M19.5 5H23a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2h-3.5"];
+const ALEV_ALTI = 23.4;
 const ALEV_BOYU = 14;
 
 /** 32'lik kutunun ortasında alev; alt kenarı `alt`ta. */
@@ -40,24 +29,12 @@ function Alev({ alt, ...ozellik }: { alt: number } & SVGProps<SVGGElement>) {
 /** Küçük işaret (menü, altbilgi, geçiş perdesi). Rengi `currentColor`. */
 export function FanusIsareti({ className = "size-7" }: { className?: string }) {
   return (
-    <span className={`inline-block shrink-0 ${className}`} aria-hidden="true">
-      {BICIMLER.map(({ kod }) => (
-        <svg key={kod} data-bicim-isaret={kod} viewBox="0 0 32 32" fill="none" className="size-full">
-          {CIZGILER[kod].map((c) => (
-            <path
-              key={c.d}
-              d={c.d}
-              stroke="currentColor"
-              strokeWidth={c.ince ? 1.5 : 2.2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity={c.ince ? 0.55 : 1}
-            />
-          ))}
-          <Alev alt={ALEV_ALTI[kod]} />
-        </svg>
+    <svg viewBox="0 0 32 32" fill="none" className={`shrink-0 ${className}`} aria-hidden="true">
+      {CIZGILER.map((d) => (
+        <path key={d} d={d} stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
       ))}
-    </span>
+      <Alev alt={ALEV_ALTI} />
+    </svg>
   );
 }
 
@@ -80,28 +57,23 @@ export function CizilenIsaret({
   className?: string;
 }) {
   return (
-    <>
-      {BICIMLER.map(({ kod }) => (
-        <svg key={kod} data-bicim-isaret={kod} viewBox="0 0 32 32" fill="none" className={className}>
-          {CIZGILER[kod].map((c) => (
-            <path
-              key={c.d}
-              {...{ [cizgiAdi]: "" }}
-              pathLength={1}
-              strokeDasharray="1"
-              strokeDashoffset={gizli ? 1 : 0}
-              d={c.d}
-              stroke="currentColor"
-              strokeWidth={c.ince ? kalinlik * 0.7 : kalinlik}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity={c.ince ? 0.55 : 1}
-            />
-          ))}
-          <Alev {...{ [alevAdi]: "" }} alt={ALEV_ALTI[kod]} className={gizli ? "opacity-0" : undefined} />
-        </svg>
+    <svg viewBox="0 0 32 32" fill="none" className={className}>
+      {CIZGILER.map((d) => (
+        <path
+          key={d}
+          {...{ [cizgiAdi]: "" }}
+          pathLength={1}
+          strokeDasharray="1"
+          strokeDashoffset={gizli ? 1 : 0}
+          d={d}
+          stroke="currentColor"
+          strokeWidth={kalinlik}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       ))}
-    </>
+      <Alev {...{ [alevAdi]: "" }} alt={ALEV_ALTI} className={gizli ? "opacity-0" : undefined} />
+    </svg>
   );
 }
 
