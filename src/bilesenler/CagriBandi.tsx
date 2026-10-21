@@ -5,8 +5,9 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { gsap, HAREKET_ACIK, useGSAP } from "@/hareket/gsap";
 import { dugmeSinifi } from "./dugme";
+import { CizilenIsaret } from "./Logo";
 
-/** Sayfa sonlarındaki çağrı: kaydırdıkça büyük fanus çizilir, alev yanar. */
+/** Sayfa sonlarındaki çağrı: kaydırdıkça büyük fanus işareti çizilir, alev yanar. */
 export default function CagriBandi({
   baslik = "Sıradaki fanus sizin olsun.",
   metin = "Ne istediğinizi kısaca yazın; kapsamı ve fiyatı birlikte netleştirelim.",
@@ -26,7 +27,12 @@ export default function CagriBandi({
           scrollTrigger: { trigger: kok.current, start: "top 75%", end: "center 45%", scrub: 1 },
         });
         zc.fromTo("[data-cagri-cizgi]", { strokeDashoffset: 1 }, { strokeDashoffset: 0, ease: "none", stagger: 0.1 })
-          .fromTo("[data-cagri-alev]", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, ease: "back.out(2)" }, 0.55)
+          .fromTo(
+            "[data-cagri-alev]",
+            { scale: 0, opacity: 0, transformOrigin: "50% 100%" },
+            { scale: 1, opacity: 1, ease: "back.out(2)" },
+            0.55,
+          )
           .fromTo("[data-cagri-hale]", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, ease: "none" }, 0.5);
       });
     },
@@ -62,41 +68,12 @@ export default function CagriBandi({
             data-cagri-hale
             className="absolute top-[62%] left-1/2 size-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_30%,transparent),transparent_62%)]"
           />
-          <svg viewBox="0 0 32 32" fill="none" className="relative w-full text-krem">
-            <path
-              data-cagri-cizgi
-              pathLength={1}
-              strokeDasharray="1"
-              d="M8.5 27V14.5a7.5 7.5 0 0 1 15 0V27"
-              stroke="currentColor"
-              strokeWidth="0.35"
-              strokeLinecap="round"
-            />
-            <circle
-              data-cagri-cizgi
-              pathLength={1}
-              strokeDasharray="1"
-              cx="16"
-              cy="5"
-              r="1.4"
-              stroke="currentColor"
-              strokeWidth="0.35"
-            />
-            <path
-              data-cagri-cizgi
-              pathLength={1}
-              strokeDasharray="1"
-              d="M5 27.5h22"
-              stroke="currentColor"
-              strokeWidth="0.45"
-              strokeLinecap="round"
-            />
-            <path
-              data-cagri-alev
-              className="origin-[16px_21px] fill-alev"
-              d="M16 13.2c2.3 2.7 3.4 4.7 3.4 6.6a3.4 3.4 0 0 1-6.8 0c0-1.9 1.1-3.9 3.4-6.6Z"
-            />
-          </svg>
+          <CizilenIsaret
+            cizgiAdi="data-cagri-cizgi"
+            alevAdi="data-cagri-alev"
+            kalinlik={0.35}
+            className="relative w-full text-krem"
+          />
         </div>
       </div>
     </section>

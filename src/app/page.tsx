@@ -51,15 +51,14 @@ export default async function AnaSayfa() {
       <main id="icerik">
         <Giris />
         <Manifesto />
-        <GecisBandi yon="safak" />
+        <GecisBandi />
         <div data-zemin="acik">
           <Serit />
           <HizmetKartlari qrSvg={qrSvg} />
           <Isler />
           <FiyatListesi />
+          <CagriBandi />
         </div>
-        <GecisBandi yon="aksam" />
-        <CagriBandi />
       </main>
     </>
   );

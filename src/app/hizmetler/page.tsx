@@ -1,4 +1,3 @@
-import GecisBandi from "@/bilesenler/GecisBandi";
 import type { Metadata } from "next";
 import AdGirisi from "@/bilesenler/AdGirisi";
 import CagriBandi from "@/bilesenler/CagriBandi";
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
 export default async function HizmetlerSayfasi() {
   const qrSvg = await qrSvgUret();
   return (
-    <main id="icerik">
+    <main id="icerik" data-zemin="acik">
       <SayfaBasi
         iz={[{ ad: "Hizmetler" }]}
         baslik="Dört hizmet, dört canlı örnek."
@@ -25,12 +24,8 @@ export default async function HizmetlerSayfasi() {
       >
         <AdGirisi />
       </SayfaBasi>
-      <GecisBandi yon="safak" boy="kisa" />
-      <div data-zemin="acik">
-        <Hizmetler qrSvg={qrSvg} />
-        <Surec />
-      </div>
-      <GecisBandi yon="aksam" boy="kisa" />
+      <Hizmetler qrSvg={qrSvg} />
+      <Surec />
       <CagriBandi />
     </main>
   );

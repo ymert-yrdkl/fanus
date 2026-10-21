@@ -1,4 +1,3 @@
-import GecisBandi from "@/bilesenler/GecisBandi";
 import type { Metadata } from "next";
 import CagriBandi from "@/bilesenler/CagriBandi";
 import Isler from "@/bilesenler/Isler";
@@ -13,17 +12,13 @@ export const metadata: Metadata = {
 
 export default function IslerSayfasi() {
   return (
-    <main id="icerik">
+    <main id="icerik" data-zemin="acik">
       <SayfaBasi
         iz={[{ ad: "İşler" }]}
         baslik="Yayında olan işler."
         metin="Üçü de Düzce'den, üçü de bugün çalışıyor. Ekran görüntüleri sitelerin kendisinden; kaydırdıkça gezin, tıklayıp açın."
       />
-      <GecisBandi yon="safak" boy="kisa" />
-      <div data-zemin="acik">
-        <Isler baslik={null} />
-      </div>
-      <GecisBandi yon="aksam" boy="kisa" />
+      <Isler baslik={null} />
       <CagriBandi baslik="Sıradaki iş sizinki olsun." />
     </main>
   );

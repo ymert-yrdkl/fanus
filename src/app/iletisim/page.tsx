@@ -28,7 +28,7 @@ export default function IletisimSayfasi() {
       <FanusSahnesi poz="son" />
       <main id="icerik">
         <Teklif />
-        <GecisBandi yon="safak" boy="kisa" />
+        <GecisBandi boy="kisa" />
         <section
           data-zemin="acik"
           aria-labelledby="kanallar"
@@ -74,7 +74,6 @@ export default function IletisimSayfasi() {
             </ul>
           </div>
         </section>
-        <GecisBandi yon="aksam" boy="kisa" />
       </main>
     </>
   );

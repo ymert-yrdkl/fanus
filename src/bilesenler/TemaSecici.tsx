@@ -2,9 +2,18 @@
 
 import { useState } from "react";
 import { Palette, X } from "@phosphor-icons/react/dist/ssr";
-import { TEMALAR, temaGecerliMi, type TemaKodu, VARSAYILAN_TEMA } from "@/site/tema";
+import {
+  BICIMLER,
+  bicimGecerliMi,
+  type BicimKodu,
+  TEMALAR,
+  temaGecerliMi,
+  type TemaKodu,
+  VARSAYILAN_BICIM,
+  VARSAYILAN_TEMA,
+} from "@/site/tema";
 
-/** Yalnız denemede: sol altta renk temasını değiştiren küçük panel (seçim bu tarayıcıda hatırlanır). */
+/** Yalnız denemede: sol altta fanus biçimini ve renk temasını değiştiren küçük panel (seçim bu tarayıcıda hatırlanır). */
 export default function TemaSecici() {
   const [acik, setAcik] = useState(false);
   const [acikBolum, setAcikBolum] = useState(() =>
@@ -15,6 +24,23 @@ export default function TemaSecici() {
     const kod = document.documentElement.dataset.tema;
     return temaGecerliMi(kod) ? kod : VARSAYILAN_TEMA;
   });
+
+  const [bicim, setBicim] = useState<BicimKodu>(() => {
+    if (typeof document === "undefined") return VARSAYILAN_BICIM;
+    const kod = document.documentElement.dataset.bicim;
+    return bicimGecerliMi(kod) ? kod : VARSAYILAN_BICIM;
+  });
+
+  const bicimSec = (kod: BicimKodu) => {
+    document.documentElement.setAttribute("data-bicim", kod);
+    try {
+      localStorage.setItem("fanus-bicim", kod);
+    } catch {
+      // depolama kapalı olabilir; biçim yine değişir
+    }
+    window.dispatchEvent(new Event("fanus:bicim"));
+    setBicim(kod);
+  };
 
   const sec = (kod: TemaKodu) => {
     document.documentElement.setAttribute("data-tema", kod);
@@ -45,7 +71,7 @@ export default function TemaSecici() {
       {acik ? (
         <div className="w-60 rounded-2xl border border-cizgi-guclu bg-gece-2/95 p-3 golge backdrop-blur-xl">
           <div className="flex items-center justify-between px-1 pb-2">
-            <span className="etiket">Renk teması</span>
+            <span className="etiket">Deneme</span>
             <button
               type="button"
               onClick={() => setAcik(false)}
@@ -55,6 +81,23 @@ export default function TemaSecici() {
               <span className="sr-only">Kapat</span>
             </button>
           </div>
+          <p className="etiket px-1 pb-2">Fanus biçimi</p>
+          <div className="mb-3 grid grid-cols-2 gap-1">
+            {BICIMLER.map((b) => (
+              <button
+                key={b.kod}
+                type="button"
+                aria-pressed={bicim === b.kod}
+                onClick={() => bicimSec(b.kod)}
+                className={`rounded-xl px-2.5 py-2 text-sm transition-colors ${
+                  bicim === b.kod ? "bg-alev text-gece" : "bg-gece-3 text-soluk hover:text-krem"
+                }`}
+              >
+                {b.ad}
+              </button>
+            ))}
+          </div>
+          <p className="etiket px-1 pb-2">Renk teması</p>
           <ul className="grid gap-1">
             {TEMALAR.map((t) => (
               <li key={t.kod}>

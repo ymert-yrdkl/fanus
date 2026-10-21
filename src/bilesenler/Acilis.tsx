@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/hareket/gsap";
 import { kaydirmayiBaslat, kaydirmayiDurdur } from "@/hareket/kaydirma";
+import { CizilenIsaret } from "./Logo";
 
 // GSAP, bir zaman çizelgesinin geri çağrısında yaratılan animasyonları o çizelgenin kapsamına bağlar.
 // Olay setTimeout ile ayrı bir turda yayınlanır ki dinleyenlerin animasyonları kendi kapsamlarında kalsın.
@@ -65,7 +66,7 @@ export default function Acilis() {
 
       if (tekrar) {
         zc.set("[data-cizgi]", { strokeDashoffset: 0 })
-          .set("[data-alev-acilis]", { scale: 1, opacity: 1 })
+          .set("[data-alev-acilis]", { scale: 1, opacity: 1, transformOrigin: "50% 100%" })
           .to(kok.current, { clipPath: "inset(0 0 100% 0)", duration: 0.9, ease: "expo.inOut" }, 0.15)
           .call(duyur, [], 0.35);
         return () => window.clearTimeout(emniyet);
@@ -78,7 +79,7 @@ export default function Acilis() {
       )
         .fromTo(
           "[data-alev-acilis]",
-          { scale: 0, opacity: 0 },
+          { scale: 0, opacity: 0, transformOrigin: "50% 100%" },
           { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2.2)" },
           0.45,
         )
@@ -116,33 +117,13 @@ export default function Acilis() {
             data-hale-acilis
             className="absolute top-[58%] left-1/2 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_35%,transparent),transparent_65%)] opacity-0"
           />
-          <svg viewBox="0 0 32 32" fill="none" className="relative size-full text-krem">
-            <path
-              data-cizgi
-              pathLength={1}
-              strokeDasharray="1"
-              strokeDashoffset="1"
-              d="M8.5 27V14.5a7.5 7.5 0 0 1 15 0V27"
-              stroke="currentColor"
-              strokeWidth="0.9"
-              strokeLinecap="round"
-            />
-            <path
-              data-cizgi
-              pathLength={1}
-              strokeDasharray="1"
-              strokeDashoffset="1"
-              d="M5 27.5h22"
-              stroke="currentColor"
-              strokeWidth="1.1"
-              strokeLinecap="round"
-            />
-            <path
-              data-alev-acilis
-              className="origin-[16px_21px] fill-alev opacity-0"
-              d="M16 13.2c2.3 2.7 3.4 4.7 3.4 6.6a3.4 3.4 0 0 1-6.8 0c0-1.9 1.1-3.9 3.4-6.6Z"
-            />
-          </svg>
+          <CizilenIsaret
+            cizgiAdi="data-cizgi"
+            alevAdi="data-alev-acilis"
+            kalinlik={0.9}
+            gizli
+            className="relative size-full text-krem"
+          />
         </div>
         <div className="flex items-end gap-4">
           <span className="flex overflow-hidden font-baslik text-5xl leading-[1.1] font-semibold tracking-[-0.04em]">

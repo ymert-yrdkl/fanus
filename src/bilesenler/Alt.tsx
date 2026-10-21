@@ -43,6 +43,7 @@ export default function Alt() {
   return (
     <footer
       ref={kok}
+      data-zemin="acik"
       className="relative z-10 overflow-hidden border-t border-cizgi bg-gece px-4 pt-20 pb-8 sm:px-6 lg:px-10"
     >
       <div className="mx-auto grid max-w-[90rem] gap-12 sm:grid-cols-2 lg:grid-cols-12">

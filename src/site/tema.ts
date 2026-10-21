@@ -20,3 +20,18 @@ export const TEMA_SECICI_ACIK = process.env.NODE_ENV === "development" || proces
 export function temaGecerliMi(kod: string | null | undefined): kod is TemaKodu {
   return TEMALAR.some((t) => t.kod === kod);
 }
+
+// Fanusun biçimi (21 Ekim 2026 denemesi): logo, sekme simgesi, açılış ve 3B sahne buna göre çizilir.
+// Seçim <html data-bicim> üzerinden; geliştirmede tema panelinden değiştirilir.
+export const BICIMLER = [
+  { kod: "simge", ad: "Cam simge" },
+  { kod: "parantez", ad: "Parantez" },
+] as const;
+
+export type BicimKodu = (typeof BICIMLER)[number]["kod"];
+
+export const VARSAYILAN_BICIM: BicimKodu = "simge";
+
+export function bicimGecerliMi(kod: string | null | undefined): kod is BicimKodu {
+  return BICIMLER.some((b) => b.kod === kod);
+}

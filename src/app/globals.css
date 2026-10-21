@@ -114,7 +114,8 @@
 
 /*
   Gündüz bölümleri (data-zemin="acik"): aynı token adları açık değerlerle yeniden tanımlanır; bileşenler
-  değişmeden beyaz zeminde çalışır. 3B fanusun olduğu bölümler gece kalır (alev görünsün).
+  değişmeden beyaz zeminde çalışır. Yalnız 3B fanusun olduğu bölümler gece kalır (alev görünsün): ana sayfanın
+  girişi ve manifestosu, iletişimin teklif bölümü. Alt sayfalar, sayfa sonları ve altbilgi gündüzdür.
   Vurgu kırmızısı beyazda bir ton koyu (#c9321a: beyaz yazıyla 5,3:1, zeminde 4,9:1).
   Menü, gündüz bölümünün üstündeyken data-acik-ust ile aynı değerleri alır.
   Denemede tamamı gece görmek için: <html data-acik-bolum="kapali">.
@@ -145,45 +146,31 @@
   display: none;
 }
 
+/* Fanus biçimi denemesi: <html data-bicim> hangi işaretin görüneceğini seçer (varsayılan cam simge). */
+[data-bicim-isaret] {
+  display: none;
+}
+:root:not([data-bicim="parantez"]) [data-bicim-isaret="simge"],
+:root[data-bicim="parantez"] [data-bicim-isaret="parantez"] {
+  display: block;
+}
+
 /* Büyük, yumuşak gölge: gecede koyu, gündüzde lacivert tonlu ve hafif */
 .golge {
   box-shadow: 0 40px 100px -40px var(--golge-rengi);
 }
 
 /*
-  Gece ile gündüz arasındaki renk geçişleri. Şafak: lacivert gece, derin mavi, sıcak ufuk ışığı, kurumsal beyaz.
-  Akşam: tersi. Ortadaki sıcak ışık alevin rengini taşır, geçiş "ışık doğuyor" hissi verir.
+  Geceden gündüze tek renk geçişi (şafak): lacivert gece, derin mavi, sıcak ufuk ışığı, kurumsal beyaz.
+  Ortadaki sıcak ışık alevin rengini taşır, geçiş "ışık doğuyor" hissi verir.
 */
 .gecis-bandi {
   position: relative;
   z-index: 10;
   pointer-events: none;
-}
-.gecis-bandi--safak {
   background:
     radial-gradient(70% 45% at 50% 58%, rgb(255 120 70 / 0.16), transparent 70%),
-    linear-gradient(
-      180deg,
-      var(--lacivert) 0%,
-      #0a1a3c 20%,
-      #1d3a6e 42%,
-      #6f8bb8 64%,
-      #c9d5e8 82%,
-      #f5f6f8 100%
-    );
-}
-.gecis-bandi--aksam {
-  background:
-    radial-gradient(70% 45% at 50% 42%, rgb(255 110 60 / 0.14), transparent 70%),
-    linear-gradient(
-      180deg,
-      #f5f6f8 0%,
-      #c9d5e8 18%,
-      #6f8bb8 36%,
-      #1d3a6e 58%,
-      #0a1a3c 80%,
-      var(--lacivert) 100%
-    );
+    linear-gradient(180deg, var(--lacivert) 0%, #0a1a3c 20%, #1d3a6e 42%, #6f8bb8 64%, #c9d5e8 82%, #f5f6f8 100%);
 }
 
 html {

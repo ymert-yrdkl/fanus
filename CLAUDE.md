@@ -52,6 +52,13 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
 - Çok sayfalı yapıya geçildi ve fiyatlar eklendi (20 Ekim 2026, Yusuf'un isteği).
 - Renk teması D seçildi (20 Ekim 2026): koyu lacivert zemin + kor kırmızısı, nötr grafit kartlar, sarı-kızıl alev.
   Eski kahve tema "yapay zekâ ürünü gibi" bulundu. Tema seçici yalnız `npm run dev`'de sol altta.
+- Gündüz/gece ve yeni fanus denemesi (21 Ekim 2026, yalnız yerelde, yayında DEĞİL): lacivert yalnız 3B sahnenin
+  olduğu yerde (ana sayfa girişi + manifesto, iletişim teklif bölümü); tek şafak geçişi (`GecisBandi`), sonrası,
+  alt sayfalar, sayfa sonu ve altbilgi kurumsal beyaz (`data-zemin="acik"`). Eski fener (topuz, pirinç taban, fitil)
+  kalktı; iki modern biçim karşılaştırılıyor: "Cam simge" (kalın cam uygulama simgesi) ve "Parantez" (iki kavisli
+  cam). Alev logodaki yoldan, dört katmanlı. Biçim `<html data-bicim>` (`src/site/tema.ts` › BICIMLER), tema
+  panelinden ya da `?bicim=`. Seçim yapılınca: diğer biçim silinir, `public/fanus-telefon.webp` (telefondaki sabit
+  görsel) ve `opengraph-image.png` yeniden çekilir.
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).
