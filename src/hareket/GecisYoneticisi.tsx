@@ -1,46 +1,38 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { FanusIsareti } from "@/bilesenler/Logo";
-import { HIZMETLER } from "@/site/icerik";
 import { gecisKaydet } from "./gecis";
 import { gsap, ScrollTrigger } from "./gsap";
 import { basaDon } from "./kaydirma";
 
-const SAYFA_ADLARI: Record<string, string> = {
-  "/": "Ana sayfa",
-  "/hizmetler": "Hizmetler",
-  "/fiyatlar": "Fiyatlar",
-  "/isler": "İşler",
-  "/iletisim": "İletişim",
-  ...Object.fromEntries(HIZMETLER.map((h) => [`/hizmetler/${h.adres}`, h.ad])),
-};
+/** Koyu (3B sahneyle) başlayan sayfalar; diğerleri gündüz zemininde başlar. Örtü gidilen sayfanın rengini alır. */
+const KOYU_BASLAYAN = new Set(["/", "/iletisim"]);
 
 /**
- * Site içi bağlantıya tıklanınca perde aşağıdan kapanır (üstünde gidilen sayfanın adı), yeni sayfa
- * yüklenince perde yukarı kalkar. Bağlantılar normal <a>/<Link> kalır: JS yoksa ya da hareket
- * azaltma tercihi varsa sayfa doğrudan açılır. Yeni sekme, değiştirici tuş ve aynı sayfadaki çapa
- * bağlantılarına dokunulmaz.
+ * Site içi bağlantıya tıklanınca "buzlu cam" geçişi: sayfa bir an bulanıklaşıp gidilen sayfanın zemin rengine
+ * karışır, üstte ince bir çizgi akar; yeni sayfa gelince örtü çözülür ve içerik hafifçe yukarı kayarak gelir.
+ * Bağlantılar normal <a>/<Link> kalır: JS yoksa ya da hareket azaltma tercihi varsa sayfa doğrudan açılır.
+ * Yeni sekme, değiştirici tuş ve aynı sayfadaki çapa bağlantılarına dokunulmaz.
  */
 export default function GecisYoneticisi() {
   const router = useRouter();
   const yol = usePathname();
-  const perde = useRef<HTMLDivElement>(null);
+  const ortu = useRef<HTMLDivElement>(null);
+  const cizgi = useRef<HTMLDivElement>(null);
   const bekleyen = useRef(false);
-  const [hedefAdi, setHedefAdi] = useState("");
 
   useEffect(() => {
     const git = (adres: string) => {
       const url = new URL(adres, window.location.href);
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !perde.current) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !ortu.current) {
         router.push(url.pathname + url.search + url.hash);
         return;
       }
       if (bekleyen.current) return;
       bekleyen.current = true;
-      setHedefAdi(SAYFA_ADLARI[url.pathname] ?? "fanussoft");
       router.prefetch(url.pathname);
+      ortu.current.dataset.ton = KOYU_BASLAYAN.has(url.pathname) ? "gece" : "gunduz";
       let gidildi = false;
       const sayfayaGec = () => {
         if (gidildi) return;
@@ -49,13 +41,13 @@ export default function GecisYoneticisi() {
       };
       gsap
         .timeline()
-        .set(perde.current, { display: "flex", clipPath: "inset(100% 0% 0% 0%)" })
-        .set("[data-perde-yazi]", { yPercent: 120 })
-        .to(perde.current, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "expo.inOut" })
-        .to("[data-perde-yazi]", { yPercent: 0, duration: 0.6, ease: "expo.out" }, 0.35)
-        .call(sayfayaGec);
+        .set(ortu.current, { display: "block", opacity: 0, backdropFilter: "blur(0px)" })
+        .set(cizgi.current, { display: "block", scaleX: 0, opacity: 1 })
+        .to(ortu.current, { opacity: 1, backdropFilter: "blur(18px)", duration: 0.32, ease: "power2.in" })
+        .to(cizgi.current, { scaleX: 0.7, duration: 0.6, ease: "power2.out" }, 0)
+        .call(sayfayaGec, [], 0.32);
       // Emniyet: animasyon karesi gelmezse (arka plandaki sekme) sayfa yine açılır
-      window.setTimeout(sayfayaGec, 1500);
+      window.setTimeout(sayfayaGec, 900);
     };
     gecisKaydet(git);
 
@@ -79,20 +71,25 @@ export default function GecisYoneticisi() {
     };
   }, [router]);
 
-  // Yeni sayfa geldi: başa dön, tetikleri yeniden ölç, perdeyi kaldır
+  // Yeni sayfa geldi: başa dön, tetikleri yeniden ölç, örtüyü çöz, içeriği hafifçe yukarı kaydırarak getir
   useEffect(() => {
     if (!bekleyen.current) return;
     bekleyen.current = false;
     basaDon();
-    const kapat = () => gsap.set(perde.current, { display: "none", clipPath: "inset(0% 0% 100% 0%)" });
+    const kapat = () => {
+      gsap.set([ortu.current, cizgi.current], { display: "none" });
+      gsap.set("#icerik", { clearProps: "transform" });
+    };
     const kare = requestAnimationFrame(() => {
       ScrollTrigger.refresh();
       gsap
         .timeline({ onComplete: kapat })
-        .to("[data-perde-yazi]", { yPercent: -120, duration: 0.5, ease: "expo.in" })
-        .to(perde.current, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.8, ease: "expo.inOut" }, 0.2);
+        .to(cizgi.current, { scaleX: 1, duration: 0.25, ease: "power2.out" })
+        .to(cizgi.current, { opacity: 0, duration: 0.3 }, 0.2)
+        .to(ortu.current, { opacity: 0, backdropFilter: "blur(0px)", duration: 0.55, ease: "power2.out" }, 0.05)
+        .fromTo("#icerik", { y: 18 }, { y: 0, duration: 0.7, ease: "expo.out" }, 0.05);
     });
-    // Emniyet: animasyon karesi gelmezse perde 2 sn sonra kendiliğinden kalkar
+    // Emniyet: animasyon karesi gelmezse örtü kendiliğinden kalkar
     const emniyet = window.setTimeout(kapat, 2000);
     return () => {
       cancelAnimationFrame(kare);
@@ -101,20 +98,9 @@ export default function GecisYoneticisi() {
   }, [yol]);
 
   return (
-    <div
-      ref={perde}
-      aria-hidden="true"
-      className="fixed inset-0 z-[78] hidden flex-col items-center justify-center gap-6 bg-gece-2"
-    >
-      <FanusIsareti className="size-14 text-krem" />
-      <span className="overflow-hidden">
-        <span
-          data-perde-yazi
-          className="block font-baslik text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.15] font-semibold tracking-[-0.035em]"
-        >
-          {hedefAdi}
-        </span>
-      </span>
-    </div>
+    <>
+      <div ref={ortu} aria-hidden="true" className="gecis-ortusu pointer-events-none fixed inset-0 z-[78] hidden" />
+      <div ref={cizgi} aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-[79] hidden h-0.5 origin-left bg-alev" />
+    </>
   );
 }

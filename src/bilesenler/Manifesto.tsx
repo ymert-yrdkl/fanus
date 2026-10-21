@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, GENIS, HAREKET_ACIK, SplitText, useGSAP } from "@/hareket/gsap";
+import { gsap, GENIS, HAREKET_ACIK, ScrollTrigger, SplitText, useGSAP } from "@/hareket/gsap";
 import { sahneDurumu } from "@/sahne/durum";
 
 const CUMLELER = [
@@ -25,8 +25,9 @@ const POZLAR = {
 /**
  * Giriş + manifesto boyunca tek bir kaydırma zaman çizelgesi (1 birim = 1 ekran boyu):
  * 0-1 giriş kayar, fanus yerine geçer · 1-2 ilk cümle · 2-3 cam kalkar, alev rüzgârda titrer ·
- * 3-4 cam iner, ışık büyür · 4.2-5.2 kamera ışığa dalar ve sahne kararır.
- * Tek çizelge kullanılır ki sahne değerleri iki ayrı tetikte çakışmasın.
+ * 3-4 cam iner, ışık büyür · 4.1-4.6 alev son kez parlar. Bölüm bitince gündüz (beyaz) sayfa doğrudan
+ * sahnenin üstüne biner; arada boş koyu ekran yok. Sahne, gündüz ekranı tamamen örtünce gizlenir (tuval çizmez).
+ * Konum ve ışık tek çizelgede kalır ki sahne değerleri iki ayrı tetikte çakışmasın; görünürlüğü yalnız ayrı tetik yazar.
  */
 export default function Manifesto() {
   const kok = useRef<HTMLElement>(null);
@@ -81,13 +82,18 @@ export default function Manifesto() {
           .to(A, { isik: 2.3, boy: P.manifesto.boy * 1.12, duration: 0.6, ease: "power2.out" }, 3.45)
           .fromTo(cumleler[2], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.18 }, 3.1)
           .to(bolumler[2].words, { opacity: 1, duration: 0.12, stagger: 0.6 / bolumler[2].words.length }, 3.25)
-          .to(cumleler[2], { autoAlpha: 0, y: -40, duration: 0.2 }, 4.25);
+          .to(cumleler[2], { autoAlpha: 0, y: -40, duration: 0.2 }, 4.05);
 
-        // Işığa dalış
-        zc.to(A, { x: 0, y: -0.03, boy: 5.5, isik: 3.4, duration: 0.85, ease: "power2.in" }, 4.3)
-          .fromTo("[data-isik-perde]", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.in" }, 4.5)
-          .to(A, { gorunur: 0, duration: 0.12 }, 5.05)
-          .to({}, { duration: 0.05 }, 5.15);
+        // Kapanış: alev son kez parlar; hemen ardından gündüz sayfası üstüne biner (boy değişmez, kadraj taşmasın)
+        zc.to(A, { isik: 2.9, duration: 0.5, ease: "power1.inOut" }, 4.1);
+
+        // Gündüz sayfası ekranı tamamen örtünce sahne gizlenir, geri kaydırınca yeniden görünür
+        ScrollTrigger.create({
+          trigger: kok.current,
+          start: "bottom top",
+          onEnter: () => gsap.set(A, { gorunur: 0 }),
+          onLeaveBack: () => gsap.set(A, { gorunur: 1 }),
+        });
 
         return () => bolumler.forEach((b) => b.revert());
       });
@@ -100,7 +106,7 @@ export default function Manifesto() {
       ref={kok}
       id="manifesto"
       aria-label="fanus ne demek"
-      className="relative z-10 bg-gece/85 [.hareket_&]:h-[520vh] [.hareket_&]:bg-transparent"
+      className="relative z-10 bg-gece/85 [.hareket_&]:h-[460vh] [.hareket_&]:bg-transparent"
     >
       <div className="relative overflow-hidden [.hareket_&]:sticky [.hareket_&]:top-0 [.hareket_&]:h-svh">
         <div className="mx-auto grid h-full max-w-[90rem] px-4 py-24 sm:px-6 md:items-center lg:px-10 [.hareket_&]:py-0">
@@ -123,9 +129,6 @@ export default function Manifesto() {
         >
           Fareyi hızlıca gezdirin: rüzgâr sizsiniz
         </p>
-
-        {/* Işığa dalışın sonu: alev ekranı doldurunca sahne düz gece rengine kapanır (degrade yok) */}
-        <div data-isik-perde aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gece opacity-0" />
       </div>
     </section>
   );

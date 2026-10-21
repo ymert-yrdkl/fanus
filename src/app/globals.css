@@ -96,6 +96,14 @@ header[data-acik-ust] {
   display: none;
 }
 
+/* Sayfa geçişi örtüsü (GecisYoneticisi): gidilen sayfanın başladığı zeminin rengi, arkası buzlu cam */
+.gecis-ortusu {
+  background: color-mix(in srgb, var(--g-zemin) 86%, transparent);
+}
+.gecis-ortusu[data-ton="gece"] {
+  background: color-mix(in srgb, var(--gece-zemin) 86%, transparent);
+}
+
 /* Büyük, yumuşak gölge: gecede koyu, gündüzde lacivert tonlu ve hafif */
 .golge {
   box-shadow: 0 40px 100px -40px var(--golge-rengi);

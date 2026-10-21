@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { List, X, ArrowUpRight, CaretDown } from "@phosphor-icons/react/dist/ssr";
@@ -37,7 +37,15 @@ export default function UstMenu() {
   const kok = useRef<HTMLElement>(null);
   const pencere = useRef<HTMLDialogElement>(null);
   const [acik, setAcik] = useState(false);
+  // Hizmetler açılır paneli bir bağlantıya tıklanınca kapanır ve fare menüden çıkana kadar kapalı kalır
+  const [acilirKapali, setAcilirKapali] = useState(false);
   const yol = usePathname();
+
+  // Sayfa değişince menüdeki odak bırakılır: odakta kalan bağlantı açılır paneli açık tutmasın
+  useEffect(() => {
+    const odak = document.activeElement;
+    if (odak instanceof HTMLElement && kok.current?.contains(odak)) odak.blur();
+  }, [yol]);
   const etkin = (adres: string) => yol === adres || yol.startsWith(`${adres}/`);
 
   useGSAP(
@@ -135,7 +143,14 @@ export default function UstMenu() {
           <ul className="hidden items-center gap-9 text-[0.9375rem] text-soluk md:flex">
             {BAGLANTILAR.map((b) =>
               b.adres === "/hizmetler" ? (
-                <li key={b.adres} className="group/acilir relative">
+                <li
+                  key={b.adres}
+                  className="group/acilir relative"
+                  onPointerDown={(olay) => {
+                    if ((olay.target as Element).closest("a")) setAcilirKapali(true);
+                  }}
+                  onPointerLeave={() => setAcilirKapali(false)}
+                >
                   <Link
                     href={b.adres}
                     aria-current={etkin(b.adres) ? "page" : undefined}
@@ -149,7 +164,13 @@ export default function UstMenu() {
                     />
                   </Link>
                   {/* Açılır panel: üzerine gelince ya da klavyeyle odaklanınca */}
-                  <div className="invisible absolute top-full left-1/2 w-[34rem] -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-[opacity,translate,visibility] duration-300 ease-yay group-focus-within/acilir:visible group-focus-within/acilir:translate-y-0 group-focus-within/acilir:opacity-100 group-hover/acilir:visible group-hover/acilir:translate-y-0 group-hover/acilir:opacity-100">
+                  <div
+                    className={`invisible absolute top-full left-1/2 w-[34rem] -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-[opacity,translate,visibility] duration-300 ease-yay ${
+                      acilirKapali
+                        ? ""
+                        : "group-focus-within/acilir:visible group-focus-within/acilir:translate-y-0 group-focus-within/acilir:opacity-100 group-hover/acilir:visible group-hover/acilir:translate-y-0 group-hover/acilir:opacity-100"
+                    }`}
+                  >
                     <ul className="grid grid-cols-2 gap-1 rounded-3xl border border-cizgi bg-gece-2/95 p-2 golge backdrop-blur-xl">
                       {HIZMETLER.map((h) => (
                         <li key={h.adres}>
