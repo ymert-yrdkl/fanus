@@ -73,7 +73,8 @@ export default function Surec() {
       aria-labelledby="surec-baslik"
       className="relative z-10 bg-gece pt-10 pb-16 md:pt-0 md:pb-0 [.hareket_&]:md:h-[340vh]"
     >
-      <div className="flex flex-col justify-center overflow-hidden md:py-32 [.hareket_&]:md:sticky [.hareket_&]:md:top-0 [.hareket_&]:md:h-dvh [.hareket_&]:md:py-0">
+      {/* Sabitlenirken içerik ekranın üstüne yakın durur (ortalanınca bölüm başında boş bir ekran kalıyordu) */}
+      <div className="flex flex-col overflow-hidden md:py-24 [.hareket_&]:md:sticky [.hareket_&]:md:top-0 [.hareket_&]:md:h-dvh [.hareket_&]:md:pt-24 [.hareket_&]:md:pb-0">
         <div className="mx-auto w-full max-w-[90rem] px-4 sm:px-6 lg:px-10">
           <BolumBasi
             id="surec-baslik"

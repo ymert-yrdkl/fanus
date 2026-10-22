@@ -55,7 +55,7 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
     <section
       ref={kok}
       aria-label="Hizmetlerin canlı örnekleri"
-      className="relative z-10 bg-gece px-4 pb-24 sm:px-6 lg:px-10"
+      className="relative z-10 bg-gece px-4 pb-10 sm:px-6 md:pb-14 lg:px-10"
     >
       <div className="mx-auto flex max-w-[90rem] flex-col gap-6 md:gap-10">
         {HIZMETLER.map((h) => (
@@ -65,10 +65,13 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
             aria-labelledby={`hizmet-${h.kod}`}
             className="relative origin-top overflow-hidden rounded-[1.25rem] border border-cizgi-guclu bg-gece-2 md:sticky md:top-[5.5rem] md:min-h-[calc(100dvh-7rem)]"
           >
-            <div className="grid gap-10 p-5 sm:p-8 md:h-full md:grid-cols-12 md:items-center md:gap-8 lg:p-12">
+            <div className="grid gap-10 p-5 sm:p-8 md:h-full md:grid-cols-12 md:items-center md:gap-8 lg:p-10">
               <div className="md:col-span-5 lg:pr-6">
                 <p className="etiket">{h.ad}</p>
-                <h2 id={`hizmet-${h.kod}`} className="ara-baslik mt-4 max-w-[18ch]">
+                <h2
+                  id={`hizmet-${h.kod}`}
+                  className="mt-4 max-w-[16ch] font-baslik text-[clamp(1.75rem,2.8vw,2.75rem)] leading-[1.02] font-semibold tracking-[-0.03em] [font-variation-settings:'opsz'_96,'wdth'_90]"
+                >
                   {h.baslik}
                 </h2>
                 <p className="mt-5 max-w-[30rem] leading-relaxed text-soluk">{h.metin}</p>
@@ -80,8 +83,8 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-cizgi pt-6">
-                  <p className="font-baslik text-xl font-semibold text-alev">{hizmetFiyatEtiketi(h.adres)}</p>
+                <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-cizgi-guclu pt-6">
+                  <p className="rakam text-xl text-alev">{hizmetFiyatEtiketi(h.adres)}</p>
                   <Link
                     href={`/hizmetler/${h.adres}`}
                     className="group inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium"

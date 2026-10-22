@@ -63,7 +63,7 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   fanussoft.com.tr 22 Ekim'de yayında (İHS ad sunucuları knuth/dijkstra.ihsdns.com; Coolify'da domain eklendi,
   fanussoft.com'a 308). Bekleyen: e-posta kutusu (`merhaba@fanussoft.com`), İHS'de alan adı kilidinin tekrar açılması.
 - Tasarım revizyonu (22 Ekim 2026): "kâğıt ve mürekkep + afiş tipografisi" sistemi, ayrıntı ve gerekçe
-  `docs/tasarim-dili.md`. Ana sayfa: afiş başlık, 3B **kapalı silindir cam** (üstü altı açık, bilezikli) ve gürültülü
+  `docs/tasarim-dili.md`. Ana sayfa: afiş başlık, 3B **kapalı silindir cam** (uçları omuzla daralıp dar delikle açılır; bilezik ve pencere yok) ve gürültülü
   yeni alev (`src/sahne/fanus3b.ts`), ince şerit, koyu karolu hizmet vitrini (`HizmetVitrini`), iş vitrini (telefonda
   yana kaydırma, çerçeveler her zeminde koyu), koyu fiyat tahtası (`FiyatListesi`, `data-zemin="koyu"`), tipografik
   çağrı. İç sayfalar: `SayfaBasi` sade, `BolumBasi` her bölümün başı, paket kartları koyu başlıklı, SSS/kanallar/diğer
@@ -84,8 +84,9 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   sınırlayan JS boyutu). Masaüstü animasyonları aynı.
 - Fiyatlar KDV hariç (22 Ekim 2026, Yusuf): görünen her fiyatın yanında "+KDV", fiyat bölümlerinde ve teklif
   oluşturucuda "Fiyatlara KDV dahil değildir." Metin tek yerde: `src/site/icerik.ts` › `KDV_EKI`, `KDV_NOTU`.
-- SIRADAKİ: Yusuf'un tasarım geri bildirimi (3B cam ve alev dahil); hizmetler sayfası (`Hizmetler.tsx` üst üste
-  binen kartlar) ve süreç şeridi yeni dile tam uyarlanmadı; SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
+- Canlı Lighthouse yeni tasarımla (22 Ekim gece): ana sayfa telefon 93 (LCP 2,6 sn, önce 85), masaüstü 93; e-ticaret
+  91/91. Paylaşım görseli 1200x720 çekilip üstten 630'a kırpılır (alt satır yarım kalmasın).
+- SIRADAKİ: Yusuf'un tasarım geri bildirimi (3B cam ve alev dahil); SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
   başlıkları kısa: denetim uyarısı; Search Console + Bing; anahtar kelimeler; Google İşletme Profili); telefonda hız
   için JS küçültme (Lenis yalnız farede, GSAP eklentileri gerektiğinde).
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
