@@ -130,6 +130,8 @@ export default function UstMenu() {
     <>
       <header
         ref={kok}
+        // Bütün sayfalar kâğıt üstünde başlar: JS gelmeden de açık renklerde (ScrollTrigger sonra yönetir)
+        data-acik-ust=""
         className="group/ust fixed inset-x-0 top-0 z-50 h-(--ust-yukseklik) border-b border-transparent text-krem transition-[background-color,border-color,backdrop-filter,color] duration-500 data-dolu:border-cizgi data-dolu:bg-gece/75 data-dolu:backdrop-blur-xl"
       >
         <nav
@@ -227,6 +229,7 @@ export default function UstMenu() {
 
       <dialog
         ref={pencere}
+        data-zemin="acik"
         aria-label="Menü"
         onCancel={(olay) => {
           olay.preventDefault();

@@ -1,4 +1,3 @@
-import GecisBandi from "@/bilesenler/GecisBandi";
 import CagriBandi from "@/bilesenler/CagriBandi";
 import FiyatListesi from "@/bilesenler/FiyatListesi";
 import Giris from "@/bilesenler/Giris";
@@ -57,20 +56,15 @@ export default async function AnaSayfa() {
       {/* Telefonda en büyük öğe fanusun sabit görseli: HTML gelir gelmez istensin (LCP) */}
       <link rel="preload" as="image" href="/fanus-telefon.webp" media="(max-width: 767px)" fetchPriority="high" />
       <FanusSahnesi />
-      <main id="icerik">
+      {/* Bütün sayfa kâğıt üstünde (3B sahne dahil); tek koyu blok fiyat tahtası (kendi data-zemin="koyu"su) */}
+      <main id="icerik" data-zemin="acik">
         <Giris />
         <Manifesto />
-        <GecisBandi />
-        <div data-zemin="acik">
-          <Serit />
-          <HizmetVitrini qrSvg={qrSvg} />
-          <Isler />
-        </div>
-        {/* Fiyat tahtası koyu: gündüz sayfasının ortasında tek koyu blok (menü de üstünde koyuya döner) */}
+        <Serit />
+        <HizmetVitrini qrSvg={qrSvg} />
+        <Isler />
         <FiyatListesi />
-        <div data-zemin="acik">
-          <CagriBandi />
-        </div>
+        <CagriBandi />
       </main>
     </>
   );

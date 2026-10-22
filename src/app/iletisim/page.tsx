@@ -1,4 +1,3 @@
-import GecisBandi from "@/bilesenler/GecisBandi";
 import type { Metadata } from "next";
 import { ArrowUpRight, EnvelopeSimple, Phone, WhatsappLogo, VideoCamera } from "@phosphor-icons/react/dist/ssr";
 import BolumBasi from "@/bilesenler/BolumBasi";
@@ -27,9 +26,8 @@ export default function IletisimSayfasi() {
   return (
     <>
       <FanusSahnesi poz="son" />
-      <main id="icerik">
+      <main id="icerik" data-zemin="acik">
         <Teklif />
-        <GecisBandi />
         <section
           data-zemin="acik"
           aria-labelledby="kanallar"

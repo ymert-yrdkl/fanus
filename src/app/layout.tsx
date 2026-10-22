@@ -36,8 +36,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1a1b1e",
-  colorScheme: "dark",
+  themeColor: "#f4f3ee",
+  colorScheme: "light",
 };
 
 // Boyamadan önce çalışır: hareket azaltma tercihi yoksa `hareket` sınıfı eklenir (animasyon ön durumları

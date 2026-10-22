@@ -52,7 +52,7 @@ export default function Serit() {
     <section
       ref={kok}
       aria-label="Yaptığımız işler"
-      className="relative z-10 overflow-hidden border-b border-cizgi-guclu bg-gece py-5 md:py-7"
+      className="relative z-10 overflow-hidden border-y border-cizgi-guclu bg-gece py-5 md:py-7"
     >
       <div data-serit-ic className="flex w-max will-change-transform">
         {[0, 1].map((kopya) => (

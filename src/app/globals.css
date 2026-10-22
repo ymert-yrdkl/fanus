@@ -39,8 +39,8 @@
 :root {
   --ust-yukseklik: 4.25rem;
   interpolate-size: allow-keywords;
-  /* Gece zemini (gündüz kapsamında da değişmez; 3B sahne bu renge siler) */
-  --gece-zemin: #1a1b1e;
+  /* 3B sahnenin zemini: kâğıt (sahne bu renge siler; giriş ve manifesto da kâğıt üstündedir) */
+  --sahne-zemin: #f4f3ee;
   /* Gece takımının kopyası: gündüz içindeki koyu tahta bölümleri (data-zemin="koyu") bunlara döner */
   --n-zemin: #1a1b1e;
   --n-kart: #232428;
@@ -131,12 +131,9 @@ header[data-acik-ust] {
   display: none;
 }
 
-/* Sayfa geçişi örtüsü (GecisYoneticisi): gidilen sayfanın başladığı zeminin rengi, arkası buzlu cam */
+/* Sayfa geçişi örtüsü (GecisYoneticisi): kâğıt rengi, arkası buzlu cam */
 .gecis-ortusu {
   background: color-mix(in srgb, var(--g-zemin) 86%, transparent);
-}
-.gecis-ortusu[data-ton="gece"] {
-  background: color-mix(in srgb, var(--gece-zemin) 86%, transparent);
 }
 
 /* Büyük, yumuşak gölge: gecede koyu, gündüzde mürekkep tonlu ve hafif */
@@ -144,36 +141,17 @@ header[data-acik-ust] {
   box-shadow: 0 40px 100px -40px var(--golge-rengi);
 }
 
-/*
-  Geceden gündüze geçiş: degrade yok. Gündüz, gece bölümünün üstüne köşeleri yuvarlak bir sayfa gibi biner;
-  köşelerin arkasında gece rengi (ya da 3B sahne) görünür.
-*/
-.gecis-yaprak {
-  position: relative;
-  z-index: 10;
-  height: 3rem;
-  margin-bottom: -1px;
-  border-radius: 2rem 2rem 0 0;
-  background: var(--g-zemin);
-  pointer-events: none;
-}
-@media (min-width: 768px) {
-  .gecis-yaprak {
-    height: 4.5rem;
-    border-radius: 3rem 3rem 0 0;
-  }
-}
-
+/* Sayfa kâğıt üstünde başlar; koyu yalnız data-zemin="koyu" bloklarında */
 html {
-  color-scheme: dark;
-  background: var(--color-gece);
+  color-scheme: light;
+  background: var(--g-zemin);
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--color-gece);
-  color: var(--color-krem);
+  background: var(--g-zemin);
+  color: var(--g-yazi);
   font-family: var(--font-govde);
   font-size: 1rem;
   line-height: 1.6;

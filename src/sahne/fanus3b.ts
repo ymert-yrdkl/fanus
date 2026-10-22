@@ -11,7 +11,6 @@
 // Ekrandaki yer, boy ve camın kalkması `sahneDurumu`ndan okunur (GSAP değiştirir).
 
 import {
-  AdditiveBlending,
   BufferAttribute,
   BufferGeometry,
   CanvasTexture,
@@ -23,6 +22,7 @@ import {
   MeshBasicMaterial,
   MeshPhysicalMaterial,
   NeutralToneMapping,
+  NormalBlending,
   PerspectiveCamera,
   PlaneGeometry,
   PMREMGenerator,
@@ -77,9 +77,9 @@ const ALEV_RENKLERI = {
   isik: 0xff8a2e,
 };
 
-/** Sahnenin zemini sayfanın gece rengiyle aynı olmalı: CSS --gece-zemin'den okunur. */
+/** Sahnenin zemini sayfanın kâğıt rengiyle aynı olmalı: CSS --sahne-zemin'den okunur. */
 const sahneZemini = () =>
-  getComputedStyle(document.documentElement).getPropertyValue("--gece-zemin").trim() || "#1a1b1e";
+  getComputedStyle(document.documentElement).getPropertyValue("--sahne-zemin").trim() || "#f4f3ee";
 
 type Secenek = {
   /** İlk kare çizilince çağrılır. */
@@ -158,7 +158,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   cizici.toneMappingExposure = 1.0;
   cizici.outputColorSpace = SRGBColorSpace;
   cizici.transmissionResolutionScale = zayif ? 0.5 : 1;
-  // Zemin sayfayla aynı renk ve opak: saydam zeminde three.js kırılma için camın arkasını beyaz siler (süt cam görünümü)
+  // Zemin sayfayla aynı renk (kâğıt) ve opak: saydam zeminde three.js kırılma için camın arkasını yarı beyaz siler
   cizici.setClearColor(sahneZemini(), 1);
 
   const sahne = new Scene();
@@ -186,13 +186,12 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   // ---- Cam ----
   const camMalzeme = m(
     new MeshPhysicalMaterial({
-      // Camın az da olsa gövdesi var: koyu zeminde tam saydam cam siyah, çok gövdeli cam buzlu okunur;
-      // %5 gri gövde ışıkla gölgelenir, gerisi kırılarak geçer
-      color: 0xb9c4d0,
+      // Kâğıt zeminde tamamen berrak cam (gri gövde koyu zeminde siyah görünmesin diye vardı, istenmedi)
+      color: 0xffffff,
       metalness: 0,
       // Hafif pürüz: ışıklar kavisli yüzeyde geniş dikey parıltılar bırakır (silindir cam okunur)
-      roughness: 0.05,
-      transmission: 0.95,
+      roughness: 0.04,
+      transmission: 1,
       thickness: 0.6,
       ior: 1.5,
       // Kenarlarda ince gökkuşağı kırılması
@@ -274,14 +273,15 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
           float h = vP.y;
           float n, n2;
           float kenar = kenarUzakligi(h, 0.6, n, n2);
-          float a = smoothstep(1.4, 0.25, kenar) * (0.2 + 0.1 * n2) * min(uGuc, 1.6);
+          float a = smoothstep(1.4, 0.25, kenar) * (0.22 + 0.1 * n2) * min(uGuc, 1.6);
           vec3 renk = mix(uDis, uOrta, smoothstep(1.2, 0.3, kenar));
-          gl_FragColor = vec4(renk * a, a);
+          gl_FragColor = vec4(renk, a);
           #include <colorspace_fragment>
         }
       `,
+      // Kâğıt zeminde toplamalı karışım beyaza gider; normal karışımla sıcak bir leke bırakır
       transparent: true,
-      blending: AdditiveBlending,
+      blending: NormalBlending,
       depthTest: false,
       depthWrite: false,
     }),
@@ -293,7 +293,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   alevGrubu.add(pirilti);
   egim.add(alevGrubu);
 
-  // ---- Hale (alevin etrafındaki ışık) ----
+  // ---- Hale (alevin etrafındaki sıcak ışık; kâğıt zeminde normal karışımla turuncu leke) ----
   const haleDokusu = haleDokusuYap();
   const haleMalzemesi = (renk: number, saydamlik: number) =>
     m(
@@ -302,16 +302,16 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
         color: renk,
         opacity: saydamlik,
         transparent: true,
-        blending: AdditiveBlending,
+        blending: NormalBlending,
         depthTest: false,
         depthWrite: false,
         toneMapped: false,
       }),
     );
-  const haleBuyuk = new Sprite(haleMalzemesi(0xff9a3c, 0.2));
+  const haleBuyuk = new Sprite(haleMalzemesi(0xff8a3c, 0.2));
   haleBuyuk.scale.setScalar(5.6);
   haleBuyuk.renderOrder = 20;
-  const haleKucuk = new Sprite(haleMalzemesi(0xffcf96, 0.2));
+  const haleKucuk = new Sprite(haleMalzemesi(0xffb347, 0.2));
   haleKucuk.scale.setScalar(2.2);
   haleKucuk.renderOrder = 21;
   haleBuyuk.position.y = haleKucuk.position.y = ALEV_ORTASI;
@@ -321,10 +321,10 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   const zeminIsigiMalzeme = m(
     new MeshBasicMaterial({
       map: haleDokusu,
-      color: 0xeb8f3a,
+      color: 0xf08a3a,
       transparent: true,
-      opacity: 0.32,
-      blending: AdditiveBlending,
+      opacity: 0.3,
+      blending: NormalBlending,
       depthWrite: false,
       toneMapped: false,
     }),
@@ -378,11 +378,11 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
         void main() {
           float d = length(gl_PointCoord - 0.5);
           float a = smoothstep(0.5, 0.0, d);
-          gl_FragColor = vec4(uRenk * 1.5, a * a * vParlaklik);
+          gl_FragColor = vec4(uRenk, a * a * vParlaklik);
         }
       `,
       transparent: true,
-      blending: AdditiveBlending,
+      blending: NormalBlending,
       depthTest: false,
       depthWrite: false,
     }),

@@ -110,6 +110,7 @@ export default function Acilis() {
     <div
       ref={kok}
       aria-hidden="true"
+      data-zemin="acik"
       className="acilis fixed inset-0 z-[80] items-center justify-center bg-gece [clip-path:inset(0_0_0_0)]"
     >
       <div data-acilis-icerik className="relative flex flex-col items-center gap-8">

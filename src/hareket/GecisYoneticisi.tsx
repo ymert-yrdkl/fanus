@@ -6,12 +6,10 @@ import { gecisKaydet } from "./gecis";
 import { gsap, ScrollTrigger } from "./gsap";
 import { basaDon } from "./kaydirma";
 
-/** Koyu (3B sahneyle) başlayan sayfalar; diğerleri gündüz zemininde başlar. Örtü gidilen sayfanın rengini alır. */
-const KOYU_BASLAYAN = new Set(["/", "/iletisim"]);
-
 /**
- * Site içi bağlantıya tıklanınca "buzlu cam" geçişi: sayfa bir an bulanıklaşıp gidilen sayfanın zemin rengine
- * karışır, üstte ince bir çizgi akar; yeni sayfa gelince örtü çözülür ve içerik hafifçe yukarı kayarak gelir.
+ * Site içi bağlantıya tıklanınca "buzlu cam" geçişi: sayfa bir an bulanıklaşıp kâğıt rengine karışır (bütün
+ * sayfalar kâğıt üstünde başlar), üstte ince bir çizgi akar; yeni sayfa gelince örtü çözülür ve içerik hafifçe
+ * yukarı kayarak gelir.
  * Bağlantılar normal <a>/<Link> kalır: JS yoksa ya da hareket azaltma tercihi varsa sayfa doğrudan açılır.
  * Yeni sekme, değiştirici tuş ve aynı sayfadaki çapa bağlantılarına dokunulmaz.
  */
@@ -32,7 +30,6 @@ export default function GecisYoneticisi() {
       if (bekleyen.current) return;
       bekleyen.current = true;
       router.prefetch(url.pathname);
-      ortu.current.dataset.ton = KOYU_BASLAYAN.has(url.pathname) ? "gece" : "gunduz";
       let gidildi = false;
       const sayfayaGec = () => {
         if (gidildi) return;

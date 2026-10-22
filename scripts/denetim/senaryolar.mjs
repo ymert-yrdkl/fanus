@@ -192,10 +192,12 @@ export const SENARYOLAR = [
     },
   },
   {
-    ad: "Renk düzeni: koyu yalnız 3B sahnede; iç sayfalar açık zeminde başlar",
+    ad: "Renk düzeni: bütün sayfalar kâğıt (açık) zeminde başlar",
     genislik: 1440,
     async calistir(sekme, kok, beklenti) {
       const yollar = [
+        "/",
+        "/iletisim",
         "/hizmetler",
         "/hizmetler/e-ticaret",
         "/hizmetler/kurumsal-site",

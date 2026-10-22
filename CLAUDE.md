@@ -86,6 +86,10 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   oluşturucuda "Fiyatlara KDV dahil değildir." Metin tek yerde: `src/site/icerik.ts` › `KDV_EKI`, `KDV_NOTU`.
 - Canlı Lighthouse yeni tasarımla (22 Ekim gece): ana sayfa telefon 93 (LCP 2,6 sn, önce 85), masaüstü 93; e-ticaret
   91/91. Paylaşım görseli 1200x720 çekilip üstten 630'a kırpılır (alt satır yarım kalmasın).
+- Giriş kâğıt üstünde (22 Ekim gece, Yusuf): bütün sayfalar `main data-zemin="acik"` ile açık başlar; 3B sahne kâğıt
+  zemine çizer (`--sahne-zemin`), cam berrak (gri gövde yok), parıltı/hale/kıvılcım normal karışım; geçiş yaprağı
+  (`GecisBandi`) ve örtünün gece tonu kaldırıldı; menü ve açılış perdesi de açık. Manifesto sahnelerinde her cümleyle
+  üç örnek kart (masaüstünde sahnede süzülür, telefonda cümlenin altında); kartlar iddia değil örnek ekrandır.
 - SIRADAKİ: Yusuf'un tasarım geri bildirimi (3B cam ve alev dahil); SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
   başlıkları kısa: denetim uyarısı; Search Console + Bing; anahtar kelimeler; Google İşletme Profili); telefonda hız
   için JS küçültme (Lenis yalnız farede, GSAP eklentileri gerektiğinde).

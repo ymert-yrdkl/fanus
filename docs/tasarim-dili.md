@@ -2,8 +2,9 @@
 
 **Okuma:** yazılım ve teknoloji çözümleri sunan bir stüdyonun tanıtım sitesi; kitle Türkiye'de küçük ve orta
 işletme sahipleri ile üretim yapan firmalar; dil sıcak, somut, abartısız. Sistem (22 Ekim 2026): **kâğıt ve
-mürekkep** üstünde **afiş tipografisi**; koyu yalnız 3B fanusun olduğu yerde ve sayfanın ortasındaki tek koyu
-tahtada. Kadranlar: çeşitlilik 7, hareket 8, yoğunluk 5.
+mürekkep** üstünde **afiş tipografisi**; 3B fanus da kâğıt üstünde yanar (22 Ekim gece, Yusuf: giriş açık olsun);
+koyu yalnız sayfanın ortasındaki fiyat tahtasında ve karo/çerçeve gibi küçük bloklarda. Kadranlar: çeşitlilik 7,
+hareket 8, yoğunluk 5.
 
 ## Metafor ve işaret
 
@@ -33,23 +34,25 @@ Eski fener (topuz, pirinç taban, fitil) "falcı fanusu", parantez biçimli iki 
 
 ## Renk (yalnız token)
 
-Gece (3B sahne ve koyu tahta): antrasit #1a1b1e (Discord'un koyu tonları). Gündüz: kâğıt #f4f3ee, mürekkep #141416.
-Tek vurgu "alev": gecede mercan #ff6145, gündüzde kor #c9321a. Lacivert, degrade, saf siyah/beyaz yok. Gece ile
-gündüz arasında renk geçişi yok (gündüz, köşeleri yuvarlak bir sayfa gibi başlar, `.gecis-yaprak`).
-Üç kapsam: varsayılan gece (`@theme`), `data-zemin="acik"` (token'lar `--g-*` değerlerine eşlenir), gündüz içinde
-`data-zemin="koyu"` (token'lar `--n-*` kopyasına geri döner; tahta, karo, çerçeve). Bütün çiftler WCAG AA (en az 4,5:1).
+Gece (koyu tahta, karolar, çerçeveler): antrasit #1a1b1e (Discord'un koyu tonları). Gündüz: kâğıt #f4f3ee, mürekkep
+#141416. Tek vurgu "alev": gecede mercan #ff6145, gündüzde kor #c9321a. Lacivert, degrade, saf siyah/beyaz yok.
+Bütün sayfalar kâğıt üstünde başlar (`main` `data-zemin="acik"`); 3B sahnenin zemini de kâğıt (`--sahne-zemin`), cam
+tamamen berrak (gri gövde istenmedi), parıltı ve hale normal karışımla sıcak turuncu leke bırakır (toplamalı karışım
+açık zeminde beyaza gider). Üç kapsam: varsayılan gece (`@theme`; yalnız kapsam dışı kalan parçalar),
+`data-zemin="acik"` (token'lar `--g-*` değerlerine eşlenir), gündüz içinde `data-zemin="koyu"` (token'lar `--n-*`
+kopyasına geri döner; tahta, karo, çerçeve). Bütün çiftler WCAG AA (en az 4,5:1).
 
-| Token                               | Gece              | Gündüz             | Kullanım                                          |
-| ----------------------------------- | ----------------- | ------------------ | ------------------------------------------------- |
-| `gece`                              | #1a1b1e           | #f4f3ee            | zemin; gecede 3B sahnenin arkası (`--gece-zemin`) |
-| `gece-2..4`                         | #232428 → #34363b | #fbfaf7 → #e1dfd6  | yüzeyler (az kullanılır)                          |
-| `cukur`                             | #141518           | #fdfcfa            | gömülü paneller, form alanları                    |
-| `krem`                              | #f4f3ee           | #141416            | ana metin                                         |
-| `soluk`                             | #b9bcc3           | #44454b            | ikincil metin                                     |
-| `silik`                             | #a3a7b0           | #67686f            | küçük yardımcı metin                              |
-| `alev` (+ `alev-acik`, `alev-koyu`) | #ff6145           | #c9321a            | TEK vurgu: birincil düğme, vurgu kelime           |
-| `canli`                             | #6fcf8f           |                    | yalnız "yayında" durum noktası                    |
-| `cizgi`, `cizgi-guclu`              | beyaz %10 / %22   | mürekkep %14 / %30 | ayraç ve çerçeve; gündüzde belirgin               |
+| Token                               | Gece              | Gündüz             | Kullanım                                                          |
+| ----------------------------------- | ----------------- | ------------------ | ----------------------------------------------------------------- |
+| `gece`                              | #1a1b1e           | #f4f3ee            | zemin (tahta / kâğıt); 3B sahnenin arkası kâğıt (`--sahne-zemin`) |
+| `gece-2..4`                         | #232428 → #34363b | #fbfaf7 → #e1dfd6  | yüzeyler (az kullanılır)                                          |
+| `cukur`                             | #141518           | #fdfcfa            | gömülü paneller, form alanları                                    |
+| `krem`                              | #f4f3ee           | #141416            | ana metin                                                         |
+| `soluk`                             | #b9bcc3           | #44454b            | ikincil metin                                                     |
+| `silik`                             | #a3a7b0           | #67686f            | küçük yardımcı metin                                              |
+| `alev` (+ `alev-acik`, `alev-koyu`) | #ff6145           | #c9321a            | TEK vurgu: birincil düğme, vurgu kelime                           |
+| `canli`                             | #6fcf8f           |                    | yalnız "yayında" durum noktası                                    |
+| `cizgi`, `cizgi-guclu`              | beyaz %10 / %22   | mürekkep %14 / %30 | ayraç ve çerçeve; gündüzde belirgin                               |
 
 İş vitrinindeki tarayıcı ve telefon çerçeveleri her zeminde koyu gri (`data-zemin="koyu"`). 3B'de alev markanın
 sabit rengindedir (`ALEV_RENKLERI`). Gündüz zeminde süs ışıkları yok. Hizmet örneklerinin içindeki minyatür siteler
@@ -72,7 +75,8 @@ kendi kâğıt renklerini kullanır (müşterinin sitesini temsil eder).
 
 ## Hareket
 
-- Her animasyonun işi var: anlatı (manifesto: cam kalkar, rüzgâr, cam iner), kanıt (işler), geri bildirim
+- Her animasyonun işi var: anlatı (manifesto: cam kalkar, rüzgâr, cam iner; her cümleyle o cümleyi anlatan üç
+  küçük örnek kart gelir, boş sahne kalmaz), kanıt (işler), geri bildirim
   (örnekler), yön (menü). Sayfada tek kayan şerit (ince, tek renk, nokta ayraçlı).
 - Kaydırmaya bağlı sahneler `scrub`, belirmeler bir kez (`once`). Telefonda sabitleme ve yatay şerit yok;
   işler yana kaydırılır, telefon ekranı CSS ile kendi kendine kayar.
