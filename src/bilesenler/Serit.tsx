@@ -8,6 +8,7 @@ const OGELER = [
   "Kurumsal site",
   "QR menü",
   "NFC kart",
+  "Mobil uygulama",
   "Özel yazılım",
   "Üretim otomasyonu",
   "Yönetim paneli",

@@ -96,8 +96,8 @@ export default function Giris() {
         <div className="mt-8 grid gap-7 md:mt-12 md:grid-cols-12 md:items-end md:gap-8">
           {/* Görünür kalır, yalnız kayar: sayfanın ana içeriği ilk boyamada sayılsın (LCP) */}
           <p data-giris-metin className="max-w-[30rem] text-lg leading-relaxed text-soluk md:col-span-5 md:text-xl">
-            fanussoft; e-ticaret ve kurumsal web siteleri, QR menü ve NFC kart sistemleri, iş ve üretim otomasyonu için
-            özel yazılım kurar.
+            fanussoft; e-ticaret ve kurumsal web siteleri, QR menü ve NFC kart sistemleri, mobil uygulamalar, iş ve
+            üretim otomasyonu için özel yazılım kurar.
           </p>
           <div data-giris className="flex flex-wrap items-center gap-3 md:col-span-5 md:col-start-7">
             <Link href="/iletisim" data-miknatis className={dugmeSinifi.alev}>
@@ -144,7 +144,7 @@ export default function Giris() {
             </li>
           ))}
         </ul>
-        <p className="etiket hidden md:ml-auto md:block">Web · E-ticaret · QR ve NFC · Özel yazılım</p>
+        <p className="etiket hidden md:ml-auto md:block">Web · E-ticaret · QR ve NFC · Mobil · Özel yazılım</p>
       </div>
     </section>
   );

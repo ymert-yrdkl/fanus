@@ -1,9 +1,9 @@
 // Sitedeki metinler. Referans bilgileri sitelerin kendisinden alındı (20 Ekim 2026);
 // sayı ya da iddia eklerken kaynağını bu dosyaya not düşün. Fiyatlar Yusuf'tan (20 Ekim 2026).
 
-export type HizmetKodu = "eticaret" | "kurumsal" | "otomasyon" | "qrmenu";
-export type HizmetAdresi = "e-ticaret" | "kurumsal-site" | "qr-menu" | "web-otomasyonu";
-export type PaketKodu = "tek-sayfa" | "kurumsal" | "e-ticaret" | "qr-menu" | "otomasyon";
+export type HizmetKodu = "eticaret" | "kurumsal" | "otomasyon" | "qrmenu" | "mobil";
+export type HizmetAdresi = "e-ticaret" | "kurumsal-site" | "qr-menu" | "web-otomasyonu" | "mobil-uygulama";
+export type PaketKodu = "tek-sayfa" | "kurumsal" | "e-ticaret" | "qr-menu" | "otomasyon" | "mobil";
 
 export type OzellikGrubu = { baslik: string; maddeler: string[] };
 export type Soru = { soru: string; cevap: string };
@@ -137,6 +137,22 @@ export const PAKETLER: Paket[] = [
       "Üretim takibi, iş emirleri ve stok sayımı",
       "Size özel yönetim panelleri ve raporlar",
       "Mevcut sitenize ya da programınıza eklenebilir",
+    ],
+  },
+  {
+    kod: "mobil",
+    ad: "Mobil uygulama",
+    hizmet: "mobil-uygulama",
+    fiyat: null,
+    yenileme: null,
+    ozet: "iOS ve Android için uygulama, mağaza yayını ve arkasındaki yönetim paneli. Fiyat, özelliklere göre belirlenir.",
+    maddeler: [
+      "iPhone ve Android için tek kod tabanı",
+      "App Store ve Google Play yayın süreci",
+      "Üyelik, bildirim, harita ve kamera",
+      "Uygulama içi abonelik ve ödeme",
+      "Yönetim paneli ve API",
+      "Yayından sonra güncelleme ve sürüm takibi",
     ],
   },
 ];
@@ -468,9 +484,84 @@ export const HIZMETLER: Hizmet[] = [
           "Çoğu zaman evet. Sitenizin, muhasebe programınızın ya da ERP'nizin dışa açık bir bağlantısı varsa ona bağlanırız; yoksa dosya alışverişiyle (Excel, CSV) de kurulabilir. Önce altyapıya bakar, eklenebilecek akışları birlikte belirleriz.",
       },
       {
-        soru: "Yalnız web mi, masaüstü ya da telefon uygulaması da olur mu?",
+        soru: "Yalnız web mi, telefon uygulaması da olur mu?",
         cevap:
-          "Akışlar tarayıcıda çalışan panellerle kurulur; telefonda da kullanılır. Barkod okuma gibi işler telefonun kamerasıyla yapılır, ayrıca uygulama indirmek gerekmez.",
+          "Akışlar tarayıcıda çalışan panellerle kurulur; telefonda da kullanılır, barkod okuma gibi işler telefonun kamerasıyla yapılır. Mağazadan indirilen ayrı bir uygulama gerekiyorsa (bildirim, çevrimdışı çalışma, abonelik) onu da yaparız: Mobil uygulama hizmeti.",
+      },
+    ],
+  },
+  {
+    // Referans: PatiSkor, App Store id6777159876 (mağaza kaydı 22 Ekim 2026'da okundu)
+    kod: "mobil",
+    adres: "mobil-uygulama",
+    ad: "Mobil uygulama",
+    baslik: "Mağazada yayınlanan, cepte duran uygulama.",
+    metin:
+      "iPhone ve Android için tek kod tabanıyla yazılan, App Store ve Google Play'de yayınlanan uygulama: üyelik, bildirim, harita, kamera, abonelik; arkasında yönetim paneli ve API.",
+    maddeler: [
+      "App Store ve Google Play'de yayın",
+      "Üyelik, bildirim, harita ve kamera",
+      "Uygulama içi abonelik (Apple ve Google)",
+      "Yönetim paneli ve API ile birlikte",
+    ],
+    sayfaBasligi: "Mağazada yayınlanan, cepte duran uygulama.",
+    sayfaMetni:
+      "iPhone ve Android için tek kod tabanıyla yazılan, App Store ve Google Play'de yayınlanan mobil uygulamalar: üyelik, bildirim, harita, kamera, abonelik ve yapay zekâ destekli özellikler; arkasında yönetim paneli ve API.",
+    seoBasligi: "Mobil uygulama geliştirme",
+    seoAciklamasi:
+      "iOS ve Android mobil uygulama geliştirme: tek kod tabanı, App Store ve Google Play yayını, üyelik, bildirim, harita, abonelik, yönetim paneli ve API. Fiyat teklifle belirlenir.",
+    kimlerIcin: [
+      "Abonelikli hizmetler",
+      "Sadakat ve kampanya uygulamaları",
+      "Randevu ve saha takibi",
+      "İçerik ve ürün platformları",
+    ],
+    ozellikler: [
+      {
+        baslik: "Uygulama",
+        maddeler: [
+          "iPhone ve Android için tek kod tabanı",
+          "Üyelik ve giriş (telefon, e-posta, Apple, Google)",
+          "Anlık bildirimler ve hatırlatmalar",
+          "Çevrimdışı çalışma ve eşitleme",
+        ],
+      },
+      {
+        baslik: "Mağaza ve gelir",
+        maddeler: [
+          "App Store ve Google Play yayın süreci",
+          "Uygulama içi abonelik: aylık, yıllık",
+          "Ücretsiz ve premium planlar",
+          "Mağaza görselleri ve açıklaması",
+        ],
+      },
+      {
+        baslik: "Arka plan",
+        maddeler: [
+          "Yönetim paneli ve API",
+          "Harita, kamera ve yapay zekâ bağlantıları",
+          "Kullanım ve çökme raporları",
+          "Güncelleme ve sürüm yönetimi",
+        ],
+      },
+    ],
+    paketler: ["mobil"],
+    referanslar: ["patiskor"],
+    sss: [
+      {
+        soru: "Hem iPhone hem Android'de çalışır mı?",
+        cevap:
+          "Evet. Uygulama tek kod tabanıyla yazılır; iki mağazaya da aynı sürüm gider. İsterseniz önce birinde yayınlanıp diğeri sonra eklenebilir.",
+      },
+      {
+        soru: "Mağazaya kim yükler, uygulama kimin adına yayınlanır?",
+        cevap:
+          "Apple ve Google geliştirici hesapları sizin adınıza açılır (yıllık ücretleri mağazalara siz ödersiniz); yayın sürecini, görselleri ve açıklamayı biz hazırlarız. Uygulama sizin hesabınızda, sizin adınızla yayınlanır.",
+      },
+      {
+        soru: "Abonelik ya da ücretli özellik satabilir miyim?",
+        cevap:
+          "Evet. App Store ve Google Play'in uygulama içi abonelik sistemi kurulur; ücretler mağaza üzerinden tahsil edilir, ücretsiz ve premium planlar ayrılır.",
       },
     ],
   },
@@ -498,13 +589,17 @@ export type Referans = {
   gosterim?: string;
   adres: string;
   tur: string;
-  sehir: string;
+  /** Şehir; mağazadaki bir uygulama için yazılmaz. */
+  sehir?: string;
   ozet: string;
   maddeler: string[];
   /** Öne çıkan sayı (sitedeki bilgiden). */
   sayi?: { deger: number; onEk?: string; sonEk?: string; aciklama: string };
-  masaustu: { src: string; genislik: number; yukseklik: number };
-  telefon: { src: string; genislik: number; yukseklik: number; aciklama: string };
+  /** Web sitesi: tarayıcı çerçevesinde kayan masaüstü görüntüsü ve telefon görünümü. */
+  masaustu?: { src: string; genislik: number; yukseklik: number };
+  telefon?: { src: string; genislik: number; yukseklik: number; aciklama: string };
+  /** Mobil uygulama: yan yana telefon ekranları (mağaza görselleri). */
+  uygulama?: { ekranlar: { src: string; genislik: number; yukseklik: number; aciklama: string }[] };
 };
 
 export const REFERANSLAR: Referans[] = [
@@ -598,6 +693,35 @@ export const REFERANSLAR: Referans[] = [
       genislik: 780,
       yukseklik: 5200,
       aciklama: "Emre Pide'nin QR menüsü telefonda",
+    },
+  },
+  {
+    // Kaynak: App Store kaydı id6777159876 (22 Ekim 2026): PatiSkor 1.0.2, ücretsiz + Premium abonelik, iOS 15.5+;
+    // açıklama ve ekran görüntüleri mağazadan. Ahmet'in (ortak) uygulaması.
+    kod: "patiskor",
+    ad: "PatiSkor",
+    alanAdi: "apps.apple.com",
+    gosterim: "PatiSkor (App Store)",
+    adres: "https://apps.apple.com/tr/app/patiskor/id6777159876",
+    tur: "Mobil uygulama · iOS",
+    ozet: "Kedi ve köpek sahipleri için yapay zekâ destekli sağlık uygulaması: sağlık puanı, aşı, ilaç ve tahlil kayıtları, kilo grafiği, hatırlatmalar, yakındaki veterinerler. Ücretsiz plan ve Premium abonelik.",
+    maddeler: [
+      "App Store'da yayında (iOS 15.5 ve üstü)",
+      "Pati-AI asistanı: fotoğrafla görsel analiz (Premium)",
+      "Uygulama içi abonelik: aylık ve yıllık",
+      "Yakındaki klinikler haritada, tek dokunuşla arama",
+    ],
+    uygulama: {
+      ekranlar: [
+        {
+          src: "/isler/patiskor-1.webp",
+          genislik: 750,
+          yukseklik: 1334,
+          aciklama: "PatiSkor ana ekranı: sağlık puanı",
+        },
+        { src: "/isler/patiskor-2.webp", genislik: 750, yukseklik: 1334, aciklama: "PatiSkor sağlık raporu" },
+        { src: "/isler/patiskor-3.webp", genislik: 750, yukseklik: 1334, aciklama: "PatiSkor kilo takibi grafiği" },
+      ],
     },
   },
 ];

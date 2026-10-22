@@ -94,5 +94,38 @@ export default function HizmetMinyaturu({ adres, qrSvg }: { adres: HizmetAdresi;
       return <QrGorseli qrSvg={qrSvg} />;
     case "web-otomasyonu":
       return <AkisGorseli />;
+    case "mobil-uygulama":
+      return <TelefonGorseli />;
   }
+}
+
+/** Mobil uygulama: küçük telefon; ekranında bildirim düşer, alt sekmeler, bir kart. */
+function TelefonGorseli() {
+  return (
+    <div className="flex h-full items-end justify-center">
+      <div className="relative flex h-full w-[6.5rem] flex-col overflow-hidden rounded-t-[1.4rem] border-[4px] border-b-0 border-gece-4 bg-cukur px-2 pt-2">
+        <span className="dusen-bildirim flex items-center gap-1.5 rounded-lg bg-alev px-2 py-1.5">
+          <span className="size-2 rounded-full bg-gece/70" aria-hidden="true" />
+          <span className="h-1.5 w-12 rounded-full bg-gece/60" />
+        </span>
+        <span className="mt-2 block rounded-lg bg-gece-2 p-2">
+          <span className="block h-1.5 w-8 rounded-full bg-soluk/60" />
+          <span className="mt-1.5 flex h-6 items-end gap-0.5">
+            {[0.4, 0.7, 0.5, 0.9, 0.6, 1].map((b, i) => (
+              <span
+                key={i}
+                className="cubuk flex-1 origin-bottom rounded-sm bg-alev/80"
+                style={{ height: `${b * 100}%`, animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </span>
+        </span>
+        <span className="mt-auto mb-1 grid grid-cols-3 gap-1">
+          {[0, 1, 2].map((i) => (
+            <span key={i} className={`h-3 rounded-md ${i === 0 ? "bg-alev" : "bg-gece-3"}`} />
+          ))}
+        </span>
+      </div>
+    </div>
+  );
 }

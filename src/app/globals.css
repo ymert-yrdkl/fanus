@@ -506,6 +506,27 @@ details.sss summary::-webkit-details-marker {
 .dugum {
   animation: dugum 3s ease-in-out infinite;
 }
+/* Mobil uygulama minyatürü: bildirim üstten düşer, durur, çekilir */
+.dusen-bildirim {
+  animation: dusen-bildirim 4s var(--ease-yay) infinite;
+}
+@keyframes dusen-bildirim {
+  0%,
+  10% {
+    transform: translateY(-200%);
+    opacity: 0;
+  }
+  25%,
+  75% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  90%,
+  100% {
+    transform: translateY(-200%);
+    opacity: 0;
+  }
+}
 @keyframes dugum {
   0%,
   10% {

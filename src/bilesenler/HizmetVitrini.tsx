@@ -14,7 +14,8 @@ export default function HizmetVitrini({ qrSvg }: { qrSvg: string }) {
     "e-ticaret": "md:col-span-4",
     "kurumsal-site": "md:col-span-2",
     "qr-menu": "md:col-span-2",
-    "web-otomasyonu": "md:col-span-4",
+    "mobil-uygulama": "md:col-span-4",
+    "web-otomasyonu": "md:col-span-6",
   };
 
   return (
@@ -26,8 +27,8 @@ export default function HizmetVitrini({ qrSvg }: { qrSvg: string }) {
         <BolumBasi
           id="hizmet-vitrini-baslik"
           etiket="Hizmetler"
-          baslik="Web sitesinden üretim hattına."
-          metin="Dört yol; her birinin canlı örneği, bütün özellikleri ve fiyatı kendi sayfasında."
+          baslik="Web sitesinden cebe ve üretim hattına."
+          metin="Beş yol; her birinin canlı örneği, bütün özellikleri ve fiyatı kendi sayfasında."
         />
 
         <ul className="mt-10 grid gap-4 md:mt-16 md:grid-cols-6 md:gap-5">

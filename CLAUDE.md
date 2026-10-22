@@ -90,6 +90,14 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   zemine çizer (`--sahne-zemin`), cam berrak (gri gövde yok), parıltı/hale/kıvılcım normal karışım; geçiş yaprağı
   (`GecisBandi`) ve örtünün gece tonu kaldırıldı; menü ve açılış perdesi de açık. Manifesto sahnelerinde her cümleyle
   üç örnek kart (masaüstünde sahnede süzülür, telefonda cümlenin altında); kartlar iddia değil örnek ekrandır.
+- KALDIĞIMIZ YER (22 Ekim gece, Yusuf eve geçti): **Mobil uygulama** hizmeti eklendi (`HIZMETLER` › `mobil`, adres
+  `/hizmetler/mobil-uygulama`, paket `mobil` teklifle; `MobilDemo` canlı örnek, minyatür `TelefonGorseli`, ana sayfa
+  vitrini 5 kart: 4-2-2-4-6) ve **PatiSkor** referansı (`REFERANSLAR` › `patiskor`; kaynak App Store id6777159876,
+  Ahmet'in uygulaması, iOS, ücretsiz + Premium; mağaza ekran görüntüleri `public/isler/patiskor-1..3.webp`; `Isler`
+  artık `uygulama` alanlı referansı yan yana telefon çerçeveleriyle gösterir, `sehir` isteğe bağlı). Giriş metni, şerit,
+  meta başlık, altbilgi ve JSON-LD "mobil uygulama" ile güncellendi. Typecheck, lint ve `npm run build` geçti; ekran
+  kontrolü, `npm run denetim`, push ve Coolify dağıtımı YAPILMADI (yerel commit var). Sıradaki: üretim derlemesinde
+  `/hizmetler/mobil-uygulama`, `/hizmetler` (MobilDemo) ve ana sayfa vitrinini görüntüle, denetimi koştur, push + deploy.
 - SIRADAKİ: Yusuf'un tasarım geri bildirimi (3B cam ve alev dahil); SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
   başlıkları kısa: denetim uyarısı; Search Console + Bing; anahtar kelimeler; Google İşletme Profili); telefonda hız
   için JS küçültme (Lenis yalnız farede, GSAP eklentileri gerektiğinde).

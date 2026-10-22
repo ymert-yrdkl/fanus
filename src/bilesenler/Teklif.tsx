@@ -17,7 +17,8 @@ const MESAJ_ADLARI: Record<PaketKodu, string> = {
   kurumsal: "tam paket kurumsal site",
   "e-ticaret": "e-ticaret sitesi",
   "qr-menu": "QR menü",
-  otomasyon: "web otomasyonu",
+  otomasyon: "özel yazılım ve otomasyon",
+  mobil: "mobil uygulama",
 };
 
 const SECENEKLER: { kod: Secenek; ad: string; fiyat?: string }[] = [

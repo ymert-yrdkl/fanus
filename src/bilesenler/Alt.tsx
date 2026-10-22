@@ -50,7 +50,8 @@ export default function Alt() {
         <div className="lg:col-span-3">
           <Logo />
           <p className="mt-5 max-w-[22rem] leading-relaxed text-soluk">
-            Web siteleri, e-ticaret, QR ve NFC sistemleri, özel yazılım ve otomasyon. Işığınızı koruyan cam.
+            Web siteleri, e-ticaret, QR ve NFC sistemleri, mobil uygulama, özel yazılım ve otomasyon. Işığınızı koruyan
+            cam.
           </p>
         </div>
         <nav aria-label="Sayfa" className="lg:col-span-2">

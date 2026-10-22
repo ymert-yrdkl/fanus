@@ -30,6 +30,7 @@ export default async function AnaSayfa() {
           "Kurumsal web sitesi",
           "QR menü",
           "NFC kart sistemleri",
+          "Mobil uygulama",
           "Özel yazılım",
           "Web ve üretim otomasyonu",
         ],

@@ -240,8 +240,18 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
       {h.referanslar && (
         <Isler
           kodlar={h.referanslar}
-          baslik={h.referanslar.length > 1 ? "Bu işi yaptığımız siteler." : "Bu işi yaptığımız bir site."}
-          metin="Yayında, bugün çalışıyor. Ekran görüntüleri sitelerin kendisinden; tıklayıp gezebilirsiniz."
+          baslik={
+            h.kod === "mobil"
+              ? "Bu işi yaptığımız bir uygulama."
+              : h.referanslar.length > 1
+                ? "Bu işi yaptığımız siteler."
+                : "Bu işi yaptığımız bir site."
+          }
+          metin={
+            h.kod === "mobil"
+              ? "App Store'da yayında, bugün kullanılıyor. Ekran görüntüleri mağaza sayfasından; tıklayıp indirebilirsiniz."
+              : "Yayında, bugün çalışıyor. Ekran görüntüleri sitelerin kendisinden; tıklayıp gezebilirsiniz."
+          }
         />
       )}
       <Sss sorular={h.sss} baslik="Bu hizmetle ilgili sorular." />
