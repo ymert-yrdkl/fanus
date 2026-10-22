@@ -703,7 +703,7 @@ export const REFERANSLAR: Referans[] = [
     alanAdi: "apps.apple.com",
     gosterim: "PatiSkor (App Store)",
     adres: "https://apps.apple.com/tr/app/patiskor/id6777159876",
-    tur: "Mobil uygulama · iOS",
+    tur: "Mobil uygulama · App Store",
     ozet: "Kedi ve köpek sahipleri için yapay zekâ destekli sağlık uygulaması: sağlık puanı, aşı, ilaç ve tahlil kayıtları, kilo grafiği, hatırlatmalar, yakındaki veterinerler. Ücretsiz plan ve Premium abonelik.",
     maddeler: [
       "App Store'da yayında (iOS 15.5 ve üstü)",
