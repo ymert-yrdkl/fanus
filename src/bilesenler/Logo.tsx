@@ -2,17 +2,23 @@ import type { SVGProps } from "react";
 
 /*
   fanus işareti, 32x32'lik kutuda: [ · ] — iki köşeli parantez (fanusun iki cam duvarı; aynı zamanda kod) ve ortada
-  tek bir ışık noktası. Klavyeyle yazılışı "[ · ]", düz metinde "[.]". Parantezler currentColor (mürekkep ya da
-  kâğıt), nokta markanın ışık rengi (--color-isik, amber); vurgu renginden bağımsızdır. (23 Ekim 2026: alev gitti.)
+  fanusun içindeki ateşböceği: sarı-yeşil bir ışık noktası ve etrafında soluk halesi. Klavyeyle yazılışı "[ · ]",
+  düz metinde "[.]". Parantezler currentColor (mürekkep ya da kâğıt), nokta markanın ışık rengi (--color-isik);
+  vurgu renginden bağımsızdır. (23 Ekim 2026: alev gitti, ateşböceği geldi.)
 */
 
 /** Köşeli parantezlerin çizgileri. */
 const CIZGILER = ["M12.5 5H9a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h3.5", "M19.5 5H23a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2h-3.5"];
-const NOKTA = { cx: 16, cy: 16, r: 2.8 };
+const NOKTA = { cx: 16, cy: 16, r: 2.4, hale: 4.4 };
 
-/** Işık noktası. */
-function Isik(ozellik: SVGProps<SVGCircleElement>) {
-  return <circle cx={NOKTA.cx} cy={NOKTA.cy} r={NOKTA.r} fill="var(--color-isik)" {...ozellik} />;
+/** Ateşböceği: hale ve çekirdek. */
+function Isik(ozellik: SVGProps<SVGGElement>) {
+  return (
+    <g {...ozellik}>
+      <circle cx={NOKTA.cx} cy={NOKTA.cy} r={NOKTA.hale} fill="var(--color-isik)" opacity={0.45} />
+      <circle cx={NOKTA.cx} cy={NOKTA.cy} r={NOKTA.r} fill="var(--color-isik-koyu)" />
+    </g>
+  );
 }
 
 /** Küçük işaret (menü, altbilgi). Parantez rengi `currentColor`. */

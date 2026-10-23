@@ -2,7 +2,8 @@
 
 /*
   fanussoft tasarım token'ları. Renk YALNIZ buradan gelir: Tailwind'in hazır paleti kapalı
-  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "vurgu": gündüzde koyu mavi-petrol (#063236; Yusuf, 23 Ekim 2026), koyu zeminde açık petrol; "isik" (amber) yalnız işaretin noktası ve 3B ışık. İki takım: gece (@theme; 3B sahnenin olduğu
+  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "vurgu": gündüzde güven mavisi (#1d5fb8; Yusuf, 23 Ekim 2026), koyu zeminde açık mavi;
+  "isik" ateşböceğinin sarı-yeşili, yalnız işaretin noktası ve 3B ışık. İki takım: gece (@theme; 3B sahnenin olduğu
   bölümler ve koyu tahta) ve gündüz (--g-*; kâğıt ve mürekkep: data-zemin="acik" bölümlerinde token'lara eşlenir).
   Degrade yok, gri üstüne gri yok: açık zemin kâğıt beyazı, yazı mürekkep siyahı, ayraçlar belirgin ince çizgi.
   Bütün çiftler WCAG AA'yı geçer (yazı, soluk, silik, vurgu ve düğme yazısı en az 4,5:1).
@@ -21,11 +22,12 @@
   --color-krem: #f4f3ee;
   --color-soluk: #b9bcc3;
   --color-silik: #a3a7b0;
-  --color-vurgu: #6fc3b5;
-  --color-vurgu-acik: #8fd4c8;
-  --color-vurgu-koyu: #4ea596;
-  /* Işık: işaretin noktası ve 3B'deki ışık; her zeminde aynı */
-  --color-isik: #f3b23e;
+  --color-vurgu: #8ab8ff;
+  --color-vurgu-acik: #a9caff;
+  --color-vurgu-koyu: #6ea3f2;
+  /* Işık: ateşböceği; işaretin noktası ve 3B'deki ışık; her zeminde aynı */
+  --color-isik: #e8f266;
+  --color-isik-koyu: #cfe02e;
   --color-canli: #6fcf8f;
   --color-transparent: transparent;
   --color-current: currentColor;
@@ -54,9 +56,9 @@
   --n-yazi: #f4f3ee;
   --n-soluk: #b9bcc3;
   --n-silik: #a3a7b0;
-  --n-vurgu: #6fc3b5;
-  --n-vurgu-ust: #8fd4c8;
-  --n-vurgu-koyu: #4ea596;
+  --n-vurgu: #8ab8ff;
+  --n-vurgu-ust: #a9caff;
+  --n-vurgu-koyu: #6ea3f2;
   --n-golge: rgb(0 0 0 / 0.85);
   /* Gündüz takımı: kâğıt ve mürekkep. data-zemin="acik" bölümünde --color-* bunlara eşlenir */
   --g-zemin: #f4f3ee;
@@ -69,9 +71,9 @@
   --g-yazi: #141416;
   --g-soluk: #44454b;
   --g-silik: #67686f;
-  --g-vurgu: #063236;
-  --g-vurgu-ust: #0a4b4f;
-  --g-vurgu-koyu: #04262a;
+  --g-vurgu: #1d5fb8;
+  --g-vurgu-ust: #174f9c;
+  --g-vurgu-koyu: #123d7a;
   --g-golge: rgb(20 20 22 / 0.16);
   --g-google: #1a0dab;
   --sayfa-isigi: color-mix(in srgb, var(--color-vurgu) 16%, transparent);

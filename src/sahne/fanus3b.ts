@@ -1,10 +1,11 @@
-// Silindir cam fanus ve içinde yanan ışık, havada süzülen toz (three.js).
+// Silindir cam fanus ve içinde dolaşan ateşböceği, havada süzülen toz (three.js).
 // Bu dosya yalnız tarayıcıda, sayfa açıldıktan sonra dinamik olarak yüklenir.
 //
 // Cam: dikey bir silindir; üstte ve altta omuz gibi daralıp ortada dar birer delikle açılır (lamba camı gibi).
 // Karşıdan bakınca iki dikey kenar ve daralan uçlar "[ ]" gibi okunur, dönünce silindir olduğu görülür.
-// Işık (23 Ekim 2026, alev yerine): ortada parlayan sıcak bir küre, etrafında hale ve kâğıda düşen sıcak leke.
-// Rüzgârla titrer ve hafifçe savrulur; cam kalkınca daha çok (manifestoda cam yukarı sıyrılır, sonra iner).
+// Ateşböceği (23 Ekim 2026, alev yerine): camın içinde yavaş, kıvrımlı bir yolda dolaşan, ara ara göz kırpan sarı-yeşil
+// bir ışık; arkasında sönen bir iz, etrafında hale, kâğıda düşen leke. Rüzgâr çıkınca telaşlanır (hızlanır, sık
+// kırpar), cam kalkınca açıklığa doğru yükselir; cam inince sakinleşir.
 //
 // Dünya birimleri: ışığın merkezi y=ISIK_ORTASI'nda, camın ortası y=CAM_ORTASI'nda.
 // Ekrandaki yer, boy ve camın kalkması `sahneDurumu`ndan okunur (GSAP değiştirir).
@@ -52,20 +53,24 @@ const OMUZ = 0.42;
 const DELIK = 0.4;
 /** Cam kalkınca ne kadar yükselir (dünya birimi). */
 const CAM_KALKMA = 1.6;
-/** Işığın merkezi (camın içinde, ortanın biraz altında). */
+/** Ateşböceğinin dolaştığı alanın merkezi (camın içinde) ve izin uzunluğu (kare). */
 const ISIK_ORTASI = 0.38;
+const IZ_UZUNLUGU = 48;
+const IZ_NOKTASI = 6;
+/** İz örnekleri arasındaki süre (sn) ve iki iz noktası arasındaki örnek sayısı. */
+const IZ_ARALIGI = 0.07;
+const IZ_ADIMI = 4;
 
-/** Işığın renkleri (paletten bağımsız, markanın ışığı: amber). */
+/** Ateşböceğinin renkleri (paletten bağımsız, markanın ışığı: sarı-yeşil). */
 const ISIK_RENKLERI = {
-  // Kâğıt zeminde ışık beyazdan parlak olamaz: ışığı renk anlatır (sıcak turuncu gövde, ortası açık)
-  oz: 0xfff1cf,
-  cekirdek: 0xf7a52a,
-  dis: 0xf3b23e,
-  hale: 0xf3b23e,
-  haleKucuk: 0xffd27a,
-  zeminIsigi: 0xf0a63a,
-  isik: 0xffc46b,
-  toz: 0xf3b23e,
+  // Ateşböceğinin sarı-yeşili. Kâğıt zeminde açık ton görünmez: gövde ve iz doygun, yalnız öz beyaza yakın
+  oz: 0xffffe6,
+  cekirdek: 0xd4e32a,
+  hale: 0xdbe84a,
+  haleKucuk: 0xe0ec4a,
+  zeminIsigi: 0xd6e63a,
+  isik: 0xdcf05a,
+  toz: 0xcfe02e,
 };
 
 /** Sahnenin zemini sayfanın kâğıt rengiyle aynı olmalı: CSS --sahne-zemin'den okunur. */
@@ -157,7 +162,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   camGrubu.position.y = CAM_ORTASI;
   egim.add(camGrubu);
 
-  // ---- Işık: yumuşak ışıltı katmanları (hale bloğunun altında kurulur) ----
+  // ---- Ateşböceği: hale, gövde, iz; hepsi bu grupla uçar ----
   const isikGrubu = new Group();
   isikGrubu.position.y = ISIK_ORTASI;
   egim.add(isikGrubu);
@@ -177,26 +182,37 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
         toneMapped: false,
       }),
     );
-  const haleBuyuk = new Sprite(haleMalzemesi(ISIK_RENKLERI.hale, 0.3));
-  haleBuyuk.scale.setScalar(5.6);
+  const haleBuyuk = new Sprite(haleMalzemesi(ISIK_RENKLERI.hale, 0.22));
+  haleBuyuk.scale.setScalar(2.4);
   haleBuyuk.renderOrder = 20;
-  const haleKucuk = new Sprite(haleMalzemesi(ISIK_RENKLERI.haleKucuk, 0.6));
-  haleKucuk.scale.setScalar(2.6);
+  const haleKucuk = new Sprite(haleMalzemesi(ISIK_RENKLERI.haleKucuk, 0.55));
+  haleKucuk.scale.setScalar(1.2);
   haleKucuk.renderOrder = 21;
-  haleBuyuk.position.y = haleKucuk.position.y = ISIK_ORTASI;
-  egim.add(haleBuyuk, haleKucuk);
+  isikGrubu.add(haleBuyuk, haleKucuk);
 
-  // Işığın gövdesi: cam üstüne çizilen iki yumuşak disk (kırılma dokusuna girmez: kenar halkası ve testere dişi olmaz).
-  // Dış disk sıcak turuncu, öz açık; kâğıt zeminde ışığı renk anlatır
+  // Gövde: cam üstüne çizilen iki yumuşak disk (kırılma dokusuna girmez: kenar halkası ve testere dişi olmaz).
+  // Dış disk sarı-yeşil, öz beyaz; kâğıt zeminde ışığı renk anlatır
   const cekirdek = new Sprite(haleMalzemesi(ISIK_RENKLERI.cekirdek, 0.95));
-  cekirdek.scale.setScalar(1.35);
+  cekirdek.scale.setScalar(0.5);
   cekirdek.renderOrder = 23;
   const oz = new Sprite(haleMalzemesi(ISIK_RENKLERI.oz, 0.9));
-  oz.scale.setScalar(0.52);
+  oz.scale.setScalar(0.15);
   oz.renderOrder = 24;
   isikGrubu.add(cekirdek, oz);
+  // İz: ateşböceğinin geçtiği yerlerde sönen noktalar (geçmiş konumlar halka tamponda tutulur)
+  const iz = new Float32Array(IZ_UZUNLUGU * 3);
+  let izBasi = 0;
+  let izSayaci = 0;
+  for (let i = 0; i < IZ_UZUNLUGU; i++) iz[i * 3 + 1] = ISIK_ORTASI;
+  const izNoktalari = Array.from({ length: IZ_NOKTASI }, (_, i) => {
+    const n = new Sprite(haleMalzemesi(ISIK_RENKLERI.cekirdek, 0.6));
+    n.scale.setScalar(0.3 - i * 0.04);
+    n.renderOrder = 22;
+    egim.add(n);
+    return n;
+  });
 
-  // Camın altına düşen sıcak ışık
+  // Kâğıda düşen leke (ateşböceğiyle birlikte kayar)
   const zeminIsigiMalzeme = m(
     new MeshBasicMaterial({
       map: haleDokusu,
@@ -273,8 +289,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
 
   // ---- Işıklar ----
   const noktaIsigi = new PointLight(ISIK_RENKLERI.isik, 6, 0, 2);
-  noktaIsigi.position.y = ISIK_ORTASI;
-  egim.add(noktaIsigi);
+  isikGrubu.add(noktaIsigi);
   const arkaIsik = new DirectionalLight(0xffe4c4, 1.4);
   arkaIsik.position.set(-4, 6, -4);
   // Ön ve yan ışıklar: kavisli camın üstünde dikey parıltılar (silindirin okunması bunlara bağlı)
@@ -317,6 +332,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
 
   // ---- Kare döngüsü ----
   let zaman = 0;
+  let ucus = 0;
   let onceki = performance.now();
   let ilkKare = true;
   let sonPoz: Poz | null = null;
@@ -369,25 +385,43 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     const egimX = (ruzgar.x + esinti) * maruz;
     const egimZ = ruzgar.y * 0.5 * maruz;
 
-    // Işık: yavaş nefes, rüzgârda titreme ve hafif sönme ("ışık kolayca söner")
-    const nefes = 1 + 0.04 * Math.sin(zaman * 2.1) * Math.sin(zaman * 0.7);
-    const titreme = 1 + 0.18 * Math.abs(egimX) * Math.sin(zaman * 19) - 0.2 * Math.min(Math.abs(egimX), 1);
-    const guc = Math.max(poz.isik * isikGiris * nefes * titreme, 0);
-    // Rüzgâr ışığı yana savurur
-    isikGrubu.position.x = egimX * 0.14;
-    isikGrubu.position.z = egimZ * 0.1;
-    isikGrubu.position.y = ISIK_ORTASI + Math.sin(zaman * 1.3) * 0.015;
-    isikGrubu.scale.setScalar(0.8 + 0.2 * Math.min(guc, 1.3));
+    // Ateşböceği: yavaş, kıvrımlı uçuş; rüzgârda telaşlanır (hızlanır), cam kalkınca açıklığa doğru yükselir
+    const telas = Math.min(Math.abs(egimX), 1) * maruz;
+    ucus += dt * (1 + 2.4 * telas + 0.6 * Math.max(0, Math.sin(zaman * 0.23)));
+    const acik = Math.min(acilma, 1);
+    const genlik = 1 + 0.6 * acik;
+    const ux = (Math.sin(ucus * 0.37) * 0.4 + Math.sin(ucus * 0.91 + 1.3) * 0.16) * genlik + egimX * 0.22;
+    const uy = ISIK_ORTASI + Math.sin(ucus * 0.29 + 0.7) * 0.42 + Math.sin(ucus * 0.73) * 0.1 + acik * 0.75;
+    const uz = Math.cos(ucus * 0.41 + 2.1) * 0.28 + egimZ * 0.1;
+    isikGrubu.position.set(ux, uy, uz);
+    // Göz kırpma: çoğu zaman loş, aralıklı parlamalar; rüzgârda daha sık
+    const kirp = Math.pow(0.5 + 0.5 * Math.sin(ucus * 1.7), 3);
+    const parlama = 0.45 + 0.55 * kirp;
+    const guc = Math.max(poz.isik * isikGiris * parlama, 0);
+    isikGrubu.scale.setScalar(0.85 + 0.15 * Math.min(guc, 1.3));
     isikGrubu.visible = guc > 0.01;
     cekirdek.material.opacity = 0.95 * Math.min(guc, 1.2);
     oz.material.opacity = 0.9 * Math.min(guc, 1.2);
-
-    haleBuyuk.material.opacity = 0.3 * Math.min(guc, 2.5);
-    haleKucuk.material.opacity = 0.6 * Math.min(guc, 1.5);
-    haleBuyuk.scale.setScalar(4.6 + guc * 1.2);
-    haleKucuk.position.x = haleBuyuk.position.x = egimX * 0.14;
-    zeminIsigiMalzeme.opacity = 0.26 * Math.min(guc, 2.2);
-    noktaIsigi.intensity = 7 * guc * olcek * olcek;
+    haleBuyuk.material.opacity = 0.22 * Math.min(guc, 2);
+    haleKucuk.material.opacity = 0.55 * Math.min(guc, 1.5);
+    haleBuyuk.scale.setScalar(2 + guc * 0.6);
+    zeminIsigi.position.x = ux * 0.8;
+    zeminIsigiMalzeme.opacity = 0.3 * Math.min(guc, 2.2);
+    noktaIsigi.intensity = 6 * guc * olcek * olcek;
+    // İz: geçmiş konumlar belli aralıkla örneklenir; noktalar geriye doğru küçülüp söner
+    izSayaci += dt;
+    if (izSayaci >= IZ_ARALIGI) {
+      izSayaci = 0;
+      iz[izBasi * 3] = ux;
+      iz[izBasi * 3 + 1] = uy;
+      iz[izBasi * 3 + 2] = uz;
+      izBasi = (izBasi + 1) % IZ_UZUNLUGU;
+    }
+    izNoktalari.forEach((n, i) => {
+      const k = (izBasi - 1 - (i + 1) * IZ_ADIMI + IZ_UZUNLUGU * 2) % IZ_UZUNLUGU;
+      n.position.set(iz[k * 3]!, iz[k * 3 + 1]!, iz[k * 3 + 2]!);
+      n.material.opacity = (0.7 - i * 0.1) * Math.min(guc, 1.2) * isikGiris;
+    });
 
     // Eğim: imleç (fare varsa) ve yavaş salınım
     if (imlec.var) {

@@ -95,13 +95,14 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   `REFERANSLAR` › `patiskor` (kaynak App Store id6777159876, Ahmet'in uygulaması, iOS, ücretsiz + Premium; mağaza
   görselleri `public/isler/patiskor-1..3.webp`); `Isler` `uygulama` alanlı referansı yan yana telefon çerçeveleriyle
   gösterir, `sehir` isteğe bağlı. Giriş metni, şerit, meta başlık, altbilgi ve JSON-LD "mobil uygulama" ile güncellendi.
-- Marka (23 Ekim 2026, Yusuf'un kararı): ateş gitti. İşaret `[ · ]` (parantez + amber ışık noktası, `Logo.tsx`,
-  `icon.svg`), vurgu rengi koyu mavi-petrol #063236 (koyu zeminde açık petrol #6fc3b5; token adı `alev` → `vurgu`,
-  `--color-isik` amber), 3B'de alev yerine sprite ışık (cam üstüne çizilir; kırılma dokusunda kenar halkası çıkıyordu),
-  cam yansıması azaltıldı ("fazla gri"). Menü çubuğu yalnız `#icerik` içindeki açık bölümlere bakar (menü penceresi
-  ve açılış perdesi açık zeminli olunca tetikleyici sönüyordu). Marka taslakları scratchpad'de (`marka-taslak*.html`,
-  `yesiller.html`, `petroller.html`, `mavi-petroller.html`).
-- SIRADAKİ: Yusuf'un tasarım geri bildirimi (3B cam ve alev dahil); SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
+- Marka (23 Ekim 2026, Yusuf'un kararı): ateş gitti, **ateşböceği** geldi. İşaret `[ · ]` (parantez + sarı-yeşil
+  ışık noktası ve halesi, `Logo.tsx`, `icon.svg`), vurgu rengi **güven mavisi #1d5fb8** (koyu zeminde #8ab8ff; token
+  adı `alev` → `vurgu`, ışık `--color-isik` #e8f266 / `--color-isik-koyu` #cfe02e). Önce seçilen koyu petrol #063236
+  yayında "basık" bulunup geri alındı; sarı Düzce'deki rakip yüzünden elendi. 3B'de (`fanus3b.ts`) camın içinde
+  dolaşan, göz kırpan, zamana bağlı örneklenen iz bırakan ateşböceği (sprite'lar, kâğıtta okunsun diye gövde doygun);
+  rüzgârda telaşlanır, cam kalkınca yükselir. Cam yansıması azaltılmış hâliyle aynı. Menü çubuğu yalnız `#icerik`
+  içindeki açık bölümlere bakar. Marka taslakları scratchpad'de (`atesbocegi.html`, `mavi-petroller.html`).
+- SIRADAKİ: Yusuf'un tasarım geri bildirimi (ateşböceği ve mavi dahil); sosyal medya için ateşböceği karakteri; SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
   başlıkları kısa: denetim uyarısı; Search Console + Bing; anahtar kelimeler; Google İşletme Profili); telefonda hız
   için JS küçültme (Lenis yalnız farede, GSAP eklentileri gerektiğinde).
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı

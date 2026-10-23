@@ -9,14 +9,16 @@ hareket 8, yoğunluk 5.
 ## Metafor ve işaret
 
 Fanus, ışığı rüzgârdan koruyan camdır. İşletmenin ışığı (emeği) internette kolay söner; fanus onu korur, büyütür,
-uzaktan görünür kılar. İşaret (23 Ekim 2026): `[ · ]` — iki köşeli parantez (fanusun iki cam duvarı; aynı zamanda
-kod, klavyeyle yazılır) ve ortada tek bir **ışık noktası** (amber, `--color-isik`). Düz metinde `[.]`. Parantezler
-mürekkep ya da kâğıt rengindedir; işaret tek renkte çalışır, vurgu renginden bağımsızdır. Yazım: **fanus**soft
-("soft" soluk). Ateş/alev imgesi bırakıldı: herkesin simgesi ("ucuz", kampanya çağrışımı); fanus markaya özgü.
+uzaktan görünür kılar. Işık bir **ateşböceği**dir (23 Ekim 2026, Yusuf'un fikri): fanusun içinde yavaşça dolaşır,
+ara ara göz kırpar, arkasında sönen bir iz bırakır; rüzgâr çıkınca telaşlanır, cam inince sakinleşir. Sosyal medyada
+da aynı karakter konuşur. İşaret: `[ · ]` — iki köşeli parantez (fanusun iki cam duvarı; aynı zamanda kod, klavyeyle
+yazılır) ve ortada ateşböceğinin **ışık noktası** (sarı-yeşil `--color-isik`, soluk halesiyle). Düz metinde `[.]`.
+Parantezler mürekkep ya da kâğıt rengindedir; işaret vurgu renginden bağımsızdır. Yazım: **fanus**soft ("soft" soluk).
+Ateş/alev imgesi bırakıldı: herkesin simgesi ("ucuz", kampanya ve simya çağrışımı); fanus ve ateşböceği markaya özgü.
 3B'de cam (22 Ekim 2026): **kapalı bir silindir**, üstte ve altta omuz gibi daralıp ortada dar birer delikle açılır
-(lamba camı); bilezik ya da pencere yok. İçinde alev değil **ışık**: cam üstüne çizilen sıcak turuncu ve açık öz
-diskleri, hale ve kâğıda düşen leke; rüzgârla titrer ve savrulur (`src/sahne/fanus3b.ts`). Eski fener "falcı fanusu",
-parçalı cam anlaşılmaz, alev ucuz bulunduğu için bırakıldı.
+(lamba camı); bilezik ya da pencere yok. İçinde ateşböceği: cam üstüne çizilen doygun sarı-yeşil disk ve beyaz öz,
+küçük hale, geriye doğru küçülüp sönen iz noktaları, kâğıda düşen ve onunla kayan leke (`src/sahne/fanus3b.ts`).
+Eski fener "falcı fanusu", parçalı cam anlaşılmaz, alev ucuz bulunduğu için bırakıldı.
 
 ## Neden bu sistem
 
@@ -36,7 +38,10 @@ parçalı cam anlaşılmaz, alev ucuz bulunduğu için bırakıldı.
 ## Renk (yalnız token)
 
 Gece (koyu tahta, karolar, çerçeveler): antrasit #1a1b1e (Discord'un koyu tonları). Gündüz: kâğıt #f4f3ee, mürekkep
-#141416. Tek vurgu "vurgu" (23 Ekim 2026, Yusuf'un seçimi): gündüzde **koyu mavi-petrol #063236**, koyu zeminde açık petrol #6fc3b5 (koyu kutularda yazı ve rakam okunsun diye). Işık noktası amber #f3b23e yalnız işarette ve 3B'de. Lacivert, degrade, saf siyah/beyaz yok.
+#141416. Tek vurgu "vurgu" (23 Ekim 2026, Yusuf'un seçimi): gündüzde **güven mavisi #1d5fb8** (canlı ve sempatik; koyu petrol
+"basık" bulundu), koyu zeminde açık mavi #8ab8ff (koyu kutularda yazı ve rakam okunsun diye). Mavi "herkeste var";
+bizde yalnız düğme, bağlantı ve vurgu kelimede kalır, kimliği parantez ve ateşböceği taşır. Ateşböceğinin ışığı
+sarı-yeşil #e8f266 (nokta için koyusu #cfe02e) yalnız işarette ve 3B'de. Lacivert, degrade, saf siyah/beyaz yok.
 Bütün sayfalar kâğıt üstünde başlar (`main` `data-zemin="acik"`); 3B sahnenin zemini de kâğıt (`--sahne-zemin`), cam
 tamamen berrak (gri gövde istenmedi), parıltı ve hale normal karışımla sıcak turuncu leke bırakır (toplamalı karışım
 açık zeminde beyaza gider). Üç kapsam: varsayılan gece (`@theme`; yalnız kapsam dışı kalan parçalar),
@@ -51,12 +56,12 @@ kopyasına geri döner; tahta, karo, çerçeve). Bütün çiftler WCAG AA (en az
 | `krem`                                 | #f4f3ee           | #141416            | ana metin                                                         |
 | `soluk`                                | #b9bcc3           | #44454b            | ikincil metin                                                     |
 | `silik`                                | #a3a7b0           | #67686f            | küçük yardımcı metin                                              |
-| `vurgu` (+ `vurgu-acik`, `vurgu-koyu`) | #6fc3b5           | #063236            | TEK vurgu: birincil düğme, vurgu kelime, bağlantı                 |
-| `isik`                                 | #f3b23e           | #f3b23e            | işaretin noktası, 3B ışık, yedek ışık                             |
+| `vurgu` (+ `vurgu-acik`, `vurgu-koyu`) | #8ab8ff           | #1d5fb8            | TEK vurgu: birincil düğme, vurgu kelime, bağlantı                 |
+| `isik` (+ `isik-koyu`)                 | #e8f266 / #cfe02e | #e8f266 / #cfe02e  | ateşböceği: işaretin noktası, 3B ışık, yedek ışık                 |
 | `canli`                                | #6fcf8f           |                    | yalnız "yayında" durum noktası                                    |
 | `cizgi`, `cizgi-guclu`                 | beyaz %10 / %22   | mürekkep %14 / %30 | ayraç ve çerçeve; gündüzde belirgin                               |
 
-İş vitrinindeki tarayıcı ve telefon çerçeveleri her zeminde koyu gri (`data-zemin="koyu"`). 3B'de ışık markanın sabit rengindedir (`ISIK_RENKLERI`). Gündüz zeminde süs ışıkları yok. Hizmet örneklerinin içindeki minyatür siteler
+İş vitrinindeki tarayıcı ve telefon çerçeveleri her zeminde koyu gri (`data-zemin="koyu"`). 3B'de ateşböceği markanın sabit rengindedir (`ISIK_RENKLERI`; kâğıtta okunsun diye gövde doygun). Gündüz zeminde süs ışıkları yok. Hizmet örneklerinin içindeki minyatür siteler
 kendi kâğıt renklerini kullanır (müşterinin sitesini temsil eder).
 
 ## Yazı
