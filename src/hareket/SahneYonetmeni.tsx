@@ -159,7 +159,7 @@ export default function SahneYonetmeni() {
     <div
       id="ilerleme"
       aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 top-0 z-[65] h-px origin-left bg-alev"
+      className="pointer-events-none fixed inset-x-0 top-0 z-[65] h-px origin-left bg-vurgu"
     />
   );
 }

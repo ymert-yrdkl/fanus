@@ -15,7 +15,7 @@ function acildiDuyur() {
 }
 
 /**
- * Açılış perdesi (masaüstü): işaret çizilir, alev yanar, perde yukarı kalkar. Oturumda ikinci açılışta kısa sürer.
+ * Açılış perdesi (masaüstü): işaret çizilir, ışık noktası belirir, perde yukarı kalkar. Oturumda ikinci açılışta kısa sürer.
  * Hareket azaltma tercihi varsa, JS yoksa ya da telefondaysa perde hiç görünmez.
  */
 export default function Acilis() {
@@ -67,7 +67,7 @@ export default function Acilis() {
 
       if (tekrar) {
         zc.set("[data-cizgi]", { strokeDashoffset: 0 })
-          .set("[data-alev-acilis]", { scale: 1, opacity: 1, transformOrigin: "50% 100%" })
+          .set("[data-isik-acilis]", { scale: 1, opacity: 1, transformOrigin: "50% 50%" })
           .to(kok.current, { clipPath: "inset(0 0 100% 0)", duration: 0.9, ease: "expo.inOut" }, 0.15)
           .call(duyur, [], 0.35);
         return () => window.clearTimeout(emniyet);
@@ -79,8 +79,8 @@ export default function Acilis() {
         { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut", stagger: 0.08 },
       )
         .fromTo(
-          "[data-alev-acilis]",
-          { scale: 0, opacity: 0, transformOrigin: "50% 100%" },
+          "[data-isik-acilis]",
+          { scale: 0, opacity: 0, transformOrigin: "50% 50%" },
           { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2.2)" },
           0.45,
         )
@@ -117,11 +117,11 @@ export default function Acilis() {
         <div className="relative size-40">
           <div
             data-hale-acilis
-            className="absolute top-[58%] left-1/2 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_35%,transparent),transparent_65%)] opacity-0"
+            className="absolute top-[58%] left-1/2 size-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-isik)_35%,transparent),transparent_65%)] opacity-0"
           />
           <CizilenIsaret
             cizgiAdi="data-cizgi"
-            alevAdi="data-alev-acilis"
+            isikAdi="data-isik-acilis"
             kalinlik={0.9}
             gizli
             className="relative size-full text-krem"

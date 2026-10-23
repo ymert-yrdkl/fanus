@@ -117,7 +117,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
                 </p>
                 {p.yenileme !== null && (
                   <p className="mt-2 text-sm text-soluk">
-                    Yıllık yenileme <span className="text-alev">{fiyatYaz(p.yenileme)}</span> {KDV_EKI}
+                    Yıllık yenileme <span className="text-vurgu">{fiyatYaz(p.yenileme)}</span> {KDV_EKI}
                   </p>
                 )}
               </div>
@@ -167,7 +167,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
                 <ul className="mt-4 grid gap-2.5">
                   {g.maddeler.map((m) => (
                     <li key={m} className="flex items-start gap-3 text-[0.9375rem]">
-                      <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
+                      <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-vurgu" aria-hidden="true" />
                       {m}
                     </li>
                   ))}
@@ -210,7 +210,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
                 data-gecikme="0.1"
                 className="flex flex-col rounded-[1.25rem] border border-cizgi-guclu p-6 sm:p-8"
               >
-                <span className="flex size-12 items-center justify-center rounded-full bg-alev text-gece">
+                <span className="flex size-12 items-center justify-center rounded-full bg-vurgu text-gece">
                   <ArrowsClockwise size={22} weight="bold" aria-hidden="true" />
                 </span>
                 <h3 className="ara-baslik mt-6">Yıllık yenileme {kdvHaricYaz(YILLIK_YENILEME)}</h3>
@@ -220,14 +220,14 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
                 <ul className="mt-6 grid gap-3">
                   {YENILEMEYE_DAHIL.map((m) => (
                     <li key={m} className="flex items-start gap-3 text-[0.9375rem]">
-                      <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
+                      <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-vurgu" aria-hidden="true" />
                       {m}
                     </li>
                   ))}
                 </ul>
                 <Link
                   href="/fiyatlar"
-                  className="mt-auto inline-flex min-h-12 items-center pt-6 text-[0.9375rem] font-medium text-alev"
+                  className="mt-auto inline-flex min-h-12 items-center pt-6 text-[0.9375rem] font-medium text-vurgu"
                 >
                   Bütün paketleri karşılaştırın
                 </Link>

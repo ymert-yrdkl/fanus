@@ -5,13 +5,13 @@
 export type Poz = {
   /** Ekran genişliğine oranla yatay konum: -0.5 sol kenar, 0 orta, 0.5 sağ kenar. */
   x: number;
-  /** Ekran yüksekliğine oranla dikey konum: -0.5 üst, 0 orta, 0.5 alt (alevin merkezi). */
+  /** Ekran yüksekliğine oranla dikey konum: -0.5 üst, 0 orta, 0.5 alt (ışığın merkezi). */
   y: number;
   /** Fanusun boyu, ekran yüksekliğine oranla. */
   boy: number;
   /** Cam: 0 kapalı, 1 tamamen açık, 2 sahnede yok (uzaklaşıp küçülmüş; alev tek başına). */
   kapak: number;
-  /** Alevin gücü (1 normal). */
+  /** Işığın gücü (1 normal). */
   isik: number;
   /** Tuvalin görünürlüğü 0..1. */
   gorunur: number;
@@ -24,9 +24,9 @@ export const sahneDurumu = {
   son: { x: 0.25, y: 0.02, boy: 0.56, kapak: 0, isik: 1.6, gorunur: 1 } as Poz,
   /** 0 = akış, 1 = son hal (teklif bölümüne girince yumuşakça 1 olur). */
   sonKarisim: 0,
-  /** Açılış: 0 = cam havada ve alev sönük, 1 = cam yerinde ve alev yanıyor. */
+  /** Açılış: 0 = cam havada ve ışık sönük, 1 = cam yerinde ve ışık yanıyor. */
   giris: 0,
-  /** Rüzgârın alevi etkileme çarpanı (manifestonun "rüzgâr" cümlesinde artar). */
+  /** Rüzgârın ışığı etkileme çarpanı (manifestonun "rüzgâr" cümlesinde artar). */
   ruzgar: 0.15,
 };
 

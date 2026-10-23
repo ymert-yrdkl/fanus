@@ -32,7 +32,7 @@ export default function DigerHizmetler({ simdiki }: { simdiki: HizmetAdresi }) {
                 <span className="rakam col-start-1 text-base text-soluk md:col-span-5 md:col-start-7 md:text-right md:text-lg">
                   {hizmetFiyatEtiketi(h.adres)}
                 </span>
-                <span className="row-span-2 flex size-11 items-center justify-center justify-self-end rounded-full border border-cizgi-guclu transition-[background-color,border-color,color,transform] duration-500 ease-yay group-hover:rotate-45 group-hover:border-alev group-hover:bg-alev group-hover:text-gece md:col-span-1 md:row-span-1">
+                <span className="row-span-2 flex size-11 items-center justify-center justify-self-end rounded-full border border-cizgi-guclu transition-[background-color,border-color,color,transform] duration-500 ease-yay group-hover:rotate-45 group-hover:border-vurgu group-hover:bg-vurgu group-hover:text-gece md:col-span-1 md:row-span-1">
                   <ArrowUpRight size={18} weight="bold" aria-hidden="true" />
                 </span>
               </Link>

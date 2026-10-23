@@ -137,7 +137,7 @@ export default function Teklif() {
                       aria-pressed={secili}
                       onClick={() => sec(s.kod)}
                       className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-[background-color,border-color,color] duration-300 ${
-                        secili ? "border-alev bg-alev text-gece" : "border-cizgi-guclu text-krem hover:border-krem/50"
+                        secili ? "border-vurgu bg-vurgu text-gece" : "border-cizgi-guclu text-krem hover:border-krem/50"
                       }`}
                     >
                       {secili && <Check size={14} weight="bold" aria-hidden="true" />}
@@ -162,7 +162,7 @@ export default function Teklif() {
                 maxLength={AD_SINIRI}
                 autoComplete="organization"
                 onChange={(olay) => setAd(olay.target.value)}
-                className="mt-2 h-13 w-full rounded-2xl border border-cizgi-guclu bg-cukur px-4 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-alev focus:outline-none"
+                className="mt-2 h-13 w-full rounded-2xl border border-cizgi-guclu bg-cukur px-4 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-vurgu focus:outline-none"
               />
             </div>
 
@@ -177,7 +177,7 @@ export default function Teklif() {
                 maxLength={NOT_SINIRI}
                 onChange={(olay) => setNot(olay.target.value)}
                 placeholder="Örneğin: 40 ürünlük bir mağaza, kapıda ödeme de olsun."
-                className="mt-2 w-full resize-none rounded-2xl border border-cizgi-guclu bg-cukur px-4 py-3 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-alev focus:outline-none"
+                className="mt-2 w-full resize-none rounded-2xl border border-cizgi-guclu bg-cukur px-4 py-3 text-krem transition-colors placeholder:text-silik hover:border-krem/40 focus:border-vurgu focus:outline-none"
               />
             </div>
 

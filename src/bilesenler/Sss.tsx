@@ -25,7 +25,7 @@ export default function Sss({
                 <details className="sss group" name="sss">
                   <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-left md:py-6">
                     <span className="font-baslik text-xl font-medium tracking-[-0.015em] md:text-2xl">{s.soru}</span>
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-cizgi-guclu transition-[transform,background-color,border-color,color] duration-500 ease-yay group-open:rotate-45 group-open:border-alev group-open:bg-alev group-open:text-gece">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-cizgi-guclu transition-[transform,background-color,border-color,color] duration-500 ease-yay group-open:rotate-45 group-open:border-vurgu group-open:bg-vurgu group-open:text-gece">
                       <Plus size={16} aria-hidden="true" />
                     </span>
                   </summary>

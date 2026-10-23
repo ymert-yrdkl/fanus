@@ -5,9 +5,9 @@ const temel =
 
 export const dugmeSinifi = {
   /** Birincil eylem (sayfada tek niyet: teklif almak). */
-  alev: `${temel} bg-alev text-gece hover:bg-alev-acik`,
+  alev: `${temel} bg-vurgu text-gece hover:bg-vurgu-acik`,
   /** İkincil: ince çerçeve. */
   cerceve: `${temel} border border-cizgi-guclu text-krem hover:border-krem/60 hover:bg-krem/5`,
   /** Koyu zemin üstünde açık dolgu. */
-  krem: `${temel} bg-krem text-gece hover:bg-alev-acik`,
+  krem: `${temel} bg-krem text-gece hover:bg-vurgu-acik`,
 };

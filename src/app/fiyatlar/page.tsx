@@ -75,7 +75,7 @@ export default function FiyatlarSayfasi() {
       >
         <div className="mx-auto grid max-w-[90rem] gap-10 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
-            <span className="flex size-12 items-center justify-center rounded-full bg-alev text-gece">
+            <span className="flex size-12 items-center justify-center rounded-full bg-vurgu text-gece">
               <ArrowsClockwise size={22} weight="bold" aria-hidden="true" />
             </span>
             <h2 id="yenileme-baslik" data-bol className="bolum-baslik mt-8 max-w-[12ch]">
@@ -93,7 +93,7 @@ export default function FiyatlarSayfasi() {
                 data-gecikme={String(i * 0.05)}
                 className="flex items-start gap-3 border-b border-cizgi-guclu py-4 text-[0.9375rem] md:text-base"
               >
-                <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
+                <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-vurgu" aria-hidden="true" />
                 {m}
               </li>
             ))}

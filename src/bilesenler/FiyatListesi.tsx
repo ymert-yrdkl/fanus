@@ -34,7 +34,7 @@ export default function FiyatListesi() {
                 href={`/hizmetler/${p.hizmet}`}
                 className="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-6 md:grid-cols-12 md:items-center md:gap-x-8 md:py-7"
               >
-                <span className="font-baslik text-[clamp(1.375rem,2.4vw,2.25rem)] leading-tight font-semibold tracking-[-0.025em] transition-colors duration-300 [font-variation-settings:'opsz'_96,'wdth'_90] group-hover:text-alev md:col-span-6">
+                <span className="font-baslik text-[clamp(1.375rem,2.4vw,2.25rem)] leading-tight font-semibold tracking-[-0.025em] transition-colors duration-300 [font-variation-settings:'opsz'_96,'wdth'_90] group-hover:text-vurgu md:col-span-6">
                   {p.ad}
                 </span>
                 <span className="rakam text-right text-[clamp(1.75rem,3.6vw,3.5rem)] leading-none md:col-span-4 md:col-start-7">
@@ -61,7 +61,7 @@ export default function FiyatListesi() {
           <Link
             href="/fiyatlar"
             data-belir
-            className="group inline-flex min-h-12 items-center gap-2 text-[0.9375rem] font-medium text-alev md:col-span-2 md:col-start-11 md:justify-self-end"
+            className="group inline-flex min-h-12 items-center gap-2 text-[0.9375rem] font-medium text-vurgu md:col-span-2 md:col-start-11 md:justify-self-end"
           >
             Paket içerikleri
             <ArrowRight

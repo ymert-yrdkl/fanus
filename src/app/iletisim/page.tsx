@@ -43,7 +43,7 @@ export default function IletisimSayfasi() {
                       {...(k.adres.startsWith("http") ? { target: "_blank", rel: "noopener" } : {})}
                       className="group grid grid-cols-[auto_1fr_auto] items-center gap-5 py-5"
                     >
-                      <span className="flex size-12 items-center justify-center rounded-full border border-cizgi-guclu text-alev transition-colors duration-500 group-hover:border-alev group-hover:bg-alev group-hover:text-gece">
+                      <span className="flex size-12 items-center justify-center rounded-full border border-cizgi-guclu text-vurgu transition-colors duration-500 group-hover:border-vurgu group-hover:bg-vurgu group-hover:text-gece">
                         <k.Ikon size={22} aria-hidden="true" />
                       </span>
                       <span className="min-w-0">
@@ -55,14 +55,14 @@ export default function IletisimSayfasi() {
                       <ArrowUpRight
                         size={20}
                         aria-hidden="true"
-                        className="text-soluk transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-alev"
+                        className="text-soluk transition-[transform,color] duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-vurgu"
                       />
                     </a>
                   </li>
                 ))}
                 <li data-belir data-gecikme="0.2" className="border-b border-cizgi-guclu">
                   <div className="grid grid-cols-[auto_1fr] items-center gap-5 py-5">
-                    <span className="flex size-12 items-center justify-center rounded-full border border-cizgi-guclu text-alev">
+                    <span className="flex size-12 items-center justify-center rounded-full border border-cizgi-guclu text-vurgu">
                       <VideoCamera size={22} aria-hidden="true" />
                     </span>
                     <span>

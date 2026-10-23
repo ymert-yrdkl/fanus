@@ -95,6 +95,12 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   `REFERANSLAR` › `patiskor` (kaynak App Store id6777159876, Ahmet'in uygulaması, iOS, ücretsiz + Premium; mağaza
   görselleri `public/isler/patiskor-1..3.webp`); `Isler` `uygulama` alanlı referansı yan yana telefon çerçeveleriyle
   gösterir, `sehir` isteğe bağlı. Giriş metni, şerit, meta başlık, altbilgi ve JSON-LD "mobil uygulama" ile güncellendi.
+- Marka (23 Ekim 2026, Yusuf'un kararı): ateş gitti. İşaret `[ · ]` (parantez + amber ışık noktası, `Logo.tsx`,
+  `icon.svg`), vurgu rengi koyu mavi-petrol #063236 (koyu zeminde açık petrol #6fc3b5; token adı `alev` → `vurgu`,
+  `--color-isik` amber), 3B'de alev yerine sprite ışık (cam üstüne çizilir; kırılma dokusunda kenar halkası çıkıyordu),
+  cam yansıması azaltıldı ("fazla gri"). Menü çubuğu yalnız `#icerik` içindeki açık bölümlere bakar (menü penceresi
+  ve açılış perdesi açık zeminli olunca tetikleyici sönüyordu). Marka taslakları scratchpad'de (`marka-taslak*.html`,
+  `yesiller.html`, `petroller.html`, `mavi-petroller.html`).
 - SIRADAKİ: Yusuf'un tasarım geri bildirimi (3B cam ve alev dahil); SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
   başlıkları kısa: denetim uyarısı; Search Console + Bing; anahtar kelimeler; Google İşletme Profili); telefonda hız
   için JS küçültme (Lenis yalnız farede, GSAP eklentileri gerektiğinde).

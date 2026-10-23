@@ -78,13 +78,13 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
                 <ul className="mt-8 grid gap-3">
                   {h.maddeler.map((madde) => (
                     <li key={madde} className="flex items-start gap-3 text-[0.9375rem]">
-                      <Check size={18} weight="bold" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
+                      <Check size={18} weight="bold" className="mt-0.5 shrink-0 text-vurgu" aria-hidden="true" />
                       {madde}
                     </li>
                   ))}
                 </ul>
                 <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-cizgi-guclu pt-6">
-                  <p className="rakam text-xl text-alev">{hizmetFiyatEtiketi(h.adres)}</p>
+                  <p className="rakam text-xl text-vurgu">{hizmetFiyatEtiketi(h.adres)}</p>
                   <Link
                     href={`/hizmetler/${h.adres}`}
                     className="group inline-flex min-h-11 items-center gap-2 text-[0.9375rem] font-medium"

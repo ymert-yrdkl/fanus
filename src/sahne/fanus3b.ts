@@ -1,13 +1,12 @@
-// Silindir cam fanus ve içinde yanan alev, kıvılcımlar (three.js).
+// Silindir cam fanus ve içinde yanan ışık, havada süzülen toz (three.js).
 // Bu dosya yalnız tarayıcıda, sayfa açıldıktan sonra dinamik olarak yüklenir.
 //
 // Cam: dikey bir silindir; üstte ve altta omuz gibi daralıp ortada dar birer delikle açılır (lamba camı gibi).
 // Karşıdan bakınca iki dikey kenar ve daralan uçlar "[ ]" gibi okunur, dönünce silindir olduğu görülür.
-// Manifestoda cam yukarı sıyrılır (alev rüzgâra kalır), sonra iner.
-// Alev logodaki siluette tek gövde: içten yukarı akan türbülans, sıcak çekirdek, rüzgârla yalanan düzensiz uçlar;
-// dışında yumuşak bir ışıltı katmanı. Her zaman kameraya döner, rüzgârla eğilir.
+// Işık (23 Ekim 2026, alev yerine): ortada parlayan sıcak bir küre, etrafında hale ve kâğıda düşen sıcak leke.
+// Rüzgârla titrer ve hafifçe savrulur; cam kalkınca daha çok (manifestoda cam yukarı sıyrılır, sonra iner).
 //
-// Dünya birimleri: alevin tabanı y=ALEV_TABANI'nda, camın ortası y=CAM_ORTASI'nda.
+// Dünya birimleri: ışığın merkezi y=ISIK_ORTASI'nda, camın ortası y=CAM_ORTASI'nda.
 // Ekrandaki yer, boy ve camın kalkması `sahneDurumu`ndan okunur (GSAP değiştirir).
 
 import {
@@ -28,11 +27,8 @@ import {
   PMREMGenerator,
   PointLight,
   Points,
-  Quaternion,
   Scene,
   ShaderMaterial,
-  Shape,
-  ShapeGeometry,
   Sprite,
   SpriteMaterial,
   SRGBColorSpace,
@@ -47,7 +43,7 @@ import { pozKaristir, sahneDurumu, type Poz } from "./durum";
 const NESNE_BOYU = 3.4;
 const KAMERA_UZAKLIK = 12;
 const CAM_ORTASI = 0.5;
-/** Silindir camın dış yarıçapı (logodaki parantezin dış kenarı), et kalınlığı ve yarı boyu. */
+/** Silindir camın dış yarıçapı, et kalınlığı ve yarı boyu. */
 const CAM_YARICAPI = 1.05;
 const CAM_ETI = 0.1;
 const CAM_YARIM_BOY = 1.45;
@@ -56,25 +52,20 @@ const OMUZ = 0.42;
 const DELIK = 0.4;
 /** Cam kalkınca ne kadar yükselir (dünya birimi). */
 const CAM_KALKMA = 1.6;
-const ALEV_TABANI = -0.24;
-/** Logodaki alev yolu 100x140'lık kutuda çizildi; dünya birimine çevirme oranı. */
-const ALEV_OLCEGI = 0.0105;
-const ALEV_BOYU = 136 * ALEV_OLCEGI;
-/** Alevin en geniş yerindeki yarı genişliği (dünya birimi). */
-const ALEV_YARIM_GEN = 38 * ALEV_OLCEGI;
-/** Alevin görünen ortası (hale ve ışık buraya konur). */
-const ALEV_ORTASI = ALEV_TABANI + 0.62;
+/** Işığın merkezi (camın içinde, ortanın biraz altında). */
+const ISIK_ORTASI = 0.38;
 
-/** Alevin ve ışığın renkleri (paletten bağımsız, markanın alevi). Alev renkleri 0-1 aralığında sRGB. */
-const ALEV_RENKLERI = {
-  cekirdek: [1.0, 0.84, 0.25],
-  orta: [1.0, 0.45, 0.07],
-  dis: [0.95, 0.15, 0.04],
-  kivilcim: [1.0, 0.62, 0.18],
-  hale: 0xff6a14,
-  haleKucuk: 0xffc23a,
-  zeminIsigi: 0xff4a2b,
-  isik: 0xff8a2e,
+/** Işığın renkleri (paletten bağımsız, markanın ışığı: amber). */
+const ISIK_RENKLERI = {
+  // Kâğıt zeminde ışık beyazdan parlak olamaz: ışığı renk anlatır (sıcak turuncu gövde, ortası açık)
+  oz: 0xfff1cf,
+  cekirdek: 0xf7a52a,
+  dis: 0xf3b23e,
+  hale: 0xf3b23e,
+  haleKucuk: 0xffd27a,
+  zeminIsigi: 0xf0a63a,
+  isik: 0xffc46b,
+  toz: 0xf3b23e,
 };
 
 /** Sahnenin zemini sayfanın kâğıt rengiyle aynı olmalı: CSS --sahne-zemin'den okunur. */
@@ -87,55 +78,6 @@ type Secenek = {
   /** Hareket azaltma tercihi: zaman akmaz, yalnız gerektiğinde çizilir. */
   azHareket: boolean;
 };
-
-/** Gürültü ve alev biçimi: gövde ile ışıltı gölgelendiricilerinin ortak parçası. */
-const ALEV_ORTAK_GLSL = /* glsl */ `
-  uniform float uZaman;
-  uniform float uGuc;
-  uniform float uProfil[64];
-  varying vec2 vP;
-  float karma(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-  float gurultu(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    f = f * f * (3.0 - 2.0 * f);
-    return mix(mix(karma(i), karma(i + vec2(1.0, 0.0)), f.x), mix(karma(i + vec2(0.0, 1.0)), karma(i + vec2(1.0, 1.0)), f.x), f.y);
-  }
-  float fbm(vec2 p) {
-    float s = 0.0;
-    float a = 0.5;
-    for (int i = 0; i < 4; i++) { s += a * gurultu(p); p *= 2.03; a *= 0.5; }
-    return s;
-  }
-  // Bu yükseklikteki yarı genişliğe göre eksenden uzaklık (0 eksen, 1 kenar), gürültüyle aşındırılmış
-  float kenarUzakligi(float h, float asinmaCarpani, out float n, out float n2) {
-    float yarim = max(uProfil[int(clamp(h, 0.0, 1.0) * 63.0)], 0.02);
-    float d = abs(vP.x) / yarim;
-    n = fbm(vec2(vP.x * 2.6 + 3.0, h * 3.2 - uZaman * 1.5));
-    n2 = fbm(vec2(vP.x * 5.0 - 7.0, h * 6.0 - uZaman * 2.4));
-    return d + (n - 0.5) * (0.25 + 0.55 * h) * asinmaCarpani;
-  }
-`;
-
-const ALEV_KOSE_GLSL = /* glsl */ `
-  uniform float uZaman;
-  uniform vec2 uEgim;
-  uniform float uGuc;
-  varying vec2 vP;
-  void main() {
-    vec3 p = position;
-    float h = clamp(p.y / ${ALEV_BOYU.toFixed(4)}, 0.0, 1.0);
-    vP = vec2(p.x / ${ALEV_YARIM_GEN.toFixed(4)}, h);
-    // Nefes: boy güçle uzar, yavaşça büyüyüp küçülür
-    p.y *= 0.9 + 0.1 * uGuc + 0.03 * sin(uZaman * 5.2);
-    p.x *= 1.0 + 0.03 * sin(uZaman * 4.1);
-    // Salınım ve rüzgâr: tepeye doğru artar
-    float bukulme = pow(h, 1.5);
-    float salinim = sin(uZaman * 3.6 + h * 2.5) * 0.045 + sin(uZaman * 7.9 + h * 5.0) * 0.012;
-    p.x += (uEgim.x * 0.55 + salinim) * bukulme;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-  }
-`;
 
 export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   const dar = window.matchMedia("(max-width: 767px)").matches;
@@ -153,7 +95,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     return null;
   }
   cizici.setPixelRatio(Math.min(window.devicePixelRatio, zayif ? 1.25 : 1.5));
-  // Nötr ton eşleme: alevin doygun renkleri solmadan kalır, camın parlamaları yumuşak sıkışır
+  // Nötr ton eşleme: ışığın sıcak renkleri solmadan kalır, camın parlamaları yumuşak sıkışır
   cizici.toneMapping = NeutralToneMapping;
   cizici.toneMappingExposure = 1.0;
   cizici.outputColorSpace = SRGBColorSpace;
@@ -186,7 +128,8 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   // ---- Cam ----
   const camMalzeme = m(
     new MeshPhysicalMaterial({
-      // Kâğıt zeminde tamamen berrak cam (gri gövde koyu zeminde siyah görünmesin diye vardı, istenmedi)
+      // Kâğıt zeminde tamamen berrak cam. Yusuf (23 Ekim): yayındaki cam güzel ama "biraz fazla gri";
+      // gri, oda ortamının yansımasından geliyor: yansıma ve cila azaltıldı, kâğıt daha çok geçer
       color: 0xffffff,
       metalness: 0,
       // Hafif pürüz: ışıklar kavisli yüzeyde geniş dikey parıltılar bırakır (silindir cam okunur)
@@ -196,8 +139,8 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       ior: 1.5,
       // Kenarlarda ince gökkuşağı kırılması
       dispersion: zayif ? 0 : 4,
-      envMapIntensity: 2.6,
-      clearcoat: 1,
+      envMapIntensity: 1.8,
+      clearcoat: 0.7,
       clearcoatRoughness: 0.08,
       iridescence: 0.22,
       iridescenceIOR: 1.3,
@@ -214,86 +157,12 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   camGrubu.position.y = CAM_ORTASI;
   egim.add(camGrubu);
 
-  // ---- Alev: opak gövde (cam onu kırarak gösterir) + dışında toplamalı ışıltı ----
-  const alevOrtak = {
-    uZaman: { value: 0 },
-    uEgim: { value: new Vector2() },
-    uGuc: { value: 1 },
-    uProfil: { value: alevProfili() },
-    uCekirdek: { value: new Color() },
-    uOrta: { value: new Color() },
-    uDis: { value: new Color() },
-  };
-  const alevGrubu = new Group();
-  alevGrubu.position.y = ALEV_TABANI;
-  const dayanak = 4 * ALEV_OLCEGI;
-  const alevGeo = g(new ShapeGeometry(alevBicimi(), zayif ? 24 : 48));
-  alevGeo.translate(0, -dayanak, 0);
+  // ---- Işık: yumuşak ışıltı katmanları (hale bloğunun altında kurulur) ----
+  const isikGrubu = new Group();
+  isikGrubu.position.y = ISIK_ORTASI;
+  egim.add(isikGrubu);
 
-  const govdeMalzeme = m(
-    new ShaderMaterial({
-      uniforms: alevOrtak,
-      vertexShader: ALEV_KOSE_GLSL,
-      fragmentShader: /* glsl */ `
-        ${ALEV_ORTAK_GLSL}
-        uniform vec3 uCekirdek;
-        uniform vec3 uOrta;
-        uniform vec3 uDis;
-        void main() {
-          float h = vP.y;
-          float n, n2;
-          float kenar = kenarUzakligi(h, 1.0, n, n2);
-          if (kenar > 1.0) discard;
-          float ic = 1.0 - kenar;
-          // Sıcak çekirdek: eksende ve alt-ortada; türbülansla nefes alır
-          float cekirdek = smoothstep(0.3, 1.0, ic) * smoothstep(0.95, 0.2, h) * (0.8 + 0.4 * n2);
-          vec3 renk = mix(uDis, uOrta, smoothstep(0.0, 0.65, ic));
-          renk = mix(renk, uCekirdek, clamp(cekirdek, 0.0, 1.0));
-          renk += vec3(1.0, 0.95, 0.8) * pow(clamp(cekirdek, 0.0, 1.0), 2.5) * 0.6;
-          renk *= 0.85 + 0.3 * n2 + 0.15 * clamp(uGuc - 1.0, 0.0, 1.5);
-          gl_FragColor = vec4(renk, 1.0);
-          #include <colorspace_fragment>
-        }
-      `,
-    }),
-  );
-  const govde = new Mesh(alevGeo, govdeMalzeme);
-  govde.position.y = dayanak;
-  alevGrubu.add(govde);
-
-  const piriltiMalzeme = m(
-    new ShaderMaterial({
-      uniforms: alevOrtak,
-      vertexShader: ALEV_KOSE_GLSL,
-      fragmentShader: /* glsl */ `
-        ${ALEV_ORTAK_GLSL}
-        uniform vec3 uOrta;
-        uniform vec3 uDis;
-        void main() {
-          float h = vP.y;
-          float n, n2;
-          float kenar = kenarUzakligi(h, 0.6, n, n2);
-          float a = smoothstep(1.4, 0.25, kenar) * (0.22 + 0.1 * n2) * min(uGuc, 1.6);
-          vec3 renk = mix(uDis, uOrta, smoothstep(1.2, 0.3, kenar));
-          gl_FragColor = vec4(renk, a);
-          #include <colorspace_fragment>
-        }
-      `,
-      // Kâğıt zeminde toplamalı karışım beyaza gider; normal karışımla sıcak bir leke bırakır
-      transparent: true,
-      blending: NormalBlending,
-      depthTest: false,
-      depthWrite: false,
-    }),
-  );
-  const pirilti = new Mesh(alevGeo, piriltiMalzeme);
-  pirilti.position.y = dayanak;
-  pirilti.scale.set(1.32, 1.16, 1);
-  pirilti.renderOrder = 19;
-  alevGrubu.add(pirilti);
-  egim.add(alevGrubu);
-
-  // ---- Hale (alevin etrafındaki sıcak ışık; kâğıt zeminde normal karışımla turuncu leke) ----
+  // ---- Hale (ışığın etrafındaki sıcak leke; kâğıt zeminde normal karışım) ----
   const haleDokusu = haleDokusuYap();
   const haleMalzemesi = (renk: number, saydamlik: number) =>
     m(
@@ -308,20 +177,30 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
         toneMapped: false,
       }),
     );
-  const haleBuyuk = new Sprite(haleMalzemesi(0xff8a3c, 0.2));
+  const haleBuyuk = new Sprite(haleMalzemesi(ISIK_RENKLERI.hale, 0.3));
   haleBuyuk.scale.setScalar(5.6);
   haleBuyuk.renderOrder = 20;
-  const haleKucuk = new Sprite(haleMalzemesi(0xffb347, 0.2));
-  haleKucuk.scale.setScalar(2.2);
+  const haleKucuk = new Sprite(haleMalzemesi(ISIK_RENKLERI.haleKucuk, 0.6));
+  haleKucuk.scale.setScalar(2.6);
   haleKucuk.renderOrder = 21;
-  haleBuyuk.position.y = haleKucuk.position.y = ALEV_ORTASI;
+  haleBuyuk.position.y = haleKucuk.position.y = ISIK_ORTASI;
   egim.add(haleBuyuk, haleKucuk);
+
+  // Işığın gövdesi: cam üstüne çizilen iki yumuşak disk (kırılma dokusuna girmez: kenar halkası ve testere dişi olmaz).
+  // Dış disk sıcak turuncu, öz açık; kâğıt zeminde ışığı renk anlatır
+  const cekirdek = new Sprite(haleMalzemesi(ISIK_RENKLERI.cekirdek, 0.95));
+  cekirdek.scale.setScalar(1.35);
+  cekirdek.renderOrder = 23;
+  const oz = new Sprite(haleMalzemesi(ISIK_RENKLERI.oz, 0.9));
+  oz.scale.setScalar(0.52);
+  oz.renderOrder = 24;
+  isikGrubu.add(cekirdek, oz);
 
   // Camın altına düşen sıcak ışık
   const zeminIsigiMalzeme = m(
     new MeshBasicMaterial({
       map: haleDokusu,
-      color: 0xf08a3a,
+      color: ISIK_RENKLERI.zeminIsigi,
       transparent: true,
       opacity: 0.3,
       blending: NormalBlending,
@@ -334,29 +213,29 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   zeminIsigi.position.y = -1.2;
   egim.add(zeminIsigi);
 
-  // ---- Kıvılcımlar ----
-  const KIVILCIM = zayif ? 40 : 90;
-  const konumlar = new Float32Array(KIVILCIM * 3);
-  const boyutlar = new Float32Array(KIVILCIM);
-  const parlakliklar = new Float32Array(KIVILCIM);
-  const omur = new Float32Array(KIVILCIM);
-  const hiz = new Float32Array(KIVILCIM);
-  const faz = new Float32Array(KIVILCIM);
-  const yaricap = new Float32Array(KIVILCIM);
-  const kivilcimTazele = (i: number, rastgeleOmur: boolean) => {
+  // ---- Toz: ışıkta süzülen küçük zerreler ----
+  const TOZ = zayif ? 30 : 60;
+  const konumlar = new Float32Array(TOZ * 3);
+  const boyutlar = new Float32Array(TOZ);
+  const parlakliklar = new Float32Array(TOZ);
+  const omur = new Float32Array(TOZ);
+  const hiz = new Float32Array(TOZ);
+  const faz = new Float32Array(TOZ);
+  const yaricap = new Float32Array(TOZ);
+  const tozTazele = (i: number, rastgeleOmur: boolean) => {
     omur[i] = rastgeleOmur ? Math.random() : 0;
-    hiz[i] = 0.06 + Math.random() * 0.12;
+    hiz[i] = 0.04 + Math.random() * 0.08;
     faz[i] = Math.random() * Math.PI * 2;
-    yaricap[i] = 0.08 + Math.random() * 0.7;
-    boyutlar[i] = 0.5 + Math.random() * 1.4;
+    yaricap[i] = 0.1 + Math.random() * 0.6;
+    boyutlar[i] = 0.4 + Math.random() * 1.1;
   };
-  for (let i = 0; i < KIVILCIM; i++) kivilcimTazele(i, true);
+  for (let i = 0; i < TOZ; i++) tozTazele(i, true);
 
-  const kivilcimGeo = g(new BufferGeometry());
-  kivilcimGeo.setAttribute("position", new BufferAttribute(konumlar, 3));
-  kivilcimGeo.setAttribute("aBoyut", new BufferAttribute(boyutlar, 1));
-  kivilcimGeo.setAttribute("aParlaklik", new BufferAttribute(parlakliklar, 1));
-  const kivilcimMalzeme = m(
+  const tozGeo = g(new BufferGeometry());
+  tozGeo.setAttribute("position", new BufferAttribute(konumlar, 3));
+  tozGeo.setAttribute("aBoyut", new BufferAttribute(boyutlar, 1));
+  tozGeo.setAttribute("aParlaklik", new BufferAttribute(parlakliklar, 1));
+  const tozMalzeme = m(
     new ShaderMaterial({
       uniforms: { uPiksel: { value: cizici.getPixelRatio() }, uOlcek: { value: 1 }, uRenk: { value: new Color() } },
       vertexShader: /* glsl */ `
@@ -387,15 +266,15 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       depthWrite: false,
     }),
   );
-  const kivilcimlar = new Points(kivilcimGeo, kivilcimMalzeme);
-  kivilcimlar.renderOrder = 22;
-  kivilcimlar.frustumCulled = false;
-  egim.add(kivilcimlar);
+  const toz = new Points(tozGeo, tozMalzeme);
+  toz.renderOrder = 22;
+  toz.frustumCulled = false;
+  egim.add(toz);
 
   // ---- Işıklar ----
-  const alevIsigi = new PointLight(0xffa04a, 6, 0, 2);
-  alevIsigi.position.y = ALEV_ORTASI;
-  egim.add(alevIsigi);
+  const noktaIsigi = new PointLight(ISIK_RENKLERI.isik, 6, 0, 2);
+  noktaIsigi.position.y = ISIK_ORTASI;
+  egim.add(noktaIsigi);
   const arkaIsik = new DirectionalLight(0xffe4c4, 1.4);
   arkaIsik.position.set(-4, 6, -4);
   // Ön ve yan ışıklar: kavisli camın üstünde dikey parıltılar (silindirin okunması bunlara bağlı)
@@ -428,19 +307,10 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   boyutla();
   window.addEventListener("resize", boyutla);
 
-  // ---- Renkler: alev sabit, zemin sayfanın gece renginden ----
+  // ---- Renkler: ışık sabit, zemin sayfanın kâğıt renginden ----
   const temaUygula = () => {
-    const t = ALEV_RENKLERI;
     cizici.setClearColor(sahneZemini(), 1);
-    const renk = (rgb: number[]) => new Color().setRGB(rgb[0]!, rgb[1]!, rgb[2]!, SRGBColorSpace);
-    alevOrtak.uCekirdek.value.copy(renk(t.cekirdek));
-    alevOrtak.uOrta.value.copy(renk(t.orta));
-    alevOrtak.uDis.value.copy(renk(t.dis));
-    (kivilcimMalzeme.uniforms.uRenk.value as Color).setRGB(t.kivilcim[0]!, t.kivilcim[1]!, t.kivilcim[2]!);
-    haleBuyuk.material.color.set(t.hale);
-    haleKucuk.material.color.set(t.haleKucuk);
-    zeminIsigiMalzeme.color.set(t.zeminIsigi);
-    alevIsigi.color.set(t.isik);
+    (tozMalzeme.uniforms.uRenk.value as Color).set(ISIK_RENKLERI.toz);
     yenidenCiz = true;
   };
   temaUygula();
@@ -451,7 +321,6 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
   let ilkKare = true;
   let sonPoz: Poz | null = null;
   const egimHedefi = { x: 0, z: 0 };
-  const egimDonusu = new Quaternion();
 
   const kare = () => {
     const simdi = performance.now();
@@ -479,16 +348,16 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     yerlesim.scale.setScalar(olcek);
     yerlesim.position.set(poz.x * gorunenW, -poz.y * gorunenH, 0);
 
-    // Açılış: önce alev tutuşur, sonra cam yukarıdan iner
+    // Açılış: önce ışık yanar, sonra cam yukarıdan iner
     const giris = secenek.azHareket ? 1 : sahneDurumu.giris;
-    const alevGiris = MathUtils.smoothstep(giris, 0, 0.35);
+    const isikGiris = MathUtils.smoothstep(giris, 0, 0.35);
     const camGiris = MathUtils.smootherstep(giris, 0.22, 1);
     const acilma = poz.kapak + (1 - camGiris) * 1.9;
     // Cam kalkınca yukarı sıyrılır, hafifçe yana yatar
     camGrubu.position.y = CAM_ORTASI + acilma * CAM_KALKMA;
     camGrubu.rotation.z = acilma * 0.05;
 
-    // Rüzgâr: imlecin hızı, cam kalktıkça alevi daha çok etkiler
+    // Rüzgâr: imlecin hızı, cam kalktıkça ışığı daha çok etkiler
     const vx = (imlec.x - imlec.oncekiX) / Math.max(dt, 0.001);
     const vy = (imlec.y - imlec.oncekiY) / Math.max(dt, 0.001);
     imlec.oncekiX = imlec.x;
@@ -500,22 +369,25 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     const egimX = (ruzgar.x + esinti) * maruz;
     const egimZ = ruzgar.y * 0.5 * maruz;
 
-    const titreme =
-      1 + 0.04 * Math.sin(zaman * 9) * Math.sin(zaman * 3.1) + 0.12 * Math.abs(egimX) * Math.sin(zaman * 19);
-    const guc = Math.max(poz.isik * alevGiris * titreme, 0);
-    alevOrtak.uZaman.value = zaman;
-    alevOrtak.uGuc.value = guc;
-    alevOrtak.uEgim.value.set(egimX, egimZ);
-    // Alev güçle büyür ama camdan taşmaz (ışığa dalışta büyüyen hale ve ışıktır)
-    alevGrubu.scale.setScalar(0.35 + 0.65 * Math.min(guc, 1.15));
-    alevGrubu.visible = guc > 0.01;
+    // Işık: yavaş nefes, rüzgârda titreme ve hafif sönme ("ışık kolayca söner")
+    const nefes = 1 + 0.04 * Math.sin(zaman * 2.1) * Math.sin(zaman * 0.7);
+    const titreme = 1 + 0.18 * Math.abs(egimX) * Math.sin(zaman * 19) - 0.2 * Math.min(Math.abs(egimX), 1);
+    const guc = Math.max(poz.isik * isikGiris * nefes * titreme, 0);
+    // Rüzgâr ışığı yana savurur
+    isikGrubu.position.x = egimX * 0.14;
+    isikGrubu.position.z = egimZ * 0.1;
+    isikGrubu.position.y = ISIK_ORTASI + Math.sin(zaman * 1.3) * 0.015;
+    isikGrubu.scale.setScalar(0.8 + 0.2 * Math.min(guc, 1.3));
+    isikGrubu.visible = guc > 0.01;
+    cekirdek.material.opacity = 0.95 * Math.min(guc, 1.2);
+    oz.material.opacity = 0.9 * Math.min(guc, 1.2);
 
-    haleBuyuk.material.opacity = 0.2 * Math.min(guc, 3);
-    haleKucuk.material.opacity = 0.2 * Math.min(guc, 2);
+    haleBuyuk.material.opacity = 0.3 * Math.min(guc, 2.5);
+    haleKucuk.material.opacity = 0.6 * Math.min(guc, 1.5);
     haleBuyuk.scale.setScalar(4.6 + guc * 1.2);
-    haleKucuk.position.x = haleBuyuk.position.x = egimX * 0.12;
+    haleKucuk.position.x = haleBuyuk.position.x = egimX * 0.14;
     zeminIsigiMalzeme.opacity = 0.26 * Math.min(guc, 2.2);
-    alevIsigi.intensity = 7 * guc * olcek * olcek;
+    noktaIsigi.intensity = 7 * guc * olcek * olcek;
 
     // Eğim: imleç (fare varsa) ve yavaş salınım
     if (imlec.var) {
@@ -526,30 +398,25 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
     egim.rotation.z = MathUtils.lerp(egim.rotation.z, egimHedefi.z + Math.sin(zaman * 0.31) * 0.02, 0.05);
     egim.rotation.y = Math.sin(zaman * 0.22) * 0.38 + (imlec.var ? imlec.x * 0.18 : 0);
 
-    // Alev hep kameraya bakar (düz katmanlar yandan görünmesin): eğimin dönüşünü geri al
-    egim.updateWorldMatrix(true, false);
-    egim.getWorldQuaternion(egimDonusu);
-    alevGrubu.quaternion.copy(egimDonusu.invert()).multiply(kamera.quaternion);
-
-    // Kıvılcımlar: alevden yükselir; cam kapalıyken içinde kalır, kalkınca tavan yükselir ve rüzgâra kapılır
+    // Toz: ışıktan yükselir; cam kapalıyken içinde kalır, kalkınca tavan yükselir ve rüzgâra kapılır
     const kapali = acilma < 0.3;
     const tavan = MathUtils.lerp(1.65, 4.2, Math.min(acilma, 1));
     const sinirX = kapali ? 0.6 : 3;
     const sinirZ = kapali ? 0.22 : 3;
-    for (let i = 0; i < KIVILCIM; i++) {
+    for (let i = 0; i < TOZ; i++) {
       omur[i] += dt * hiz[i] * (0.6 + 0.4 * guc);
-      if (omur[i] >= 1) kivilcimTazele(i, false);
+      if (omur[i] >= 1) tozTazele(i, false);
       const o = omur[i];
-      const aci = faz[i] + zaman * 0.6 + o * 3;
+      const aci = faz[i] + zaman * 0.5 + o * 3;
       const yar = yaricap[i] * (0.25 + o * 0.9);
       konumlar[i * 3] = MathUtils.clamp(Math.cos(aci) * yar + egimX * o * o * 2.2, -sinirX, sinirX);
-      konumlar[i * 3 + 1] = ALEV_TABANI + o * (tavan - ALEV_TABANI);
+      konumlar[i * 3 + 1] = ISIK_ORTASI - 0.5 + o * (tavan - ISIK_ORTASI + 0.5);
       konumlar[i * 3 + 2] = MathUtils.clamp(Math.sin(aci) * yar, -sinirZ, sinirZ);
-      parlakliklar[i] = Math.sin(o * Math.PI) * Math.min(guc, 1.5) * 0.8;
+      parlakliklar[i] = Math.sin(o * Math.PI) * Math.min(guc, 1.5) * 0.55;
     }
-    kivilcimGeo.attributes.position.needsUpdate = true;
-    kivilcimGeo.attributes.aParlaklik.needsUpdate = true;
-    kivilcimMalzeme.uniforms.uOlcek.value = olcek;
+    tozGeo.attributes.position.needsUpdate = true;
+    tozGeo.attributes.aParlaklik.needsUpdate = true;
+    tozMalzeme.uniforms.uOlcek.value = olcek;
 
     cizici.render(sahne, kamera);
     if (ilkKare) {
@@ -567,7 +434,7 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
           cizici.setPixelRatio(1);
           cizici.transmissionResolutionScale = 0.5;
           camMalzeme.dispersion = 0;
-          kivilcimMalzeme.uniforms.uPiksel.value = 1;
+          tozMalzeme.uniforms.uPiksel.value = 1;
           boyutla();
         }
       }
@@ -598,38 +465,6 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       cizici.dispose();
     },
   };
-}
-
-/**
- * Logodaki alevin biçimi, tabanı y=0'da. SVG yolu (100x140'lık kutuda, y aşağı):
- * M57 2C64 34 88 54 88 90C88 119 71 138 50 138C29 138 12 119 12 90C12 58 42 42 57 2Z
- */
-function alevBicimi() {
-  const n = (x: number, y: number): [number, number] => [(x - 50) * ALEV_OLCEGI, (138 - y) * ALEV_OLCEGI];
-  const b = new Shape();
-  b.moveTo(...n(57, 2));
-  b.bezierCurveTo(...n(64, 34), ...n(88, 54), ...n(88, 90));
-  b.bezierCurveTo(...n(88, 119), ...n(71, 138), ...n(50, 138));
-  b.bezierCurveTo(...n(29, 138), ...n(12, 119), ...n(12, 90));
-  b.bezierCurveTo(...n(12, 58), ...n(42, 42), ...n(57, 2));
-  return b;
-}
-
-/**
- * Alevin 64 yükseklik diliminde yarı genişliği (en geniş yere oranla, 0..1). Gölgelendirici bununla her noktanın
- * kenara uzaklığını bilir; gürültüyle aşındırılan kenar logonun siluetini korur.
- */
-function alevProfili() {
-  const noktalar = alevBicimi().getPoints(120);
-  const profil = new Array<number>(64).fill(0);
-  noktalar.forEach((p) => {
-    const i = Math.min(63, Math.max(0, Math.round((p.y / ALEV_BOYU) * 63)));
-    profil[i] = Math.max(profil[i]!, Math.abs(p.x) / ALEV_YARIM_GEN);
-  });
-  // Nokta düşmeyen dilimleri komşularından doldur
-  for (let i = 1; i < 64; i++) if (profil[i] === 0) profil[i] = profil[i - 1]!;
-  for (let i = 62; i >= 0; i--) if (profil[i] === 0) profil[i] = profil[i + 1]!;
-  return profil;
 }
 
 /**

@@ -84,12 +84,12 @@ export default function Giris() {
           Web&apos;den üretime,
           <br /> işinizi yürüten
           <br />
-          <span className="relative inline-block text-alev">
+          <span className="relative inline-block text-vurgu">
             yazılım.
             <span
               data-vurgu-cizgi
               aria-hidden="true"
-              className="absolute -bottom-1 left-0 h-[0.06em] w-full origin-left rounded-full bg-alev/70"
+              className="absolute -bottom-1 left-0 h-[0.06em] w-full origin-left rounded-full bg-vurgu/70"
             />
           </span>
         </h1>
@@ -132,7 +132,7 @@ export default function Giris() {
                 href={r.adres}
                 target="_blank"
                 rel="noopener"
-                className="group inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] text-krem/85 transition-colors hover:text-alev md:min-h-0"
+                className="group inline-flex min-h-11 items-center gap-1.5 text-[0.9375rem] text-krem/85 transition-colors hover:text-vurgu md:min-h-0"
               >
                 {r.gosterim ?? r.alanAdi}
                 <ArrowUpRight

@@ -8,14 +8,15 @@ hareket 8, yoğunluk 5.
 
 ## Metafor ve işaret
 
-Fanus, alevi rüzgârdan koruyan camdır. İşletmenin ışığı (emeği) internette kolay söner; fanus onu korur, büyütür,
-uzaktan görünür kılar. İşaret: köşeli parantez içinde alev, `[ alev ]`; yazım **fanus**soft ("soft" soluk).
+Fanus, ışığı rüzgârdan koruyan camdır. İşletmenin ışığı (emeği) internette kolay söner; fanus onu korur, büyütür,
+uzaktan görünür kılar. İşaret (23 Ekim 2026): `[ · ]` — iki köşeli parantez (fanusun iki cam duvarı; aynı zamanda
+kod, klavyeyle yazılır) ve ortada tek bir **ışık noktası** (amber, `--color-isik`). Düz metinde `[.]`. Parantezler
+mürekkep ya da kâğıt rengindedir; işaret tek renkte çalışır, vurgu renginden bağımsızdır. Yazım: **fanus**soft
+("soft" soluk). Ateş/alev imgesi bırakıldı: herkesin simgesi ("ucuz", kampanya çağrışımı); fanus markaya özgü.
 3B'de cam (22 Ekim 2026): **kapalı bir silindir**, üstte ve altta omuz gibi daralıp ortada dar birer delikle açılır
-(lamba camı); bilezik ya da pencere yok (Yusuf ikisini de istemedi). Karşıdan iki dikey kenar ve daralan uçlar
-`[ ]` gibi okunur, dönünce silindir olduğu görülür. Alev logodaki siluette tek gövde: gürültüyle içten
-akan türbülans, sıcak çekirdek, düzensiz uçlar, dışında yumuşak ışıltı (`src/sahne/fanus3b.ts`). Düz, çizgi film
-gibi alev işareti sayfada kullanılmaz (Yusuf "ucuz" buldu); parantezli işaret yalnız logo, menü ve altbilgide.
-Eski fener (topuz, pirinç taban, fitil) "falcı fanusu", parantez biçimli iki cam parça ise anlaşılmaz bulunduğu için bırakıldı.
+(lamba camı); bilezik ya da pencere yok. İçinde alev değil **ışık**: cam üstüne çizilen sıcak turuncu ve açık öz
+diskleri, hale ve kâğıda düşen leke; rüzgârla titrer ve savrulur (`src/sahne/fanus3b.ts`). Eski fener "falcı fanusu",
+parçalı cam anlaşılmaz, alev ucuz bulunduğu için bırakıldı.
 
 ## Neden bu sistem
 
@@ -35,27 +36,27 @@ Eski fener (topuz, pirinç taban, fitil) "falcı fanusu", parantez biçimli iki 
 ## Renk (yalnız token)
 
 Gece (koyu tahta, karolar, çerçeveler): antrasit #1a1b1e (Discord'un koyu tonları). Gündüz: kâğıt #f4f3ee, mürekkep
-#141416. Tek vurgu "alev": gecede mercan #ff6145, gündüzde kor #c9321a. Lacivert, degrade, saf siyah/beyaz yok.
+#141416. Tek vurgu "vurgu" (23 Ekim 2026, Yusuf'un seçimi): gündüzde **koyu mavi-petrol #063236**, koyu zeminde açık petrol #6fc3b5 (koyu kutularda yazı ve rakam okunsun diye). Işık noktası amber #f3b23e yalnız işarette ve 3B'de. Lacivert, degrade, saf siyah/beyaz yok.
 Bütün sayfalar kâğıt üstünde başlar (`main` `data-zemin="acik"`); 3B sahnenin zemini de kâğıt (`--sahne-zemin`), cam
 tamamen berrak (gri gövde istenmedi), parıltı ve hale normal karışımla sıcak turuncu leke bırakır (toplamalı karışım
 açık zeminde beyaza gider). Üç kapsam: varsayılan gece (`@theme`; yalnız kapsam dışı kalan parçalar),
 `data-zemin="acik"` (token'lar `--g-*` değerlerine eşlenir), gündüz içinde `data-zemin="koyu"` (token'lar `--n-*`
 kopyasına geri döner; tahta, karo, çerçeve). Bütün çiftler WCAG AA (en az 4,5:1).
 
-| Token                               | Gece              | Gündüz             | Kullanım                                                          |
-| ----------------------------------- | ----------------- | ------------------ | ----------------------------------------------------------------- |
-| `gece`                              | #1a1b1e           | #f4f3ee            | zemin (tahta / kâğıt); 3B sahnenin arkası kâğıt (`--sahne-zemin`) |
-| `gece-2..4`                         | #232428 → #34363b | #fbfaf7 → #e1dfd6  | yüzeyler (az kullanılır)                                          |
-| `cukur`                             | #141518           | #fdfcfa            | gömülü paneller, form alanları                                    |
-| `krem`                              | #f4f3ee           | #141416            | ana metin                                                         |
-| `soluk`                             | #b9bcc3           | #44454b            | ikincil metin                                                     |
-| `silik`                             | #a3a7b0           | #67686f            | küçük yardımcı metin                                              |
-| `alev` (+ `alev-acik`, `alev-koyu`) | #ff6145           | #c9321a            | TEK vurgu: birincil düğme, vurgu kelime                           |
-| `canli`                             | #6fcf8f           |                    | yalnız "yayında" durum noktası                                    |
-| `cizgi`, `cizgi-guclu`              | beyaz %10 / %22   | mürekkep %14 / %30 | ayraç ve çerçeve; gündüzde belirgin                               |
+| Token                                  | Gece              | Gündüz             | Kullanım                                                          |
+| -------------------------------------- | ----------------- | ------------------ | ----------------------------------------------------------------- |
+| `gece`                                 | #1a1b1e           | #f4f3ee            | zemin (tahta / kâğıt); 3B sahnenin arkası kâğıt (`--sahne-zemin`) |
+| `gece-2..4`                            | #232428 → #34363b | #fbfaf7 → #e1dfd6  | yüzeyler (az kullanılır)                                          |
+| `cukur`                                | #141518           | #fdfcfa            | gömülü paneller, form alanları                                    |
+| `krem`                                 | #f4f3ee           | #141416            | ana metin                                                         |
+| `soluk`                                | #b9bcc3           | #44454b            | ikincil metin                                                     |
+| `silik`                                | #a3a7b0           | #67686f            | küçük yardımcı metin                                              |
+| `vurgu` (+ `vurgu-acik`, `vurgu-koyu`) | #6fc3b5           | #063236            | TEK vurgu: birincil düğme, vurgu kelime, bağlantı                 |
+| `isik`                                 | #f3b23e           | #f3b23e            | işaretin noktası, 3B ışık, yedek ışık                             |
+| `canli`                                | #6fcf8f           |                    | yalnız "yayında" durum noktası                                    |
+| `cizgi`, `cizgi-guclu`                 | beyaz %10 / %22   | mürekkep %14 / %30 | ayraç ve çerçeve; gündüzde belirgin                               |
 
-İş vitrinindeki tarayıcı ve telefon çerçeveleri her zeminde koyu gri (`data-zemin="koyu"`). 3B'de alev markanın
-sabit rengindedir (`ALEV_RENKLERI`). Gündüz zeminde süs ışıkları yok. Hizmet örneklerinin içindeki minyatür siteler
+İş vitrinindeki tarayıcı ve telefon çerçeveleri her zeminde koyu gri (`data-zemin="koyu"`). 3B'de ışık markanın sabit rengindedir (`ISIK_RENKLERI`). Gündüz zeminde süs ışıkları yok. Hizmet örneklerinin içindeki minyatür siteler
 kendi kâğıt renklerini kullanır (müşterinin sitesini temsil eder).
 
 ## Yazı
@@ -70,7 +71,7 @@ kendi kâğıt renklerini kullanır (müşterinin sitesini temsil eder).
 - `BolumBasi`: her bölümün başı. Bölüm iç boşluğu `pt-10 pb-16 md:pt-14 md:pb-24`; bölümler arasında ek boşluk yok
   (üst üste binen büyük boşluklar "neden boşluk var" eleştirisini getirdi).
 - Köşe yarıçapı 1,25 rem (`--radius-kart`); 2 rem'lik yuvarlak kartlar kaldırıldı.
-- Düğmeler hap biçimli (`dugme.ts`): birincil alev, ikincil ince çerçeve.
+- Düğmeler hap biçimli (`dugme.ts`): birincil vurgu, ikincil ince çerçeve.
 - Koyu karo: `data-zemin="koyu"` + `rounded-[1.25rem]`; içinde token'lar gece değerlerindedir.
 
 ## Hareket
@@ -86,5 +87,5 @@ kendi kâğıt renklerini kullanır (müşterinin sitesini temsil eder).
 ## Yasaklar
 
 Uzun çizgi (—), bölüm numarası etiketi (01, 02), sahte istatistik, "devrim yaratın / sorunsuz / yeni nesil"
-gibi dolgu sözcükler, emoji ikon, düz alev ikonu, özel imleç, imleci izleyen pencere, büyük gradyan metin,
+gibi dolgu sözcükler, emoji ikon, alev/ateş ikonu, özel imleç, imleci izleyen pencere, büyük gradyan metin,
 saf siyah/beyaz, gri üstüne gri.

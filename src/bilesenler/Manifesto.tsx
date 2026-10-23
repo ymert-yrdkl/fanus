@@ -254,7 +254,7 @@ export default function Manifesto() {
 function KartGovdesi({ kart }: { kart: Kart }) {
   return (
     <span className="flex w-[17rem] max-w-full items-center gap-3 rounded-2xl border border-cizgi-guclu bg-gece-2 px-4 py-3 golge">
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-alev text-gece">
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-vurgu text-gece">
         <kart.Ikon size={20} weight="bold" aria-hidden="true" />
       </span>
       <span className="min-w-0">

@@ -54,14 +54,14 @@ export default function MobilDemo() {
               <span className="h-1.5 w-14 rounded-full bg-cukur" aria-hidden="true" />
             </div>
             <div className="flex items-center gap-3 px-5 pt-3">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-alev text-xs font-semibold text-gece">
+              <span className="flex size-9 items-center justify-center rounded-xl bg-vurgu text-xs font-semibold text-gece">
                 {basHarfler(gorunen)}
               </span>
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">{gorunen}</p>
                 <p className="text-[0.7rem] text-soluk">{premium ? "Premium üye" : "Ücretsiz plan"}</p>
               </div>
-              {premium && <Crown size={16} weight="fill" className="ml-auto text-alev" aria-hidden="true" />}
+              {premium && <Crown size={16} weight="fill" className="ml-auto text-vurgu" aria-hidden="true" />}
             </div>
 
             {/* Sekme içeriği */}
@@ -77,7 +77,7 @@ export default function MobilDemo() {
                       {[0.4, 0.7, 0.5, 0.9, 0.6, 1, 0.8].map((b, i) => (
                         <span
                           key={i}
-                          className="cubuk flex-1 origin-bottom rounded-sm bg-alev/80"
+                          className="cubuk flex-1 origin-bottom rounded-sm bg-vurgu/80"
                           style={{ height: `${b * 100}%`, animationDelay: `${i * 0.2}s` }}
                         />
                       ))}
@@ -85,12 +85,12 @@ export default function MobilDemo() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="rounded-2xl bg-gece-2 p-3">
-                      <Heart size={18} weight="fill" className="text-alev" aria-hidden="true" />
+                      <Heart size={18} weight="fill" className="text-vurgu" aria-hidden="true" />
                       <p className="mt-2 text-xs font-semibold">Favoriler</p>
                       <p className="text-[0.7rem] text-soluk">12 kayıt</p>
                     </div>
                     <div className="rounded-2xl bg-gece-2 p-3">
-                      <MapPin size={18} weight="fill" className="text-alev" aria-hidden="true" />
+                      <MapPin size={18} weight="fill" className="text-vurgu" aria-hidden="true" />
                       <p className="mt-2 text-xs font-semibold">En yakın şube</p>
                       <p className="text-[0.7rem] text-soluk">1,2 km</p>
                     </div>
@@ -101,7 +101,7 @@ export default function MobilDemo() {
                 <div className="grid gap-2">
                   {["Yarın 10:30", "Cuma 14:00", "Pazartesi 09:15"].map((s, i) => (
                     <div key={s} className="flex items-center gap-3 rounded-2xl bg-gece-2 p-3">
-                      <CalendarCheck size={18} className={i === 0 ? "text-alev" : "text-soluk"} aria-hidden="true" />
+                      <CalendarCheck size={18} className={i === 0 ? "text-vurgu" : "text-soluk"} aria-hidden="true" />
                       <div>
                         <p className="text-xs font-semibold">{s}</p>
                         <p className="text-[0.7rem] text-soluk">{i === 0 ? "Onaylandı" : "Boş saat"}</p>
@@ -123,7 +123,7 @@ export default function MobilDemo() {
                       type="button"
                       onClick={() => setPremium((p) => !p)}
                       className={`mt-3 inline-flex min-h-9 items-center justify-center rounded-full px-4 text-xs font-semibold transition-colors ${
-                        premium ? "border border-cizgi-guclu" : "bg-alev text-gece"
+                        premium ? "border border-cizgi-guclu" : "bg-vurgu text-gece"
                       }`}
                     >
                       {premium ? "Aboneliği yönet" : "Premium'a geç · ₺49/ay"}
@@ -148,7 +148,7 @@ export default function MobilDemo() {
                   aria-pressed={sekme === kod}
                   onClick={() => setSekme(kod)}
                   className={`flex min-h-10 flex-col items-center justify-center gap-0.5 rounded-xl text-[0.65rem] transition-colors ${
-                    sekme === kod ? "bg-gece text-alev" : "text-soluk"
+                    sekme === kod ? "bg-gece text-vurgu" : "text-soluk"
                   }`}
                 >
                   <Ikon size={16} weight={sekme === kod ? "fill" : "regular"} aria-hidden="true" />
@@ -164,7 +164,7 @@ export default function MobilDemo() {
                 bildirim === null ? "-translate-y-24 opacity-0" : "translate-y-0 opacity-100"
               }`}
             >
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-alev text-gece">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-vurgu text-gece">
                 <Bell size={14} weight="fill" aria-hidden="true" />
               </span>
               <span className="min-w-0">

@@ -96,14 +96,14 @@ export default function Surec() {
             >
               <div
                 data-dolum
-                className="h-full origin-left bg-alev shadow-[0_0_12px_color-mix(in_srgb,var(--color-alev)_80%,transparent)]"
+                className="h-full origin-left bg-vurgu shadow-[0_0_12px_color-mix(in_srgb,var(--color-vurgu)_80%,transparent)]"
               />
             </div>
             <div
               aria-hidden="true"
               className="absolute top-0 bottom-0 left-[1.45rem] w-px bg-cizgi-guclu sm:left-[1.95rem] md:hidden"
             >
-              <div data-dolum-dikey className="h-full w-full origin-top bg-alev" />
+              <div data-dolum-dikey className="h-full w-full origin-top bg-vurgu" />
             </div>
 
             {SUREC.map((adim, i) => {
@@ -116,9 +116,9 @@ export default function Surec() {
                 >
                   <span
                     aria-hidden="true"
-                    className="absolute top-3 left-[1.45rem] size-3 -translate-x-1/2 rounded-full border border-cizgi-guclu bg-gece transition-[background-color,border-color,box-shadow] duration-500 group-data-aktif/adim:border-alev group-data-aktif/adim:bg-alev group-data-aktif/adim:shadow-[0_0_16px_4px_color-mix(in_srgb,var(--color-alev)_60%,transparent)] sm:left-[1.95rem] md:top-0 md:left-6 md:-translate-y-1/2"
+                    className="absolute top-3 left-[1.45rem] size-3 -translate-x-1/2 rounded-full border border-cizgi-guclu bg-gece transition-[background-color,border-color,box-shadow] duration-500 group-data-aktif/adim:border-vurgu group-data-aktif/adim:bg-vurgu group-data-aktif/adim:shadow-[0_0_16px_4px_color-mix(in_srgb,var(--color-vurgu)_60%,transparent)] sm:left-[1.95rem] md:top-0 md:left-6 md:-translate-y-1/2"
                   />
-                  <span className="flex size-11 items-center justify-center rounded-full border border-cizgi-guclu text-soluk transition-[background-color,border-color,color] duration-700 group-data-aktif/adim:border-alev group-data-aktif/adim:bg-alev group-data-aktif/adim:text-gece">
+                  <span className="flex size-11 items-center justify-center rounded-full border border-cizgi-guclu text-soluk transition-[background-color,border-color,color] duration-700 group-data-aktif/adim:border-vurgu group-data-aktif/adim:bg-vurgu group-data-aktif/adim:text-gece">
                     <Ikon size={20} aria-hidden="true" />
                   </span>
                   <h3 className="mt-6 font-baslik text-[clamp(2rem,3.2vw,3rem)] leading-none font-semibold tracking-[-0.035em] text-soluk transition-colors duration-700 [font-variation-settings:'opsz'_96,'wdth'_88] group-data-aktif/adim:text-krem md:mt-8">

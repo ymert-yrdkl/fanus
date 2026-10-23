@@ -121,14 +121,14 @@ export default function EticaretDemo() {
       <div className="relative overflow-hidden rounded-[1.75rem] border border-cizgi-guclu bg-cukur p-4 golge">
         <div className="flex items-center justify-between gap-3 border-b border-cizgi pb-3">
           <div className="flex min-w-0 items-center gap-2.5">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-alev font-baslik text-sm font-semibold text-gece">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-vurgu font-baslik text-sm font-semibold text-gece">
               {basHarfler(gorunen)}
             </span>
             <span className="truncate font-medium">{gorunen}</span>
           </div>
           <span className="relative flex size-9 items-center justify-center rounded-full bg-gece-3">
             <ShoppingBag size={18} aria-hidden="true" />
-            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-alev text-[0.6875rem] font-semibold text-gece tabular-nums">
+            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-vurgu text-[0.6875rem] font-semibold text-gece tabular-nums">
               {sepetAdedi}
             </span>
             <span className="sr-only">Sepette {sepetAdedi} ürün</span>
@@ -138,7 +138,7 @@ export default function EticaretDemo() {
         <ul className="mt-3 grid gap-2.5">
           {URUNLER.map((u, i) => (
             <li key={u.kod} className="flex items-center gap-3 rounded-2xl bg-gece-2 p-2.5">
-              <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gece-4 text-alev">
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gece-4 text-vurgu">
                 <u.Ikon size={24} aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
@@ -185,7 +185,7 @@ export default function EticaretDemo() {
                 setAsama("odeme");
               }}
               disabled={toplam === 0}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-alev font-medium text-gece transition-colors hover:bg-alev-acik disabled:opacity-40"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-vurgu font-medium text-gece transition-colors hover:bg-vurgu-acik disabled:opacity-40"
             >
               Ödemeye geç
             </button>
@@ -193,7 +193,7 @@ export default function EticaretDemo() {
           {asama === "odeme" && (
             <div className="grid gap-2.5">
               <div className="flex items-center gap-3 rounded-2xl border border-cizgi bg-gece-2 px-4 py-3 text-sm">
-                <CreditCard size={20} className="text-alev" aria-hidden="true" />
+                <CreditCard size={20} className="text-vurgu" aria-hidden="true" />
                 <span className="font-mono tracking-wider">•••• 4242</span>
                 <span className="ml-auto text-soluk">12/29</span>
               </div>
@@ -203,7 +203,7 @@ export default function EticaretDemo() {
                   dokunuldu.current = true;
                   ode();
                 }}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-alev font-medium text-gece transition-colors hover:bg-alev-acik"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-vurgu font-medium text-gece transition-colors hover:bg-vurgu-acik"
               >
                 <LockSimple size={16} weight="bold" aria-hidden="true" />
                 {tlBicimi.format(toplam / 100)} öde
@@ -214,13 +214,13 @@ export default function EticaretDemo() {
             <div className="grid gap-3 rounded-2xl border border-cizgi bg-gece-2 p-4">
               <p className="text-sm">3D Secure doğrulanıyor</p>
               <div className="h-1.5 overflow-hidden rounded-full bg-gece-4">
-                <div className="h-full w-full origin-left animate-[dolum_1.4s_ease-in-out_forwards] rounded-full bg-alev" />
+                <div className="h-full w-full origin-left animate-[dolum_1.4s_ease-in-out_forwards] rounded-full bg-vurgu" />
               </div>
             </div>
           )}
           {asama === "tamam" && (
-            <div className="flex items-center gap-3 rounded-2xl border border-alev/40 bg-alev/10 p-4">
-              <CheckCircle size={28} weight="fill" className="shrink-0 text-alev" aria-hidden="true" />
+            <div className="flex items-center gap-3 rounded-2xl border border-vurgu/40 bg-vurgu/10 p-4">
+              <CheckCircle size={28} weight="fill" className="shrink-0 text-vurgu" aria-hidden="true" />
               <div>
                 <p className="font-medium">Ödeme alındı</p>
                 <p className="text-sm text-soluk">Sipariş #{yeniNo} oluşturuldu</p>
@@ -250,7 +250,7 @@ export default function EticaretDemo() {
                 <span
                   className={`w-[5.75rem] shrink-0 rounded-full px-2 py-1 text-center text-xs ${
                     s.durum === "Yeni"
-                      ? "bg-alev text-gece"
+                      ? "bg-vurgu text-gece"
                       : s.durum === "Hazırlanıyor"
                         ? "bg-gece-4 text-krem"
                         : "bg-transparent text-soluk ring-1 ring-cizgi-guclu"

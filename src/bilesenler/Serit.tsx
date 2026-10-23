@@ -67,7 +67,7 @@ export default function Serit() {
                 <span className="font-baslik text-[clamp(1.75rem,3.6vw,3.25rem)] leading-none font-semibold tracking-[-0.035em] whitespace-nowrap [font-variation-settings:'opsz'_96,'wdth'_88]">
                   {oge}
                 </span>
-                <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-alev md:size-2.5" />
+                <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-vurgu md:size-2.5" />
               </Fragment>
             ))}
           </div>

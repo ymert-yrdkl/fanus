@@ -116,7 +116,7 @@ export default function Isler({
                 <p className="mt-4 leading-relaxed text-soluk max-md:line-clamp-3 md:mt-5">{r.ozet}</p>
                 {r.sayi && (
                   <p className="mt-5 flex items-baseline gap-2.5 md:mt-7">
-                    <span className="rakam text-4xl text-alev md:text-5xl">
+                    <span className="rakam text-4xl text-vurgu md:text-5xl">
                       <span data-sayac={r.sayi.deger}>{r.sayi.deger.toLocaleString("tr-TR")}</span>
                       {r.sayi.sonEk}
                     </span>
@@ -126,7 +126,7 @@ export default function Isler({
                 <ul className="mt-7 hidden gap-2.5 md:grid">
                   {r.maddeler.map((m) => (
                     <li key={m} className="flex items-start gap-3 text-[0.9375rem]">
-                      <Check size={16} weight="bold" className="mt-1 shrink-0 text-alev" aria-hidden="true" />
+                      <Check size={16} weight="bold" className="mt-1 shrink-0 text-vurgu" aria-hidden="true" />
                       {m}
                     </li>
                   ))}
@@ -135,10 +135,10 @@ export default function Isler({
                   href={r.adres}
                   target="_blank"
                   rel="noopener"
-                  className="group mt-6 inline-flex min-h-12 items-center gap-2 rounded-full border border-cizgi-guclu py-2 pr-2 pl-5 text-[0.9375rem] transition-colors duration-300 hover:border-alev md:mt-9"
+                  className="group mt-6 inline-flex min-h-12 items-center gap-2 rounded-full border border-cizgi-guclu py-2 pr-2 pl-5 text-[0.9375rem] transition-colors duration-300 hover:border-vurgu md:mt-9"
                 >
                   {r.gosterim ?? r.alanAdi}
-                  <span className="flex size-9 items-center justify-center rounded-full bg-krem text-gece transition-transform duration-500 ease-yay group-hover:rotate-45 group-hover:bg-alev">
+                  <span className="flex size-9 items-center justify-center rounded-full bg-krem text-gece transition-transform duration-500 ease-yay group-hover:rotate-45 group-hover:bg-vurgu">
                     <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
                   </span>
                   <span className="sr-only">(yeni sekmede açılır)</span>

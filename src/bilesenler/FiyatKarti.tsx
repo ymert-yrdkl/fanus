@@ -42,7 +42,7 @@ export default function FiyatKarti({
             </p>
             {paket.yenileme !== null && (
               <p className="mt-3 text-[0.9375rem] text-soluk">
-                Yıllık yenileme <span className="font-medium text-alev">{fiyatYaz(paket.yenileme)}</span> {KDV_EKI}
+                Yıllık yenileme <span className="font-medium text-vurgu">{fiyatYaz(paket.yenileme)}</span> {KDV_EKI}
               </p>
             )}
           </>
@@ -58,7 +58,7 @@ export default function FiyatKarti({
         <ul className="grid flex-1 content-start gap-3">
           {paket.maddeler.map((m) => (
             <li key={m} className="flex items-start gap-3 text-[0.9375rem]">
-              <Check size={17} weight="bold" className="mt-0.5 shrink-0 text-alev" aria-hidden="true" />
+              <Check size={17} weight="bold" className="mt-0.5 shrink-0 text-vurgu" aria-hidden="true" />
               {m}
             </li>
           ))}

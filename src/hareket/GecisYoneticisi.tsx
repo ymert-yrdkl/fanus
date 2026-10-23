@@ -102,7 +102,7 @@ export default function GecisYoneticisi() {
       <div
         ref={cizgi}
         aria-hidden="true"
-        className="pointer-events-none fixed inset-x-0 top-0 z-[79] hidden h-0.5 origin-left bg-alev"
+        className="pointer-events-none fixed inset-x-0 top-0 z-[79] hidden h-0.5 origin-left bg-vurgu"
       />
     </>
   );

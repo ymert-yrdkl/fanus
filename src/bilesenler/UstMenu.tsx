@@ -25,7 +25,7 @@ function KayanYazi({ children }: { children: string }) {
       <span className="block transition-transform duration-500 ease-yay group-hover:-translate-y-full">{children}</span>
       <span
         aria-hidden="true"
-        className="absolute inset-0 block translate-y-full text-alev transition-transform duration-500 ease-yay group-hover:translate-y-0"
+        className="absolute inset-0 block translate-y-full text-vurgu transition-transform duration-500 ease-yay group-hover:translate-y-0"
       >
         {children}
       </span>
@@ -72,16 +72,24 @@ export default function UstMenu() {
   useGSAP(
     () => {
       const ust = kok.current!;
-      ust.removeAttribute("data-acik-ust");
-      gsap.utils.toArray<HTMLElement>('[data-zemin="acik"]').forEach((bolum) => {
+      // Sayfa içeriğindeki (#icerik) açık zeminli bölümlerden en az biri menünün altındaysa menü açık renkte;
+      // menü penceresi ve açılış perdesi gibi içerik dışı açık zeminler sayılmaz (kapalıyken tetikleyiciyi söndürürdü)
+      const aktifler = new Set<HTMLElement>();
+      const uygula = () => ust.toggleAttribute("data-acik-ust", aktifler.size > 0);
+      gsap.utils.toArray<HTMLElement>('#icerik[data-zemin="acik"], #icerik [data-zemin="acik"]').forEach((bolum) => {
         ScrollTrigger.create({
           trigger: bolum,
-          // Menünün alt kenarı beyaz içeriğe değince açık renge geç
+          // Menünün alt kenarı açık içeriğe değince açık renge geç
           start: "top top+=60",
           end: "bottom top+=60",
-          onToggle: (t) => ust.toggleAttribute("data-acik-ust", t.isActive),
+          onToggle: (t) => {
+            if (t.isActive) aktifler.add(bolum);
+            else aktifler.delete(bolum);
+            uygula();
+          },
         });
       });
+      uygula();
     },
     { dependencies: [yol], revertOnUpdate: true },
   );
@@ -185,10 +193,10 @@ export default function UstMenu() {
                               <ArrowUpRight
                                 size={14}
                                 aria-hidden="true"
-                                className="text-soluk transition-[transform,color] duration-300 group-hover/hizmet:translate-x-0.5 group-hover/hizmet:-translate-y-0.5 group-hover/hizmet:text-alev"
+                                className="text-soluk transition-[transform,color] duration-300 group-hover/hizmet:translate-x-0.5 group-hover/hizmet:-translate-y-0.5 group-hover/hizmet:text-vurgu"
                               />
                             </span>
-                            <span className="mt-1 block text-sm text-alev">{hizmetFiyatEtiketi(h.adres)}</span>
+                            <span className="mt-1 block text-sm text-vurgu">{hizmetFiyatEtiketi(h.adres)}</span>
                           </Link>
                         </li>
                       ))}
@@ -257,10 +265,10 @@ export default function UstMenu() {
                   href={b.adres}
                   aria-current={yol === b.adres ? "page" : undefined}
                   onClick={(olay) => penceredenGit(olay, b.adres)}
-                  className="flex items-center justify-between py-2 font-baslik text-[2.5rem] leading-tight font-semibold tracking-[-0.03em] aria-[current=page]:text-alev"
+                  className="flex items-center justify-between py-2 font-baslik text-[2.5rem] leading-tight font-semibold tracking-[-0.03em] aria-[current=page]:text-vurgu"
                 >
                   {b.ad}
-                  <ArrowUpRight size={26} className="text-alev" aria-hidden="true" />
+                  <ArrowUpRight size={26} className="text-vurgu" aria-hidden="true" />
                 </a>
                 {b.adres === "/hizmetler" && (
                   <ul className="mb-3 grid grid-cols-2 gap-x-4 gap-y-1 pl-1">

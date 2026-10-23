@@ -95,7 +95,7 @@ export default function FanusSahnesi({ poz = "akis" }: { poz?: "akis" | "son" })
       <div
         className={`absolute inset-0 transition-opacity duration-[1600ms] ${hal === "hazir" ? "opacity-0" : "opacity-100"} ${poz === "akis" ? "max-md:hidden" : ""}`}
       >
-        <div className="absolute top-[64%] left-1/2 size-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-alev)_28%,transparent),color-mix(in_srgb,var(--color-alev)_6%,transparent)_40%,transparent_68%)] md:top-[52%] md:left-[72%]" />
+        <div className="absolute top-[64%] left-1/2 size-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--color-isik)_28%,transparent),color-mix(in_srgb,var(--color-isik)_6%,transparent)_40%,transparent_68%)] md:top-[52%] md:left-[72%]" />
       </div>
       <div
         className={`absolute inset-0 transition-opacity duration-[1600ms] max-md:duration-700 ${hal === "hazir" ? "opacity-100" : "opacity-0"}`}

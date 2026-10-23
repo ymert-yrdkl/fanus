@@ -61,7 +61,7 @@ export default function Alt() {
               <li key={b.adres}>
                 <Link
                   href={b.adres}
-                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-vurgu"
                 >
                   {b.ad}
                 </Link>
@@ -76,7 +76,7 @@ export default function Alt() {
               <li key={h.adres}>
                 <Link
                   href={`/hizmetler/${h.adres}`}
-                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-vurgu"
                 >
                   {h.ad}
                 </Link>
@@ -93,7 +93,7 @@ export default function Alt() {
                   href={r.adres}
                   target="_blank"
                   rel="noopener"
-                  className="group inline-flex min-h-10 items-center gap-1.5 text-krem/85 transition-colors hover:text-alev"
+                  className="group inline-flex min-h-10 items-center gap-1.5 text-krem/85 transition-colors hover:text-vurgu"
                 >
                   {r.gosterim ?? r.alanAdi}
                   <ArrowUpRight
@@ -112,7 +112,7 @@ export default function Alt() {
             <li>
               <a
                 href={`mailto:${SITE.eposta}`}
-                className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-vurgu"
               >
                 {SITE.eposta}
               </a>
@@ -121,7 +121,7 @@ export default function Alt() {
               <li>
                 <a
                   href={`tel:${SITE.telefon.replace(/\s/g, "")}`}
-                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-vurgu"
                 >
                   {SITE.telefon}
                 </a>
@@ -133,7 +133,7 @@ export default function Alt() {
                   href={`https://www.instagram.com/${SITE.instagram}/`}
                   target="_blank"
                   rel="noopener"
-                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-alev"
+                  className="inline-flex min-h-10 items-center text-krem/85 transition-colors hover:text-vurgu"
                 >
                   Instagram: @{SITE.instagram}
                 </a>

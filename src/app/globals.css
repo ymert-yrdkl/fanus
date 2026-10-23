@@ -2,7 +2,7 @@
 
 /*
   fanussoft tasarım token'ları. Renk YALNIZ buradan gelir: Tailwind'in hazır paleti kapalı
-  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "alev". İki takım: gece (@theme; 3B sahnenin olduğu
+  (bg-white, text-neutral-* çalışmaz). Tek vurgu rengi "vurgu": gündüzde koyu mavi-petrol (#063236; Yusuf, 23 Ekim 2026), koyu zeminde açık petrol; "isik" (amber) yalnız işaretin noktası ve 3B ışık. İki takım: gece (@theme; 3B sahnenin olduğu
   bölümler ve koyu tahta) ve gündüz (--g-*; kâğıt ve mürekkep: data-zemin="acik" bölümlerinde token'lara eşlenir).
   Degrade yok, gri üstüne gri yok: açık zemin kâğıt beyazı, yazı mürekkep siyahı, ayraçlar belirgin ince çizgi.
   Bütün çiftler WCAG AA'yı geçer (yazı, soluk, silik, vurgu ve düğme yazısı en az 4,5:1).
@@ -21,9 +21,11 @@
   --color-krem: #f4f3ee;
   --color-soluk: #b9bcc3;
   --color-silik: #a3a7b0;
-  --color-alev: #ff6145;
-  --color-alev-acik: #ff8f78;
-  --color-alev-koyu: #e5452a;
+  --color-vurgu: #6fc3b5;
+  --color-vurgu-acik: #8fd4c8;
+  --color-vurgu-koyu: #4ea596;
+  /* Işık: işaretin noktası ve 3B'deki ışık; her zeminde aynı */
+  --color-isik: #f3b23e;
   --color-canli: #6fcf8f;
   --color-transparent: transparent;
   --color-current: currentColor;
@@ -52,9 +54,9 @@
   --n-yazi: #f4f3ee;
   --n-soluk: #b9bcc3;
   --n-silik: #a3a7b0;
-  --n-vurgu: #ff6145;
-  --n-vurgu-ust: #ff8f78;
-  --n-vurgu-koyu: #e5452a;
+  --n-vurgu: #6fc3b5;
+  --n-vurgu-ust: #8fd4c8;
+  --n-vurgu-koyu: #4ea596;
   --n-golge: rgb(0 0 0 / 0.85);
   /* Gündüz takımı: kâğıt ve mürekkep. data-zemin="acik" bölümünde --color-* bunlara eşlenir */
   --g-zemin: #f4f3ee;
@@ -67,21 +69,21 @@
   --g-yazi: #141416;
   --g-soluk: #44454b;
   --g-silik: #67686f;
-  --g-vurgu: #c9321a;
-  --g-vurgu-ust: #a82a14;
-  --g-vurgu-koyu: #8f2410;
+  --g-vurgu: #063236;
+  --g-vurgu-ust: #0a4b4f;
+  --g-vurgu-koyu: #04262a;
   --g-golge: rgb(20 20 22 / 0.16);
   --g-google: #1a0dab;
-  --sayfa-isigi: color-mix(in srgb, var(--color-alev) 16%, transparent);
+  --sayfa-isigi: color-mix(in srgb, var(--color-vurgu) 16%, transparent);
   --golge-rengi: rgb(0 0 0 / 0.85);
   --google-mavi: #9fc0ff;
 }
 
 /*
   Gündüz bölümleri (data-zemin="acik"): aynı token adları paletin gündüz değerleriyle (--g-*) yeniden tanımlanır;
-  bileşenler değişmeden açık zeminde çalışır. Yalnız 3B fanusun olduğu bölümler gece kalır (alev görünsün): ana
+  bileşenler değişmeden açık zeminde çalışır. Koyu yalnız tahta ve karolarda (data-zemin="koyu"): ana
   sayfanın girişi ve manifestosu, iletişimin teklif bölümü. Alt sayfalar, sayfa sonları ve altbilgi gündüzdür.
-  Gündüzde --color-alev-acik düğmenin üzerine gelinceki renktir (koyulaşır; açık yazıyla kontrast korunur).
+  Gündüzde --color-vurgu-acik düğmenin üzerine gelinceki renktir (koyulaşır; açık yazıyla kontrast korunur).
   Menü, gündüz bölümünün üstündeyken data-acik-ust ile aynı değerleri alır.
 */
 [data-zemin="acik"],
@@ -96,9 +98,9 @@ header[data-acik-ust] {
   --color-krem: var(--g-yazi);
   --color-soluk: var(--g-soluk);
   --color-silik: var(--g-silik);
-  --color-alev: var(--g-vurgu);
-  --color-alev-acik: var(--g-vurgu-ust);
-  --color-alev-koyu: var(--g-vurgu-koyu);
+  --color-vurgu: var(--g-vurgu);
+  --color-vurgu-acik: var(--g-vurgu-ust);
+  --color-vurgu-koyu: var(--g-vurgu-koyu);
   --golge-rengi: var(--g-golge);
   --google-mavi: var(--g-google);
   color: var(--color-krem);
@@ -118,9 +120,9 @@ header[data-acik-ust] {
   --color-krem: var(--n-yazi);
   --color-soluk: var(--n-soluk);
   --color-silik: var(--n-silik);
-  --color-alev: var(--n-vurgu);
-  --color-alev-acik: var(--n-vurgu-ust);
-  --color-alev-koyu: var(--n-vurgu-koyu);
+  --color-vurgu: var(--n-vurgu);
+  --color-vurgu-acik: var(--n-vurgu-ust);
+  --color-vurgu-koyu: var(--n-vurgu-koyu);
   --golge-rengi: var(--n-golge);
   background: var(--color-gece);
   color: var(--color-krem);
@@ -160,12 +162,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-alev);
+  background: var(--color-vurgu);
   color: var(--color-gece);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-alev);
+  outline: 2px solid var(--color-vurgu);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -178,7 +180,7 @@ body {
   z-index: 100;
   padding: 0.75rem 1rem;
   border-radius: 999px;
-  background: var(--color-alev);
+  background: var(--color-vurgu);
   color: var(--color-gece);
   font-weight: 600;
   transform: translateY(-200%);
@@ -402,24 +404,6 @@ details.sss summary::-webkit-details-marker {
   -webkit-text-stroke: 1px var(--color-cizgi-guclu);
 }
 
-/* Başlık içindeki küçük alev: yerinde titrer */
-.alev-titrer {
-  transform-origin: 50% 100%;
-  animation: alev-titrer 1.7s ease-in-out infinite;
-}
-@keyframes alev-titrer {
-  0%,
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
-  35% {
-    transform: scale(1.04, 1.07) rotate(-2deg);
-  }
-  70% {
-    transform: scale(0.97, 1.02) rotate(2deg);
-  }
-}
-
 /* Imleç ışığı: [data-isik] öğesinde --mx / --my JS ile güncellenir */
 [data-isik] {
   --mx: 50%;
@@ -434,7 +418,7 @@ details.sss summary::-webkit-details-marker {
   transition: opacity 0.4s var(--ease-yay);
   background: radial-gradient(
     28rem circle at var(--mx) var(--my),
-    color-mix(in srgb, var(--color-alev) 9%, transparent),
+    color-mix(in srgb, var(--color-vurgu) 9%, transparent),
     transparent 60%
   );
 }
@@ -530,8 +514,8 @@ details.sss summary::-webkit-details-marker {
 @keyframes dugum {
   0%,
   10% {
-    color: var(--color-alev);
-    border-color: var(--color-alev);
+    color: var(--color-vurgu);
+    border-color: var(--color-vurgu);
   }
   30%,
   100% {

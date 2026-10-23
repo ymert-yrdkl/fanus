@@ -36,7 +36,7 @@ export default function HizmetVitrini({ qrSvg }: { qrSvg: string }) {
             <li key={h.adres} data-belir data-gecikme={String(i * 0.06)} className={yerlesim[h.adres]}>
               <Link
                 href={`/hizmetler/${h.adres}`}
-                className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-cizgi-guclu bg-gece-2 p-5 transition-[border-color,transform] duration-500 ease-yay hover:-translate-y-1 hover:border-alev sm:p-7"
+                className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-cizgi-guclu bg-gece-2 p-5 transition-[border-color,transform] duration-500 ease-yay hover:-translate-y-1 hover:border-vurgu sm:p-7"
               >
                 <div className="relative h-44" aria-hidden="true">
                   <HizmetMinyaturu adres={h.adres} qrSvg={qrSvg} />
@@ -46,7 +46,7 @@ export default function HizmetVitrini({ qrSvg }: { qrSvg: string }) {
                     <h3 className="ara-baslik">{h.ad}</h3>
                     <p className="mt-2.5 max-w-[30rem] leading-relaxed text-soluk">{h.baslik}</p>
                   </div>
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-cizgi-guclu transition-[background-color,border-color,color,transform] duration-500 ease-yay group-hover:rotate-45 group-hover:border-alev group-hover:bg-alev group-hover:text-gece">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-cizgi-guclu transition-[background-color,border-color,color,transform] duration-500 ease-yay group-hover:rotate-45 group-hover:border-vurgu group-hover:bg-vurgu group-hover:text-gece">
                     <ArrowUpRight size={18} weight="bold" aria-hidden="true" />
                   </span>
                 </div>

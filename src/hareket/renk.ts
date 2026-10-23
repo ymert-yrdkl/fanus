@@ -11,7 +11,7 @@ function hexAyristir(hex: string): [number, number, number] {
 
 /** Temanın vurgu (alev) rengi, istenen saydamlıkla: vurgu(0.3) → "rgba(255, 90, 54, 0.3)" */
 export function vurgu(alfa: number) {
-  const deger = getComputedStyle(document.documentElement).getPropertyValue("--color-alev");
+  const deger = getComputedStyle(document.documentElement).getPropertyValue("--color-vurgu");
   const [r, g, b] = deger.startsWith("#") ? hexAyristir(deger) : [235, 160, 78];
   return `rgba(${r}, ${g}, ${b}, ${alfa})`;
 }

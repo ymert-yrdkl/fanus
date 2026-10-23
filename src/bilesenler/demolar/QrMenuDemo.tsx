@@ -132,19 +132,19 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
           <span
             data-tarama
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-3 top-0 h-0.5 rounded-full bg-alev opacity-0 shadow-[0_0_18px_4px_color-mix(in_srgb,var(--color-alev)_70%,transparent)]"
+            className="pointer-events-none absolute inset-x-3 top-0 h-0.5 rounded-full bg-vurgu opacity-0 shadow-[0_0_18px_4px_color-mix(in_srgb,var(--color-vurgu)_70%,transparent)]"
           />
         </div>
         <div>
           <p className="max-w-[22rem] text-[0.9375rem] leading-relaxed">
-            Telefonunuzun kamerasıyla okutun: <span className="text-alev">Emre Pide&apos;nin gerçek QR menüsü</span>{" "}
+            Telefonunuzun kamerasıyla okutun: <span className="text-vurgu">Emre Pide&apos;nin gerçek QR menüsü</span>{" "}
             açılır. Bu kodu biz kurduk.
           </p>
           <a
             href="https://menu.emrepide.com.tr"
             target="_blank"
             rel="noopener"
-            className="mt-2 inline-flex min-h-11 items-center gap-1.5 text-sm text-soluk underline decoration-cizgi-guclu underline-offset-4 transition-colors hover:text-alev"
+            className="mt-2 inline-flex min-h-11 items-center gap-1.5 text-sm text-soluk underline decoration-cizgi-guclu underline-offset-4 transition-colors hover:text-vurgu"
           >
             Telefondaysanız dokunun: menu.emrepide.com.tr
             <ArrowUpRight size={14} aria-hidden="true" />
