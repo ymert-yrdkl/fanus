@@ -5,18 +5,28 @@ import BolumBasi from "./BolumBasi";
 import HizmetMinyaturu from "./demolar/HizmetMinyaturleri";
 
 /**
- * Ana sayfadaki hizmet vitrini: farklı genişlikte dört kart (4-2-2-4; Yusuf ilk düzeni tercih etti). Üstte hizmetin
- * kendi kendine dönen minyatürü, altında ad, bir cümle ve ok; en altta çizgiyle ayrılmış fiyat. Her kart hizmetin
- * kendi sayfasına gider; üzerine gelince hafifçe kalkar.
+ * Vitrinin düzeni (6 sütunlu ızgara): 4+2, 2+4, 6. Her satır tam dolar. Sıra burada tutulur; HIZMETLER'in sırası
+ * (otomasyon mobilden önce) kullanılınca tam genişlikteki kart satıra sığmayıp alta kayıyor, iki satırda boşluk
+ * kalıyordu (Yusuf, 25 Ekim 2026: "düzensiz").
+ */
+const DUZEN: { adres: HizmetAdresi; sinif: string }[] = [
+  { adres: "e-ticaret", sinif: "md:col-span-4" },
+  { adres: "kurumsal-site", sinif: "md:col-span-2" },
+  { adres: "qr-menu", sinif: "md:col-span-2" },
+  { adres: "mobil-uygulama", sinif: "md:col-span-4" },
+  { adres: "web-otomasyonu", sinif: "md:col-span-6" },
+];
+
+/**
+ * Ana sayfadaki hizmet vitrini: farklı genişlikte beş kart (yukarıdaki DUZEN). Üstte hizmetin kendi kendine dönen
+ * minyatürü, altında ad, bir cümle ve ok; en altta çizgiyle ayrılmış fiyat. Her kart hizmetin kendi sayfasına gider;
+ * üzerine gelince hafifçe kalkar.
  */
 export default function HizmetVitrini({ qrSvg }: { qrSvg: string }) {
-  const yerlesim: Record<HizmetAdresi, string> = {
-    "e-ticaret": "md:col-span-4",
-    "kurumsal-site": "md:col-span-2",
-    "qr-menu": "md:col-span-2",
-    "mobil-uygulama": "md:col-span-4",
-    "web-otomasyonu": "md:col-span-6",
-  };
+  const kartlar = DUZEN.flatMap(({ adres, sinif }) => {
+    const h = HIZMETLER.find((x) => x.adres === adres);
+    return h ? [{ h, sinif }] : [];
+  });
 
   return (
     <section
@@ -32,8 +42,8 @@ export default function HizmetVitrini({ qrSvg }: { qrSvg: string }) {
         />
 
         <ul className="mt-10 grid gap-4 md:mt-16 md:grid-cols-6 md:gap-5">
-          {HIZMETLER.map((h, i) => (
-            <li key={h.adres} data-belir data-gecikme={String(i * 0.06)} className={yerlesim[h.adres]}>
+          {kartlar.map(({ h, sinif }, i) => (
+            <li key={h.adres} data-belir data-gecikme={String(i * 0.06)} className={sinif}>
               <Link
                 href={`/hizmetler/${h.adres}`}
                 className="group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-cizgi-guclu bg-gece-2 p-5 transition-[border-color,transform] duration-500 ease-yay hover:-translate-y-1 hover:border-vurgu sm:p-7"
