@@ -11,15 +11,18 @@ type SiteAyarlari = {
   telefon: string;
   eposta: string;
   instagram: string;
+  /** Arama motoru doğrulama kodları (Search Console, Bing, Yandex); boşken etiket yazılmaz. Rehber: docs/seo.md */
+  dogrulama: { google: string; bing: string; yandex: string };
 };
 
 export const SITE: SiteAyarlari = {
   ad: "fanus",
   alanAdi: "fanussoft.com",
   adres: process.env.NEXT_PUBLIC_SITE_ADRESI ?? "https://fanussoft.com",
-  baslik: "fanussoft | Web sitesi, e-ticaret, mobil uygulama, özel yazılım",
+  // Ana sayfanın arama başlığı ve açıklaması (anahtar kelime planı docs/seo.md)
+  baslik: "Düzce Web Tasarım, E-ticaret ve Özel Yazılım | fanussoft",
   aciklama:
-    "fanussoft; e-ticaret ve kurumsal web siteleri, QR menü ve NFC kart sistemleri, mobil uygulamalar ve iş otomasyonu için özel yazılım kurar. Yayındaki işleri gezin, teklif isteyin.",
+    "Düzce merkezli yazılım stüdyosu: kurumsal web sitesi, e-ticaret, QR menü, NFC kart, mobil uygulama ve özel yazılım. Açık fiyatlar, Türkiye geneline hizmet.",
 
   // ONAY BEKLİYOR: WhatsApp numarası, ülke koduyla ve boşluksuz (ör. "905xxxxxxxxx").
   // Boşken WhatsApp düğmeleri gizlenir, teklif e-postayla gönderilir.
@@ -30,6 +33,9 @@ export const SITE: SiteAyarlari = {
   eposta: "merhaba@fanussoft.com",
   // ONAY BEKLİYOR: Instagram kullanıcı adı (ör. "fanussoft"). Boşken gösterilmez.
   instagram: "",
+  // Search Console › Ayarlar › Sahiplik doğrulama › HTML etiketi: content="..." içindeki değer.
+  // Bing Webmaster › msvalidate.01, Yandex Webmaster › yandex-verification. Doldurup yayına alın.
+  dogrulama: { google: "", bing: "", yandex: "" },
 };
 
 /** Hazır metinle WhatsApp bağlantısı. Numara yoksa null. */

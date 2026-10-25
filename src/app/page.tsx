@@ -6,9 +6,18 @@ import Isler from "@/bilesenler/Isler";
 import Manifesto from "@/bilesenler/Manifesto";
 import Serit from "@/bilesenler/Serit";
 import FanusSahnesi from "@/sahne/FanusSahnesi";
+import type { Metadata } from "next";
 import { SITE } from "@/site/ayarlar";
 import { REFERANSLAR } from "@/site/icerik";
 import { qrSvgUret } from "@/site/qr";
+import { jsonLd, sayfaMetasi, sayfaVerisi } from "@/site/seo";
+
+export const metadata: Metadata = sayfaMetasi({
+  baslik: SITE.baslik,
+  aciklama: SITE.aciklama,
+  yol: "/",
+  tamBaslik: true,
+});
 
 export default async function AnaSayfa() {
   const qrSvg = await qrSvgUret();
@@ -16,27 +25,10 @@ export default async function AnaSayfa() {
   const yapilandirilmisVeri = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "ProfessionalService",
-        "@id": `${SITE.adres}/#isletme`,
-        name: "fanus",
-        url: SITE.adres,
-        description: SITE.aciklama,
-        areaServed: { "@type": "Country", name: "Türkiye" },
-        ...(SITE.eposta ? { email: SITE.eposta } : {}),
-        ...(SITE.telefon ? { telephone: SITE.telefon } : {}),
-        knowsAbout: [
-          "E-ticaret sitesi",
-          "Kurumsal web sitesi",
-          "QR menü",
-          "NFC kart sistemleri",
-          "Mobil uygulama",
-          "Özel yazılım",
-          "Web ve üretim otomasyonu",
-        ],
-      },
+      sayfaVerisi({ yol: "/", baslik: SITE.baslik, aciklama: SITE.aciklama }),
       {
         "@type": "ItemList",
+        "@id": `${SITE.adres}/#isler`,
         name: "Yayındaki işler",
         itemListElement: REFERANSLAR.map((r, i) => ({
           "@type": "ListItem",
@@ -50,10 +42,7 @@ export default async function AnaSayfa() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(yapilandirilmisVeri).replace(/</g, "\\u003c") }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yapilandirilmisVeri) }} />
       {/* Telefonda en büyük öğe fanusun sabit görseli: HTML gelir gelmez istensin (LCP) */}
       <link rel="preload" as="image" href="/fanus-telefon.webp" media="(max-width: 767px)" fetchPriority="high" />
       <FanusSahnesi />

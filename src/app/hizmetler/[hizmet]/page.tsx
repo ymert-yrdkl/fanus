@@ -13,6 +13,7 @@ import SayfaBasi from "@/bilesenler/SayfaBasi";
 import Sss from "@/bilesenler/Sss";
 import { dugmeSinifi } from "@/bilesenler/dugme";
 import { SITE } from "@/site/ayarlar";
+import { ISLETME, jsonLd, SEHIR, sayfaMetasi, sayfaVerisi } from "@/site/seo";
 import {
   fiyatYaz,
   HIZMETLER,
@@ -36,11 +37,7 @@ export async function generateMetadata({ params }: PageProps<"/hizmetler/[hizmet
   const { hizmet } = await params;
   const h = hizmetBul(hizmet);
   if (!h) return {};
-  return {
-    title: h.seoBasligi,
-    description: h.seoAciklamasi,
-    alternates: { canonical: `/hizmetler/${h.adres}` },
-  };
+  return sayfaMetasi({ baslik: h.seoBasligi, aciklama: h.seoAciklamasi, yol: `/hizmetler/${h.adres}` });
 }
 
 export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[hizmet]">) {
@@ -53,13 +50,19 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
   const yapilandirilmisVeri = {
     "@context": "https://schema.org",
     "@graph": [
+      sayfaVerisi({ yol: `/hizmetler/${h.adres}`, baslik: h.seoBasligi, aciklama: h.seoAciklamasi }),
       {
         "@type": "Service",
+        "@id": `${SITE.adres}/hizmetler/${h.adres}#hizmet`,
         name: h.ad,
+        serviceType: h.seoBasligi,
         description: h.seoAciklamasi,
         url: `${SITE.adres}/hizmetler/${h.adres}`,
-        areaServed: { "@type": "Country", name: "Türkiye" },
-        provider: { "@type": "ProfessionalService", name: "fanus", url: SITE.adres },
+        areaServed: [
+          { "@type": "City", name: SEHIR },
+          { "@type": "Country", name: "Türkiye" },
+        ],
+        provider: ISLETME,
         offers: paketler
           .filter((p) => p.fiyat !== null)
           .map((p) => ({
@@ -88,10 +91,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
 
   return (
     <main id="icerik" key={h.adres} data-zemin="acik">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(yapilandirilmisVeri).replace(/</g, "\\u003c") }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yapilandirilmisVeri) }} />
       <SayfaBasi
         iz={[{ ad: "Hizmetler", adres: "/hizmetler" }, { ad: h.ad }]}
         baslik={h.sayfaBasligi}

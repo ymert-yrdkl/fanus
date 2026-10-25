@@ -1,30 +1,40 @@
 "use client";
 
-import Lenis from "lenis";
 import { useEffect } from "react";
 import { gsap, ScrollTrigger } from "./gsap";
 import { lenisAyarla } from "./kaydirma";
 
 /**
  * Masaüstünde fare tekerleğini yumuşatan Lenis'i kurar ve GSAP'in saatine bağlar
- * (ScrollTrigger her karede güncel konumu bilsin). Dokunmatikte tarayıcının kendi kaydırması kalır.
+ * (ScrollTrigger her karede güncel konumu bilsin). Dokunmatikte tarayıcının kendi kaydırması kalır ve Lenis hiç
+ * indirilmez: paket yalnız fareli, hareket tercihi açık cihazlarda sonradan yüklenir.
  */
 export default function PuruzsuzKaydirma() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!window.matchMedia("(prefers-reduced-motion: no-preference) and (pointer: fine)").matches) return;
 
-    const lenis = new Lenis({ lerp: 0.085, anchors: true, autoRaf: false });
-    lenisAyarla(lenis);
-    lenis.on("scroll", ScrollTrigger.update);
+    let iptal = false;
+    let temizle = () => {};
+    import("lenis").then(({ default: Lenis }) => {
+      if (iptal) return;
+      const lenis = new Lenis({ lerp: 0.085, anchors: true, autoRaf: false });
+      lenisAyarla(lenis);
+      lenis.on("scroll", ScrollTrigger.update);
 
-    const kare = (zaman: number) => lenis.raf(zaman * 1000);
-    gsap.ticker.add(kare);
-    gsap.ticker.lagSmoothing(0);
+      const kare = (zaman: number) => lenis.raf(zaman * 1000);
+      gsap.ticker.add(kare);
+      gsap.ticker.lagSmoothing(0);
+
+      temizle = () => {
+        gsap.ticker.remove(kare);
+        lenis.destroy();
+        lenisAyarla(null);
+      };
+    });
 
     return () => {
-      gsap.ticker.remove(kare);
-      lenis.destroy();
-      lenisAyarla(null);
+      iptal = true;
+      temizle();
     };
   }, []);
 

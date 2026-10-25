@@ -4,13 +4,16 @@ import BolumBasi from "@/bilesenler/BolumBasi";
 import Teklif from "@/bilesenler/Teklif";
 import FanusSahnesi from "@/sahne/FanusSahnesi";
 import { SITE } from "@/site/ayarlar";
+import { jsonLd, sayfaMetasi, sayfaVerisi } from "@/site/seo";
 
-export const metadata: Metadata = {
-  title: "İletişim",
-  description:
-    "Ne yaptırmak istediğinizi seçin, mesajınız hazırlansın; WhatsApp'tan ya da e-postayla gönderin. E-ticaret, kurumsal site, QR menü ve web otomasyonu için teklif alın.",
-  alternates: { canonical: "/iletisim" },
+const SEO = {
+  baslik: "İletişim ve Teklif Al",
+  aciklama:
+    "Web sitesi, e-ticaret, QR menü, mobil uygulama ya da özel yazılım için teklif alın: ne istediğinizi seçin, mesajınız hazırlansın, e-postayla gönderin.",
+  yol: "/iletisim",
 };
+
+export const metadata: Metadata = sayfaMetasi(SEO);
 
 export default function IletisimSayfasi() {
   const kanallar = [
@@ -27,6 +30,12 @@ export default function IletisimSayfasi() {
     <>
       <FanusSahnesi poz="son" />
       <main id="icerik" data-zemin="acik">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLd({ "@context": "https://schema.org", ...sayfaVerisi({ ...SEO, tur: "ContactPage" }) }),
+          }}
+        />
         <Teklif />
         <section
           data-zemin="acik"

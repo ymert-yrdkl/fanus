@@ -8,6 +8,7 @@ import GecisYoneticisi from "@/hareket/GecisYoneticisi";
 import PuruzsuzKaydirma from "@/hareket/PuruzsuzKaydirma";
 import SayfaEtkileri from "@/hareket/SayfaEtkileri";
 import { SITE } from "@/site/ayarlar";
+import { cekirdekVeri, jsonLd, MARKA } from "@/site/seo";
 import "./globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin", "latin-ext"] });
@@ -19,20 +20,28 @@ const bricolage = Bricolage_Grotesque({
   axes: ["opsz", "wdth"],
 });
 
+// Sayfaların kendi başlığı, açıklaması ve paylaşım etiketleri src/site/seo.ts › sayfaMetasi ile yazılır.
+const { google, bing, yandex } = SITE.dogrulama;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.adres),
-  title: { default: SITE.baslik, template: "%s | fanussoft" },
+  title: { default: SITE.baslik, template: `%s | ${MARKA}` },
   description: SITE.aciklama,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "tr_TR",
-    url: "/",
-    siteName: SITE.alanAdi,
-    title: { default: SITE.baslik, template: "%s | fanussoft" },
-    description: SITE.aciklama,
+  applicationName: MARKA,
+  creator: MARKA,
+  publisher: MARKA,
+  category: "technology",
+  // Büyük görsel önizlemesi ve sınırsız alıntı: aramada ve yapay zekâ özetlerinde daha çok yer
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
-  twitter: { card: "summary_large_image", title: SITE.baslik, description: SITE.aciklama },
+  formatDetection: { telephone: false, email: false, address: false },
+  verification: {
+    ...(google ? { google } : {}),
+    ...(yandex ? { yandex } : {}),
+    ...(bing ? { other: { "msvalidate.01": bing } } : {}),
+  },
 };
 
 export const viewport: Viewport = {
@@ -57,6 +66,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: HAREKET_BETIGI }} />
       </head>
       <body className="tane">
+        {/* İşletme ve site: bütün sayfalarda aynı çekirdek (sayfalar kendi düğümlerini ekler) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd({ "@context": "https://schema.org", "@graph": cekirdekVeri() }) }}
+        />
         <a href="#icerik" className="atla">
           İçeriğe geç
         </a>

@@ -207,9 +207,9 @@ export const HIZMETLER: Hizmet[] = [
     sayfaBasligi: "Uyurken de satan mağaza.",
     sayfaMetni:
       "Ürünlerinizi kendiniz eklediğiniz, kartla ödeme alan, siparişi ve kargoyu tek panelden yönettiğiniz e-ticaret sitesi.",
-    seoBasligi: "E-ticaret sitesi",
+    seoBasligi: "E-ticaret Sitesi Yaptırma ve Fiyatı",
     seoAciklamasi:
-      "Panelli e-ticaret sitesi: ürün ve stok yönetimi, iyzico/PayTR ile ödeme, sipariş ve kargo takibi. ₺65.000 +KDV, yıllık yenileme ₺2.399 +KDV.",
+      "E-ticaret sitesi yaptırma: ürün ve stok paneli, iyzico/PayTR ile kartla ödeme, sipariş ve kargo takibi. ₺65.000 +KDV, yıllık yenileme ₺2.399 +KDV.",
     kimlerIcin: ["Üretici markalar", "Butik mağazalar", "Baskı ve promosyon", "Pazaryerinden kendi sitesine geçenler"],
     ozellikler: [
       {
@@ -284,9 +284,9 @@ export const HIZMETLER: Hizmet[] = [
     sayfaBasligi: "İlk bakışta güven veren site.",
     sayfaMetni:
       "Tek sayfalık bir tanıtım sitesinden yönetim panelli, çok dilli kurumsal siteye kadar. Firmanızı doğru anlatan, telefonda hızlı açılan ve Google'da bulunan bir site.",
-    seoBasligi: "Kurumsal web sitesi",
+    seoBasligi: "Kurumsal Web Sitesi Yaptırma ve Fiyatı",
     seoAciklamasi:
-      "Kurumsal web sitesi: tek sayfa site ₺9.999 +KDV, yönetim panelli tam paket ₺45.000 +KDV; yıllık yenileme ₺2.399 +KDV. Sıfırdan tasarım, SEO, çok dil.",
+      "Kurumsal web sitesi yaptırma: tek sayfa site ₺9.999 +KDV, yönetim panelli tam paket ₺45.000 +KDV. Sıfırdan tasarım, SEO, çok dil, hızlı açılan sayfalar.",
     kimlerIcin: ["Üretim ve sanayi", "Klinik ve ofisler", "Restoran ve kafeler", "Hizmet işletmeleri"],
     ozellikler: [
       {
@@ -361,9 +361,9 @@ export const HIZMETLER: Hizmet[] = [
     sayfaBasligi: "Masadaki kod, telefondaki menü.",
     sayfaMetni:
       "Restoran, kafe ve pastaneler için dijital menü. Müşteri okutur, menü açılır; fiyatı panelden değiştirirsiniz, kod aynı kalır.",
-    seoBasligi: "QR menü",
+    seoBasligi: "QR Menü: Restoran ve Kafe İçin Dijital Menü",
     seoAciklamasi:
-      "Restoran ve kafeler için QR menü: kategoriler, fotoğraflar, porsiyon fiyatları, anında güncelleme. ₺9.999 +KDV'den başlayan fiyatlar, yıllık yenileme ₺2.399 +KDV.",
+      "Restoran, kafe ve pastaneler için QR menü: kategoriler, fotoğraflar, porsiyon fiyatları, panelden anında güncelleme. ₺9.999 +KDV'den başlayan fiyatlar.",
     kimlerIcin: ["Restoranlar", "Kafeler", "Pastaneler", "Otel ve plaj işletmeleri"],
     ozellikler: [
       {
@@ -429,9 +429,9 @@ export const HIZMETLER: Hizmet[] = [
     sayfaBasligi: "Tekrar eden işi yazılıma devredin.",
     sayfaMetni:
       "Her gün elle yaptığınız işleri birbirine bağlayan özel yazılım: sipariş, fatura, kargo, randevu ve bildirimlerden üretim takibine; mevcut sistemlerinize eklenir, kendiliğinden yürür.",
-    seoBasligi: "Özel yazılım ve otomasyon",
+    seoBasligi: "Özel Yazılım ve İş Otomasyonu",
     seoAciklamasi:
-      "Özel yazılım ve otomasyon: sipariş, fatura, kargo ve WhatsApp bildirim akışları, üretim takibi, ERP ve muhasebe bağlantısı, yönetim panelleri. Fiyat teklifle belirlenir.",
+      "Özel yazılım ve iş otomasyonu: sipariş, fatura, kargo ve WhatsApp bildirim akışları, üretim takibi, ERP ve muhasebe bağlantısı. Fiyat teklifle belirlenir.",
     kimlerIcin: ["E-ticaret siteleri", "Üretim ve atölyeler", "Randevulu işletmeler", "Ofis ve muhasebe işleri"],
     ozellikler: [
       {
@@ -507,9 +507,9 @@ export const HIZMETLER: Hizmet[] = [
     sayfaBasligi: "Mağazada yayınlanan, cepte duran uygulama.",
     sayfaMetni:
       "iPhone ve Android için tek kod tabanıyla yazılan, App Store ve Google Play'de yayınlanan mobil uygulamalar: üyelik, bildirim, harita, kamera, abonelik ve yapay zekâ destekli özellikler; arkasında yönetim paneli ve API.",
-    seoBasligi: "Mobil uygulama geliştirme",
+    seoBasligi: "Mobil Uygulama Geliştirme: iOS ve Android",
     seoAciklamasi:
-      "iOS ve Android mobil uygulama geliştirme: tek kod tabanı, App Store ve Google Play yayını, üyelik, bildirim, harita, abonelik, yönetim paneli ve API. Fiyat teklifle belirlenir.",
+      "iOS ve Android mobil uygulama geliştirme: tek kod tabanı, App Store ve Google Play yayını, bildirim, abonelik, yönetim paneli. Fiyat teklifle belirlenir.",
     kimlerIcin: [
       "Abonelikli hizmetler",
       "Sadakat ve kampanya uygulamaları",

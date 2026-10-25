@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { SITE } from "@/site/ayarlar";
+import { jsonLd } from "@/site/seo";
 
 type Iz = { ad: string; adres?: string };
 
@@ -36,10 +37,7 @@ export default function SayfaBasi({
       data-sayfa-basi
       className="relative z-10 bg-gece px-4 pt-[calc(var(--ust-yukseklik)+2.5rem)] pb-14 sm:px-6 md:pt-[calc(var(--ust-yukseklik)+5rem)] md:pb-20 lg:px-10"
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(yol).replace(/</g, "\\u003c") }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yol) }} />
       <div className="relative mx-auto max-w-[90rem]">
         <nav aria-label="Konum" data-belir className="flex items-center gap-3">
           <span className="h-px w-8 bg-cizgi-guclu" aria-hidden="true" />

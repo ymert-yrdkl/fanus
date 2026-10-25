@@ -5,22 +5,26 @@ import FiyatKarti from "@/bilesenler/FiyatKarti";
 import SayfaBasi from "@/bilesenler/SayfaBasi";
 import Sss from "@/bilesenler/Sss";
 import { SITE } from "@/site/ayarlar";
-import { kdvHaricYaz, PAKETLER, SSS, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
+import { fiyatYaz, kdvHaricYaz, PAKETLER, paketBul, SSS, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
+import { jsonLd, sayfaMetasi, sayfaVerisi } from "@/site/seo";
 
-export const metadata: Metadata = {
-  title: "Fiyatlar",
-  description:
-    "Tek sayfa site ₺9.999 +KDV, kurumsal tam paket ₺45.000 +KDV, e-ticaret sitesi ₺65.000 +KDV, QR menü ₺9.999 +KDV'den başlayan; yenileme ₺2.399 +KDV / yıl.",
-  alternates: { canonical: "/fiyatlar" },
+const yil = new Date().getFullYear();
+const fiyat = (kod: Parameters<typeof paketBul>[0]) => fiyatYaz(paketBul(kod).fiyat ?? 0);
+const SEO = {
+  baslik: `Web Sitesi ve E-ticaret Fiyatları ${yil}`,
+  aciklama: `Tek sayfa site ${fiyat("tek-sayfa")}, kurumsal site ${fiyat("kurumsal")}, e-ticaret ${fiyat("e-ticaret")}, QR menü ${fiyat("qr-menu")}'dan başlayan (+KDV). Paketlerin içeriği ve yıllık ${fiyatYaz(YILLIK_YENILEME)} yenileme açıkça yazılı.`,
+  yol: "/fiyatlar",
 };
+
+export const metadata: Metadata = sayfaMetasi(SEO);
 
 export default function FiyatlarSayfasi() {
   const fiyatliPaketler = PAKETLER.filter((p) => p.fiyat !== null);
   const teklifli = PAKETLER.filter((p) => p.fiyat === null);
   const fiyatSorulari = SSS.filter((s) => /Fiyat|yenileme|süre|güncelleyebilir/i.test(s.soru));
 
-  const yapilandirilmisVeri = {
-    "@context": "https://schema.org",
+  // Paketler ve fiyatları (KDV hariç)
+  const katalog = {
     "@type": "OfferCatalog",
     name: "fanussoft paketleri",
     url: `${SITE.adres}/fiyatlar`,
@@ -40,12 +44,11 @@ export default function FiyatlarSayfasi() {
     })),
   };
 
+  const yapilandirilmisVeri = { "@context": "https://schema.org", "@graph": [sayfaVerisi(SEO), katalog] };
+
   return (
     <main id="icerik" data-zemin="acik">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(yapilandirilmisVeri).replace(/</g, "\\u003c") }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yapilandirilmisVeri) }} />
       <SayfaBasi
         iz={[{ ad: "Fiyatlar" }]}
         baslik="Fiyatı baştan söylüyoruz."

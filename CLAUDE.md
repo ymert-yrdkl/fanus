@@ -34,6 +34,7 @@ metin kopyalanmaz). Hedef: ziyaretçi "keşke bende de olsa" desin; ağır, ama�
 - Ekran görüntüsü (sistem Chrome'u, ek paket yok): `npm run ekran -- <adres> <çıktı.png> [genişlik] [yükseklik]
 [--tam] [--telefon] [--bekle=ms]`. Paylaşım görseli `src/app/opengraph-image.png` böyle çekildi (1200x630,
   `--bekle=7000`).
+- SEO: `npm run indexnow` her yayından sonra (Bing, Yandex'e değişen adresleri bildirir). Ayrıntı `docs/seo.md`.
 - Referans görselleri: `npm run referanslar [site-kodu]` → `public/isler/*.webp` (canlı sitelerden; çerez bandı
   yalnız görüntüde gizlenir, hiçbir şey kabul edilmez).
 
@@ -104,9 +105,20 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   gölgelendiricide analitik, gövde cam üstüne çizilir, kırılma geçişinde kenarlar basamaklıydı). Manifesto masaüstünde:
   fanus ortada (`POZLAR.genis.manifesto` x 0, boy 0,58), cümle altta ortalı, kartlar dört köşeye dağılır (sahne
   başına bir köşe kayar), rüzgâr ipucu üstte. Menü çubuğu yalnız `#icerik` içindeki açık bölümlere bakar.
-- SIRADAKİ: Yusuf'un tasarım geri bildirimi (mavi alev ve manifesto düzeni dahil); sosyal medya görsel dili; SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
-  başlıkları kısa: denetim uyarısı; Search Console + Bing; anahtar kelimeler; Google İşletme Profili); telefonda hız
-  için JS küçültme (Lenis yalnız farede, GSAP eklentileri gerektiğinde).
+- Hizmet vitrini (25 Ekim 2026, YAYINDA 6629515): kartlar `DUZEN` sırasıyla (4+2, 2+4, 6; HIZMETLER sırasında
+  boşluk kalıyordu), bütün minyatürler aynı çerçeveli panelde (`PANEL`).
+- SEO ve hız (25 Ekim 2026, Yusuf: "görünür olalım"): `src/site/seo.ts` (sayfaMetasi, cekirdekVeri, sayfaVerisi,
+  jsonLd). Anahtar kelimeli başlık ve açıklamalar (ana sayfa "Düzce Web Tasarım, E-ticaret ve Özel Yazılım"; plan ve
+  gerekçe `docs/seo.md`); iç sayfaların paylaşım etiketleri artık kendi (önce hepsi ana sayfayı gösteriyordu, og:image
+  her sayfada açıkça); her sayfada işletme (ProfessionalService, Düzce adresi, logo, fiyat aralığı, hizmet kataloğu)
+  - WebSite + sayfa düğümü, işlerde WebSite/MobileApplication; site haritasında görseller; `/llms.txt` (yapay zekâ
+    aramaları); IndexNow anahtarı `public/<anahtar>.txt` + `npm run indexnow`; doğrulama kodları `ayarlar.ts` ›
+    `dogrulama`; `/logo.png`, Apple simgesi, `manifest.webmanifest`. Eski metinler düzeldi ("Dört hizmet" → beş,
+    "Üçü de Düzce'den" kalktı). Hız: MotionPath yalnız `OtomasyonDemo`'da, Lenis yalnız fareli cihazda sonradan iner
+    (ana sayfa JS 279 → 265 KB gzip). Yusuf'un yapacakları (Search Console, İşletme Profili, yorumlar, müşteri
+    sitelerinden bağlantı, Bing/Yandex, telefon/Instagram, içerik) `docs/seo.md`'de sırayla.
+- SIRADAKİ: Yusuf'un tasarım geri bildirimi (mavi alev ve manifesto düzeni dahil); sosyal medya görsel dili; SEO'nun
+  hesap gerektiren adımları (`docs/seo.md`); içerik bölümü (`/rehber`) Yusuf onaylarsa; telefonda hız için kalan JS.
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).

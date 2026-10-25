@@ -10,8 +10,12 @@ import {
   Check,
   Lightning,
 } from "@phosphor-icons/react/dist/ssr";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
 import { useIsletmeAdi } from "../IsletmeAdi";
+
+// Yalnız bu örnek yol boyunca hareket ettirir: eklenti burada kaydedilir (her sayfa indirmesin)
+if (typeof window !== "undefined") gsap.registerPlugin(MotionPathPlugin);
 
 const ADIMLAR = [
   { ad: "Yeni sipariş", Ikon: ShoppingBagOpen },
