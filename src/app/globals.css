@@ -228,6 +228,19 @@ html.lenis body {
   opacity: 0;
 }
 
+/* Telefonda belirme (SahneYonetmeni): JS öğeye .belir-bekliyor ekler, ekrana girince .belirdi; yalnız saydamlık ve
+   konum, ekran kartında döner */
+.belir-bekliyor {
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.belir-bekliyor.belirdi {
+  opacity: 1;
+  transform: none;
+}
+
 /* GSAP'in ölçeklediği çizgiler: başlangıçta kapalı (Tailwind scale-* GSAP transform'uyla çakışır, kullanılmaz) */
 .hareket [data-dolum],
 .hareket #ilerleme {
@@ -489,9 +502,6 @@ details.sss summary::-webkit-details-marker {
     transform: translateX(100%);
   }
 }
-.dugum {
-  animation: dugum 3s ease-in-out infinite;
-}
 /* Mobil uygulama minyatürü: bildirim üstten düşer, durur, çekilir */
 .dusen-bildirim {
   animation: dusen-bildirim 4s var(--ease-yay) infinite;
@@ -513,16 +523,28 @@ details.sss summary::-webkit-details-marker {
     opacity: 0;
   }
 }
+/* Düğüm yanar: renk ve çerçeve rengi her karede ana iş parçacığında hesaplanır; onun yerine vurgu renkli bir
+   çerçeve katmanının saydamlığı değişir (ekran kartında döner, sayfayı yavaşlatmaz) */
+.dugum::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--color-vurgu);
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--color-vurgu) 10%, transparent);
+  opacity: 0;
+  animation: dugum 3s ease-in-out infinite;
+  /* Her düğüm sırayla yanar: gecikme öğenin satır içi stilinden (OtomasyonDemo / HizmetMinyaturleri) */
+  animation-delay: inherit;
+}
 @keyframes dugum {
   0%,
   10% {
-    color: var(--color-vurgu);
-    border-color: var(--color-vurgu);
+    opacity: 1;
   }
   30%,
   100% {
-    color: var(--color-soluk);
-    border-color: var(--color-cizgi-guclu);
+    opacity: 0;
   }
 }
 

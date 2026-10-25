@@ -115,7 +115,13 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
     aramaları); IndexNow anahtarı `public/<anahtar>.txt` + `npm run indexnow`; doğrulama kodları `ayarlar.ts` ›
     `dogrulama`; `/logo.png`, Apple simgesi, `manifest.webmanifest`. Eski metinler düzeldi ("Dört hizmet" → beş,
     "Üçü de Düzce'den" kalktı). Hız: MotionPath yalnız `OtomasyonDemo`'da, Lenis yalnız fareli cihazda sonradan iner
-    (ana sayfa JS 279 → 265 KB gzip). Yusuf'un yapacakları (Search Console, İşletme Profili, yorumlar, müşteri
+    (ana sayfa JS 279 → 265 KB gzip). Telefonda açılış: sonsuz CSS animasyonları yalnız ekrandayken oynar
+    (`src/hareket/EkrandaOynat.tsx`, document.getAnimations + IntersectionObserver; ekran dışındakiler ilk 6 sn'de ana
+    iş parçacığını 3,8 → 2,0 sn meşgul ediyordu), kayan şerit ekrana girince başlar, otomasyon düğümü renk yerine
+    saydamlıkla yanar, telefonda belirmeler 49 ScrollTrigger yerine tek IntersectionObserver + CSS (`.belir-bekliyor`),
+    telefon posteri ana sayfa HTML'ine gömülü (data: adresi). Gerçek telefon benzetiminde (4x yavaş işlemci) LCP 1,0 sn;
+    Lighthouse'un telefon tahmini (simülasyon) aynı sayfada 66-85 arasında oynuyor, masaüstü 95-96, SEO/erişilebilirlik/
+    en iyi uygulamalar 100. Yusuf'un yapacakları (Search Console, İşletme Profili, yorumlar, müşteri
     sitelerinden bağlantı, Bing/Yandex, telefon/Instagram, içerik) `docs/seo.md`'de sırayla.
 - SIRADAKİ: Yusuf'un tasarım geri bildirimi (mavi alev ve manifesto düzeni dahil); sosyal medya görsel dili; SEO'nun
   hesap gerektiren adımları (`docs/seo.md`); içerik bölümü (`/rehber`) Yusuf onaylarsa; telefonda hız için kalan JS.

@@ -6,6 +6,8 @@ import Isler from "@/bilesenler/Isler";
 import Manifesto from "@/bilesenler/Manifesto";
 import Serit from "@/bilesenler/Serit";
 import FanusSahnesi from "@/sahne/FanusSahnesi";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import type { Metadata } from "next";
 import { SITE } from "@/site/ayarlar";
 import { REFERANSLAR } from "@/site/icerik";
@@ -18,6 +20,13 @@ export const metadata: Metadata = sayfaMetasi({
   yol: "/",
   tamBaslik: true,
 });
+
+/**
+ * Telefonda ekranın en büyük öğesi fanusun sabit görseli (yaklaşık 10 KB). Ayrı istenince JavaScript çalışırken
+ * çizimi saniyelerce gecikiyordu (Lighthouse: LCP 4,7 sn, 4 sn'si çizim gecikmesi); HTML'e gömülünce metinle
+ * birlikte çizilir. Derleme anında okunur (sayfa durağan); görsel `npm run poster` ile yenilenir.
+ */
+const POSTER = `data:image/webp;base64,${readFileSync(join(process.cwd(), "public/fanus-telefon.webp")).toString("base64")}`;
 
 export default async function AnaSayfa() {
   const qrSvg = await qrSvgUret();
@@ -43,9 +52,7 @@ export default async function AnaSayfa() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yapilandirilmisVeri) }} />
-      {/* Telefonda en büyük öğe fanusun sabit görseli: HTML gelir gelmez istensin (LCP) */}
-      <link rel="preload" as="image" href="/fanus-telefon.webp" media="(max-width: 767px)" fetchPriority="high" />
-      <FanusSahnesi />
+      <FanusSahnesi poster={POSTER} />
       {/* Bütün sayfa kâğıt üstünde (3B sahne dahil); tek koyu blok fiyat tahtası (kendi data-zemin="koyu"su) */}
       <main id="icerik" data-zemin="acik">
         <Giris />

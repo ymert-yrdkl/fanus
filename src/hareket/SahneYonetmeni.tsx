@@ -18,25 +18,30 @@ export default function SahneYonetmeni() {
   useGSAP(() => {
     const mm = gsap.matchMedia();
 
-    // Telefon: belirmeler kısa ve sakin; başlıklar satırlara bölünmez, aynı kısa belirmeyle gelir
+    // Telefon: belirmeler kısa ve sakin; başlıklar satırlara bölünmez, aynı kısa belirmeyle gelir. GSAP ve
+    // ScrollTrigger yerine tek bir IntersectionObserver ve CSS geçişi (globals.css › .belir-bekliyor): her öğe için
+    // ayrı tetik kurmak açılışta sayfa yerleşimini onlarca kez yeniden hesaplatıyordu (telefonda hız puanı).
     mm.add(`${HAREKET_ACIK} and (max-width: 767px)`, () => {
-      gsap.utils
+      const ogeler = gsap.utils
         .toArray<HTMLElement>("[data-belir], [data-bol]")
-        .filter((el) => !el.closest("[data-sayfa-basi]"))
-        .forEach((el) => {
-          // Yalnız saydamlık (visibility değil): başlıklar ekran okuyucuda ve erişilebilirlik ağacında kalır
-          gsap.fromTo(
-            el,
-            { opacity: 0, y: 16 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: "power2.out",
-              scrollTrigger: { trigger: el, start: "top 90%", once: true },
-            },
-          );
-        });
+        .filter((el) => !el.closest("[data-sayfa-basi]"));
+      const gozcu = new IntersectionObserver(
+        (girdiler) =>
+          girdiler.forEach((g) => {
+            if (!g.isIntersecting) return;
+            g.target.classList.add("belirdi");
+            gozcu.unobserve(g.target);
+          }),
+        { rootMargin: "0px 0px -10% 0px" },
+      );
+      ogeler.forEach((el) => {
+        el.classList.add("belir-bekliyor");
+        gozcu.observe(el);
+      });
+      return () => {
+        gozcu.disconnect();
+        ogeler.forEach((el) => el.classList.remove("belir-bekliyor", "belirdi"));
+      };
     });
 
     // Masaüstü: aşağıdan uzun belirme, başlıklar satır satır maskeden yükselir, paralaks

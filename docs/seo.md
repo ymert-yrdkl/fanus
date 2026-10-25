@@ -45,7 +45,9 @@ yazılım stüdyosu" her sayfada yerel sinyal verir.
   değişti" bildirir; her yayından sonra çalıştırılır.
 - **Doğrulama etiketleri**: `src/site/ayarlar.ts` › `dogrulama` (Google, Bing, Yandex). Boşken yazılmaz.
 - **Hız**: üç boyutlu sahne ilk etkileşimde yüklenir; Lenis yalnız fareli cihazda iner; MotionPath eklentisi yalnız
-  otomasyon örneğinde. Canlı Lighthouse sonuçları CLAUDE.md'de.
+  otomasyon örneğinde; sonsuz animasyonlar yalnız ekrandayken oynar; telefon posteri HTML'e gömülü. Google sıralamada
+  gerçek kullanıcı ölçümlerini (Core Web Vitals) kullanır; Lighthouse'un telefon puanı bir tahmindir ve oynar.
+  Ayrıntı CLAUDE.md'de.
 
 ## Yusuf'un yapacakları (hesap gerektirir; önem sırasıyla)
 

@@ -15,7 +15,14 @@ type Hal = "yukleniyor" | "hazir" | "yok";
  * sahne sabit değildir: yalnız girişin parçasıdır ve sayfayla birlikte kayar (manifesto telefonda sahnesizdir).
  * `poz`: "akis" ana sayfanın kaydırma çizelgesi, "son" iletişim sayfasının sabit duruşu.
  */
-export default function FanusSahnesi({ poz = "akis" }: { poz?: "akis" | "son" }) {
+export default function FanusSahnesi({
+  poz = "akis",
+  poster = "/fanus-telefon.webp",
+}: {
+  poz?: "akis" | "son";
+  /** Telefondaki sabit görselin adresi; ana sayfa onu HTML'e gömülü (data: adresi) verir. */
+  poster?: string;
+}) {
   const tuvalRef = useRef<HTMLCanvasElement>(null);
   const [hal, setHal] = useState<Hal>("yukleniyor");
 
@@ -85,9 +92,10 @@ export default function FanusSahnesi({ poz = "akis" }: { poz?: "akis" | "son" })
       {poz === "akis" && (
         // eslint-disable-next-line @next/next/no-img-element -- tam ekran boyunda, ölçeklemesi CSS ile
         <img
-          src="/fanus-telefon.webp"
+          src={poster}
           alt=""
           fetchPriority="high"
+          decoding="sync"
           className={`absolute top-0 left-1/2 h-full w-auto max-w-none -translate-x-1/2 transition-opacity duration-700 md:hidden ${hal === "hazir" ? "opacity-0" : "opacity-100"}`}
         />
       )}

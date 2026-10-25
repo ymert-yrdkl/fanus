@@ -23,7 +23,14 @@ export default function Serit() {
     () => {
       const mm = gsap.matchMedia();
       mm.add(HAREKET_ACIK, () => {
-        const dongu = gsap.to("[data-serit-ic]", { xPercent: -50, duration: 42, ease: "none", repeat: -1 });
+        // Duraklamış başlar: şerit ekrana girince oynar, çıkınca durur (ekran dışında her karede stil hesabı olmasın)
+        const dongu = gsap.to("[data-serit-ic]", {
+          xPercent: -50,
+          duration: 42,
+          ease: "none",
+          repeat: -1,
+          paused: true,
+        });
         const egik = gsap.quickTo("[data-serit-ic]", "skewX", { duration: 0.5, ease: "power3.out" });
         let yon = 1;
         const tetik = ScrollTrigger.create({
