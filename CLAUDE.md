@@ -95,14 +95,16 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   `REFERANSLAR` › `patiskor` (kaynak App Store id6777159876, Ahmet'in uygulaması, iOS, ücretsiz + Premium; mağaza
   görselleri `public/isler/patiskor-1..3.webp`); `Isler` `uygulama` alanlı referansı yan yana telefon çerçeveleriyle
   gösterir, `sehir` isteğe bağlı. Giriş metni, şerit, meta başlık, altbilgi ve JSON-LD "mobil uygulama" ile güncellendi.
-- Marka (23 Ekim 2026, Yusuf'un kararı): ateş gitti, **ateşböceği** geldi. İşaret `[ · ]` (parantez + sarı-yeşil
-  ışık noktası ve halesi, `Logo.tsx`, `icon.svg`), vurgu rengi **güven mavisi #1d5fb8** (koyu zeminde #8ab8ff; token
-  adı `alev` → `vurgu`, ışık `--color-isik` #e8f266 / `--color-isik-koyu` #cfe02e). Önce seçilen koyu petrol #063236
-  yayında "basık" bulunup geri alındı; sarı Düzce'deki rakip yüzünden elendi. 3B'de (`fanus3b.ts`) camın içinde
-  dolaşan, göz kırpan, zamana bağlı örneklenen iz bırakan ateşböceği (sprite'lar, kâğıtta okunsun diye gövde doygun);
-  rüzgârda telaşlanır, cam kalkınca yükselir. Cam yansıması azaltılmış hâliyle aynı. Menü çubuğu yalnız `#icerik`
-  içindeki açık bölümlere bakar. Marka taslakları scratchpad'de (`atesbocegi.html`, `mavi-petroller.html`).
-- SIRADAKİ: Yusuf'un tasarım geri bildirimi (ateşböceği ve mavi dahil); sosyal medya için ateşböceği karakteri; SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
+- Marka (23-25 Ekim 2026, Yusuf'un kararları): turuncu alev gitti; işaret `[ · ]` (parantez + ışık noktası ve halesi,
+  `Logo.tsx`, `icon.svg`; token adı `alev` → `vurgu`). Koyu petrol #063236 yayında "basık" bulunup geri alındı; sarı
+  Düzce'deki rakip yüzünden, ateşböceği (sarı-yeşil) "yeşilden komple vazgeçelim" diye elendi. Şimdiki: vurgu
+  **güven mavisi #2a6ad0** (koyu zeminde #8fbbff; daha açığı kâğıt rengi düğme yazısıyla AA'yı geçmez), ışık
+  `--color-isik` #7f93ff / `--color-isik-koyu` #2f72f5. 3B'de (`fanus3b.ts`) **mavi-mor jet alevi** (ocak/jet motoru:
+  gölgelendiriciyle çizilen dik ve güçlü gövde, beyaz-mavi çekirdek, mor uçlar, şok elması düğümleri; profil
+  gölgelendiricide analitik, gövde cam üstüne çizilir, kırılma geçişinde kenarlar basamaklıydı). Manifesto masaüstünde:
+  fanus ortada (`POZLAR.genis.manifesto` x 0, boy 0,58), cümle altta ortalı, kartlar dört köşeye dağılır (sahne
+  başına bir köşe kayar), rüzgâr ipucu üstte. Menü çubuğu yalnız `#icerik` içindeki açık bölümlere bakar.
+- SIRADAKİ: Yusuf'un tasarım geri bildirimi (mavi alev ve manifesto düzeni dahil); sosyal medya görsel dili; SEO aşaması Yusuf'un kararıyla sonraya kaldı (sayfa
   başlıkları kısa: denetim uyarısı; Search Console + Bing; anahtar kelimeler; Google İşletme Profili); telefonda hız
   için JS küçültme (Lenis yalnız farede, GSAP eklentileri gerektiğinde).
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı

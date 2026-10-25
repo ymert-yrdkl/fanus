@@ -49,18 +49,22 @@ const SAHNELER: { cumle: string; kartlar: Kart[] }[] = [
   },
 ];
 
-/** Masaüstünde kartların sahnedeki yerleri (cümle ortada solda, fanus sağda). */
+/**
+ * Masaüstünde kartların sahnedeki yerleri: fanus ortada, cümle altta; kartlar ekrana dağılır (dört köşe).
+ * Her sahne kartlarını bir köşe kaydırarak kullanır ki üç sahne aynı yerde yığılmasın.
+ */
 const KART_YERLERI = [
-  "left-0 top-[12%] rotate-[-3deg]",
-  "left-[26%] bottom-[12%] rotate-[2deg]",
-  "left-[50%] top-[20%] rotate-[3deg]",
+  "left-0 top-[14%] rotate-[-3deg]",
+  "right-0 top-[22%] rotate-[2deg]",
+  "right-[6%] bottom-[30%] rotate-[-2deg]",
+  "left-[5%] bottom-[32%] rotate-[3deg]",
 ];
 
-/** Fanusun ekrandaki yerleri: masaüstünde sağda, telefonda başlığın altında. */
+/** Fanusun ekrandaki yerleri: girişte sağda, manifestoda ortada (cümle altında); telefonda başlığın altında. */
 const POZLAR = {
   genis: {
     giris: { x: 0.27, y: 0.04, boy: 0.64 },
-    manifesto: { x: 0.26, y: 0.05, boy: 0.76 },
+    manifesto: { x: 0, y: -0.1, boy: 0.58 },
   },
   dar: {
     giris: { x: 0, y: 0.31, boy: 0.38 },
@@ -72,7 +76,7 @@ const POZLAR = {
  * Giriş + manifesto boyunca tek bir kaydırma zaman çizelgesi (1 birim = 1 ekran boyu):
  * 0-1 giriş kayar, fanus yerine geçer · 1-2 ilk cümle · 2-3 cam parçaları açılır, rüzgâr çıkar, alev titrer ·
  * 3-4 cam kapanır, ışık büyür · 4.1-4.6 alev son kez parlar. Her cümleyle birlikte üç kart gelir ve gider.
- * Bölüm bitince şerit doğrudan sahnenin üstüne biner. Sahne, sayfa onu tamamen örtünce gizlenir.
+ * Masaüstünde fanus ortaya geçer, cümle altta ortalı durur, kartlar köşelere dağılır. Bölüm bitince şerit doğrudan sahnenin üstüne biner. Sahne, sayfa onu tamamen örtünce gizlenir.
  * Konum ve ışık tek çizelgede kalır ki sahne değerleri iki ayrı tetikte çakışmasın; görünürlüğü yalnız ayrı tetik yazar.
  * Telefonda (dar ekran) sabitleme ve çizelge yoktur: cümleler ve kartları alt alta, ekrana girince belirir.
  */
@@ -201,12 +205,12 @@ export default function Manifesto() {
     >
       <div className="relative overflow-hidden [.hareket_&]:md:sticky [.hareket_&]:md:top-0 [.hareket_&]:md:h-svh">
         <div className="mx-auto grid h-full max-w-[90rem] px-4 py-20 sm:px-6 md:items-center lg:px-10 [.hareket_&]:md:py-0">
-          <div className="relative flex flex-col gap-14 md:max-w-[44rem] [.hareket_&]:md:h-full lg:max-w-[50rem]">
+          <div className="relative flex flex-col gap-14 md:max-w-[44rem] [.hareket_&]:md:mx-auto [.hareket_&]:md:h-full [.hareket_&]:md:w-full [.hareket_&]:md:max-w-[52rem] [.hareket_&]:md:text-center lg:max-w-[50rem]">
             {SAHNELER.map((sahne, i) => (
               <div key={i} className="[.hareket_&]:md:contents">
                 <p
                   data-cumle
-                  className="cumle text-krem [.hareket_&]:md:absolute [.hareket_&]:md:inset-x-0 [.hareket_&]:md:top-1/2 [.hareket_&]:md:-translate-y-1/2"
+                  className="cumle text-krem [.hareket_&]:md:absolute [.hareket_&]:md:inset-x-0 [.hareket_&]:md:bottom-[7%]"
                 >
                   {sahne.cumle}
                 </p>
@@ -232,7 +236,7 @@ export default function Manifesto() {
             className="pointer-events-none absolute inset-x-4 inset-y-0 hidden sm:inset-x-6 lg:inset-x-10 [.hareket_&]:md:block"
           >
             {sahne.kartlar.map((k, j) => (
-              <div key={k.baslik} className={`absolute ${KART_YERLERI[j]}`}>
+              <div key={k.baslik} className={`absolute ${KART_YERLERI[(i + j) % KART_YERLERI.length]}`}>
                 <KartGovdesi kart={k} />
               </div>
             ))}
@@ -241,7 +245,7 @@ export default function Manifesto() {
 
         <p
           data-ruzgar-ipucu
-          className="pointer-events-none absolute bottom-10 left-1/2 hidden -translate-x-1/2 rounded-full border border-cizgi bg-gece/60 px-4 py-2 font-mono text-xs tracking-wide text-soluk opacity-0 backdrop-blur [@media(pointer:fine)]:block"
+          className="pointer-events-none absolute top-[5%] left-1/2 hidden -translate-x-1/2 rounded-full border border-cizgi bg-gece/60 px-4 py-2 font-mono text-xs tracking-wide text-soluk opacity-0 backdrop-blur [@media(pointer:fine)]:block"
         >
           Fareyi hızlıca gezdirin: rüzgâr sizsiniz
         </p>

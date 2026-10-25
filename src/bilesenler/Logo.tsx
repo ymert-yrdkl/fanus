@@ -2,16 +2,16 @@ import type { SVGProps } from "react";
 
 /*
   fanus işareti, 32x32'lik kutuda: [ · ] — iki köşeli parantez (fanusun iki cam duvarı; aynı zamanda kod) ve ortada
-  fanusun içindeki ateşböceği: sarı-yeşil bir ışık noktası ve etrafında soluk halesi. Klavyeyle yazılışı "[ · ]",
+  fanusun içindeki mavi alevin ışığı: mavi bir nokta ve etrafında mor-mavi soluk hale. Klavyeyle yazılışı "[ · ]",
   düz metinde "[.]". Parantezler currentColor (mürekkep ya da kâğıt), nokta markanın ışık rengi (--color-isik);
-  vurgu renginden bağımsızdır. (23 Ekim 2026: alev gitti, ateşböceği geldi.)
+  vurgu renginden bağımsızdır. (25 Ekim 2026: mavi alev; ateşböceği ve turuncu alev bırakıldı.)
 */
 
 /** Köşeli parantezlerin çizgileri. */
 const CIZGILER = ["M12.5 5H9a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h3.5", "M19.5 5H23a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2h-3.5"];
 const NOKTA = { cx: 16, cy: 16, r: 2.4, hale: 4.4 };
 
-/** Ateşböceği: hale ve çekirdek. */
+/** Alevin ışığı: hale ve çekirdek. */
 function Isik(ozellik: SVGProps<SVGGElement>) {
   return (
     <g {...ozellik}>
