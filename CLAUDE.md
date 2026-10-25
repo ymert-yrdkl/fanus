@@ -120,8 +120,9 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
     iş parçacığını 3,8 → 2,0 sn meşgul ediyordu), kayan şerit ekrana girince başlar, otomasyon düğümü renk yerine
     saydamlıkla yanar, telefonda belirmeler 49 ScrollTrigger yerine tek IntersectionObserver + CSS (`.belir-bekliyor`),
     telefon posteri ana sayfa HTML'ine gömülü (data: adresi). Gerçek telefon benzetiminde (4x yavaş işlemci) LCP 1,0 sn;
-    Lighthouse'un telefon tahmini (simülasyon) aynı sayfada 66-85 arasında oynuyor, masaüstü 95-96, SEO/erişilebilirlik/
-    en iyi uygulamalar 100. Yusuf'un yapacakları (Search Console, İşletme Profili, yorumlar, müşteri
+    Lighthouse'un telefon tahmini (simülasyon) oynak: canlıda ana sayfa önce 66-85, bu işlerden sonra 88;
+    e-ticaret sayfası telefonda 73 (LCP sayfa başı metni, sıradaki iş); masaüstü 95-96; SEO, erişilebilirlik ve en iyi
+    uygulamalar her sayfada 100 (26 Ekim 2026). Yusuf'un yapacakları (Search Console, İşletme Profili, yorumlar, müşteri
     sitelerinden bağlantı, Bing/Yandex, telefon/Instagram, içerik) `docs/seo.md`'de sırayla.
 - SIRADAKİ: Yusuf'un tasarım geri bildirimi (mavi alev ve manifesto düzeni dahil); sosyal medya görsel dili; SEO'nun
   hesap gerektiren adımları (`docs/seo.md`); içerik bölümü (`/rehber`) Yusuf onaylarsa; telefonda hız için kalan JS.
