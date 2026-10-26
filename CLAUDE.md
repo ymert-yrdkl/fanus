@@ -151,6 +151,12 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   - Ölçümler (yerel Lighthouse, telefon tahmini): ana sayfa 85 → 89, e-ticaret 85 → 92, rehber 91-94; masaüstü 99-100;
     gerçek kısıtlamalı telefon ölçümünde ana sayfa 69 → 78 (bloklanma 1,7 → 0,75 sn). Telefonda 100 olmuyor: bütün
     JavaScript engellense bile 98 (yazı tipi + stil + HTML); kalan iş React'ın sayfayı canlandırması.
+  - Canlı Google PageSpeed (27 Ekim, yayına alındıktan sonra, ana sayfa): masaüstü 100/100/100/100; telefon hız
+    94, 94, 97 (üç koşu), erişilebilirlik/en iyi uygulamalar/SEO 100. Telefonda LCP öğesi poster görseli
+    (`fanus-telefon.webp`, 9,5 KB); LCP 2,6-2,9 sn çünkü Lighthouse ilk çizimden önce istenen bütün JS ve yazı
+    tiplerini LCP'ye sayıyor (Next/React çalışma zamanı + 104 KB yazı tipi).
+  - Search Console'da yeni adresler için dizine ekleme istendi (27 Ekim): `/rehber`, 4 rehber yazısı,
+    `/hizmetler/ozel-yazilim`; IndexNow da gönderildi (`npm run indexnow`).
   - Denenip alınmayanlar: Suspense ile parça parça canlandırma (masaüstünde SplitText henüz canlanmamış bölümün
     DOM'unu değiştiriyor, React #418), `content-visibility` (gerçek ölçümde kazanç yok), stili gömmek (HTML 2 kat).
 - SIRADAKİ: Yusuf'un tasarım geri bildirimi; sosyal medya görsel dili; hesap gerektiren SEO adımları (`docs/seo.md`:
