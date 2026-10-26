@@ -35,7 +35,8 @@ export const SITE: SiteAyarlari = {
   instagram: "",
   // Search Console › Ayarlar › Sahiplik doğrulama › HTML etiketi: content="..." içindeki değer.
   // Bing Webmaster › msvalidate.01, Yandex Webmaster › yandex-verification. Doldurup yayına alın.
-  dogrulama: { google: "", bing: "", yandex: "" },
+  // Search Console (softfanus@gmail.com, URL ön eki https://fanussoft.com/; 26 Ekim 2026)
+  dogrulama: { google: "YyTz-9kRKzPGPCYAkW6GNwL9h9lzVzSk82qaMucIq1Q", bing: "", yandex: "" },
 };
 
 /** Hazır metinle WhatsApp bağlantısı. Numara yoksa null. */
