@@ -12,8 +12,9 @@ import { cekirdekVeri, jsonLd, MARKA } from "@/site/seo";
 import "./globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin", "latin-ext"] });
-// Mono yalnız küçük etiketlerde: öncelikli indirilmez (açılışta başlık ve gövde yazı tiplerine yer kalsın)
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin", "latin-ext"], preload: false });
+// Mono etiketlerde ve sayfa başı kırıntısında: öncelikli indirilir. Ön yüklemesi kapatılınca geç gelen yazı tipi
+// kırıntıyı iki satıra kırıp altındaki her şeyi itiyordu (PageSpeed: düzen kayması 0,19)
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin", "latin-ext"] });
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin", "latin-ext"],
