@@ -17,14 +17,7 @@ export default function Giris() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      // Telefon: başlık beklemeden görünür (CSS), düğmeler ve bağlantılar kısa bir belirmeyle gelir
-      mm.add(`${HAREKET_ACIK} and (max-width: 767px)`, () => {
-        gsap.fromTo(
-          kok.current!.querySelectorAll("[data-giris]"),
-          { autoAlpha: 0, y: 12 },
-          { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out", stagger: 0.06, delay: 0.1 },
-        );
-      });
+      // Telefon: başlık, metin, düğmeler ve şerit JavaScript'i beklemeden CSS ile görünür (globals.css)
 
       mm.add(`${HAREKET_ACIK} and ${GENIS}`, () => {
         const baslik = kok.current!.querySelector<HTMLElement>("h1")!;

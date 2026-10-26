@@ -234,13 +234,14 @@ html.lenis body {
   /* Kendi saydamlığı: .hareket sınıfı düşse de (çok yavaş cihaz) öğe kaymış hâlde görünmez */
   opacity: 0;
   transform: translateY(16px);
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
+/* Geçiş yalnız belirirken: gizlenme anında olur (ekranın altındaki öğe JS gelince sessizce gizlenir) */
 .belir-bekliyor.belirdi {
   opacity: 1;
   transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* GSAP'in ölçeklediği çizgiler: başlangıçta kapalı (Tailwind scale-* GSAP transform'uyla çakışır, kullanılmaz) */
@@ -296,6 +297,17 @@ html.lenis body {
   }
   .hareket [data-giris-baslik] {
     opacity: 1;
+  }
+  /* Telefonda belirecek öğeler baştan görünür: ilk ekrandakiler JavaScript'i beklemez (Google'ın Speed Index ve
+     LCP ölçümü), ekranın altındakileri SahneYonetmeni .belir-bekliyor ile gizleyip ekrana girince belirtir */
+  .hareket [data-belir],
+  .hareket [data-bol] {
+    opacity: 1;
+  }
+  /* Giriş metni, düğmeler ve "şu an yayında" şeridi de beklemeden, kısa bir CSS belirmesiyle */
+  .hareket [data-giris] {
+    opacity: 1;
+    animation: ilk-ekran 0.6s ease-out both;
   }
   /* Sayfa başı (ilk ekran) JavaScript'i beklemeden belirir: içerik hemen görünür (LCP) */
   .hareket [data-sayfa-basi] [data-belir],

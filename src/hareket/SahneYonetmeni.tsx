@@ -22,9 +22,10 @@ export default function SahneYonetmeni() {
     // ScrollTrigger yerine tek bir IntersectionObserver ve CSS geçişi (globals.css › .belir-bekliyor): her öğe için
     // ayrı tetik kurmak açılışta sayfa yerleşimini onlarca kez yeniden hesaplatıyordu (telefonda hız puanı).
     mm.add(`${HAREKET_ACIK} and (max-width: 767px)`, () => {
+      // İlk ekrandakiler olduğu gibi görünür kalır (CSS); yalnız ekranın altındakiler belirmeyi bekler
       const ogeler = gsap.utils
         .toArray<HTMLElement>("[data-belir], [data-bol]")
-        .filter((el) => !el.closest("[data-sayfa-basi]"));
+        .filter((el) => !el.closest("[data-sayfa-basi]") && el.getBoundingClientRect().top > window.innerHeight);
       const gozcu = new IntersectionObserver(
         (girdiler) =>
           girdiler.forEach((g) => {
