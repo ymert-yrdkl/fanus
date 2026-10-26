@@ -28,6 +28,7 @@ export default async function HizmetlerSayfasi() {
       />
       <SayfaBasi
         iz={[{ ad: "Hizmetler" }]}
+        ustBaslik="Web tasarım ve yazılım hizmetleri"
         baslik="Beş hizmet, beş canlı örnek."
         metin="İşletmenizin adını yazın; aşağıdaki örnekler sizin adınızla çalışsın. Her kartın sonunda fiyatı ve ayrıntıları var."
       >

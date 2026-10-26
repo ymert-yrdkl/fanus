@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowsClockwise, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { ArrowsClockwise, ArrowUpRight, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import AdGirisi from "@/bilesenler/AdGirisi";
 import BolumBasi from "@/bilesenler/BolumBasi";
 import CagriBandi from "@/bilesenler/CagriBandi";
@@ -11,6 +11,7 @@ import HizmetDemosu from "@/bilesenler/demolar/HizmetDemosu";
 import Isler from "@/bilesenler/Isler";
 import SayfaBasi from "@/bilesenler/SayfaBasi";
 import Sss from "@/bilesenler/Sss";
+import { REHBER } from "@/site/rehber";
 import { dugmeSinifi } from "@/bilesenler/dugme";
 import { SITE } from "@/site/ayarlar";
 import { ISLETME, jsonLd, SEHIR, sayfaMetasi, sayfaVerisi } from "@/site/seo";
@@ -94,6 +95,7 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yapilandirilmisVeri) }} />
       <SayfaBasi
         iz={[{ ad: "Hizmetler", adres: "/hizmetler" }, { ad: h.ad }]}
+        ustBaslik={h.ustBaslik}
         baslik={h.sayfaBasligi}
         metin={h.sayfaMetni}
       >
@@ -128,7 +130,6 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
           ))}
         </div>
       </SayfaBasi>
-
       {/* Canlı örnek */}
       <section
         aria-labelledby="canli-ornek"
@@ -150,7 +151,6 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
           </div>
         </div>
       </section>
-
       {/* Özellikler */}
       <section
         aria-labelledby="ozellikler"
@@ -255,6 +255,37 @@ export default async function HizmetSayfasi({ params }: PageProps<"/hizmetler/[h
         />
       )}
       <Sss sorular={h.sss} baslik="Bu hizmetle ilgili sorular." />
+      {/* Bu hizmetle ilgili rehber yazıları: yazılar hizmetten, hizmet yazılardan bağlantı alır */}
+      {REHBER.some((y) => y.ilgiliHizmet === h.adres) && (
+        <section aria-labelledby="ilgili-yazilar" className="relative z-10 bg-gece px-4 pb-12 sm:px-6 lg:px-10">
+          <div className="mx-auto max-w-[90rem] border-t border-cizgi-guclu pt-8">
+            <h2 id="ilgili-yazilar" className="etiket">
+              Rehberden
+            </h2>
+            <ul className="mt-6 grid gap-4 md:grid-cols-2">
+              {REHBER.filter((y) => y.ilgiliHizmet === h.adres).map((y) => (
+                <li key={y.adres}>
+                  <Link
+                    href={`/rehber/${y.adres}`}
+                    className="group flex h-full items-start justify-between gap-4 rounded-[1.25rem] border border-cizgi-guclu bg-gece-2 p-5 transition-colors hover:border-vurgu"
+                  >
+                    <span>
+                      <span className="block font-semibold leading-snug">{y.baslik}</span>
+                      <span className="mt-2 block text-sm leading-relaxed text-soluk">{y.ozet}</span>
+                    </span>
+                    <ArrowUpRight
+                      size={18}
+                      weight="bold"
+                      aria-hidden="true"
+                      className="mt-0.5 shrink-0 transition-transform duration-500 ease-yay group-hover:rotate-45"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
       <DigerHizmetler simdiki={h.adres} />
       <CagriBandi />
     </main>

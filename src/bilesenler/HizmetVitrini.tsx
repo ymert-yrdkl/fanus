@@ -14,7 +14,7 @@ const DUZEN: { adres: HizmetAdresi; sinif: string }[] = [
   { adres: "kurumsal-site", sinif: "md:col-span-2" },
   { adres: "qr-menu", sinif: "md:col-span-2" },
   { adres: "mobil-uygulama", sinif: "md:col-span-4" },
-  { adres: "web-otomasyonu", sinif: "md:col-span-6" },
+  { adres: "ozel-yazilim", sinif: "md:col-span-6" },
 ];
 
 /**

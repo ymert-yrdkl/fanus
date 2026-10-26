@@ -51,6 +51,7 @@ export default function FiyatlarSayfasi() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yapilandirilmisVeri) }} />
       <SayfaBasi
         iz={[{ ad: "Fiyatlar" }]}
+        ustBaslik={`Web sitesi ve e-ticaret fiyatları ${yil}`}
         baslik="Fiyatı baştan söylüyoruz."
         metin={`Her paketin fiyatı ve içeriği aşağıda yazılı. Site yayına girdikten sonra her yıl ${kdvHaricYaz(YILLIK_YENILEME)} yenileme ödersiniz; sunucu, SSL, güncelleme ve yedek buna dahildir.`}
       />

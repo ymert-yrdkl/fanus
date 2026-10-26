@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "@/hareket/gsap";
+import { hareketYukle } from "@/hareket/gsap";
 
 export const tlBicimi = new Intl.NumberFormat("tr-TR", {
   style: "currency",
@@ -27,9 +27,17 @@ export function AkanTutar({ kurus, className }: { kurus: number; className?: str
       yaz();
       return;
     }
-    const tw = gsap.to(deger.current, { v: kurus, duration: 0.9, ease: "power3.out", onUpdate: yaz });
+    // İlk açılışta (ya da değer aynıysa) akacak bir şey yok: GSAP boşuna yüklenmesin (telefonda açılış hızı)
+    if (deger.current.v === kurus) return;
+    let iptal = false;
+    let tw: gsap.core.Tween | undefined;
+    void hareketYukle().then(({ gsap }) => {
+      if (iptal) return;
+      tw = gsap.to(deger.current, { v: kurus, duration: 0.9, ease: "power3.out", onUpdate: yaz });
+    });
     return () => {
-      tw.kill();
+      iptal = true;
+      tw?.kill();
     };
   }, [kurus]);
 

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useSyncExternalStore } from "react";
 import { WhatsappLogo, EnvelopeSimple, Check } from "@phosphor-icons/react/dist/ssr";
-import { gsap, GENIS, useGSAP } from "@/hareket/gsap";
+import { GENIS, useHareket } from "@/hareket/gsap";
 import { sahneDurumu } from "@/sahne/durum";
 import { epostaBaglantisi, whatsappBaglantisi } from "@/site/ayarlar";
 import { kdvHaricYaz, PAKETLER, type PaketKodu } from "@/site/icerik";
@@ -86,8 +86,8 @@ export default function Teklif() {
     setElleSecilen(secilenler.includes(secenek) ? secilenler.filter((s) => s !== secenek) : [...secilenler, secenek]);
 
   // Arkadaki fanusun yeri: masaüstünde sağda, telefonda üstte soluk
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap }) => {
       const mm = gsap.matchMedia();
       mm.add({ genis: GENIS }, (baglam) => {
         const { genis } = baglam.conditions as { genis: boolean };
@@ -112,8 +112,13 @@ export default function Teklif() {
     >
       <div className="mx-auto max-w-[90rem]">
         <div className="max-w-[40rem]">
-          <h1 id="teklif-baslik" data-bol className="dev-baslik">
-            Sıradaki fanus sizin olsun.
+          <h1 id="teklif-baslik">
+            <span data-belir className="etiket block text-krem">
+              Teklif ve iletişim
+            </span>
+            <span data-bol className="dev-baslik mt-5 block md:mt-6">
+              Sıradaki fanus sizin olsun.
+            </span>
           </h1>
           <p data-belir className="mt-6 max-w-[32rem] text-lg leading-relaxed text-soluk">
             Ne istediğinizi seçin, mesajınız hazırlansın. Gerisini görüşmede birlikte netleştiririz.

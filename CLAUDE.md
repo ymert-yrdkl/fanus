@@ -41,7 +41,7 @@ metin kopyalanmaz). Hedef: ziyaretçi "keşke bende de olsa" desin; ağır, ama�
 ## Sayfalar
 
 `/` ana sayfa (3B giriş, manifesto, hizmet kartları, işler, fiyat listesi) · `/hizmetler` (canlı örnekler + süreç) ·
-`/hizmetler/[e-ticaret|kurumsal-site|qr-menu|web-otomasyonu]` (örnek, özellikler, paketler, referans, SSS) ·
+`/hizmetler/[e-ticaret|kurumsal-site|qr-menu|ozel-yazilim]` (örnek, özellikler, paketler, referans, SSS) ·
 `/fiyatlar` · `/isler` · `/iletisim` (3B fanus + teklif formu, `?paket=` ile seçili gelir). Menü, altbilgi, açılış
 perdesi ve sayfa geçiş perdesi (`src/hareket/GecisYoneticisi.tsx`) layout'ta; genel kaydırma efektleri her sayfada
 yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PAKETLER.
@@ -136,8 +136,26 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
   başlık yazı tipini öncelikten çıkarmak (geç gelince kırıntı ve başlıklar kayıyor), başlık yazı tipinde opsz'yi 96'ya
   sabitlemek (185 → 93 KB ama logo ve küçük yazılar sıkışıyor). Kalan sınır: açılıştaki React + GSAP JavaScript'i;
   büyük adım GSAP'ı gerektiğinde yüklemek (19 dosya).
-- SIRADAKİ: Yusuf'un tasarım geri bildirimi (mavi alev ve manifesto düzeni dahil); sosyal medya görsel dili; SEO'nun
-  hesap gerektiren adımları (`docs/seo.md`); içerik bölümü (`/rehber`) Yusuf onaylarsa; telefonda hız için kalan JS.
+- Tam SEO ve hız turu (27 Ekim 2026, Yusuf: "mobilde ve webde 100, müthiş SEO"):
+  - SEO: iç sayfalarda H1'in küçük ilk satırı aranan kelime (`SayfaBasi` › `ustBaslik`, hizmetlerde `icerik.ts` ›
+    `ustBaslik`; görünen kırıntıda yalnız üst sayfalar); "Özel yazılım" adresi `/hizmetler/ozel-yazilim` (eski adres
+    kalıcı yönlenir); `/rehber` + 4 yazı (`src/site/rehber.ts`, Article + SSS verisi, yasal iddialar resmi kaynaklı,
+    kaynaklar dosyanın başında; hizmet sayfalarında "Rehberden" bağlantıları; menü, altbilgi, site haritası, llms.txt);
+    HSTS; hreflang tr-TR/x-default. Ayrı "Düzce web tasarım" sayfası açılmadı (ana sayfayla aynı kelimeye yarışırdı).
+  - Yazı tipleri kendi sunucumuzdan, küçültülmüş: `scripts/yazitipi-uret.py` (kaynak `kaynak/yazitipi/`, çıktı
+    `public/yazitipi/*.özet.woff2`, `src/app/yazitipleri.css`, `src/site/yazitipleri.ts`), 269 → 104 KB; Bricolage
+    opsz 96'ya sabit, logo için ayrı 1,4 KB'lık "Bricolage Logo" (`.logo-yazi`); next/font kaldırıldı.
+  - GSAP gerektiğinde yüklenir (`src/hareket/gsap.ts` › `useHareket`, `hareketYukle`; paket `gsap-paketi.ts`):
+    masaüstünde hemen, telefonda ilk dokunuş/kaydırmada (telefonda ilk ekran ve aşağıdaki belirmeler GSAP'sız: CSS +
+    IntersectionObserver). `@gsap/react` kaldırıldı. Ana sayfa açılış JS 265 → 178 KB gzip.
+  - Ölçümler (yerel Lighthouse, telefon tahmini): ana sayfa 85 → 89, e-ticaret 85 → 92, rehber 91-94; masaüstü 99-100;
+    gerçek kısıtlamalı telefon ölçümünde ana sayfa 69 → 78 (bloklanma 1,7 → 0,75 sn). Telefonda 100 olmuyor: bütün
+    JavaScript engellense bile 98 (yazı tipi + stil + HTML); kalan iş React'ın sayfayı canlandırması.
+  - Denenip alınmayanlar: Suspense ile parça parça canlandırma (masaüstünde SplitText henüz canlanmamış bölümün
+    DOM'unu değiştiriyor, React #418), `content-visibility` (gerçek ölçümde kazanç yok), stili gömmek (HTML 2 kat).
+- SIRADAKİ: Yusuf'un tasarım geri bildirimi; sosyal medya görsel dili; hesap gerektiren SEO adımları (`docs/seo.md`:
+  İşletme Profili doğrulaması ancak yüz yüze hizmet ve belgeyle, Bing/Yandex); rehbere düzenli yeni yazı; Hakkımızda
+  sayfası (Yusuf'un bilgisiyle).
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı
   `docs/yayina-alma.md`; push sonrası Coolify'da elle Deploy. Sıradaki: fanus.tr alan adı, iletişim bilgileri,
   `docs/acik-kararlar.md` (KDV, ilk yıl, paket özellikleri).

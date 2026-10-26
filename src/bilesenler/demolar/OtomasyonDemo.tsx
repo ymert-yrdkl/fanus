@@ -10,12 +10,15 @@ import {
   Check,
   Lightning,
 } from "@phosphor-icons/react/dist/ssr";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
+import { HAREKET_ACIK, hareketYukle, useHareket } from "@/hareket/gsap";
 import { useIsletmeAdi } from "../IsletmeAdi";
 
-// Yalnız bu örnek yol boyunca hareket ettirir: eklenti burada kaydedilir (her sayfa indirmesin)
-if (typeof window !== "undefined") gsap.registerPlugin(MotionPathPlugin);
+// Yalnız bu örnek yol boyunca hareket ettirir: MotionPath eklentisi akış ilk çalıştığında yüklenir (her sayfa indirmesin)
+const hareketVeYol = () =>
+  Promise.all([hareketYukle(), import("gsap/MotionPathPlugin")]).then(([h, { MotionPathPlugin }]) => {
+    h.gsap.registerPlugin(MotionPathPlugin);
+    return h;
+  });
 
 const ADIMLAR = [
   { ad: "Yeni sipariş", Ikon: ShoppingBagOpen },
@@ -130,32 +133,34 @@ export default function OtomasyonDemo() {
     if (azHareket) {
       for (let i = 1; i < ADIMLAR.length; i++) kaydet(adimMetinleri[i]!);
       setAktif(ADIMLAR.length - 1);
-      aktifYollar.forEach((y) => gsap.set(y, { strokeDashoffset: 0 }));
+      aktifYollar.forEach((y) => (y.style.strokeDashoffset = "0"));
       bitir();
       return;
     }
 
-    const zc = gsap.timeline({ onComplete: bitir });
-    zc.set(aktifYollar, { strokeDashoffset: 1 }).set(nokta.current, { autoAlpha: 1 });
-    temelYollar.forEach((yol, i) => {
-      zc.to(nokta.current, {
-        duration: 0.75,
-        ease: "power2.inOut",
-        motionPath: { path: yol, align: yol, alignOrigin: [0.5, 0.5] },
-      })
-        .to(aktifYollar[i]!, { strokeDashoffset: 0, duration: 0.75, ease: "power2.inOut" }, "<")
-        .call(() => {
-          setAktif(i + 1);
-          kaydet(adimMetinleri[i + 1]!);
+    void hareketVeYol().then(({ gsap }) => {
+      const zc = gsap.timeline({ onComplete: bitir });
+      zc.set(aktifYollar, { strokeDashoffset: 1 }).set(nokta.current, { autoAlpha: 1 });
+      temelYollar.forEach((yol, i) => {
+        zc.to(nokta.current, {
+          duration: 0.75,
+          ease: "power2.inOut",
+          motionPath: { path: yol, align: yol, alignOrigin: [0.5, 0.5] },
         })
-        .to({}, { duration: 0.25 });
+          .to(aktifYollar[i]!, { strokeDashoffset: 0, duration: 0.75, ease: "power2.inOut" }, "<")
+          .call(() => {
+            setAktif(i + 1);
+            kaydet(adimMetinleri[i + 1]!);
+          })
+          .to({}, { duration: 0.25 });
+      });
+      zc.to(nokta.current, { autoAlpha: 0, duration: 0.3 });
     });
-    zc.to(nokta.current, { autoAlpha: 0, duration: 0.3 });
   }, []);
 
   // Görünürken birkaç saniyede bir yeni sipariş gelir
-  useGSAP(
-    () => {
+  useHareket(
+    ({ ScrollTrigger }) => {
       let aralik = 0;
       const t = ScrollTrigger.create({
         trigger: kok.current,
@@ -178,10 +183,13 @@ export default function OtomasyonDemo() {
 
   useEffect(() => {
     if (!mesaj || !kok.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.fromTo(
-      kok.current.querySelector("[data-balon]"),
-      { scale: 0.6, opacity: 0, y: 12 },
-      { scale: 1, opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.8)" },
+    const balon = kok.current.querySelector("[data-balon]");
+    void hareketYukle().then(({ gsap }) =>
+      gsap.fromTo(
+        balon,
+        { scale: 0.6, opacity: 0, y: 12 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.7, ease: "back.out(1.8)" },
+      ),
     );
   }, [mesaj]);
 

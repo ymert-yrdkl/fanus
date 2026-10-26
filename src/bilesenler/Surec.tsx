@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { ChatsCircle, PencilRuler, Code, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
-import { gsap, GENIS, HAREKET_ACIK, useGSAP } from "@/hareket/gsap";
+import { GENIS, HAREKET_ACIK, useHareket } from "@/hareket/gsap";
 import { SUREC } from "@/site/icerik";
 import BolumBasi from "./BolumBasi";
 
@@ -12,8 +12,8 @@ const IKONLAR = [ChatsCircle, PencilRuler, Code, ShieldCheck];
 export default function Surec() {
   const kok = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap }) => {
       const mm = gsap.matchMedia();
       mm.add({ genis: GENIS, hareket: HAREKET_ACIK }, (baglam) => {
         const { genis, hareket } = baglam.conditions as { genis: boolean; hareket: boolean };

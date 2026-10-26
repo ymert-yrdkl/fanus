@@ -2,7 +2,7 @@
 // sayı ya da iddia eklerken kaynağını bu dosyaya not düşün. Fiyatlar Yusuf'tan (20 Ekim 2026).
 
 export type HizmetKodu = "eticaret" | "kurumsal" | "otomasyon" | "qrmenu" | "mobil";
-export type HizmetAdresi = "e-ticaret" | "kurumsal-site" | "qr-menu" | "web-otomasyonu" | "mobil-uygulama";
+export type HizmetAdresi = "e-ticaret" | "kurumsal-site" | "qr-menu" | "ozel-yazilim" | "mobil-uygulama";
 export type PaketKodu = "tek-sayfa" | "kurumsal" | "e-ticaret" | "qr-menu" | "otomasyon" | "mobil";
 
 export type OzellikGrubu = { baslik: string; maddeler: string[] };
@@ -17,7 +17,8 @@ export type Hizmet = {
   metin: string;
   /** Hizmetler sayfasındaki kısa liste */
   maddeler: string[];
-  /** Hizmet sayfasının üst bölümü */
+  /** Hizmet sayfasının üst bölümü. ustBaslik H1'in küçük ilk satırı: aranan kelime (ör. "E-ticaret sitesi yaptırma") */
+  ustBaslik: string;
   sayfaBasligi: string;
   sayfaMetni: string;
   seoBasligi: string;
@@ -126,7 +127,7 @@ export const PAKETLER: Paket[] = [
   {
     kod: "otomasyon",
     ad: "Özel yazılım ve otomasyon",
-    hizmet: "web-otomasyonu",
+    hizmet: "ozel-yazilim",
     fiyat: null,
     yenileme: null,
     ozet: "Sipariş, fatura, randevu, bildirim ve üretim takibi gibi tekrar eden işler için kurulan özel yazılım. Fiyat, bağlanacak sistemlere göre belirlenir.",
@@ -204,6 +205,7 @@ export const HIZMETLER: Hizmet[] = [
       "Sipariş, kargo ve fatura takibi",
       "Ürünleri kendiniz eklediğiniz panel",
     ],
+    ustBaslik: "E-ticaret sitesi yaptırma",
     sayfaBasligi: "Uyurken de satan mağaza.",
     sayfaMetni:
       "Ürünlerinizi kendiniz eklediğiniz, kartla ödeme alan, siparişi ve kargoyu tek panelden yönettiğiniz e-ticaret sitesi.",
@@ -281,6 +283,7 @@ export const HIZMETLER: Hizmet[] = [
       "Türkçe, İngilizce ve başka diller",
       "Teklif ve iletişim formları",
     ],
+    ustBaslik: "Kurumsal web sitesi yaptırma",
     sayfaBasligi: "İlk bakışta güven veren site.",
     sayfaMetni:
       "Tek sayfalık bir tanıtım sitesinden yönetim panelli, çok dilli kurumsal siteye kadar. Firmanızı doğru anlatan, telefonda hızlı açılan ve Google'da bulunan bir site.",
@@ -358,6 +361,7 @@ export const HIZMETLER: Hizmet[] = [
       "Telefonla ve WhatsApp'tan sipariş",
       "İsterseniz birden çok dilde",
     ],
+    ustBaslik: "QR menü sistemi",
     sayfaBasligi: "Masadaki kod, telefondaki menü.",
     sayfaMetni:
       "Restoran, kafe ve pastaneler için dijital menü. Müşteri okutur, menü açılır; fiyatı panelden değiştirirsiniz, kod aynı kalır.",
@@ -415,7 +419,7 @@ export const HIZMETLER: Hizmet[] = [
   },
   {
     kod: "otomasyon",
-    adres: "web-otomasyonu",
+    adres: "ozel-yazilim",
     ad: "Özel yazılım ve otomasyon",
     baslik: "Tekrar eden işi yazılıma devredin.",
     metin:
@@ -426,6 +430,7 @@ export const HIZMETLER: Hizmet[] = [
       "Üretim takibi, iş emirleri ve stok sayımı",
       "Size özel yönetim panelleri ve raporlar",
     ],
+    ustBaslik: "Özel yazılım ve iş otomasyonu",
     sayfaBasligi: "Tekrar eden işi yazılıma devredin.",
     sayfaMetni:
       "Her gün elle yaptığınız işleri birbirine bağlayan özel yazılım: sipariş, fatura, kargo, randevu ve bildirimlerden üretim takibine; mevcut sistemlerinize eklenir, kendiliğinden yürür.",
@@ -504,6 +509,7 @@ export const HIZMETLER: Hizmet[] = [
       "Uygulama içi abonelik (Apple ve Google)",
       "Yönetim paneli ve API ile birlikte",
     ],
+    ustBaslik: "Mobil uygulama geliştirme",
     sayfaBasligi: "Mağazada yayınlanan, cepte duran uygulama.",
     sayfaMetni:
       "iPhone ve Android için tek kod tabanıyla yazılan, App Store ve Google Play'de yayınlanan mobil uygulamalar: üyelik, bildirim, harita, kamera, abonelik ve yapay zekâ destekli özellikler; arkasında yönetim paneli ve API.",

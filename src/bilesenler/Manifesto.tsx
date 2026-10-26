@@ -13,7 +13,7 @@ import {
   Storefront,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon } from "@phosphor-icons/react";
-import { gsap, GENIS, HAREKET_ACIK, ScrollTrigger, SplitText, useGSAP } from "@/hareket/gsap";
+import { GENIS, HAREKET_ACIK, useHareket } from "@/hareket/gsap";
 import { sahneDurumu } from "@/sahne/durum";
 
 type Kart = { Ikon: Icon; baslik: string; alt: string };
@@ -83,8 +83,8 @@ const POZLAR = {
 export default function Manifesto() {
   const kok = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, ScrollTrigger, SplitText }) => {
       const mm = gsap.matchMedia();
       mm.add({ genis: GENIS, hareket: HAREKET_ACIK }, (baglam) => {
         const { genis, hareket } = baglam.conditions as { genis: boolean; hareket: boolean };

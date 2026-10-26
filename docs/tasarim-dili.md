@@ -69,7 +69,9 @@ kendi kâğıt renklerini kullanır (müşterinin sitesini temsil eder).
 
 ## Yazı
 
-- Başlık: Bricolage Grotesque, eksenler opsz 96 + wdth (next/font `axes: ["opsz", "wdth"]`). Gövde: Geist. Etiket: Geist Mono büyük harf, 0,75 rem, geniş aralık.
+- Başlık: Bricolage Grotesque (opsz 96'ya sabit, wght 500-700, wdth 85-100); logo yazısı ayrı küçük dosya (opsz 22). Gövde:
+  Geist (400-700). Etiket: Geist Mono (400-600) büyük harf, 0,75 rem, geniş aralık. Yazı tipleri kendi sunucumuzdan,
+  `scripts/yazitipi-uret.py` ile küçültülür; yeni kalınlık ya da Latin dışı karakter gerekirse oradan genişletilir.
 - Sınıflar `globals.css`'te: `.dev-baslik` (giriş, sayfa başı, çağrı; 6,9vw'ye kadar, wdth 86), `.bolum-baslik`
   (wdth 88), `.ara-baslik` (wdth 92), `.cumle` (manifesto), `.rakam` (fiyat ve sayı: tablo rakamları), `.etiket`.
 - Gövde en az 16 px, satır 1,6; ikincil metin `soluk`. Telefonda başlıklar ayrı ölçekte (`@media (max-width: 767px)`).

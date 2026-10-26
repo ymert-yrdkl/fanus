@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useRef } from "react";
-import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
+import { HAREKET_ACIK, useHareket } from "@/hareket/gsap";
 
 const OGELER = [
   "E-ticaret",
@@ -19,8 +19,8 @@ const OGELER = [
 export default function Serit() {
   const kok = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, ScrollTrigger }) => {
       const mm = gsap.matchMedia();
       mm.add(HAREKET_ACIK, () => {
         // Duraklamış başlar: şerit ekrana girince oynar, çıkınca durur (ekran dışında her karede stil hesabı olmasın)

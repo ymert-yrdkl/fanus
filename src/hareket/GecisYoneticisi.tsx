@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { gecisKaydet } from "./gecis";
-import { gsap, ScrollTrigger } from "./gsap";
+import { hareketYukle } from "./gsap";
 import { basaDon } from "./kaydirma";
 
 /**
@@ -38,13 +38,17 @@ export default function GecisYoneticisi() {
       };
       // Telefonda bulanıklık yok: zayıf telefonlarda takılır; sade solma yeter
       const bulaniklik = window.matchMedia("(max-width: 767px)").matches ? "none" : "blur(18px)";
-      gsap
-        .timeline()
-        .set(ortu.current, { display: "block", opacity: 0, backdropFilter: "blur(0px)" })
-        .set(cizgi.current, { display: "block", scaleX: 0, opacity: 1 })
-        .to(ortu.current, { opacity: 1, backdropFilter: bulaniklik, duration: 0.32, ease: "power2.in" })
-        .to(cizgi.current, { scaleX: 0.7, duration: 0.6, ease: "power2.out" }, 0)
-        .call(sayfayaGec, [], 0.32);
+      const ortuOge = ortu.current;
+      const cizgiOge = cizgi.current;
+      void hareketYukle().then(({ gsap }) =>
+        gsap
+          .timeline()
+          .set(ortuOge, { display: "block", opacity: 0, backdropFilter: "blur(0px)" })
+          .set(cizgiOge, { display: "block", scaleX: 0, opacity: 1 })
+          .to(ortuOge, { opacity: 1, backdropFilter: bulaniklik, duration: 0.32, ease: "power2.in" })
+          .to(cizgiOge, { scaleX: 0.7, duration: 0.6, ease: "power2.out" }, 0)
+          .call(sayfayaGec, [], 0.32),
+      );
       // Emniyet: animasyon karesi gelmezse (arka plandaki sekme) sayfa yine açılır
       window.setTimeout(sayfayaGec, 900);
     };
@@ -76,17 +80,22 @@ export default function GecisYoneticisi() {
     bekleyen.current = false;
     basaDon();
     const kapat = () => {
-      gsap.set([ortu.current, cizgi.current], { display: "none" });
-      gsap.set("#icerik", { clearProps: "transform" });
+      if (ortu.current) ortu.current.style.display = "none";
+      if (cizgi.current) cizgi.current.style.display = "none";
+      document.getElementById("icerik")?.style.removeProperty("transform");
     };
+    const ortuOge = ortu.current;
+    const cizgiOge = cizgi.current;
     const kare = requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-      gsap
-        .timeline({ onComplete: kapat })
-        .to(cizgi.current, { scaleX: 1, duration: 0.25, ease: "power2.out" })
-        .to(cizgi.current, { opacity: 0, duration: 0.3 }, 0.2)
-        .to(ortu.current, { opacity: 0, backdropFilter: "blur(0px)", duration: 0.55, ease: "power2.out" }, 0.05)
-        .fromTo("#icerik", { y: 18 }, { y: 0, duration: 0.7, ease: "expo.out" }, 0.05);
+      void hareketYukle().then(({ gsap, ScrollTrigger }) => {
+        ScrollTrigger.refresh();
+        gsap
+          .timeline({ onComplete: kapat })
+          .to(cizgiOge, { scaleX: 1, duration: 0.25, ease: "power2.out" })
+          .to(cizgiOge, { opacity: 0, duration: 0.3 }, 0.2)
+          .to(ortuOge, { opacity: 0, backdropFilter: "blur(0px)", duration: 0.55, ease: "power2.out" }, 0.05)
+          .fromTo("#icerik", { y: 18 }, { y: 0, duration: 0.7, ease: "expo.out" }, 0.05);
+      });
     });
     // Emniyet: animasyon karesi gelmezse örtü kendiliğinden kalkar
     const emniyet = window.setTimeout(kapat, 2000);

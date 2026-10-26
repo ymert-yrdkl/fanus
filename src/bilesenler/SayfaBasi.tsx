@@ -11,15 +11,24 @@ type Iz = { ad: string; adres?: string };
  */
 export default function SayfaBasi({
   iz,
+  ustBaslik,
   baslik,
+  uzunBaslik = false,
   metin,
   children,
 }: {
   iz: Iz[];
+  /** H1'in küçük ilk satırı: sayfanın aranan kelimesi (ör. "E-ticaret sitesi yaptırma"). Büyük satır slogan.
+   *  Rehber yazılarında yok: başlığın kendisi aranan cümledir. */
+  ustBaslik?: string;
   baslik: string;
+  /** Uzun başlık (rehber yazısı): afiş boyu yerine bölüm başlığı boyu */
+  uzunBaslik?: boolean;
   metin: string;
   children?: ReactNode;
 }) {
+  // Görünen yolda yalnız üst sayfalar: bulunulan sayfayı H1'in ilk satırı söyler (Google'a giden yol eksiksiz)
+  const ustSayfalar = iz.filter((i) => i.adres);
   // Google için sayfa yolu: Ana sayfa > Hizmetler > E-ticaret sitesi
   const yol = {
     "@context": "https://schema.org",
@@ -47,28 +56,32 @@ export default function SayfaBasi({
                 fanussoft
               </Link>
             </li>
-            {iz.map((i) => (
+            {ustSayfalar.map((i) => (
               <li key={i.ad} className="flex items-center gap-2">
                 <span aria-hidden="true" className="text-silik">
                   /
                 </span>
-                {i.adres ? (
-                  <Link href={i.adres} className="transition-colors hover:text-krem">
-                    {i.ad}
-                  </Link>
-                ) : (
-                  <span aria-current="page" className="text-krem">
-                    {i.ad}
-                  </span>
-                )}
+                <Link href={i.adres!} className="transition-colors hover:text-krem">
+                  {i.ad}
+                </Link>
               </li>
             ))}
           </ol>
         </nav>
-        <div className="mt-6 grid gap-10 md:mt-8 md:grid-cols-12 md:items-end md:gap-8">
+        <div className="mt-5 grid gap-10 md:mt-7 md:grid-cols-12 md:items-end md:gap-8">
           <div className={children ? "md:col-span-7" : "md:col-span-10"}>
-            <h1 data-bol className="dev-baslik max-w-[14ch]">
-              {baslik}
+            <h1>
+              {ustBaslik && (
+                <span data-belir className="etiket mb-5 block text-krem md:mb-6">
+                  {ustBaslik}
+                </span>
+              )}
+              <span
+                data-bol
+                className={uzunBaslik ? "bolum-baslik block max-w-[22ch]" : "dev-baslik block max-w-[14ch]"}
+              >
+                {baslik}
+              </span>
             </h1>
             <p
               data-belir

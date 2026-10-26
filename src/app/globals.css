@@ -406,6 +406,12 @@ details.sss summary::-webkit-details-marker {
     "opsz" 96,
     "wdth" 90;
 }
+/* Logo yazısı: yalnız "fanussoft" harflerini taşıyan, logonun kendi optik boyunda çizilmiş küçük yazı tipi
+   (scripts/yazitipi-uret.py); başlık yazı tipi optik boy 96'ya sabit olduğu için logo ondan ayrı */
+.logo-yazi {
+  font-family: "Bricolage Logo", var(--font-baslik);
+}
+
 .etiket {
   font-family: var(--font-mono);
   font-size: 0.75rem;

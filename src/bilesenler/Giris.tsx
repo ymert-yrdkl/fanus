@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { ArrowUpRight, ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { gsap, GENIS, HAREKET_ACIK, SplitText, useGSAP } from "@/hareket/gsap";
+import { GENIS, HAREKET_ACIK, useHareket } from "@/hareket/gsap";
 import { REFERANSLAR } from "@/site/icerik";
 import { dugmeSinifi } from "./dugme";
 
@@ -14,8 +14,8 @@ import { dugmeSinifi } from "./dugme";
 export default function Giris() {
   const kok = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, SplitText }) => {
       const mm = gsap.matchMedia();
       // Telefon: başlık, metin, düğmeler ve şerit JavaScript'i beklemeden CSS ile görünür (globals.css)
 

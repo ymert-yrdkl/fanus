@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import Acilis from "@/bilesenler/Acilis";
 import Alt from "@/bilesenler/Alt";
 import { IsletmeAdiSaglayici } from "@/bilesenler/IsletmeAdi";
@@ -8,19 +7,12 @@ import GecisYoneticisi from "@/hareket/GecisYoneticisi";
 import PuruzsuzKaydirma from "@/hareket/PuruzsuzKaydirma";
 import SayfaEtkileri from "@/hareket/SayfaEtkileri";
 import { SITE } from "@/site/ayarlar";
+import { YAZI_TIPI_DOSYALARI } from "@/site/yazitipleri";
 import { cekirdekVeri, jsonLd, MARKA } from "@/site/seo";
+import "./yazitipleri.css";
 import "./globals.css";
 
-const geist = Geist({ variable: "--font-geist", subsets: ["latin", "latin-ext"] });
-// Mono etiketlerde ve sayfa başı kırıntısında: öncelikli indirilir. Ön yüklemesi kapatılınca geç gelen yazı tipi
-// kırıntıyı iki satıra kırıp altındaki her şeyi itiyordu (PageSpeed: düzen kayması 0,19)
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin", "latin-ext"] });
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin", "latin-ext"],
-  // opsz: büyük boy çizimi; wdth: başlıklar hafif sıkışık (afiş gibi), etiketler geniş
-  axes: ["opsz", "wdth"],
-});
+// Yazı tipleri kendi sunucumuzdan, küçültülmüş (scripts/yazitipi-uret.py › src/app/yazitipleri.css)
 
 // Sayfaların kendi başlığı, açıklaması ve paylaşım etiketleri src/site/seo.ts › sayfaMetasi ile yazılır.
 const { google, bing, yandex } = SITE.dogrulama;
@@ -57,12 +49,12 @@ const HAREKET_BETIGI = `(function(){var d=document.documentElement;try{if(matchM
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="tr"
-      suppressHydrationWarning
-      className={`${geist.variable} ${geistMono.variable} ${bricolage.variable}`}
-    >
+    <html lang="tr" suppressHydrationWarning>
       <head>
+        {/* Yazı tipleri ilk çizimde gerekli (başlık, gövde, etiket, logo; Türkçe harfler ayrı küçük dosyada) */}
+        {YAZI_TIPI_DOSYALARI.map((dosya) => (
+          <link key={dosya} rel="preload" href={dosya} as="font" type="font/woff2" crossOrigin="anonymous" />
+        ))}
         {/* Boyamadan önce çalışmalı: next/script beforeInteractive bunu geciktirir. Geliştirme modunda React
             "script etiketi" uyarısı verir; yalnız geliştirmede görünür, zararsızdır. */}
         <script dangerouslySetInnerHTML={{ __html: HAREKET_BETIGI }} />

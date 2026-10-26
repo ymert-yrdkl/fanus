@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Minus, Plus, Phone, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { vurgu } from "@/hareket/renk";
-import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
+import { HAREKET_ACIK, hareketYukle, useHareket } from "@/hareket/gsap";
 import { useIsletmeAdi } from "../IsletmeAdi";
 
 type Urun = { ad: string; aciklama?: string; fiyat: number };
@@ -51,8 +51,8 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
   const [guncellendi, setGuncellendi] = useState(0);
 
   // Görünüme girince: QR taranır, menü telefona akar
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, ScrollTrigger }) => {
       const mm = gsap.matchMedia();
       mm.add(HAREKET_ACIK, () => {
         gsap.set("[data-menu-satir]", { autoAlpha: 0, y: 18 });
@@ -90,25 +90,32 @@ export default function QrMenuDemo({ qrSvg }: { qrSvg: string }) {
       return;
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.fromTo(
-      kok.current!.querySelectorAll("[data-menu-satir]"),
-      { autoAlpha: 0, x: 16 },
-      { autoAlpha: 1, x: 0, duration: 0.5, ease: "expo.out", stagger: 0.05 },
+    const satirlar = kok.current!.querySelectorAll("[data-menu-satir]");
+    void hareketYukle().then(({ gsap }) =>
+      gsap.fromTo(
+        satirlar,
+        { autoAlpha: 0, x: 16 },
+        { autoAlpha: 1, x: 0, duration: 0.5, ease: "expo.out", stagger: 0.05 },
+      ),
     );
   }, [kategori]);
 
   useEffect(() => {
     if (guncellendi === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.fromTo(
-      kok.current!.querySelector("[data-fiyat-satiri]"),
-      { backgroundColor: vurgu(0.35) },
-      { backgroundColor: vurgu(0), duration: 1.2, ease: "power2.out" },
-    );
-    gsap.fromTo(
-      kok.current!.querySelector("[data-fiyat]"),
-      { yPercent: -60, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 0.45, ease: "back.out(2)" },
-    );
+    const satir = kok.current!.querySelector("[data-fiyat-satiri]");
+    const fiyat = kok.current!.querySelector("[data-fiyat]");
+    void hareketYukle().then(({ gsap }) => {
+      gsap.fromTo(
+        satir,
+        { backgroundColor: vurgu(0.35) },
+        { backgroundColor: vurgu(0), duration: 1.2, ease: "power2.out" },
+      );
+      gsap.fromTo(
+        fiyat,
+        { yPercent: -60, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 0.45, ease: "back.out(2)" },
+      );
+    });
   }, [guncellendi]);
 
   const fiyatDegistir = (fark: number) => {

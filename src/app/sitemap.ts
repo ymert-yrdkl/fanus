@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { HIZMETLER, REFERANSLAR } from "@/site/icerik";
+import { REHBER } from "@/site/rehber";
 import { tamAdres } from "@/site/seo";
 
 /** Derleme anı: her yayın yeni içerik getirir, son değişiklik tarihi odur. */
@@ -30,6 +31,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { yol: "/fiyatlar", oncelik: 0.9, gorseller: [] },
     { yol: "/isler", oncelik: 0.7, gorseller: referansGorselleri(butunIsler) },
     { yol: "/iletisim", oncelik: 0.6, gorseller: [] },
+    { yol: "/rehber", oncelik: 0.7, gorseller: [] },
+    ...REHBER.map((y) => ({ yol: `/rehber/${y.adres}`, oncelik: 0.7, gorseller: [] as string[] })),
   ];
 
   return sayfalar.map((s) => ({

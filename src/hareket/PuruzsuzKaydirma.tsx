@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { gsap, ScrollTrigger } from "./gsap";
+import { hareketYukle } from "./gsap";
 import { lenisAyarla } from "./kaydirma";
 
 /**
@@ -15,7 +15,7 @@ export default function PuruzsuzKaydirma() {
 
     let iptal = false;
     let temizle = () => {};
-    import("lenis").then(({ default: Lenis }) => {
+    Promise.all([import("lenis"), hareketYukle()]).then(([{ default: Lenis }, { gsap, ScrollTrigger }]) => {
       if (iptal) return;
       const lenis = new Lenis({ lerp: 0.085, anchors: true, autoRaf: false });
       lenisAyarla(lenis);

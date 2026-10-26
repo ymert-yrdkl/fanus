@@ -98,7 +98,7 @@ export default function HizmetMinyaturu({ adres, qrSvg }: { adres: HizmetAdresi;
       return <SiteGorseli />;
     case "qr-menu":
       return <QrGorseli qrSvg={qrSvg} />;
-    case "web-otomasyonu":
+    case "ozel-yazilim":
       return <AkisGorseli />;
     case "mobil-uygulama":
       return <TelefonGorseli />;

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Desktop, DeviceMobile, List, MagnifyingGlass, ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { gsap } from "@/hareket/gsap";
+import { hareketYukle } from "@/hareket/gsap";
 import { adresAdi, basHarfler, useIsletmeAdi } from "../IsletmeAdi";
 
 // Örnek sitenin tema renkleri (ziyaretçinin seçeceği marka renkleri; fanussoft'un paleti değil).
@@ -83,10 +83,13 @@ export default function KurumsalDemo() {
       return;
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.fromTo(
-      kok.current!.querySelectorAll("[data-dil-metni]"),
-      { y: 14, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.04 },
+    const metinler = kok.current!.querySelectorAll("[data-dil-metni]");
+    void hareketYukle().then(({ gsap }) =>
+      gsap.fromTo(
+        metinler,
+        { y: 14, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.04 },
+      ),
     );
   }, [dil]);
 

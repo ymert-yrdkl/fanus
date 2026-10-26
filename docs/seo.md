@@ -17,7 +17,9 @@ sayfalarınınki `src/site/icerik.ts` › `seoBasligi`, `seoAciklamasi`.
 | `/hizmetler/e-ticaret`      | e-ticaret sitesi yaptırma, fiyatı | E-ticaret Sitesi Yaptırma ve Fiyatı              |
 | `/hizmetler/kurumsal-site`  | kurumsal web sitesi yaptırma      | Kurumsal Web Sitesi Yaptırma ve Fiyatı           |
 | `/hizmetler/qr-menu`        | qr menü, restoran dijital menü    | QR Menü: Restoran ve Kafe İçin Dijital Menü      |
-| `/hizmetler/web-otomasyonu` | özel yazılım, iş otomasyonu       | Özel Yazılım ve İş Otomasyonu                    |
+| `/hizmetler/ozel-yazilim`   | özel yazılım, iş otomasyonu       | Özel Yazılım ve İş Otomasyonu                    |
+| `/rehber`                   | web sitesi, e-ticaret rehberi     | Web Sitesi ve E-ticaret Rehberi                  |
+| `/rehber/<yazı>`            | bilgi arayan sorular              | yazının kendi başlığı (`src/site/rehber.ts`)     |
 | `/hizmetler/mobil-uygulama` | mobil uygulama geliştirme         | Mobil Uygulama Geliştirme: iOS ve Android        |
 | `/fiyatlar`                 | web sitesi fiyatları (yıl)        | Web Sitesi ve E-ticaret Fiyatları (derleme yılı) |
 | `/isler`                    | referanslar                       | Referanslar: Yayındaki Siteler ve Uygulamalar    |
@@ -28,6 +30,16 @@ PAKETLER'den gelir; sayfada yazmayan bir iddia başlığa ya da açıklamaya gir
 yazılım stüdyosu" her sayfada yerel sinyal verir.
 
 ## Sitede olanlar
+
+- **H1'de anahtar kelime** (26 Ekim 2026): iç sayfalarda H1'in küçük ilk satırı aranan kelime ("E-ticaret sitesi
+  yaptırma", "Web sitesi ve e-ticaret fiyatları 2026"...), büyük satırı slogan (`SayfaBasi` › `ustBaslik`; hizmetlerde
+  `icerik.ts` › `ustBaslik`). Görünen kırıntı yolunda yalnız üst sayfalar; Google'a giden kırıntı verisi eksiksiz.
+- **Adres**: "Özel yazılım ve otomasyon" sayfası `/hizmetler/ozel-yazilim` (eski `/hizmetler/web-otomasyonu` kalıcı
+  yönlenir, `next.config.ts`).
+- **Rehber** (`/rehber`, `src/site/rehber.ts`): bilgi arayan aramalara cevap veren yazılar; her biri Article + SSS
+  (FAQPage) verisi, iç bağlantılar, ilgili hizmet kutusu; menüde, altbilgide, site haritasında ve /llms.txt'te.
+- **HSTS** (`Strict-Transport-Security`, iki yıl) ve dil eşlemesi (`hreflang` tr-TR ve x-default).
+- **Yazı tipleri** kendi sunucumuzdan, küçültülmüş (269 → 104 KB; `scripts/yazitipi-uret.py`).
 
 - **Başlık, açıklama, kanonik adres** her sayfada ayrı. **Paylaşım etiketleri** (Open Graph, X) her sayfada ayrı:
   önceden iç sayfalar paylaşılınca ana sayfanın başlığı ve adresi çıkıyordu (Next bu alanları birleştirmiyor).
@@ -51,7 +63,9 @@ yazılım stüdyosu" her sayfada yerel sinyal verir.
 
 ## Yusuf'un yapacakları (hesap gerektirir; önem sırasıyla)
 
-1. **Google Search Console**: search.google.com/search-console › Mülk ekle › Alan adı `fanussoft.com` › verilen TXT
+1. **Google Search Console** (26 Ekim 2026'da kuruldu: softfanus@gmail.com, mülk `https://fanussoft.com/`, HTML
+   etiketiyle doğrulandı, site haritası gönderildi). Yeni sayfa eklenince URL denetimi › dizine eklenmesini iste.
+   Eski not: search.google.com/search-console › Mülk ekle › Alan adı `fanussoft.com` › verilen TXT
    kaydını İHS DNS'e ekle (ya da "URL öneki" › HTML etiketi › kodu `ayarlar.ts` › `dogrulama.google`'a yaz, yayına
    al). Sonra Site haritaları › `sitemap.xml` gönder.
 2. **Google İşletme Profili** (yerel aramada en etkili adım): business.google.com › "fanussoft" › kategori

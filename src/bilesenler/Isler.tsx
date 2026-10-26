@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { ArrowUpRight, Check } from "@phosphor-icons/react/dist/ssr";
-import { gsap, GENIS, HAREKET_ACIK, useGSAP } from "@/hareket/gsap";
+import { GENIS, HAREKET_ACIK, useHareket } from "@/hareket/gsap";
 import { REFERANSLAR, type Referans } from "@/site/icerik";
 import BolumBasi from "./BolumBasi";
 
@@ -26,8 +26,8 @@ export default function Isler({
   const kok = useRef<HTMLElement>(null);
   const isler = kodlar ? REFERANSLAR.filter((r) => kodlar.includes(r.kod)) : REFERANSLAR;
 
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap }) => {
       const mm = gsap.matchMedia();
       mm.add(`${HAREKET_ACIK} and ${GENIS}`, () => {
         gsap.utils.toArray<HTMLElement>("[data-is]").forEach((is) => {

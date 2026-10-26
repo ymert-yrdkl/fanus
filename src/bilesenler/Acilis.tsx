@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, useGSAP } from "@/hareket/gsap";
+import { useHareket } from "@/hareket/gsap";
 import { kaydirmayiBaslat, kaydirmayiDurdur } from "@/hareket/kaydirma";
 import { CizilenIsaret } from "./Logo";
 
@@ -21,8 +21,8 @@ function acildiDuyur() {
 export default function Acilis() {
   const kok = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap }) => {
       const html = document.documentElement;
       // Hareket azaltma tercihinde ve telefonda perde yok (CSS de gizler)
       if (!html.classList.contains("hareket") || window.matchMedia("(max-width: 767px)").matches) {

@@ -202,7 +202,7 @@ export const SENARYOLAR = [
         "/hizmetler/e-ticaret",
         "/hizmetler/kurumsal-site",
         "/hizmetler/qr-menu",
-        "/hizmetler/web-otomasyonu",
+        "/hizmetler/ozel-yazilim",
         "/fiyatlar",
         "/isler",
       ];

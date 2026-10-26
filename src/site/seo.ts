@@ -39,7 +39,8 @@ export function sayfaMetasi({
   return {
     title: tamBaslik ? { absolute: baslik } : baslik,
     description: aciklama,
-    alternates: { canonical: yol },
+    // Tek dil: Türkçe sürüm aynı adres (x-default da)
+    alternates: { canonical: yol, languages: { "tr-TR": yol, "x-default": yol } },
     openGraph: {
       type: "website",
       locale: "tr_TR",

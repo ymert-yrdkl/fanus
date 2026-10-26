@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "@/hareket/gsap";
+import { hareketYukle } from "@/hareket/gsap";
 import { sahneDurumu } from "./durum";
 
 type Hal = "yukleniyor" | "hazir" | "yok";
@@ -43,7 +43,8 @@ export default function FanusSahnesi({
         sahneDurumu.giris = 1;
         return;
       }
-      const oynat = () => gsap.to(sahneDurumu, { giris: 1, duration: 2.8, ease: "power2.inOut" });
+      const oynat = () =>
+        void hareketYukle().then(({ gsap }) => gsap.to(sahneDurumu, { giris: 1, duration: 2.8, ease: "power2.inOut" }));
       if (window.__fanusAcildi) oynat();
       else window.addEventListener("fanus:acildi", oynat, { once: true });
     };

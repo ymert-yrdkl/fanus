@@ -23,18 +23,29 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   async redirects() {
-    return YONLENECEK_HOSTLAR.map((host) => ({
-      source: "/:yol*",
-      has: [{ type: "host" as const, value: host }],
-      destination: `${ASIL_ADRES}/:yol*`,
-      permanent: true,
-    }));
+    return [
+      ...YONLENECEK_HOSTLAR.map((host) => ({
+        source: "/:yol*",
+        has: [{ type: "host" as const, value: host }],
+        destination: `${ASIL_ADRES}/:yol*`,
+        permanent: true,
+      })),
+      // Eski adresler (kalıcı): "Özel yazılım ve otomasyon" sayfası anahtar kelimeli adrese taşındı (26 Ekim 2026)
+      { source: "/hizmetler/web-otomasyonu", destination: "/hizmetler/ozel-yazilim", permanent: true },
+    ];
   },
   async headers() {
     return [
+      // Yazı tipi dosyalarının adında içerik özeti var (scripts/yazitipi-uret.py): değişmez, bir yıl önbellekte kalır
+      {
+        source: "/yazitipi/:dosya*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
       {
         source: "/:yol*",
         headers: [
+          // Tarayıcı siteyi yalnız https ile açar (ilk ziyaretten sonra http denemesi olmaz)
+          { key: "Strict-Transport-Security", value: "max-age=63072000" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },

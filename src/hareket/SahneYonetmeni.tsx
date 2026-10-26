@@ -1,6 +1,7 @@
 "use client";
 
-import { FARE, gsap, GENIS, HAREKET_ACIK, ScrollTrigger, SplitText, useGSAP } from "./gsap";
+import { useEffect } from "react";
+import { FARE, GENIS, HAREKET_ACIK, useHareket } from "./gsap";
 
 const sayiBicimi = new Intl.NumberFormat("tr-TR");
 
@@ -15,35 +16,39 @@ const sayiBicimi = new Intl.NumberFormat("tr-TR");
  * Sayfanın EN SONUNDA durur ki bütün bölümler DOM'da olsun.
  */
 export default function SahneYonetmeni() {
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-
-    // Telefon: belirmeler kısa ve sakin; başlıklar satırlara bölünmez, aynı kısa belirmeyle gelir. GSAP ve
-    // ScrollTrigger yerine tek bir IntersectionObserver ve CSS geçişi (globals.css › .belir-bekliyor): her öğe için
-    // ayrı tetik kurmak açılışta sayfa yerleşimini onlarca kez yeniden hesaplatıyordu (telefonda hız puanı).
-    mm.add(`${HAREKET_ACIK} and (max-width: 767px)`, () => {
-      // İlk ekrandakiler olduğu gibi görünür kalır (CSS); yalnız ekranın altındakiler belirmeyi bekler
-      const ogeler = gsap.utils
-        .toArray<HTMLElement>("[data-belir], [data-bol]")
-        .filter((el) => !el.closest("[data-sayfa-basi]") && el.getBoundingClientRect().top > window.innerHeight);
-      const gozcu = new IntersectionObserver(
-        (girdiler) =>
-          girdiler.forEach((g) => {
-            if (!g.isIntersecting) return;
-            g.target.classList.add("belirdi");
-            gozcu.unobserve(g.target);
-          }),
-        { rootMargin: "0px 0px -10% 0px" },
-      );
-      ogeler.forEach((el) => {
-        el.classList.add("belir-bekliyor");
-        gozcu.observe(el);
-      });
-      return () => {
-        gozcu.disconnect();
-        ogeler.forEach((el) => el.classList.remove("belir-bekliyor", "belirdi"));
-      };
+  // Telefon: belirmeler kısa ve sakin; başlıklar satırlara bölünmez, aynı kısa belirmeyle gelir. GSAP gerekmez (o
+  // telefonda ilk dokunuşta yüklenir): tek bir IntersectionObserver ve CSS geçişi (globals.css › .belir-bekliyor).
+  // Her öğe için ayrı tetik kurmak açılışta sayfa yerleşimini onlarca kez yeniden hesaplatıyordu (telefonda hız).
+  useEffect(() => {
+    if (window.matchMedia(GENIS).matches) return;
+    // Telefonda içerik GSAP'ı beklemez: açılış betiğinin 6 sn emniyeti .hareket sınıfını kaldırmasın
+    window.__fanusHazir = true;
+    if (!window.matchMedia(HAREKET_ACIK).matches) return;
+    // İlk ekrandakiler olduğu gibi görünür kalır (CSS); yalnız ekranın altındakiler belirmeyi bekler
+    const ogeler = Array.from(document.querySelectorAll<HTMLElement>("[data-belir], [data-bol]")).filter(
+      (el) => !el.closest("[data-sayfa-basi]") && el.getBoundingClientRect().top > window.innerHeight,
+    );
+    const gozcu = new IntersectionObserver(
+      (girdiler) =>
+        girdiler.forEach((g) => {
+          if (!g.isIntersecting) return;
+          g.target.classList.add("belirdi");
+          gozcu.unobserve(g.target);
+        }),
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    ogeler.forEach((el) => {
+      el.classList.add("belir-bekliyor");
+      gozcu.observe(el);
     });
+    return () => {
+      gozcu.disconnect();
+      ogeler.forEach((el) => el.classList.remove("belir-bekliyor", "belirdi"));
+    };
+  }, []);
+
+  useHareket(({ gsap, ScrollTrigger, SplitText }) => {
+    const mm = gsap.matchMedia();
 
     // Masaüstü: aşağıdan uzun belirme, başlıklar satır satır maskeden yükselir, paralaks
     mm.add(`${HAREKET_ACIK} and ${GENIS}`, () => {
@@ -67,6 +72,9 @@ export default function SahneYonetmeni() {
           type: "lines",
           mask: "lines",
           linesClass: "bol-satir",
+          // Başlık öğesine aria-label koyar (satırlar okunmasın diye); h1 içindeki span gibi başlık olmayan öğede
+          // aria-label kurala aykırı (axe: aria-prohibited-attr): orada ARIA'ya dokunmaz, metin olduğu gibi okunur
+          aria: /^H[1-6]$/.test(el.tagName) ? "auto" : "none",
           autoSplit: true,
           onSplit(parca) {
             gsap.set(el, { opacity: 1 });

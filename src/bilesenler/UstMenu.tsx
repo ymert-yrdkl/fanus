@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { List, X, ArrowUpRight, CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { gecisleGit } from "@/hareket/gecis";
-import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
+import { HAREKET_ACIK, hareketYukle, useHareket } from "@/hareket/gsap";
 import { kaydirmayiBaslat, kaydirmayiDurdur } from "@/hareket/kaydirma";
 import { HIZMETLER, hizmetFiyatEtiketi } from "@/site/icerik";
 import { Logo } from "./Logo";
@@ -15,6 +15,7 @@ const BAGLANTILAR = [
   { ad: "Hizmetler", adres: "/hizmetler" },
   { ad: "İşler", adres: "/isler" },
   { ad: "Fiyatlar", adres: "/fiyatlar" },
+  { ad: "Rehber", adres: "/rehber" },
   { ad: "İletişim", adres: "/iletisim" },
 ];
 
@@ -48,8 +49,8 @@ export default function UstMenu() {
   }, [yol]);
   const etkin = (adres: string) => yol === adres || yol.startsWith(`${adres}/`);
 
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, ScrollTrigger }) => {
       // Aşağı kaydırınca menü gizlenir, yukarı kaydırınca geri gelir; en üstte zeminsizdir
       let gizli = false;
       ScrollTrigger.create({
@@ -69,8 +70,8 @@ export default function UstMenu() {
   );
 
   // Gündüz (beyaz) bölümün üstündeyken menü de açık renklere döner; her sayfa değişiminde yeniden kurulur
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, ScrollTrigger }) => {
       const ust = kok.current!;
       // Sayfa içeriğindeki (#icerik) açık zeminli bölümlerden en az biri menünün altındaysa menü açık renkte;
       // menü penceresi ve açılış perdesi gibi içerik dışı açık zeminler sayılmaz (kapalıyken tetikleyiciyi söndürürdü)
@@ -91,16 +92,19 @@ export default function UstMenu() {
       });
       uygula();
     },
-    { dependencies: [yol], revertOnUpdate: true },
+    { dependencies: [yol] },
   );
 
   const menuyuAc = () => {
     const dialog = pencere.current!;
+    const hareketli = window.matchMedia(HAREKET_ACIK).matches;
+    // GSAP henüz yüklenmediyse pencere kapalı (kırpılmış) açılır, GSAP gelince perde gibi iner
+    if (hareketli) dialog.style.clipPath = "inset(0 0 100% 0)";
     dialog.showModal();
     setAcik(true);
     kaydirmayiDurdur();
-    const mm = gsap.matchMedia();
-    mm.add(HAREKET_ACIK, () => {
+    if (!hareketli) return;
+    void hareketYukle().then(({ gsap }) => {
       gsap.fromTo(
         dialog,
         { clipPath: "inset(0 0 100% 0)" },
@@ -123,7 +127,9 @@ export default function UstMenu() {
       sonra?.();
     };
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return bitir();
-    gsap.to(dialog, { clipPath: "inset(100% 0 0% 0)", duration: 0.6, ease: "expo.inOut", onComplete: bitir });
+    void hareketYukle().then(({ gsap }) =>
+      gsap.to(dialog, { clipPath: "inset(100% 0 0% 0)", duration: 0.6, ease: "expo.inOut", onComplete: bitir }),
+    );
   };
 
   /** Menü penceresinden bir sayfaya: önce pencere kapanır, sonra sayfa geçişi başlar. */

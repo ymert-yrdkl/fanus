@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Check } from "@phosphor-icons/react/dist/ssr";
-import { gsap, GENIS, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
+import { GENIS, HAREKET_ACIK, useHareket } from "@/hareket/gsap";
 import { HIZMETLER, hizmetFiyatEtiketi } from "@/site/icerik";
 import HizmetDemosu from "./demolar/HizmetDemosu";
 
@@ -15,8 +15,8 @@ export default function Hizmetler({ qrSvg }: { qrSvg: string }) {
   const kok = useRef<HTMLElement>(null);
 
   // Kartlar üst üste biner: alttaki kart gelince öndeki küçülür ve kararır
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, ScrollTrigger }) => {
       const mm = gsap.matchMedia();
       // Ekrandan uzun kart yapışınca alt kısmı görünmez kalmasın: üst boşluğu karta göre küçült
       mm.add(GENIS, () => {

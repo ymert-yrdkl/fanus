@@ -13,7 +13,7 @@ import {
   LockSimple,
 } from "@phosphor-icons/react/dist/ssr";
 import { vurgu } from "@/hareket/renk";
-import { gsap, HAREKET_ACIK, ScrollTrigger, useGSAP } from "@/hareket/gsap";
+import { HAREKET_ACIK, hareketYukle, useHareket } from "@/hareket/gsap";
 import { basHarfler, useIsletmeAdi } from "../IsletmeAdi";
 import { AkanTutar, tlBicimi } from "./AkanSayi";
 
@@ -75,8 +75,8 @@ export default function EticaretDemo() {
   };
 
   // Görünüme ilk girişte, ziyaretçi dokunmadıysa akışı bir kez kendiliğinden göster
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap, ScrollTrigger }) => {
       const mm = gsap.matchMedia();
       mm.add(HAREKET_ACIK, () => {
         const t = ScrollTrigger.create({
@@ -101,17 +101,19 @@ export default function EticaretDemo() {
     if (yeniNo === null || !kok.current) return;
     const satir = kok.current.querySelector(`[data-siparis="${yeniNo}"]`);
     if (!satir) return;
-    gsap.fromTo(
-      satir,
-      { height: 0, opacity: 0, backgroundColor: vurgu(0.22) },
-      {
-        height: "auto",
-        opacity: 1,
-        duration: 0.7,
-        ease: "expo.out",
-        backgroundColor: vurgu(0),
-        clearProps: "height",
-      },
+    void hareketYukle().then(({ gsap }) =>
+      gsap.fromTo(
+        satir,
+        { height: 0, opacity: 0, backgroundColor: vurgu(0.22) },
+        {
+          height: "auto",
+          opacity: 1,
+          duration: 0.7,
+          ease: "expo.out",
+          backgroundColor: vurgu(0),
+          clearProps: "height",
+        },
+      ),
     );
   }, [yeniNo]);
 

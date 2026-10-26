@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { ArrowUp, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
-import { gsap, HAREKET_ACIK, useGSAP } from "@/hareket/gsap";
+import { HAREKET_ACIK, useHareket } from "@/hareket/gsap";
 import { kaydir } from "@/hareket/kaydirma";
 import { SITE } from "@/site/ayarlar";
 import { HIZMETLER, REFERANSLAR } from "@/site/icerik";
@@ -14,6 +14,7 @@ const SAYFA_BAGLANTILARI = [
   { ad: "Hizmetler", adres: "/hizmetler" },
   { ad: "İşler", adres: "/isler" },
   { ad: "Fiyatlar", adres: "/fiyatlar" },
+  { ad: "Rehber", adres: "/rehber" },
   { ad: "İletişim", adres: "/iletisim" },
 ];
 
@@ -21,8 +22,8 @@ export default function Alt() {
   const kok = useRef<HTMLElement>(null);
 
   // Dev kelime markası: harfler çizgiden dolguya, soldan sağa ışıyarak dolar
-  useGSAP(
-    () => {
+  useHareket(
+    ({ gsap }) => {
       const mm = gsap.matchMedia();
       mm.add(HAREKET_ACIK, () => {
         gsap.fromTo(

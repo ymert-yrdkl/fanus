@@ -4,6 +4,7 @@
 import { SITE } from "@/site/ayarlar";
 import { fiyatYaz, HIZMETLER, PAKETLER, REFERANSLAR, YENILEMEYE_DAHIL, YILLIK_YENILEME } from "@/site/icerik";
 import { MARKA, SEHIR, tamAdres } from "@/site/seo";
+import { REHBER } from "@/site/rehber";
 
 export const dynamic = "force-static";
 
@@ -32,12 +33,17 @@ export function GET() {
     "",
     ...REFERANSLAR.map((r) => `- [${r.ad}](${r.adres}) (${r.tur}${r.sehir ? `, ${r.sehir}` : ""}): ${r.ozet}`),
     "",
+    "## Rehber",
+    "",
+    ...REHBER.map((y) => `- [${y.baslik}](${tamAdres(`/rehber/${y.adres}`)}): ${y.aciklama}`),
+    "",
     "## Sayfalar",
     "",
     `- [Ana sayfa](${tamAdres("/")})`,
     `- [Hizmetler](${tamAdres("/hizmetler")}): her hizmetin canlı örneği`,
     `- [Fiyatlar](${tamAdres("/fiyatlar")})`,
     `- [İşler](${tamAdres("/isler")}): yayındaki siteler ve uygulamalar`,
+    `- [Rehber](${tamAdres("/rehber")}): web sitesi, e-ticaret ve QR menü üzerine yazılar`,
     `- [İletişim ve teklif](${tamAdres("/iletisim")})`,
     "",
     "## İletişim",

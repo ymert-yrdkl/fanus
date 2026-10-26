@@ -44,6 +44,7 @@ export default function IslerSayfasi() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(yapilandirilmisVeri) }} />
       <SayfaBasi
         iz={[{ ad: "İşler" }]}
+        ustBaslik="Referanslar"
         baslik="Yayında olan işler."
         metin="Hepsi bugün çalışıyor. Ekran görüntüleri sitelerin ve mağazanın kendisinden; kaydırdıkça gezin, tıklayıp açın."
       />
