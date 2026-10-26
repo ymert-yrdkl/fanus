@@ -124,6 +124,18 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
     e-ticaret sayfası telefonda 73 (LCP sayfa başı metni, sıradaki iş); masaüstü 95-96; SEO, erişilebilirlik ve en iyi
     uygulamalar her sayfada 100 (26 Ekim 2026). Yusuf'un yapacakları (Search Console, İşletme Profili, yorumlar, müşteri
     sitelerinden bağlantı, Bing/Yandex, telefon/Instagram, içerik) `docs/seo.md`'de sırayla.
+- Google hesapları (26 Ekim 2026, softfanus@gmail.com "FanusSoft", Chrome'un ayrı profili): Search Console mülkü
+  https://fanussoft.com/ (URL ön eki) HTML etiketiyle doğrulandı (`ayarlar.ts` › `dogrulama.google`; etiket silinmesin),
+  site haritası gönderildi, ana sayfa yeniden taramaya alındı. İşletme Profili "fanussoft" açıldı: kategori Web Sitesi
+  Tasarımcısı, ziyaret edilecek konum yok (hizmet bölgesi işletmesi), bölge Türkiye + Düzce, web sitesi, telefonsuz;
+  doğrulama için gizli posta adresi ve doğrulama adımı Yusuf'ta. Bing/Yandex hesap açmayı gerektirdiği için Yusuf'ta.
+- Telefon hızı (26 Ekim 2026, Google PageSpeed telefon): ana sayfa 85-90, e-ticaret 83 → 90, SEO/erişilebilirlik/en iyi
+  uygulamalar 100. Telefonda ilk ekran JavaScript'i beklemeden görünür (yalnız ekranın altındakiler `.belir-bekliyor`
+  ile belirir), hizmet sayfası canlı örnekleri `next/dynamic` ile ayrı parça. Denenip alınmayanlar: stili HTML'e gömmek
+  (`inlineCss`; Next stili sayfa verisinde ikinci kez yazıyor, HTML 2 kat), posteri gömmek (aynı sebep), etiket ya da
+  başlık yazı tipini öncelikten çıkarmak (geç gelince kırıntı ve başlıklar kayıyor), başlık yazı tipinde opsz'yi 96'ya
+  sabitlemek (185 → 93 KB ama logo ve küçük yazılar sıkışıyor). Kalan sınır: açılıştaki React + GSAP JavaScript'i;
+  büyük adım GSAP'ı gerektiğinde yüklemek (19 dosya).
 - SIRADAKİ: Yusuf'un tasarım geri bildirimi (mavi alev ve manifesto düzeni dahil); sosyal medya görsel dili; SEO'nun
   hesap gerektiren adımları (`docs/seo.md`); içerik bölümü (`/rehber`) Yusuf onaylarsa; telefonda hız için kalan JS.
 - YAYINDA (20 Ekim 2026): https://fanustr.ahmcloud.com (Coolify Root Team › fanus, Let's Encrypt). Ayrıntı

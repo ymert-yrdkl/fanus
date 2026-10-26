@@ -95,7 +95,6 @@ export default function FanusSahnesi({
           src={poster}
           alt=""
           fetchPriority="high"
-          decoding="sync"
           className={`absolute top-0 left-1/2 h-full w-auto max-w-none -translate-x-1/2 transition-opacity duration-700 md:hidden ${hal === "hazir" ? "opacity-0" : "opacity-100"}`}
         />
       )}
