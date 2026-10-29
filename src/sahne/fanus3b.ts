@@ -149,6 +149,8 @@ export function fanusSahnesiKur(tuval: HTMLCanvasElement, secenek: Secenek) {
       antialias: !zayif,
       alpha: true,
       powerPreference: "high-performance",
+      // Yazılımla çizimde (ekran kartı yok) bağlam açılmaz, yedek ışık kalır (FanusSahnesi › ekranKartiVar)
+      failIfMajorPerformanceCaveat: true,
     });
   } catch {
     return null;

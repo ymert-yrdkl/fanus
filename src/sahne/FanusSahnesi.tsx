@@ -7,8 +7,23 @@ import { sahneDurumu } from "./durum";
 type Hal = "yukleniyor" | "hazir" | "yok";
 
 /**
+ * Tarayıcı 3B'yi ekran kartıyla mı çiziyor? Ekran kartı yoksa ya da donanım hızlandırması kapalıysa tarayıcı 3B'yi
+ * yazılımla (işlemciyle) çizer: cam saniyede birkaç kareye düşer, sayfa kilitlenir. Google PageSpeed'in test
+ * makineleri de böyle: masaüstü ölçümü sahne yüzünden süre sınırını aşıp "DEADLINE_EXCEEDED" veriyordu. O durumda
+ * sahne hiç kurulmaz, yerinde yedek ışık (telefonda sabit görsel) kalır.
+ */
+function ekranKartiVar(): boolean {
+  const gl = document.createElement("canvas").getContext("webgl2", { failIfMajorPerformanceCaveat: true });
+  if (!gl) return false;
+  const bilgi = gl.getExtension("WEBGL_debug_renderer_info");
+  const cizici = bilgi ? String(gl.getParameter(bilgi.UNMASKED_RENDERER_WEBGL)) : "";
+  gl.getExtension("WEBGL_lose_context")?.loseContext();
+  return !/swiftshader|llvmpipe|softpipe|software|basic render/i.test(cizici);
+}
+
+/**
  * Sayfanın arkasında sabit duran 3B fanus. three.js ilk etkileşimde yüklenir (masaüstünde etkileşim yoksa
- * 6 sn sonra); o sırada ve WebGL yoksa yerinde sıcak bir ışık durur. Telefonda o ana kadar sahnenin birebir
+ * 6 sn sonra); o sırada ve WebGL ya da ekran kartı yoksa yerinde sıcak bir ışık durur. Telefonda o ana kadar sahnenin birebir
  * sabit görseli durur
  * (`public/fanus-telefon.webp`, giriş bitmiş hâli; tema değişirse yeniden çekilmeli). Saydam bölümler (ana sayfada giriş ve
  * manifesto, iletişimde teklif) tuvali gösterir, diğer bölümler zemin rengiyle örter. Telefonda ana sayfada
@@ -50,6 +65,10 @@ export default function FanusSahnesi({
     };
 
     const baslat = async () => {
+      if (!ekranKartiVar()) {
+        setHal("yok");
+        return;
+      }
       const { fanusSahnesiKur } = await import("./fanus3b");
       if (iptal || !tuvalRef.current) return;
       kurulum = fanusSahnesiKur(tuvalRef.current, {
