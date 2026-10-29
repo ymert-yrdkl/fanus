@@ -155,6 +155,13 @@ yeniden kurulur (`SayfaEtkileri`). Fiyat ve paketler `src/site/icerik.ts` › PA
     94, 94, 97 (üç koşu), erişilebilirlik/en iyi uygulamalar/SEO 100. Telefonda LCP öğesi poster görseli
     (`fanus-telefon.webp`, 9,5 KB); LCP 2,6-2,9 sn çünkü Lighthouse ilk çizimden önce istenen bütün JS ve yazı
     tiplerini LCP'ye sayıyor (Next/React çalışma zamanı + 104 KB yazı tipi).
+  - PageSpeed masaüstü ölçümü sık sık "RPC::DEADLINE_EXCEEDED" veriyordu (28-29 Ekim): masaüstünde 3B sahne 6 sn
+    sonra kendiliğinden kurulur; Google'ın test makinelerinde ekran kartı yok, cam yazılımla çizilince Lighthouse'un
+    yüklemeden sonraki adımları (öğe izleme, tam boy ekran görüntüsü) 10 sn yerine ~98 sn sürüyordu. Çözüm
+    (1de3e5d): `FanusSahnesi` › `ekranKartiVar` (failIfMajorPerformanceCaveat + çizici adında SwiftShader/llvmpipe/
+    software): yazılımla çizimde sahne kurulmaz, yedek ışık kalır. Bu, ziyaretçi ayrımı değil yetenek denetimi
+    (Google Haritalar, Mapbox aynı bayrağı kullanır); ekran kartı olan her cihazda (tümleşik dahil) sahne aynı.
+    Sonra canlı PageSpeed masaüstü 99 ve 100/100/100/100, telefon 94 ve 97; ölçüm süre sınırına takılmıyor.
   - Search Console'da yeni adresler için dizine ekleme istendi (27 Ekim): `/rehber`, 4 rehber yazısı,
     `/hizmetler/ozel-yazilim`; IndexNow da gönderildi (`npm run indexnow`).
   - Denenip alınmayanlar: Suspense ile parça parça canlandırma (masaüstünde SplitText henüz canlanmamış bölümün
